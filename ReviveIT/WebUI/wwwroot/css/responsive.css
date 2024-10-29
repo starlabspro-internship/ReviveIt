@@ -1,0 +1,97 @@
+@media (max-width: 1200px) {
+  .job_section .box .option-box {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    margin-left: auto;
+    margin-top: 15px;
+  }
+
+  @media (max-width: 1120px) {}
+
+  @media (max-width: 992px) {
+    .hero_area {
+      height: auto;
+    }
+
+    .slider_section {
+      padding: 45px 0 75px 0;
+    }
+
+
+    .slider_section .find_container form .btn-box {
+      justify-content: center;
+    }
+
+  }
+
+  @media (max-width: 767px) {
+    .about_section .detail-box {
+      margin-bottom: 45px;
+    }
+
+
+    .info_section .row>div {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+
+    .info_section .row>div:not(:nth-last-child(1)) {
+      margin-bottom: 25px;
+    }
+
+    .info_section .info_links ul {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+  }
+
+  @media (max-width: 576px) {
+
+    .job_section .box .detail-box .detail-info {
+      flex-direction: column;
+    }
+
+    .job_section .box .detail-box .detail-info h6:nth-child(1) {
+      margin: 0;
+      margin-bottom: 5px;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .slider_section .find_container .job_check_list {
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .slider_section .find_container .job_check_list li {
+      margin-right: 0;
+    }
+  }
+
+  @media (max-width: 420px) {
+    .slider_section .detail-box h1 {
+      font-size: 2rem;
+    }
+
+    .job_section .box .job_content-box {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+
+    .job_section .box .img-box {
+      margin-right: 0;
+      margin-bottom: 15px;
+    }
+  }
+
+  @media (max-width: 376px) {}
+
+  @media (min-width: 1200px) {
+    .container {
+      max-width: 1170px;
+    }
+  }
