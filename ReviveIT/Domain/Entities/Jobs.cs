@@ -16,7 +16,9 @@ namespace Domain.Entities
         public DateTime CreatedAt { get; set; }
         public DateTime UpdatedAt { get; set; }
         public int UserID { get; set; }
-       /* public User User { get; set; }
-       */
+        /* public User User { get; set; }
+        */
+
+        public ICollection<JobApplication> JobApplications { get; set; }
     }
 }

@@ -15,6 +15,7 @@ namespace Infrastructure.Data
 
         }
         public DbSet<Jobs> Jobs { get; set; }
+        public DbSet<JobApplication> JobApplications { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -32,6 +33,24 @@ namespace Infrastructure.Data
 
                 /*entity.HasOne(e => e.User)
                       .WithMany(u => u.Jobs)
+                      .HasForeignKey(e => e.UserID);*/
+            
+              
+
+
+                });
+            modelBuilder.Entity<JobApplication>(entity =>
+            {
+                entity.HasKey(e => e.ApplicationID);
+                entity.Property(e => e.ApplicationDate).IsRequired();
+                entity.Property(e => e.Status).IsRequired().HasMaxLength(20);
+
+                entity.HasOne(e => e.Job)
+                      .WithMany(j => j.JobApplications)
+                      .HasForeignKey(e => e.JobID);
+
+                /*entity.HasOne(e => e.User)
+                      .WithMany(u => u.JobApplications)
                       .HasForeignKey(e => e.UserID);*/
             });
         }
