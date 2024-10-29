@@ -1,0 +1,55 @@
+﻿@{
+    ViewData["Title"] = "Sign Up Page";
+}
+<div class="hero_area">
+    <!-- slider section -->
+    <section class="slider_section ">
+        <div class="container d-flex justify-content-center">
+            <section class="login_section">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-12 mx-auto">
+                            <div class="card p-4 shadow-lg">
+                                <h3 class="text-center mb-4">Login to ReviveIt</h3>
+                                <form action="/login" method="post">
+                                    <!-- Email Input Group -->
+                                    <div class="form-group">
+                                        <label for="email">Email Address</label>
+                                        <div class="input-group">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text"><i class="fa fa-user"></i></span>
+                                            </div>
+                                            <input type="email" class="form-control" id="email" name="email" placeholder="Enter your email" required>
+                                        </div>
+                                    </div>
+
+                                    <!-- Password Input Group -->
+                                    <div class="form-group">
+                                        <label for="password">Password</label>
+                                        <div class="input-group">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text"><i class="fa fa-lock"></i></span>
+                                            </div>
+                                            <input type="password" class="form-control" id="password" name="password" placeholder="Enter your password" required>
+                                        </div>
+                                    </div>
+
+                                    <button type="submit" class="btn btn-primary btn-block">Login</button>
+                                </form>
+
+                                <!-- Register and Forgot Password Links -->
+                                <div class="text-center mt-3">
+                                    <p>Don't have an account? <a href="~/register">Register</a></p>
+                                </div>
+                                <div class="text-center mt-3">
+                                    <a href="#" class="text-muted">Forgot your password?</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>     
+         </div>
+    </section>
+    <!-- end slider section -->
+</div>

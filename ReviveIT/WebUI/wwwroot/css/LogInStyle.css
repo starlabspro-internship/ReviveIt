@@ -1,0 +1,85 @@
+﻿
+/* Background for the login page */
+
+.login_section {
+    width: 100%;
+    max-width: 600px;
+    padding: 20px;
+}
+
+.card {
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+    padding: 40px;
+}
+
+    .card h3 {
+        color: #333;
+        font-weight: 600;
+    }
+
+.form-group label {
+    color: #555;
+    font-weight: 500;
+}
+
+.form-control {
+    border-radius: 30px;
+    padding: 10px 20px;
+    border: 1px solid #ccc;
+}
+
+.input-group-text {
+    background-color: transparent;
+    border: none;
+}
+
+.input-group {
+    border-radius: 30px;
+    overflow: hidden;
+    border: 1px solid #ccc;
+}
+
+.btn-primary {
+    background-color: #08135c;
+    border-color: #6a11cb;
+    border-radius: 30px;
+    padding: 12px;
+    transition: all 0.3s ease;
+}
+
+    .btn-primary:hover {
+        background-color: #2575fc;
+        border-color: #2575fc;
+    }
+
+.text-center a {
+    color: #6a11cb;
+    transition: color 0.3s;
+}
+
+    .text-center a:hover {
+        color: #2575fc;
+    }
+
+.text-muted {
+    color: #aaa !important;
+}
+
+/* For smaller screens, make the form more responsive */
+@media (max-width: 768px) {
+    .card {
+        padding: 30px;
+    }
+}
+
+@media (max-width: 576px) {
+    .card {
+        padding: 20px;
+    }
+
+    .btn-primary {
+        padding: 10px;
+    }
+}

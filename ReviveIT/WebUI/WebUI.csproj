@@ -7,6 +7,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="wwwroot\css\css\**" />
+    <Content Remove="wwwroot\css\css\**" />
+    <EmbeddedResource Remove="wwwroot\css\css\**" />
+    <None Remove="wwwroot\css\css\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\Application\Application.csproj" />
   </ItemGroup>
 

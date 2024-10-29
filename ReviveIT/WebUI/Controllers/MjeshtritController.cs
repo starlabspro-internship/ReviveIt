@@ -1,20 +1,16 @@
+﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 using WebUI.Models;
 
 namespace WebUI.Controllers
 {
-    public class HomeController : Controller
+    public class MjeshtritController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
-
-        public HomeController(ILogger<HomeController> logger)
+        // GET: MjeshtritController
+        public IActionResult Mjeshtrit()
         {
-            _logger = logger;
-        }
-
-        public IActionResult Index()
-        {
+            ViewBag.IsMjeshtritPage = true;
             return View();
         }
 
