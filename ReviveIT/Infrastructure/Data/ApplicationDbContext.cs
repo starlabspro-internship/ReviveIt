@@ -54,5 +54,7 @@ namespace Infrastructure.Data
                       .HasForeignKey(e => e.UserID);*/
             });
         }
+
+        public DbSet<Service> Services { get; set; }
     }
 }
