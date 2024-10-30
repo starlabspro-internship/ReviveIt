@@ -1,0 +1,48 @@
+﻿using Domain.Entities;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Domain.Configurations
+{
+    public class SubscriptionsConfiguration : IEntityTypeConfiguration<Subscriptions>
+    {
+        public void Configure(EntityTypeBuilder<Subscriptions> builder)
+        {
+
+            builder.HasKey(e => e.SubscriptionId);
+
+            builder.Property(e => e.PlanType)
+                  .IsRequired()
+                  .HasMaxLength(50);
+
+            builder.Property(e => e.Status)
+                  .IsRequired()
+                  .HasMaxLength(50);
+
+            builder.Property(e => e.StartDate)
+                  .IsRequired();
+
+            builder.Property(e => e.EndDate)
+                  .IsRequired();
+
+            builder.Property(e => e.CreatedAt)
+                    .HasDefaultValueSql("GETDATE()")
+                    .ValueGeneratedOnAdd();
+
+            builder.Property(e => e.UpdatedAt)
+                  .HasDefaultValueSql("GETDATE()")
+                  .ValueGeneratedOnAddOrUpdate();
+
+            // Foreign Key Configuration
+            //entity.HasOne<User>()
+            //   .WithMany() // Adjust if there’s a collection in User
+            //   .HasForeignKey(e => e.UserId)
+            //   .OnDelete(DeleteBehavior.Cascade); // Optional: configure delete behavior
+        }
+    }
+}

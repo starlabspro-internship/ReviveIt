@@ -16,45 +16,7 @@ namespace Infrastructure.Data
         }
         public DbSet<Jobs> Jobs { get; set; }
         public DbSet<JobApplication> JobApplications { get; set; }
-
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
-            base.OnModelCreating(modelBuilder);
-
-            modelBuilder.Entity<Jobs>(entity =>
-            {
-                entity.HasKey(e => e.JobID);
-                entity.Property(e => e.Title).IsRequired().HasMaxLength(100);
-                entity.Property(e => e.Description).IsRequired().HasMaxLength(1000);
-                entity.Property(e => e.Category).IsRequired().HasMaxLength(50);
-                entity.Property(e => e.Status).IsRequired().HasMaxLength(20);
-                entity.Property(e => e.CreatedAt).HasDefaultValueSql("GETDATE()");
-                entity.Property(e => e.UpdatedAt).HasDefaultValueSql("GETDATE()");
-
-                /*entity.HasOne(e => e.User)
-                      .WithMany(u => u.Jobs)
-                      .HasForeignKey(e => e.UserID);*/
-            
-              
-
-
-                });
-            modelBuilder.Entity<JobApplication>(entity =>
-            {
-                entity.HasKey(e => e.ApplicationID);
-                entity.Property(e => e.ApplicationDate).IsRequired();
-                entity.Property(e => e.Status).IsRequired().HasMaxLength(20);
-
-                entity.HasOne(e => e.Job)
-                      .WithMany(j => j.JobApplications)
-                      .HasForeignKey(e => e.JobID);
-
-                /*entity.HasOne(e => e.User)
-                      .WithMany(u => u.JobApplications)
-                      .HasForeignKey(e => e.UserID);*/
-            });
-        }
-
         public DbSet<Service> Services { get; set; }
+        public DbSet<Subscriptions> Subscriptions { get; set; }
     }
 }
