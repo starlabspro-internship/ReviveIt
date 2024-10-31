@@ -20,7 +20,8 @@ namespace Infrastructure.Data
         public DbSet<JobApplication> JobApplications { get; set; }
         public DbSet<Service> Services { get; set; }
         public DbSet<Subscriptions> Subscriptions { get; set; }
-
+        public DbSet<Messages> Messages { get; set; }
+        
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
@@ -29,6 +30,7 @@ namespace Infrastructure.Data
             builder.ApplyConfiguration(new JobsApplicationsConfigurations());
             builder.ApplyConfiguration(new ServicesConfigurations());
             builder.ApplyConfiguration(new SubscriptionsConfiguration());
+            builder.ApplyConfiguration(new MessagesConfigurations());
         }
 
     }
