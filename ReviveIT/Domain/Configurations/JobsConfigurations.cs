@@ -22,9 +22,10 @@ namespace Domain.Configurations
             builder.Property(e => e.CreatedAt).HasDefaultValueSql("GETDATE()");
             builder.Property(e => e.UpdatedAt).HasDefaultValueSql("GETDATE()");
 
-            /*entity.HasOne(e => e.User)
-            .WithMany(u => u.Jobs)
-            .HasForeignKey(e => e.UserID);*/
+            builder.HasOne(e => e.User)
+            .WithMany()
+            .HasForeignKey(e => e.UserId)
+            .OnDelete(DeleteBehavior.NoAction);
         }
     }
 }

@@ -21,6 +21,11 @@ namespace Domain.Configurations
             builder.Property(e => e.Price).IsRequired();
             builder.Property(e => e.CreatedAt).HasDefaultValueSql("GETDATE()");
             builder.Property(e => e.UpdatedAt).HasDefaultValueSql("GETDATE()");
+
+            builder.HasOne(c => c.User)
+                .WithMany()
+                .HasForeignKey(c => c.UserId)
+                .OnDelete(DeleteBehavior.NoAction);
         }
     }
 }

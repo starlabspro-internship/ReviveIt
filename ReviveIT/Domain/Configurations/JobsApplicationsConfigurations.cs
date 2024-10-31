@@ -21,12 +21,14 @@ namespace Domain.Configurations
 
             builder.HasOne(e => e.Job)
                   .WithMany(j => j.JobApplications)
-                  .HasForeignKey(e => e.JobID);
+                  .HasForeignKey(e => e.JobID)
+                  .OnDelete(DeleteBehavior.NoAction);
 
-            /*entity.HasOne(e => e.User)
-                  .WithMany(u => u.JobApplications)
-                  .HasForeignKey(e => e.UserID);*/
-            
+            builder.HasOne(e => e.User)
+                  .WithMany()
+                  .HasForeignKey(e => e.UserId)
+                  .OnDelete(DeleteBehavior.NoAction);
+
         }
     }
 }
