@@ -9,13 +9,12 @@ namespace Domain.Entities
 {
     public class Service
     {
-        [Key]
         public int ServiceID { get; set; }
-        [StringLength(50)]
+        
         public string ServiceName { get; set; }
-        [StringLength(50)]
+       
         public string Category { get; set; }
-        [StringLength(2000)]
+       
         public string Description { get; set; }
         
         public double Price { get; set; }
@@ -23,9 +22,7 @@ namespace Domain.Entities
         public DateTime CreatedAt { get; set; }
         
         public DateTime UpdatedAt { get; set; }
-        
-        //Kur krijohet User Tabel
-        //public int USerId { get; set; }
-        //public User User { get; set; }
+        public string UserId { get; set; }
+        public Users User { get; set; }
     }
 }

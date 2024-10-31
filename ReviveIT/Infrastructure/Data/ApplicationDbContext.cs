@@ -5,10 +5,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Domain.Entities;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Domain.Configurations;
 
 namespace Infrastructure.Data
 {
-    public class ApplicationDbContext : DbContext
+    public class ApplicationDbContext : IdentityDbContext<Users>
     {
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
         {
@@ -18,5 +20,16 @@ namespace Infrastructure.Data
         public DbSet<JobApplication> JobApplications { get; set; }
         public DbSet<Service> Services { get; set; }
         public DbSet<Subscriptions> Subscriptions { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder builder)
+        {
+            base.OnModelCreating(builder);
+            builder.ApplyConfiguration(new UsersConfigurations());
+            builder.ApplyConfiguration(new JobsConfigurations());
+            builder.ApplyConfiguration(new JobsApplicationsConfigurations());
+            builder.ApplyConfiguration(new ServicesConfigurations());
+            builder.ApplyConfiguration(new SubscriptionsConfiguration());
+        }
+
     }
 }

@@ -38,11 +38,10 @@ namespace Domain.Configurations
                   .HasDefaultValueSql("GETDATE()")
                   .ValueGeneratedOnAddOrUpdate();
 
-            // Foreign Key Configuration
-            //entity.HasOne<User>()
-            //   .WithMany() // Adjust if there’s a collection in User
-            //   .HasForeignKey(e => e.UserId)
-            //   .OnDelete(DeleteBehavior.Cascade); // Optional: configure delete behavior
+            builder.HasOne(e => e.User)
+                .WithMany()
+                .HasForeignKey(e => e.UserId)
+                .OnDelete(DeleteBehavior.NoAction);
         }
     }
 }
