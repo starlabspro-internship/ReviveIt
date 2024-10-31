@@ -5,6 +5,7 @@ using Domain.Entities;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Configuration;
 
 namespace Infrastructure.Data
 {
@@ -23,26 +24,6 @@ namespace Infrastructure.Data
                 {
                     await roleManager.CreateAsync(new IdentityRole(roleName));
                 }
-            }
-
-            // Create an admin user
-            var adminUser = new Users
-            {
-                UserName = "admin",
-                Email = "admin@example.com",
-                Role = "Admin",
-                CreatedAt = DateTime.UtcNow,
-                UpdatedAt = DateTime.UtcNow
-            };
-
-            var result = await userManager.CreateAsync(adminUser, "AdminPassword123!");
-            if (result.Succeeded)
-            {
-                await userManager.AddToRoleAsync(adminUser, "Admin");
-            }
-            else
-            {
-                Console.WriteLine("Admin User Already Added, Skipping");
             }
         }
     }
