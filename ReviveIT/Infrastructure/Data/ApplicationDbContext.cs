@@ -21,7 +21,8 @@ namespace Infrastructure.Data
         public DbSet<Service> Services { get; set; }
         public DbSet<Subscriptions> Subscriptions { get; set; }
         public DbSet<Messages> Messages { get; set; }
-        
+
+        public DbSet<Reviews> Reviews { get; set; } // Nathan
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
@@ -31,6 +32,7 @@ namespace Infrastructure.Data
             builder.ApplyConfiguration(new ServicesConfigurations());
             builder.ApplyConfiguration(new SubscriptionsConfiguration());
             builder.ApplyConfiguration(new MessagesConfigurations());
+            builder.ApplyConfiguration(new ReviewsConfiguration()); // Nathan
         }
 
     }
