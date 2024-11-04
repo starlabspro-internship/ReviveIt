@@ -1,11 +1,6 @@
 ﻿using Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Domain.Configurations
 {
@@ -13,7 +8,6 @@ namespace Domain.Configurations
     {
         public void Configure(EntityTypeBuilder<Subscriptions> builder)
         {
-
             builder.HasKey(e => e.SubscriptionId);
 
             builder.Property(e => e.PlanType)
@@ -25,7 +19,7 @@ namespace Domain.Configurations
                   .HasMaxLength(50);
 
             builder.Property(e => e.StartDate)
-                  .IsRequired();
+                   .IsRequired();
 
             builder.Property(e => e.EndDate)
                   .IsRequired();

@@ -2,11 +2,12 @@
 using System.Net;
 
 namespace WebUI.MiddleWares
-    {
-        public class ExceptionMiddleware
+{
+    public class ExceptionMiddleware
     {
         private readonly RequestDelegate _next;
         private readonly ILogger<ExceptionMiddleware> _logger;
+
         public ExceptionMiddleware(RequestDelegate next, ILogger<ExceptionMiddleware> logger)
         {
             _next = next;
@@ -28,50 +29,40 @@ namespace WebUI.MiddleWares
 
         private async Task HandleException(HttpContext context, Exception exception)
         {
-            if (exception is ValidationException validationException)
-            {
-                context.Response.StatusCode = (int)HttpStatusCode.BadRequest;
-                context.Response.ContentType = "application/json";
-                await context.Response.WriteAsJsonAsync(new { validationException.Message, validationException.Failures });
-                return;
-            }
-            if (exception is NotFoundException notFoundException)
-            {
-                context.Response.StatusCode = (int)HttpStatusCode.NotFound;
-                context.Response.ContentType = "application/json";
-                await context.Response.WriteAsJsonAsync(new { notFoundException.Message });
-                return;
-            }
-            if (exception is BadRequestException badRequestException)
-            {
-                context.Response.StatusCode = (int)HttpStatusCode.BadRequest;
-                context.Response.ContentType = "application/json";
-                await context.Response.WriteAsJsonAsync(new { badRequestException.Message });
+            context.Response.ContentType = "application/json";
 
-                return;
-            }
-            if (exception is UnauthorizedException unauthorizedException)
+            switch (exception)
             {
-                context.Response.StatusCode = (int)HttpStatusCode.Unauthorized;
-                context.Response.ContentType = "application/json";
-                await context.Response.WriteAsJsonAsync($"{unauthorizedException.Message}");
-                return;
-            }
-            if (exception is ForbiddenException forbiddenException)
-            {
-                context.Response.StatusCode = (int)HttpStatusCode.Forbidden;
-                context.Response.ContentType = "application/json";
-                await context.Response.WriteAsJsonAsync($"{forbiddenException.Message}");
-                return;
-            }
-            else
-            {
-                context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
-                context.Response.ContentType = "application/json";
-                await context.Response.WriteAsJsonAsync(new { exception.Message });
+                case ValidationException validationException:
+                    context.Response.StatusCode = (int)HttpStatusCode.BadRequest;
+                    await context.Response.WriteAsJsonAsync(new { validationException.Message, validationException.Failures });
+                    break;
 
+                case NotFoundException notFoundException:
+                    context.Response.StatusCode = (int)HttpStatusCode.NotFound;
+                    await context.Response.WriteAsJsonAsync(new { notFoundException.Message });
+                    break;
+
+                case BadRequestException badRequestException:
+                    context.Response.StatusCode = (int)HttpStatusCode.BadRequest;
+                    await context.Response.WriteAsJsonAsync(new { badRequestException.Message });
+                    break;
+
+                case UnauthorizedException unauthorizedException:
+                    context.Response.StatusCode = (int)HttpStatusCode.Unauthorized;
+                    await context.Response.WriteAsJsonAsync(new { unauthorizedException.Message });
+                    break;
+
+                case ForbiddenException forbiddenException:
+                    context.Response.StatusCode = (int)HttpStatusCode.Forbidden;
+                    await context.Response.WriteAsJsonAsync(new { forbiddenException.Message });
+                    break;
+
+                default:
+                    context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
+                    await context.Response.WriteAsJsonAsync(new { exception.Message });
+                    break;
             }
         }
-
     }
 }

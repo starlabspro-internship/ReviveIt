@@ -1,12 +1,8 @@
-﻿using System;
-using System.ComponentModel.DataAnnotations;
-
-namespace Domain.Entities
+﻿namespace Domain.Entities
 {
     public class Subscriptions
     {
-      
-        public int SubscriptionId { get; set; } // Primary key
+        public int SubscriptionId { get; set; }
         public string PlanType { get; set; }
         public string Status { get; set; }
         public DateTime StartDate { get; set; }
