@@ -1,11 +1,8 @@
-﻿using System;
-using System.ComponentModel.DataAnnotations;
-
-namespace Domain.Entities
+﻿namespace Domain.Entities
 {
     public class Reviews
     {
-        public int ReviewID { get; set; } // Primary key
+        public int ReviewID { get; set; }
         public string Content { get; set; }
         public int Rating { get; set; }
         public DateTime CreatedAt { get; set; }
@@ -17,5 +14,4 @@ namespace Domain.Entities
         public int ServiceID { get; set; }
         public Service Service { get; set; }
     }
-    // Nathan
 }

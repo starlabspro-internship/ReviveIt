@@ -1,12 +1,6 @@
 ﻿using Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection.Emit;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Domain.Configurations
 {
@@ -15,11 +9,17 @@ namespace Domain.Configurations
         public void Configure(EntityTypeBuilder<Service> builder)
         {
             builder.HasKey(c => c.ServiceID);
+
             builder.Property(e => e.ServiceName).IsRequired();
+
             builder.Property(e => e.Category).IsRequired();
+
             builder.Property(e => e.Description).IsRequired();
+
             builder.Property(e => e.Price).IsRequired();
+
             builder.Property(e => e.CreatedAt).HasDefaultValueSql("GETDATE()");
+
             builder.Property(e => e.UpdatedAt).HasDefaultValueSql("GETDATE()");
 
             builder.HasOne(c => c.User)

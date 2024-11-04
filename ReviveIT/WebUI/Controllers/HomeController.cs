@@ -1,6 +1,6 @@
-using Microsoft.AspNetCore.Mvc;
-using System.Diagnostics;
 using WebUI.Models;
+using System.Diagnostics;
+using Microsoft.AspNetCore.Mvc;
 
 namespace WebUI.Controllers
 {
