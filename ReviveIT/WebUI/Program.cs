@@ -34,7 +34,6 @@ builder.Services.AddAuthorization(options =>
     options.AddPolicy("RequireAuthenticatedUser", policy => policy.RequireAuthenticatedUser());
 });
 
-
 builder.Services.AddScoped<TokenHelper>();
 builder.Services.AddScoped<LoginFeature>();
 
