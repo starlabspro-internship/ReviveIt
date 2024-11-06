@@ -1,14 +1,16 @@
 using Application.Features.Accounts;
 using Application.Helpers;
+using Application.Interfaces;
+using Domain.Constants;
 using Domain.Entities;
 using Infrastructure.Data;
+using Infrastructure.Repositories;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using WebUI.MiddleWares;
-using Domain.Constants;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -56,6 +58,16 @@ builder.Services.AddAuthentication(options =>
         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration[ConfigurationConstant.Key]))
     };
 });
+
+builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
+builder.Services.AddScoped<IJobsRepository, JobsRepository>();
+builder.Services.AddScoped<IJobApplicationsRepository, JobApplicationsRepository>();
+builder.Services.AddScoped<IServicesRepository, ServicesRepository>();
+builder.Services.AddScoped<ISubscriptionsRepository, SubscriptionsRepository>();
+builder.Services.AddScoped<IUsersRepository, UsersRepository>();
+builder.Services.AddScoped<IMessagesRepository, MessagesRepository>();
+builder.Services.AddScoped<IReviewsRepository, ReviewsRepository>();
+
 
 var app = builder.Build();
 
