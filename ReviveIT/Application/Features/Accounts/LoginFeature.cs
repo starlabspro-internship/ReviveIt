@@ -21,10 +21,10 @@ namespace Application.Features.Accounts
         public async Task<string> AuthenticateUser(LoginRequestDto loginDto)
         {
             var user = await _userManager.FindByEmailAsync(loginDto.Email);
-            if (user == null) return "Please provide your email.";
+            if (user == null) return "Your Email or Password may be incorrect.";
 
             var result = await _signInManager.CheckPasswordSignInAsync(user, loginDto.Password, false);
-            if (!result.Succeeded) return "Your Password is invalid.";
+            if (!result.Succeeded) return "Your Email or Password may be incorrect.";
 
             return _tokenHelper.GenerateToken(user);
         }
