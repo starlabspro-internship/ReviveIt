@@ -14,5 +14,8 @@
         public Users User { get; set; }
 
         public ICollection<JobApplication> JobApplications { get; set; }
+        public Company Company { get; set; }
+
+        public Guid CompanyId { get; set; }
     }
 }

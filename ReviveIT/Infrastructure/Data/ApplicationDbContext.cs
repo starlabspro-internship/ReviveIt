@@ -15,6 +15,8 @@ namespace Infrastructure.Data
         public DbSet<Subscriptions> Subscriptions { get; set; }
         public DbSet<Messages> Messages { get; set; }
         public DbSet<Reviews> Reviews { get; set; }
+        public DbSet<Company> Companies { get; set; }
+
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
@@ -32,6 +34,8 @@ namespace Infrastructure.Data
             builder.ApplyConfiguration(new MessagesConfigurations());
 
             builder.ApplyConfiguration(new ReviewsConfiguration());
+            builder.ApplyConfiguration(new CompanyConfiguration());
+
         }
 
     }

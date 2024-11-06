@@ -26,6 +26,10 @@ namespace Domain.Configurations
             .WithMany()
             .HasForeignKey(e => e.UserId)
             .OnDelete(DeleteBehavior.NoAction);
+            builder.HasOne(e => e.Company)
+           .WithMany()
+           .HasForeignKey(e => e.CompanyId)
+           .OnDelete(DeleteBehavior.NoAction);
         }
     }
 }
