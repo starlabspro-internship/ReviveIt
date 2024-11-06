@@ -24,7 +24,7 @@ namespace Application.Features.Accounts
             if (user == null) return "Please provide your email.";
 
             var result = await _signInManager.CheckPasswordSignInAsync(user, loginDto.Password, false);
-            if (!result.Succeeded) return null;
+            if (!result.Succeeded) return "Your Password is invalid.";
 
             return _tokenHelper.GenerateToken(user);
         }
