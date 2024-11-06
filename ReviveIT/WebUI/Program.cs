@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using WebUI.MiddleWares;
+using Domain.Constants;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -37,7 +38,6 @@ builder.Services.AddAuthorization(options =>
 builder.Services.AddScoped<TokenHelper>();
 builder.Services.AddScoped<LoginFeature>();
 
-var jwtSettings = builder.Configuration.GetSection("Jwt");
 builder.Services.AddAuthentication(options =>
 {
     options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -51,9 +51,9 @@ builder.Services.AddAuthentication(options =>
         ValidateAudience = true,
         ValidateLifetime = true,
         ValidateIssuerSigningKey = true,
-        ValidIssuer = jwtSettings["Issuer"],
-        ValidAudience = jwtSettings["Audience"],
-        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSettings["Key"]))
+        ValidIssuer = builder.Configuration[ConfigurationConstant.Issuer],
+        ValidAudience = builder.Configuration[ConfigurationConstant.Audience],
+        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration[ConfigurationConstant.Key]))
     };
 });
 
@@ -86,7 +86,7 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
-app.UseAuthentication(); 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.UseCors("AllowAll");
