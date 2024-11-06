@@ -3,6 +3,9 @@ using Infrastructure.Data;
 using Microsoft.AspNetCore.Identity;
 using Domain.Entities;
 using WebUI.MiddleWares;
+using Application.Interfaces;
+using Infrastructure.Repositories;
+using Microsoft.Data.SqlClient;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -14,6 +17,16 @@ builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlSer
 builder.Services.AddIdentity<Users, IdentityRole>()
     .AddEntityFrameworkStores<ApplicationDbContext>()
     .AddDefaultTokenProviders();
+
+builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
+builder.Services.AddScoped<IJobsRepository, JobsRepository>();
+builder.Services.AddScoped<IJobApplicationsRepository, JobApplicationsRepository>();
+builder.Services.AddScoped<IServicesRepository, ServicesRepository>();
+builder.Services.AddScoped<ISubscriptionsRepository, SubscriptionsRepository>();
+builder.Services.AddScoped<IUsersRepository, UsersRepository>();
+builder.Services.AddScoped<IMessagesRepository, MessagesRepository>();
+builder.Services.AddScoped<IReviewsRepository, ReviewsRepository>();
+
 
 var app = builder.Build();
 
