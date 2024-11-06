@@ -13,20 +13,31 @@ namespace WebUI.MiddleWares
             _next = next;
             _logger = logger;
         }
-
         public async Task Invoke(HttpContext context)
         {
             try
             {
+                var url = context.Request.Query["url"].ToString() ?? context.Request.Body.ToString();
+
+                if (!string.IsNullOrEmpty(url) && UrlGuard.IsUnsafeUrl(url))
+                {
+                    context.Response.StatusCode = (int)HttpStatusCode.BadRequest;
+                    await context.Response.WriteAsJsonAsync(new { Message = "Unsafe URL detected" });
+                    return; 
+                }
                 await _next(context);
             }
             catch (Exception exception)
             {
-                _logger.LogError(exception.Message, exception.StackTrace, exception.InnerException, exception.InnerException?.Message);
+                _logger.LogError(
+                    exception.Message,      
+                    exception.StackTrace,    
+                    exception.InnerException, 
+                    exception.InnerException?.Message 
+                );
                 await HandleException(context, exception);
             }
         }
-
         private async Task HandleException(HttpContext context, Exception exception)
         {
             context.Response.ContentType = "application/json";
@@ -44,22 +55,27 @@ namespace WebUI.MiddleWares
                     break;
 
                 case BadRequestException badRequestException:
-                    context.Response.StatusCode = (int)HttpStatusCode.BadRequest;
+                    context.Response.StatusCode = (int)HttpStatusCode.BadRequest; 
                     await context.Response.WriteAsJsonAsync(new { badRequestException.Message });
                     break;
 
                 case UnauthorizedException unauthorizedException:
-                    context.Response.StatusCode = (int)HttpStatusCode.Unauthorized;
+                    context.Response.StatusCode = (int)HttpStatusCode.Unauthorized; 
                     await context.Response.WriteAsJsonAsync(new { unauthorizedException.Message });
                     break;
 
                 case ForbiddenException forbiddenException:
-                    context.Response.StatusCode = (int)HttpStatusCode.Forbidden;
+                    context.Response.StatusCode = (int)HttpStatusCode.Forbidden; 
                     await context.Response.WriteAsJsonAsync(new { forbiddenException.Message });
                     break;
 
+                case UrlGuard.UnsafeUrlException unsafeUrlException:
+                    context.Response.StatusCode = (int)HttpStatusCode.BadRequest;
+                    await context.Response.WriteAsJsonAsync(new { unsafeUrlException.Message });
+                    break;
+
                 default:
-                    context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
+                    context.Response.StatusCode = (int)HttpStatusCode.InternalServerError; 
                     await context.Response.WriteAsJsonAsync(new { exception.Message });
                     break;
             }
