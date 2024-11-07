@@ -1,0 +1,119 @@
+﻿
+@{
+    ViewData["Title"] = "Admin Dashboard";
+}
+<style>
+    .nav-link{
+        font-size:larger;
+        color: white !important;
+    }
+    .nav-link:hover {
+        color: deepskyblue !important; 
+    }
+</style>
+<!-- Admin Dashboard Section -->
+<section class="dashboard_section py-3 align-center">
+    <div class="container-fluid">
+        <div class="row">
+            <!-- Sidebar Section -->
+            <nav class="col-md-3 col-lg-2 d-md-block sidebar">
+     
+                <ul class="nav flex-column">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="">Dashboard</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="">Users</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="">Manage Jobs</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="">Settings</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="">Logout</a>
+                    </li>
+                </ul>
+            </nav>
+
+            <!-- Main Content Section -->
+            <main class="col-md-9 ml-sm-auto col-lg-10 px-4 py-5">
+                <div class="container-fluid">
+                    <!-- Dashboard Heading -->
+                    <div class="row mb-4">
+                        <div class="col-12">
+                            <h1 class="h2 text-white">Dashboard Overview</h1>
+                        </div>
+                    </div>
+
+                    <!-- Dashboard Stats Section -->
+                    <div class="row mb-4">
+                        <!-- Users Stat Box -->
+                        <div class="col-md-4">
+                            <div class="card text-white bg-primary mb-3">
+                                <div class="card-body">
+                                    <h5 class="card-title">Users</h5>
+                                    <p class="card-text">125 active users</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Jobs Stat Box -->
+                        <div class="col-md-4">
+                            <div class="card text-white bg-success mb-3">
+                                <div class="card-body">
+                                    <h5 class="card-title">Jobs Posted</h5>
+                                    <p class="card-text">45 new jobs this week</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Messages Stat Box -->
+                        <div class="col-md-4">
+                            <div class="card text-white bg-warning mb-3">
+                                <div class="card-body">
+                                    <h5 class="card-title">Messages</h5>
+                                    <p class="card-text">32 unread messages</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Recent Activities Section -->
+                    <div class="row mb-4">
+                        <div class="col-12">
+                            <h2 class="text-white">Recent Activities</h2>
+                            <ul class="list-group">
+                                <li class="list-group-item">
+                                    <strong>John Doe</strong> posted a new job: <a href="job-detail.html">Job1</a>
+                                </li>
+                                <li class="list-group-item">
+                                    <strong>Jane Smith</strong> applied for a job: <a href="job-detail.html">Job2</a>
+                                </li>
+                                <li class="list-group-item">
+                                    <strong>Mark Johnson</strong> messaged you: <a href="messages.html">Job3</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- System Health Section -->
+                    <div class="row text-white ">
+                        <div class="col-12">
+                            <h2 >System Health</h2>
+                          
+                                
+                                    <p><strong>System Status:</strong> All systems are operational</p>
+                                    <p><strong>Database Status:</strong> Healthy</p>
+                                    <p><strong>Last Backup:</strong> 2 hours ago</p>
+                        
+                         
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+</section>
+
