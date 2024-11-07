@@ -51,7 +51,7 @@ namespace WebUI.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("JobApplications");
+                    b.ToTable("JobApplications", (string)null);
                 });
 
             modelBuilder.Entity("Domain.Entities.Jobs", b =>
@@ -100,7 +100,7 @@ namespace WebUI.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Jobs");
+                    b.ToTable("Jobs", (string)null);
                 });
 
             modelBuilder.Entity("Domain.Entities.Messages", b =>
@@ -135,7 +135,7 @@ namespace WebUI.Migrations
 
                     b.HasIndex("SenderID");
 
-                    b.ToTable("Messages");
+                    b.ToTable("Messages", (string)null);
                 });
 
             modelBuilder.Entity("Domain.Entities.Reviews", b =>
@@ -177,7 +177,7 @@ namespace WebUI.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Reviews");
+                    b.ToTable("Reviews", (string)null);
                 });
 
             modelBuilder.Entity("Domain.Entities.Service", b =>
@@ -221,7 +221,7 @@ namespace WebUI.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Services");
+                    b.ToTable("Services", (string)null);
                 });
 
             modelBuilder.Entity("Domain.Entities.Subscriptions", b =>
@@ -266,7 +266,7 @@ namespace WebUI.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Subscriptions");
+                    b.ToTable("Subscriptions", (string)null);
                 });
 
             modelBuilder.Entity("Domain.Entities.Users", b =>

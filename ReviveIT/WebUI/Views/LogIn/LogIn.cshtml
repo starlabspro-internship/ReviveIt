@@ -1,9 +1,9 @@
 ﻿@{
-    ViewData["Title"] = "Sign Up Page";
+    ViewData["Title"] = "Login Page";
 }
 <div class="hero_area">
     <!-- slider section -->
-    <section class="slider_section ">
+    <section class="slider_section">
         <div class="container d-flex justify-content-center">
             <section class="login_section">
                 <div class="container">
@@ -11,7 +11,8 @@
                         <div class="col-lg-12 mx-auto">
                             <div class="card p-4 shadow-lg">
                                 <h3 class="text-center mb-4">Login to ReviveIt</h3>
-                                <form action="/login" method="post">
+                                <!-- Update the form to use onsubmit event -->
+                                <form onsubmit="submitLogin(event)">
                                     <!-- Email Input Group -->
                                     <div class="form-group">
                                         <label for="email">Email Address</label>
@@ -48,8 +49,41 @@
                         </div>
                     </div>
                 </div>
-            </section>     
-         </div>
+            </section>
+        </div>
     </section>
     <!-- end slider section -->
 </div>
+
+<!-- Add the JavaScript here for form submission -->
+<script>
+    function submitLogin(event) {
+        event.preventDefault();  // Prevents the default form submission
+
+        const email = document.getElementById("email").value;
+        const password = document.getElementById("password").value;
+
+        fetch('/api/accounts/login', {  // Adjust this URL if needed
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ email, password })
+        })
+        .then(response => {
+            if (!response.ok) {
+                alert("Login failed. Please check your credentials.");
+                return null;
+            }
+            return response.json();
+        })
+        .then(data => {
+            if (data && data.Token) {
+                localStorage.setItem("jwtToken", data.Token);
+                alert("Login successful!");
+                // Redirect or update UI after successful login
+            }
+        })
+        .catch(error => console.error("Error during login:", error));
+    }
+</script>
