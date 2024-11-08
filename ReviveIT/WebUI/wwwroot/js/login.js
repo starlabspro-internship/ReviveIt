@@ -15,11 +15,11 @@
             success: function (response) {
                 localStorage.setItem("jwtToken", response.token);
                 alert("Login successful!");
-
                 window.location.href = "/home";
             },
-            error: function () {
-                alert("Invalid login credentials. Please try again.");
+            error: function (xhr) {
+                var errorMessage = xhr.responseJSON?.message || "An unexpected error occurred. Please try again later.";
+                alert(errorMessage); 
             }
         });
     });

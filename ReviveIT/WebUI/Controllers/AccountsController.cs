@@ -20,11 +20,11 @@ public class AccountsController : ControllerBase
     [HttpPost("login")]
     public async Task<IActionResult> Login([FromBody] LoginRequestDto loginDto)
     {
-        var token = await _loginFeature.AuthenticateUser(loginDto);
-        if (token == null)
-            return Unauthorized(new { Message = "Your Email or Password may be incorrect." });
+        var result = await _loginFeature.AuthenticateUser(loginDto);
+        if (!result.IsSuccess)
+            return Unauthorized(new { Message = result.ErrorMessage });
 
-        return Ok(new { Token = token });
+        return Ok(new { Token = result.Token });
     }
 
     [HttpPost("register")]
