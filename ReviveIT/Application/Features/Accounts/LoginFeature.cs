@@ -1,5 +1,4 @@
-﻿using Application.Common.Exceptions;
-using Application.DTO;
+﻿using Application.DTO;
 using Application.Helpers;
 using Domain.Entities;
 using Microsoft.AspNetCore.Identity;
@@ -19,20 +18,21 @@ namespace Application.Features.Accounts
             _tokenHelper = tokenHelper;
         }
 
-        public async Task<string?> AuthenticateUser(LoginRequestDto loginDto)
+        public async Task<LoginResultDTO> AuthenticateUser(LoginRequestDto loginDto)
         {
             var user = await _userManager.FindByEmailAsync(loginDto.Email);
             if (user == null)
-                throw new NotFoundException();
+                return LoginResultDTO.Failure("User not found.");
 
-            if (user.EmailConfirmed == false)
-                throw new UnauthorizedException("Email not verified.");
+            if (!user.EmailConfirmed)
+                return LoginResultDTO.Failure("Email not verified.");
 
             var result = await _signInManager.CheckPasswordSignInAsync(user, loginDto.Password, false);
             if (!result.Succeeded)
-                throw new UnauthorizedException("Password incorrect.");
-            
-            return _tokenHelper.GenerateToken(user);
+                return LoginResultDTO.Failure("Password incorrect.");
+
+            var token = _tokenHelper.GenerateToken(user);
+            return LoginResultDTO.Success(token);
         }
     }
 }
