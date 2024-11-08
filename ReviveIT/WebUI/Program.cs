@@ -39,6 +39,8 @@ builder.Services.AddAuthorization(options =>
 
 builder.Services.AddScoped<TokenHelper>();
 builder.Services.AddScoped<LoginFeature>();
+builder.Services.AddScoped<RegisterFeature>();
+
 
 builder.Services.AddAuthentication(options =>
 {
