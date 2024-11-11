@@ -11,7 +11,8 @@ namespace Application.DTO
         public string ConfirmPassword { get; set; }
 
         [Required]
-        public string Role { get; set; }
+        [EnumDataType(typeof(UserRole))]
+        public UserRole Role { get; set; }
         public string? Name { get; set; }
         public string? Expertise { get; set; }
         public int? Experience { get; set; }

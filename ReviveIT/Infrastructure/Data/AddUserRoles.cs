@@ -1,5 +1,4 @@
-﻿using Domain.Entities;
-using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Infrastructure.Data
@@ -11,7 +10,7 @@ namespace Infrastructure.Data
             var roleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
             var userManager = serviceProvider.GetRequiredService<UserManager<Users>>();
 
-            string[] roleNames = { "Admin", "Technician", "User" };
+            string[] roleNames = Enum.GetNames(typeof(UserRole));
 
             foreach (var roleName in roleNames)
             {

@@ -1,13 +1,19 @@
 ﻿document.addEventListener("DOMContentLoaded", function () {
     const registerForm = document.getElementById("registerForm");
 
+    const roleMapping = {
+        "Customer": 1,
+        "Technician": 2,
+        "Company": 3
+    };
+
     registerForm.addEventListener("submit", async function (event) {
         event.preventDefault();
 
         const email = document.getElementById("email").value.trim();
         const password = document.getElementById("password").value;
         const confirmPassword = document.getElementById("confirm_password").value;
-        const role = document.getElementById("role").value;
+        const role = roleMapping[document.getElementById("role").value];
         const name = document.getElementById("name").value.trim();
 
         const expertise = document.getElementById("expertise")?.value || null;
@@ -30,22 +36,22 @@
             return;
         }
 
-        if ((role === "User" || role === "Technician") && !name) {
+        if ((role === 1 || role === 2) && !name) {
             alert("Please enter your full name.");
             return;
         }
 
-        if (role === "Technician" && !expertise) {
+        if (role === 2 && !expertise) {
             alert("Please specify your expertise.");
             return;
         }
 
-        if (role === "Technician" && !experience) {
+        if (role === 2 && !experience) {
             alert("Please specify your years of experience.");
             return;
         }
 
-        if (role === "Company" && (!companyName || !companyAddress)) {
+        if (role === 3 && (!companyName || !companyAddress)) {
             alert("Company name and address are required for Company registration.");
             return;
         }
@@ -55,11 +61,11 @@
             password,
             confirmPassword,
             role,
-            name: (role === "User" || role === "Technician") ? name : null,
-            expertise: role === "Technician" ? expertise : null,
-            experience: role === "Technician" ? experience : null,
-            companyName: role === "Company" ? companyName : null,
-            companyAddress: role === "Company" ? companyAddress : null
+            name: (role === 1 || role === 2) ? name : null,
+            expertise: role === 2 ? expertise : null,
+            experience: role === 2 ? experience : null,
+            companyName: role === 3 ? companyName : null,
+            companyAddress: role === 3 ? companyAddress : null
         };
 
         try {

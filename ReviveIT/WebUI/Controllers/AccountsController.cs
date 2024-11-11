@@ -30,8 +30,6 @@ public class AccountsController : ControllerBase
     [HttpPost("register")]
     public async Task<IActionResult> Register([FromBody] RegisterDto registerDto)
     {
-        registerDto.Role = MapRole(registerDto.Role);
-
         if (!ModelState.IsValid)
         {
             var errors = ModelState.Values.SelectMany(v => v.Errors)
@@ -48,10 +46,5 @@ public class AccountsController : ControllerBase
         }
 
         return Ok(new { success = true, token = registerResult.Token, message = registerResult.Message });
-    }
-
-    private string MapRole(string role)
-    {
-        return role == "Company" ? "Technician" : role;
     }
 }

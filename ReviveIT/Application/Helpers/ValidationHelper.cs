@@ -18,6 +18,7 @@ namespace Application.Helpers
         {
             if (!IsValidEmailInput(dto.Email, out message)) return false;
             if (!IsValidPasswordInput(dto.Password, dto.ConfirmPassword, out message)) return false;
+            if (!ValidateRoleSpecificFields(dto, out message)) return false;
 
             message = string.Empty;
             return true;
@@ -47,6 +48,58 @@ namespace Application.Helpers
                 message = "Passwords do not match.";
                 return false;
             }
+            message = string.Empty;
+            return true;
+        }
+
+        private static bool ValidateRoleSpecificFields(RegisterDto dto, out string message)
+        {
+            switch (dto.Role)
+            {
+                case UserRole.Customer:
+                    if (string.IsNullOrWhiteSpace(dto.Name))
+                    {
+                        message = "Full name is required for Customer role.";
+                        return false;
+                    }
+                    break;
+
+                case UserRole.Technician:
+                    if (string.IsNullOrWhiteSpace(dto.Name))
+                    {
+                        message = "Full name is required for Technician role.";
+                        return false;
+                    }
+                    if (string.IsNullOrWhiteSpace(dto.Expertise))
+                    {
+                        message = "Expertise is required for Technician role.";
+                        return false;
+                    }
+                    if (dto.Experience == null)
+                    {
+                        message = "Experience is required for Technician role.";
+                        return false;
+                    }
+                    break;
+
+                case UserRole.Company:
+                    if (string.IsNullOrWhiteSpace(dto.CompanyName))
+                    {
+                        message = "Company name is required for Company role.";
+                        return false;
+                    }
+                    if (string.IsNullOrWhiteSpace(dto.CompanyAddress))
+                    {
+                        message = "Company address is required for Company role.";
+                        return false;
+                    }
+                    break;
+
+                default:
+                    message = "Invalid role selected.";
+                    return false;
+            }
+
             message = string.Empty;
             return true;
         }
