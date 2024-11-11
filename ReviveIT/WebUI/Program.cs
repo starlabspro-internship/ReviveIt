@@ -2,7 +2,6 @@ using Application.Features.Accounts;
 using Application.Helpers;
 using Application.Interfaces;
 using Domain.Constants;
-using Domain.Entities;
 using Infrastructure.Data;
 using Infrastructure.Repositories;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -39,6 +38,7 @@ builder.Services.AddAuthorization(options =>
 
 builder.Services.AddScoped<TokenHelper>();
 builder.Services.AddScoped<LoginFeature>();
+builder.Services.AddScoped<RegisterFeature>();
 
 builder.Services.AddAuthentication(options =>
 {
@@ -67,7 +67,6 @@ builder.Services.AddScoped<ISubscriptionsRepository, SubscriptionsRepository>();
 builder.Services.AddScoped<IUsersRepository, UsersRepository>();
 builder.Services.AddScoped<IMessagesRepository, MessagesRepository>();
 builder.Services.AddScoped<IReviewsRepository, ReviewsRepository>();
-
 
 var app = builder.Build();
 

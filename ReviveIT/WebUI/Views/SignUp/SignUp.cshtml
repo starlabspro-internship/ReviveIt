@@ -1,7 +1,7 @@
 ﻿@{
     ViewData["Title"] = "Sign Up Page";
 }
-<div class="hero_area">
+<div class="hero_area" style="height: auto;">
     <!-- slider section -->
     <section class="slider_section">
         <div class="container d-flex justify-content-center pb-5">
@@ -10,16 +10,28 @@
                     <div class="row">
                         <div class="col-lg-12 mx-auto">
                             <div class="card p-4 shadow-lg">
-                                <h3 class="text-center mb-4">Register at Hirevac</h3>
-                                <form action="/register" method="post">
-                                    <!-- Name Input Group -->
+                                <h3 class="text-center mb-4">Register at ReviveIt</h3>
+
+                                <form id="registerForm" action="/Accounts/Register" method="post">
+                                    <!-- Role Selection -->
                                     <div class="form-group">
+                                        <label for="role">Register As</label>
+                                        <select id="role" name="role" class="form-control" onchange="toggleRoleFields()" required>
+                                            <option value="">Select a role</option>
+                                            <option value="Customer">Customer</option>
+                                            <option value="Technician">Technician</option>
+                                            <option value="Company">Company</option>
+                                        </select>
+                                    </div>
+
+                                    <!-- Name Input Group -->
+                                    <div class="form-group" id="nameField">
                                         <label for="name">Full Name</label>
                                         <div class="input-group">
                                             <div class="input-group-prepend">
                                                 <span class="input-group-text"><i class="fa fa-user"></i></span>
                                             </div>
-                                            <input type="text" class="form-control" id="name" name="name" placeholder="Enter your full name" required>
+                                            <input type="text" class="form-control" id="name" name="name" placeholder="Enter your full name">
                                         </div>
                                     </div>
 
@@ -56,6 +68,50 @@
                                         </div>
                                     </div>
 
+                                    <!-- Additional Fields for Technician -->
+                                    <div id="technicianFields" style="display: none;">
+                                        <div class="form-group">
+                                            <label for="expertise">Expertise</label>
+                                            <div class="input-group">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text"><i class="fas fa-cogs"></i></span> <!-- Icon for Expertise -->
+                                                </div>
+                                                <input type="text" class="form-control" id="expertise" name="expertise" placeholder="Your field of expertise" required>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="experience">Years of Experience</label>
+                                            <div class="input-group">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text"><i class="fas fa-calendar-alt"></i></span> <!-- Icon for Years of Experience -->
+                                                </div>
+                                                <input type="number" class="form-control" id="experience" name="experience" min="0" placeholder="Experience in years" required>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Additional Fields for Company -->
+                                    <div id="companyFields" style="display: none;">
+                                        <div class="form-group">
+                                            <label for="companyName">Company Name</label>
+                                            <div class="input-group">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text"><i class="fa fa-building"></i></span> <!-- Icon for company name -->
+                                                </div>
+                                                <input type="text" class="form-control" id="companyName" name="companyName" placeholder="Enter company name" required>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="companyAddress">Company Address</label>
+                                            <div class="input-group">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text"><i class="fa fa-map-marker-alt"></i></span> <!-- Icon for company address -->
+                                                </div>
+                                                <input type="text" class="form-control" id="companyAddress" name="companyAddress" placeholder="Enter company address" required>
+                                            </div>
+                                        </div>
+                                    </div>
+
                                     <button type="submit" class="btn btn-primary btn-block">Register</button>
                                 </form>
 
@@ -70,5 +126,27 @@
             </section>
         </div>
     </section>
-    <!-- end slider section -->
 </div>
+
+<!-- end slider section -->
+
+<script>
+    function toggleRoleFields() {
+        const role = document.getElementById("role").value;
+
+        const technicianFields = document.getElementById("technicianFields");
+        const companyFields = document.getElementById("companyFields");
+
+        technicianFields.style.display = role === "Technician" ? "block" : "none";
+        companyFields.style.display = role === "Company" ? "block" : "none";
+
+        document.getElementById("expertise").required = (role === "Technician");
+        document.getElementById("experience").required = (role === "Technician");
+        document.getElementById("companyName").required = (role === "Company");
+        document.getElementById("companyAddress").required = (role === "Company");
+
+        const nameField = document.getElementById("nameField");
+        nameField.style.display = role === "Company" ? "none" : "block";
+    }
+</script>
+<script src="~/js/register.js"></script>

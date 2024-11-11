@@ -1,5 +1,4 @@
-﻿using Domain.Entities;
-using Microsoft.Extensions.Configuration;
+﻿using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
@@ -26,8 +25,13 @@ namespace Application.Helpers
             {
                 new Claim(JwtRegisteredClaimNames.Sub, user.UserName),
                 new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
-                new Claim(ClaimTypes.Role, user.Role),
-                new Claim("UserId", user.Id)
+                new Claim(ClaimTypes.Role, user.Role.ToString()),
+                new Claim("Email", user.Email),
+                new Claim("UserId", user.Id),
+                new Claim("FullName", user.FullName ?? string.Empty),
+                new Claim("CreatedAt", user.CreatedAt.ToString("O")),
+                new Claim("CompanyName", user.CompanyName ?? string.Empty),
+                new Claim("CompanyAddress", user.CompanyAddress ?? string.Empty)
             };
 
             var token = new JwtSecurityToken(
