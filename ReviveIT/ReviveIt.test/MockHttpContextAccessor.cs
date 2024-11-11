@@ -1,12 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Microsoft.AspNetCore.Http;
+using System.Security.Claims;
 
-namespace ReviveIt.test
+namespace ReviveIt.test.Providers;
+
+public class MockHttpContextAccessor : IHttpContextAccessor
 {
-    internal class MockHttpContextAccessor
+    public HttpContext HttpContext { get; set; } = new DefaultHttpContext();
+
+    public MockHttpContextAccessor()
     {
     }
 }

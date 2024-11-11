@@ -18,7 +18,7 @@ namespace Application.Features.Accounts
             _tokenHelper = tokenHelper;
         }
 
-        public async Task<LoginResultDTO> AuthenticateUser(LoginRequestDto loginDto)
+        public async Task<LoginResultDTO> AuthenticateUser(LoginDto loginDto)
         {
             var user = await _userManager.FindByEmailAsync(loginDto.Email);
             if (user == null)

@@ -18,7 +18,7 @@ public class AccountsController : ControllerBase
     }
 
     [HttpPost("login")]
-    public async Task<IActionResult> Login([FromBody] LoginRequestDto loginDto)
+    public async Task<IActionResult> Login([FromBody] LoginDto loginDto)
     {
         var result = await _loginFeature.AuthenticateUser(loginDto);
         if (!result.IsSuccess)
