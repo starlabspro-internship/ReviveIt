@@ -1,12 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿namespace ReviveIt.test;
 
-namespace ReviveIt.test
+public static class TestServiceFactory
 {
-    internal class TestServiceFactory
-    {
-    }
 }

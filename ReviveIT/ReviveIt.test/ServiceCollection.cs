@@ -1,12 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Infrastructure.Data;
+using Microsoft.AspNetCore.Http;
+using ReviveIt.test.Providers;
 
-namespace ReviveIt.test
+
+public static class ServiceCollectionExtensions
 {
-    internal class ServiceCollection
+    public static IServiceCollection AddTestServices(this IServiceCollection services)
     {
+        services.AddDbContext<ApplicationDbContext>(options =>
+            options.UseInMemoryDatabase("TestDatabase"));
+
+        services.AddSingleton<IHttpContextAccessor, MockHttpContextAccessor>();
+
+        return services;
     }
 }
