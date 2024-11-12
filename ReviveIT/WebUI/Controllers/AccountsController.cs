@@ -1,20 +1,27 @@
 ﻿using Application.DTO;
 using Application.Features.Accounts;
+using Application.Interfaces;
+using Infrastructure.Services;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.Data;
 using Microsoft.AspNetCore.Mvc;
 
-[Route("Accounts")]
 [Route("api/[controller]")]
 [ApiController]
 public class AccountsController : ControllerBase
 {
     private readonly LoginFeature _loginFeature;
-
     private readonly RegisterFeature _registerFeature;
+    private readonly IEmailSender _emailSender;
+    private readonly UserManager<Users> _userManager;
 
-    public AccountsController(LoginFeature loginFeature, RegisterFeature registerFeature)
+    public AccountsController(LoginFeature loginFeature, RegisterFeature registerFeature, IEmailSender emailSender, UserManager<Users> userManager)
     {
         _loginFeature = loginFeature;
         _registerFeature = registerFeature;
+        _emailSender = emailSender;
+        _userManager = userManager;
     }
 
     [HttpPost("login")]
@@ -46,5 +53,22 @@ public class AccountsController : ControllerBase
         }
 
         return Ok(new { success = true, token = registerResult.Token, message = registerResult.Message });
+    }
+
+    [HttpGet("confirm-email")]
+    public async Task<IActionResult> ConfirmEmail(string userId, string token)
+    {
+        if (string.IsNullOrWhiteSpace(userId) || string.IsNullOrWhiteSpace(token))
+            return BadRequest("Invalid email confirmation request.");
+
+        var user = await _userManager.FindByIdAsync(userId);
+        if (user == null)
+            return NotFound("User not found.");
+
+        var result = await _userManager.ConfirmEmailAsync(user, token);
+        if (result.Succeeded)
+            return Ok("Email confirmed successfully!");
+
+        return BadRequest("Email confirmation failed.");
     }
 }
