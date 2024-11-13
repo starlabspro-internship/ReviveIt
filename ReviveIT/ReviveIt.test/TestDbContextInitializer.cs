@@ -1,12 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Infrastructure.Data;
 
-namespace ReviveIt.test
+namespace ReviveIt.test.Providers;
+
+public static class TestDbContextInitializer
 {
-    internal class TestDbContextInitializer
+    public static void SeedTestData(ApplicationDbContext context)
     {
+        context.Database.EnsureCreated();
+
+        context.Users.Add(new Users
+        {
+            Email = "testuser@example.com",
+            Role = UserRole.Admin 
+        });
+
+        context.SaveChanges();
     }
 }
