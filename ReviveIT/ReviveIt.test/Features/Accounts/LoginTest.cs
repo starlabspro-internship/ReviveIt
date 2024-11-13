@@ -56,7 +56,6 @@ namespace ReviveIt.test.Feature
             Assert.Equal("User not found.", result.ErrorMessage);
         }
 
-
         [Fact]
         public async Task AuthenticateUser_ShouldReturnFailure_WhenEmailNotConfirmed()
         {
@@ -97,7 +96,6 @@ namespace ReviveIt.test.Feature
             Assert.False(result.IsSuccess);
             Assert.Equal("Password incorrect.", result.ErrorMessage);
         }
-
 
         [Fact]
         public async Task AuthenticateUser_ShouldReturnSuccess_WithToken_WhenCredentialsAreValid()

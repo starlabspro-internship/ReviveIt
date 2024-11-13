@@ -1,0 +1,59 @@
+﻿@{
+    
+    var role = ViewBag.Role as string;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewData["Title"] - Revivelt</title>
+    <link rel="stylesheet" href="~/css/sitee.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Icons+Round" rel="stylesheet">
+</head>
+<body>
+    <!-- HEADER -->
+    <header class="header">
+        <div class="header-container">
+            <h1 class="site-title">Revivelt</h1>
+            <button class="menu-toggle-button icon-box" data-menu-toggle aria-label="Toggle Menu">
+                <span class="material-icons-round">menu</span>
+            </button>
+            <nav class="main-navbar">
+                <div class="navbar-container">
+                    <ul class="navbar-list">
+                        @if (role == "Company")
+                        {
+                            <li><a asp-controller="Company" asp-action="Inbox" class="navbar-link"><span class="material-icons-round">inbox</span>Inbox</a></li>
+                        }
+                        else if (role == "Technician")
+                        {
+                            <li><a asp-controller="Technician" asp-action="PostedJobs" class="navbar-link"><span class="material-icons-round">search</span>Posted Jobs</a></li>
+                            <li><a asp-controller="Technician" asp-action="Inbox" class="navbar-link"><span class="material-icons-round">inbox</span>Inbox</a></li>
+                        }
+                        else if (role == "Customer")
+                        {
+                            <li><a asp-controller="Customer" asp-action="TechniciansCompanies" class="navbar-link"><span class="material-icons-round">search</span>Technicians/Companies</a></li>
+                            <li><a asp-controller="Customer" asp-action="PostJob" class="navbar-link"><span class="material-icons-round">post_add</span>Post a job</a></li>
+                            <li><a asp-controller="Customer" asp-action="Inbox" class="navbar-link"><span class="material-icons-round">inbox</span>Inbox</a></li>
+                        }
+                    </ul>
+                    <ul class="user-action-list">
+                        <li><a asp-controller="Account" asp-action="Logout" class="navbar-link logout"><span class="material-icons-round">logout</span>Log out</a></li>
+                        <li><a asp-controller="Account" asp-action="MyAccount" class="navbar-link my-account"><span class="material-icons-round">account_circle</span>My account</a></li>
+                    </ul>
+                </div>
+            </nav>
+        </div>
+    </header>
+    <!-- Content -->
+    <main id="content-placeholder">
+        @RenderBody()
+    </main>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</body>
+</html>

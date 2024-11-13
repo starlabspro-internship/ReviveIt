@@ -90,7 +90,6 @@ if (!app.Environment.IsDevelopment())
     app.UseHsts();
 }
 
-app.UseMiddleware<ExceptionMiddleware>();
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
@@ -101,9 +100,31 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.UseCors("AllowAll");
+// Endpoint Route Mapping for Program.cs or Startup.cs
 
 app.MapControllerRoute(
     name: "default",
+    pattern: "{controller=Home}/{action=Index}/{id?}");
+
+app.MapControllerRoute(
+    name: "public",
+    pattern: "Company/{action=Index}/{id?}",
+    defaults: new { controller = "Company" });
+
+app.MapControllerRoute(
+    name: "public",
+    pattern: "Technician/{action=Index}/{id?}",
+    defaults: new { controller = "Technician" });
+
+app.MapControllerRoute(
+    name: "public",
+    pattern: "Customer/{action=Index}/{id?}",
+    defaults: new { controller = "Customer" });
+
+
+app.MapControllerRoute(name: "login", pattern: "LogIn/LogIn", defaults: new { controller = "LogIn", action = "LogIn" });
+app.MapControllerRoute(
+    name: "public",
     pattern: "{controller=Home}/{action=Index}/{id?}");
 
 app.Run();

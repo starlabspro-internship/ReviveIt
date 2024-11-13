@@ -23,16 +23,20 @@ namespace Application.Features.Accounts
             var user = await _userManager.FindByEmailAsync(loginDto.Email);
             if (user == null)
                 return LoginResultDTO.Failure("User not found.");
-
-            if (!user.EmailConfirmed)
-                return LoginResultDTO.Failure("Email not verified.");
-
             var result = await _signInManager.CheckPasswordSignInAsync(user, loginDto.Password, false);
             if (!result.Succeeded)
                 return LoginResultDTO.Failure("Password incorrect.");
 
+            var roles = await _userManager.GetRolesAsync(user);
             var token = _tokenHelper.GenerateToken(user);
-            return LoginResultDTO.Success(token);
+
+            // Determine the redirect URL based on the user's role
+            string redirectUrl = roles.Contains("Company") ? "/Company/Inbox"
+                               : roles.Contains("Technician") ? "/Technician/Inbox"
+                               : roles.Contains("Customer") ? "/Customer/Inbox"
+                               : "/";
+
+            return LoginResultDTO.Success(token, redirectUrl);
         }
     }
 }

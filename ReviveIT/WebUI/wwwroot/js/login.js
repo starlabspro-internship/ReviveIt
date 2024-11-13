@@ -14,12 +14,13 @@
             data: JSON.stringify(loginData),
             success: function (response) {
                 localStorage.setItem("jwtToken", response.token);
-                alert("Login successful!");
-                window.location.href = "/home";
+               
+                // Redirect to the URL returned by the backend
+                window.location.href = response.redirectUrl;
             },
             error: function (xhr) {
                 var errorMessage = xhr.responseJSON?.message || "An unexpected error occurred. Please try again later.";
-                alert(errorMessage); 
+                alert(errorMessage);
             }
         });
     });

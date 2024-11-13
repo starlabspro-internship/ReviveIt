@@ -80,6 +80,8 @@
             if (result.success) {
                 alert(result.message);
                 registerForm.reset();
+                // Redirect to login page
+                window.location.href = "";
             } else {
                 alert(result.message || "Registration failed. Please try again.");
             }

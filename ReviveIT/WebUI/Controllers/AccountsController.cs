@@ -8,7 +8,6 @@ using Microsoft.AspNetCore.Mvc;
 public class AccountsController : ControllerBase
 {
     private readonly LoginFeature _loginFeature;
-
     private readonly RegisterFeature _registerFeature;
 
     public AccountsController(LoginFeature loginFeature, RegisterFeature registerFeature)
@@ -24,7 +23,8 @@ public class AccountsController : ControllerBase
         if (!result.IsSuccess)
             return Unauthorized(new { Message = result.ErrorMessage });
 
-        return Ok(new { Token = result.Token });
+        // Return the token and redirect URL in the response
+        return Ok(new { Token = result.Token, RedirectUrl = result.RedirectUrl });
     }
 
     [HttpPost("register")]
@@ -33,18 +33,17 @@ public class AccountsController : ControllerBase
         if (!ModelState.IsValid)
         {
             var errors = ModelState.Values.SelectMany(v => v.Errors)
-                                          .Select(e => e.ErrorMessage)
-                                          .ToList();
+                .Select(e => e.ErrorMessage)
+                .ToList();
             return BadRequest(new { success = false, message = "Validation failed", errors = errors });
         }
 
         var registerResult = await _registerFeature.RegisterUserAsync(registerDto);
-
         if (!registerResult.Success)
         {
             return BadRequest(new { success = false, message = registerResult.Message });
         }
 
         return Ok(new { success = true, token = registerResult.Token, message = registerResult.Message });
-    }
+        }
 }
