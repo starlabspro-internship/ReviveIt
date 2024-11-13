@@ -9,7 +9,6 @@ public class AccountsController : ControllerBase
 {
     private readonly LoginFeature _loginFeature;
     private readonly RegisterFeature _registerFeature;
-
     public AccountsController(LoginFeature loginFeature, RegisterFeature registerFeature)
     {
         _loginFeature = loginFeature;
