@@ -1,11 +1,12 @@
-﻿using Domain.Configurations;
+﻿using Application.Interfaces;
+using Domain.Configurations;
 using Domain.Entities;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Data
 {
-    public class ApplicationDbContext : IdentityDbContext<Users>
+    public class ApplicationDbContext : IdentityDbContext<Users>, IApplicationDbContext
     {
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
         { }
@@ -15,6 +16,7 @@ namespace Infrastructure.Data
         public DbSet<Subscriptions> Subscriptions { get; set; }
         public DbSet<Messages> Messages { get; set; }
         public DbSet<Reviews> Reviews { get; set; }
+        public DbSet<UserRefreshToken>UserRefreshTokens { get; set; }
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
@@ -32,6 +34,8 @@ namespace Infrastructure.Data
             builder.ApplyConfiguration(new MessagesConfigurations());
 
             builder.ApplyConfiguration(new ReviewsConfiguration());
+
+            builder.ApplyConfiguration(new UserRefreshTokenConfigurations());
         }
 
     }

@@ -38,12 +38,7 @@ namespace Application.Helpers
                 new Claim(JwtRegisteredClaimNames.Sub, user.UserName),
                 new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
                 new Claim(ClaimTypes.Role, user.Role.ToString()),
-                new Claim("Email", user.Email),
-                new Claim("UserId", user.Id),
-                new Claim("FullName", user.FullName ?? string.Empty),
-                new Claim("CreatedAt", user.CreatedAt.ToString("O")),
-                new Claim("CompanyName", user.CompanyName ?? string.Empty),
-                new Claim("CompanyAddress", user.CompanyAddress ?? string.Empty)
+                new Claim("UserId", user.Id) 
             };
 
             var token = new JwtSecurityToken(
@@ -54,10 +49,18 @@ namespace Application.Helpers
                 signingCredentials: creds
             );
 
-            return new JwtSecurityTokenHandler().WriteToken(token);
+            var tokenString = new JwtSecurityTokenHandler().WriteToken(token);
+
+            Console.WriteLine("Generated Token Claims:");
+            foreach (var claim in claims)
+            {
+                Console.WriteLine($"{claim.Type}: {claim.Value}");
+            }
+
+            return tokenString;
         }
 
-        public static string GenerateRefreshToken()
+        public string GenerateRefreshToken()
         {
             var randomNumber = new byte[32];
             using var rng = RandomNumberGenerator.Create();
