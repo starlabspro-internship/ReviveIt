@@ -1,16 +1,11 @@
 ﻿using Application.DTO;
 using Application.Features.Accounts;
 using Application.Helpers;
+using Application.Interfaces;
 using Domain.Constants;
-using Domain.Entities;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
-using Moq;
-using Xunit;
-using System.Threading.Tasks;
-using ReviveIt.test.Helpers;
-using Application.Interfaces;
 
 namespace ReviveIt.test.Feature
 {
@@ -27,7 +22,6 @@ namespace ReviveIt.test.Feature
 
         public LoginTest()
         {
-            // Configure mock dependencies
             _configuration = new ConfigurationBuilder()
                 .AddJsonFile("appsettings.json")
                 .Build();
@@ -42,7 +36,6 @@ namespace ReviveIt.test.Feature
             _signInManagerMock = SetupSignInManagerMock();
             _tokenHelperMock = new Mock<ITokenHelper>();
 
-            // Mocking IApplicationDbContext to pass into RefreshTokenRepository
             var dbContextMock = new Mock<IApplicationDbContext>();
             _refreshTokenRepositoryMock = new Mock<RefreshTokenRepository>(dbContextMock.Object);
 
