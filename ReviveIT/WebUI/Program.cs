@@ -2,8 +2,10 @@ using Application.Features.Accounts;
 using Application.Helpers;
 using Application.Interfaces;
 using Domain.Constants;
+using Domain.Entities;
 using Infrastructure.Data;
 using Infrastructure.Repositories;
+using Infrastructure.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -67,6 +69,9 @@ builder.Services.AddScoped<ISubscriptionsRepository, SubscriptionsRepository>();
 builder.Services.AddScoped<IUsersRepository, UsersRepository>();
 builder.Services.AddScoped<IMessagesRepository, MessagesRepository>();
 builder.Services.AddScoped<IReviewsRepository, ReviewsRepository>();
+
+builder.Services.AddTransient<IEmailSender, EmailSender>();
+builder.Services.AddHttpContextAccessor();
 
 var app = builder.Build();
 

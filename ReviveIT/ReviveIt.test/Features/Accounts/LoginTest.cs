@@ -1,6 +1,7 @@
 ﻿using Application.DTO;
 using Application.Features.Accounts;
 using Application.Helpers;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 
@@ -13,6 +14,7 @@ namespace ReviveIt.test.Feature
         private readonly Mock<SignInManager<Users>> _signInManagerMock;
         private readonly LoginFeature _loginFeature;
         private readonly IConfiguration _configuration;
+        private readonly Mock<IHttpContextAccessor> _httpContextAccessorMock;
 
         public LoginTest()
         {
@@ -20,7 +22,13 @@ namespace ReviveIt.test.Feature
                 .AddJsonFile("appsettings.json")
                 .Build();
 
-            _tokenHelper = new TokenHelper(_configuration);
+            _httpContextAccessorMock = new Mock<IHttpContextAccessor>();
+            var httpContextMock = new DefaultHttpContext();
+            httpContextMock.Request.Scheme = "https";
+            httpContextMock.Request.Host = new HostString("localhost", 7018);
+            _httpContextAccessorMock.Setup(x => x.HttpContext).Returns(httpContextMock);
+
+            _tokenHelper = new TokenHelper(_configuration, _httpContextAccessorMock.Object);
 
             _userManagerMock = SetupUserManagerMock();
             _signInManagerMock = SetupSignInManagerMock();
