@@ -1,11 +1,10 @@
 ﻿using Application.DTO;
 using Application.Features.Accounts;
 using Application.Interfaces;
-using Infrastructure.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.Data;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 [Route("api/[controller]")]
 [ApiController]
@@ -15,13 +14,15 @@ public class AccountsController : ControllerBase
     private readonly RegisterFeature _registerFeature;
     private readonly IEmailSender _emailSender;
     private readonly UserManager<Users> _userManager;
+    private readonly RefreshTokenRepository _refreshTokenRepository;
 
-    public AccountsController(LoginFeature loginFeature, RegisterFeature registerFeature, IEmailSender emailSender, UserManager<Users> userManager)
+    public AccountsController(LoginFeature loginFeature, RegisterFeature registerFeature, IEmailSender emailSender, UserManager<Users> userManager, RefreshTokenRepository refreshTokenRepository)
     {
         _loginFeature = loginFeature;
         _registerFeature = registerFeature;
         _emailSender = emailSender;
         _userManager = userManager;
+        _refreshTokenRepository = refreshTokenRepository;
     }
 
     [HttpPost("login")]
@@ -32,6 +33,28 @@ public class AccountsController : ControllerBase
             return Unauthorized(new { Message = result.ErrorMessage });
 
         return Ok(new { Token = result.Token });
+    }
+
+    [Authorize]
+    [HttpPost("logout")]
+    public async Task<IActionResult> Logout()
+    {
+        var email = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+        var user = await _userManager.FindByEmailAsync(email);
+       
+        if (string.IsNullOrEmpty(user.Id))
+        {
+            return Unauthorized(new { message = "User ID not found in token." });
+        }
+
+        var result = await _refreshTokenRepository.RemoveRefreshTokenAsync(user.Id);
+
+        if (result)
+        {
+            return Ok(new { message = "Successfully logged out" });
+        }
+
+        return NotFound(new { message = "Refresh token not found." });
     }
 
     [HttpPost("register")]

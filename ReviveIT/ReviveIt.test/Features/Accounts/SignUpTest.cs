@@ -2,15 +2,8 @@
 using Application.Features.Accounts;
 using Application.Helpers;
 using Application.Interfaces;
-using Domain.Entities;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
-using Moq;
-using System;
-using System.Linq;
-using System.Security.Claims;
-using System.Threading.Tasks;
-using Xunit;
 
 namespace ReviveIt.test.Feature
 {

@@ -1,8 +1,4 @@
-﻿// MockTokenHelper.cs
-using Domain.Entities;
-using ReviveIt.test.Helpers;
-
-namespace ReviveIt.test.Helpers
+﻿namespace ReviveIt.test.Helpers
 {
     public class MockTokenHelper 
     {

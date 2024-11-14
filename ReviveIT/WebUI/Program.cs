@@ -25,6 +25,8 @@ builder.Services.AddIdentity<Users, IdentityRole>()
     .AddEntityFrameworkStores<ApplicationDbContext>()
     .AddDefaultTokenProviders();
 
+builder.Services.AddHttpContextAccessor();
+
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowAll",
@@ -41,6 +43,7 @@ builder.Services.AddAuthorization(options =>
 builder.Services.AddScoped<TokenHelper>();
 builder.Services.AddScoped<LoginFeature>();
 builder.Services.AddScoped<RegisterFeature>();
+builder.Services.AddScoped<RefreshTokenRepository>();
 
 builder.Services.AddAuthentication(options =>
 {
@@ -69,11 +72,16 @@ builder.Services.AddScoped<ISubscriptionsRepository, SubscriptionsRepository>();
 builder.Services.AddScoped<IUsersRepository, UsersRepository>();
 builder.Services.AddScoped<IMessagesRepository, MessagesRepository>();
 builder.Services.AddScoped<IReviewsRepository, ReviewsRepository>();
+builder.Services.AddScoped<IApplicationDbContext, ApplicationDbContext>();
 
 builder.Services.AddTransient<IEmailSender, EmailSender>();
 builder.Services.AddHttpContextAccessor();
 
+builder.Services.AddSingleton<ConfigurationConstant>();
+
 var app = builder.Build();
+
+UserHelper.Configure(app.Services.GetRequiredService<IHttpContextAccessor>(), app.Configuration);
 
 using (var scope = app.Services.CreateScope())
 {
@@ -95,17 +103,17 @@ if (!app.Environment.IsDevelopment())
     app.UseHsts();
 }
 
-app.UseMiddleware<ExceptionMiddleware>();
-
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
 
-app.UseAuthentication();
-app.UseAuthorization();
-
 app.UseCors("AllowAll");
+
+app.UseAuthentication(); 
+app.UseAuthorization();  
+
+app.UseMiddleware<ExceptionMiddleware>();
 
 app.MapControllerRoute(
     name: "default",
