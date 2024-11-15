@@ -14,9 +14,9 @@ public class AccountsController : ControllerBase
     private readonly RegisterFeature _registerFeature;
     private readonly IEmailSender _emailSender;
     private readonly UserManager<Users> _userManager;
-    private readonly RefreshTokenRepository _refreshTokenRepository;
+    private readonly IRefreshTokenRepository _refreshTokenRepository;
 
-    public AccountsController(LoginFeature loginFeature, RegisterFeature registerFeature, IEmailSender emailSender, UserManager<Users> userManager, RefreshTokenRepository refreshTokenRepository)
+    public AccountsController(LoginFeature loginFeature, RegisterFeature registerFeature, IEmailSender emailSender, UserManager<Users> userManager, IRefreshTokenRepository refreshTokenRepository)
     {
         _loginFeature = loginFeature;
         _registerFeature = registerFeature;
