@@ -1,5 +1,12 @@
 ﻿document.addEventListener("DOMContentLoaded", function () {
     const registerForm = document.getElementById("registerForm");
+    const loginRedirectLink = document.getElementById("logInRedirect");
+
+    registerForm.parentElement.classList.add("register-container");
+
+    const spinner = document.createElement("div");
+    spinner.className = "loader";
+    registerForm.parentElement.appendChild(spinner);
 
     const roleMapping = {
         "Customer": 1,
@@ -27,7 +34,9 @@
         }
 
         if (!password || !validatePassword(password)) {
-            alert("Password must be at least 8 characters long, contain an uppercase letter, a lowercase letter, a number, and a non-alphanumeric character.");
+            alert(
+                "Password must be at least 8 characters long, contain an uppercase letter, a lowercase letter, a number, and a non-alphanumeric character."
+            );
             return;
         }
 
@@ -61,12 +70,16 @@
             password,
             confirmPassword,
             role,
-            name: (role === 1 || role === 2) ? name : null,
+            name: role === 1 || role === 2 ? name : null,
             expertise: role === 2 ? expertise : null,
             experience: role === 2 ? experience : null,
             companyName: role === 3 ? companyName : null,
             companyAddress: role === 3 ? companyAddress : null
         };
+
+        registerForm.style.display = "none";
+        if (loginRedirectLink) loginRedirectLink.style.display = "none";
+        spinner.style.display = "block";
 
         try {
             const response = await fetch("/api/Accounts/register", {
@@ -77,15 +90,29 @@
 
             const result = await response.json();
 
+            spinner.style.display = "none";
+
             if (result.success) {
-                alert(result.message);
-                registerForm.reset();
+                const messageContainer = document.createElement("div");
+                messageContainer.className = "alert alert-success";
+                messageContainer.innerHTML = `
+                    <p>Registration was successful! A confirmation link has been sent to your email.</p>
+                    <p>Please check your email to verify your account.</p>
+                    <a href="/LogIn/LogIn" class="btn btn-primary mt-3" style="display: block; margin: 20px auto; text-align: center;">Go to Login</a>
+                `;
+                registerForm.parentElement.appendChild(messageContainer);
             } else {
+                registerForm.style.display = "block";
+                if (loginRedirectLink) loginRedirectLink.style.display = "block";
                 alert(result.message || "Registration failed. Please try again.");
             }
         } catch (error) {
             console.error("Error:", error);
             alert("An unexpected error occurred. Please try again later.");
+
+            registerForm.style.display = "block";
+            if (loginRedirectLink) loginRedirectLink.style.display = "block";
+            spinner.style.display = "none";
         }
     });
 

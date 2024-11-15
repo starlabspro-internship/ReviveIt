@@ -6,6 +6,7 @@ using System;
 using System.Linq;
 using Application.DTO;
 using System.Security.Claims;
+using Application.Interfaces;
 
 namespace Application.Features.Accounts
 {
@@ -13,11 +14,13 @@ namespace Application.Features.Accounts
     {
         private readonly UserManager<Users> _userManager;
         private readonly TokenHelper _tokenHelper;
+        private readonly IEmailSender _emailSender;
 
-        public RegisterFeature(UserManager<Users> userManager, TokenHelper tokenHelper)
+        public RegisterFeature(UserManager<Users> userManager, TokenHelper tokenHelper, IEmailSender emailSender)
         {
             _userManager = userManager;
             _tokenHelper = tokenHelper;
+            _emailSender = emailSender;
         }
 
         public async Task<RegisterResultDto> RegisterUserAsync(RegisterDto dto)
@@ -66,7 +69,8 @@ namespace Application.Features.Accounts
             });
 
             var token = _tokenHelper.GenerateToken(user);
-            return new RegisterResultDto { Success = true, Token = token, Message = "Registration successful!" };
+            await SendEmailConfirmationAsync(user);
+            return new RegisterResultDto { Success = true, Token = token, Message = "Registration successful! Please check your email to confirm your account." };
         }
 
         private Users CreateUserFromDto(RegisterDto dto) => new Users
@@ -82,5 +86,14 @@ namespace Application.Features.Accounts
             CompanyName = dto.CompanyName,
             CompanyAddress = dto.CompanyAddress
         };
+
+        private async Task SendEmailConfirmationAsync(Users user)
+        {
+            var token = await _userManager.GenerateEmailConfirmationTokenAsync(user);
+            var confirmationLink = _tokenHelper.GenerateConfirmationLink(user.Id, token);
+
+            await _emailSender.SendEmailAsync(user.Email, "Confirm Your Email",
+                $"Please confirm your account by clicking this link: {confirmationLink}");
+        }
     }
 }

@@ -1,4 +1,5 @@
-﻿:root {
+﻿/* Custom Properties */
+:root {
     --primary-color: hsl(220, 100%, 50%);
     --secondary-color: hsl(220, 41%, 20%);
     --background-color: hsl(0, 0%, 96%);
@@ -9,6 +10,7 @@
     --transition: 0.25s ease;
     --font-family: "Be Vietnam Pro", sans-serif;
 }
+
 /* Reset Styles */
 *, *::before, *::after {
     margin: 0;
@@ -41,6 +43,7 @@ html {
     outline: 2px solid var(--text-color);
     outline-offset: 1px;
 }
+
 /* Body */
 body {
     margin: 0 auto;
@@ -48,6 +51,7 @@ body {
     padding: 0 20px;
     padding-top: 92px; /* Add padding-top to ensure content starts below the fixed header */
 }
+
 /* Header and Navbar */
 .header {
     background: var(--white);
@@ -146,6 +150,7 @@ body {
         .user-action-list a.logout {
             margin-right: 5px; /* Slight margin to keep Log Out and My Account close */
         }
+
 /* Content Frame */
 #content-placeholder {
     padding: 0;
@@ -159,6 +164,7 @@ body {
         height: calc(100vh - 92px); /* Ensure iframe fits within the content area */
         border: none;
     }
+
 /* Responsive Styles */
 @media (max-width: 768px) {
     .menu-toggle-button {
@@ -187,3 +193,4 @@ body {
         text-align: center;
     }
 }
+s

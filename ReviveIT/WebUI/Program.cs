@@ -4,6 +4,7 @@ using Application.Interfaces;
 using Domain.Constants;
 using Infrastructure.Data;
 using Infrastructure.Repositories;
+using Infrastructure.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -54,6 +55,7 @@ builder.Services.AddAuthorization(options =>
 builder.Services.AddScoped<TokenHelper>();
 builder.Services.AddScoped<LoginFeature>();
 builder.Services.AddScoped<RegisterFeature>();
+builder.Services.AddScoped<RefreshTokenRepository>();
 
 
 builder.Services.AddAuthentication(options =>
@@ -76,9 +78,6 @@ builder.Services.AddAuthentication(options =>
 });
 
 builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
-
-
-builder.Services.AddHttpContextAccessor();
 
 var app = builder.Build();
 
@@ -104,14 +103,10 @@ if (!app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
-
 app.UseRouting();
-
 app.UseCors("AllowAll");
-
-app.UseAuthentication();
-app.UseAuthorization();
-
+app.UseAuthentication(); 
+app.UseAuthorization();  
 app.UseMiddleware<ExceptionMiddleware>();
 
 app.MapControllerRoute(
