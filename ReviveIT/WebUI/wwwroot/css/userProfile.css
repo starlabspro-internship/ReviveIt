@@ -1,0 +1,61 @@
+﻿/* Cropper Modal Image Styling */
+#cropperImage {
+    width: 100%; /* Take full width within container */
+    max-width: 100px; /* Limit to desired width of profile page */
+    height: auto;
+    display: block;
+}
+
+
+    #cropperModal .modal-content {
+        background-color: white;
+        padding: 20px;
+        border-radius: 10px;
+        position: relative;
+        width: 90%;
+        max-width: 600px;
+        z-index: 1051; /* Ensures content remains on top */
+        display: flex;
+        flex-direction: column;
+    }
+
+    #cropperModal .image-crop-container {
+        max-width: 100%;
+        max-height: 400px;
+        overflow: hidden; /* Prevent overflow issues */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+/* Updated controls styling to ensure alignment */
+.controls {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
+}
+
+    .controls button {
+        flex: 1;
+        margin: 0 5px;
+    }
+.slider_section {
+    background-image: -webkit-gradient(linear, left top, right top, from(rgba(8, 19, 92, 0.9)), to(rgba(8, 19, 92, 0.9))), url(../images/slider-bg.jpg);
+    background-image: -webkit-linear-gradient(left, rgba(8, 19, 92, 0.9), rgba(8, 19, 92, 0.9)), url(../images/slider-bg.jpg);
+    background-image: -moz-linear-gradient(left, rgba(8, 19, 92, 0.9), rgba(8, 19, 92, 0.9)), url(../images/slider-bg.jpg);
+    background-image: -o-linear-gradient(left, rgba(8, 19, 92, 0.9), rgba(8, 19, 92, 0.9)), url(../images/slider-bg.jpg);
+    background-image: linear-gradient(to right, rgba(8, 19, 92, 0.9), rgba(8, 19, 92, 0.9)), url(../images/slider-bg.jpg);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 50px;
+}
+
+
+.footer_section {
+    position: static;
+}
