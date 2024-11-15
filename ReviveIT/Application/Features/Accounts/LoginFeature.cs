@@ -1,5 +1,6 @@
 ﻿using Application.DTO;
 using Application.Helpers;
+using Application.Interfaces; 
 using Domain.Constants;
 using Domain.Entities;
 using Microsoft.AspNetCore.Identity;
@@ -11,19 +12,19 @@ namespace Application.Features.Accounts
         private readonly UserManager<Users> _userManager;
         private readonly SignInManager<Users> _signInManager;
         private readonly TokenHelper _tokenHelper;
-        private readonly RefreshTokenRepository _refreshTokenRepository;
+        private readonly IRefreshTokenRepository _refreshTokenRepository; 
         private readonly ConfigurationConstant _constant;
 
         public LoginFeature(UserManager<Users> userManager,
                             SignInManager<Users> signInManager,
                             TokenHelper tokenHelper,
-                            RefreshTokenRepository refreshTokenRepository,
+                            IRefreshTokenRepository refreshTokenRepository, 
                             ConfigurationConstant constant)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _tokenHelper = tokenHelper;
-            _refreshTokenRepository = refreshTokenRepository;
+            _refreshTokenRepository = refreshTokenRepository; 
             _constant = constant;
         }
 
@@ -34,10 +35,11 @@ namespace Application.Features.Accounts
             {
                 return LoginResultDTO.Failure("Invalid credentials.");
             }
-            if (user.EmailConfirmed == false)
+            if (!user.EmailConfirmed)
             {
                 return LoginResultDTO.Failure("Email not confirmed!");
             }
+
             var result = await _signInManager.CheckPasswordSignInAsync(user, loginDto.Password, lockoutOnFailure: false);
             if (!result.Succeeded)
             {
@@ -58,7 +60,7 @@ namespace Application.Features.Accounts
             {
                 UserId = user.Id,
                 Token = refreshToken,
-                ExpiresOn = DateTime.UtcNow.AddDays(7) 
+                ExpiresOn = DateTime.UtcNow.AddDays(7)
             };
 
             await _refreshTokenRepository.AddOrUpdateRefreshTokenAsync(userRefreshToken);

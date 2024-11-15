@@ -2,7 +2,7 @@
 using Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 
-public class RefreshTokenRepository
+public class RefreshTokenRepository : IRefreshTokenRepository
 {
     private readonly IApplicationDbContext _context;
 
