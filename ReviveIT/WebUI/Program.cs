@@ -2,7 +2,6 @@ using Application.Features.Accounts;
 using Application.Helpers;
 using Application.Interfaces;
 using Domain.Constants;
-using Domain.Entities;
 using Infrastructure.Data;
 using Infrastructure.Repositories;
 using Infrastructure.Services;
@@ -73,15 +72,14 @@ builder.Services.AddScoped<IUsersRepository, UsersRepository>();
 builder.Services.AddScoped<IMessagesRepository, MessagesRepository>();
 builder.Services.AddScoped<IReviewsRepository, ReviewsRepository>();
 builder.Services.AddScoped<IApplicationDbContext, ApplicationDbContext>();
-
+builder.Services.AddScoped<IRefreshTokenRepository, RefreshTokenRepository>();
 builder.Services.AddTransient<IEmailSender, EmailSender>();
+
 builder.Services.AddHttpContextAccessor();
 
 builder.Services.AddSingleton<ConfigurationConstant>();
 
 var app = builder.Build();
-
-UserHelper.Configure(app.Services.GetRequiredService<IHttpContextAccessor>(), app.Configuration);
 
 using (var scope = app.Services.CreateScope())
 {
