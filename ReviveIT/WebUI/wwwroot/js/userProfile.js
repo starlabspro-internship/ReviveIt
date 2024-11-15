@@ -54,10 +54,8 @@ function updateProfileImage() {
             cropperModal.classList.remove('d-none');
             cropperImage.src = e.target.result;
 
-            // Destroy any existing cropper instance
             if (cropper) cropper.destroy();
 
-            // Initialize Cropper.js with new settings
             cropper = new Cropper(cropperImage, {
                 aspectRatio: 1,
                 viewMode: 1,
@@ -67,7 +65,6 @@ function updateProfileImage() {
                 cropBoxResizable: true,
                 responsive: true,
                 crop(event) {
-                    // No additional code needed for cropper instance
                 }
             });
         };
@@ -98,7 +95,6 @@ function cancelCrop() {
         cropper = null;
     }
 }
-// Once the cropper instance is created, ensure other cropper elements are adjusted
 cropper = new Cropper(cropperImage, {
     aspectRatio: 1,
     viewMode: 1,
@@ -108,9 +104,8 @@ cropper = new Cropper(cropperImage, {
     cropBoxResizable: true,
     responsive: true,
     ready() {
-        // Hide cropper overlay if not needed or ensure it's constrained
         document.querySelectorAll('.cropper-hide, .cropper-view-box').forEach(element => {
-            element.style.display = 'none'; // Optional: hide if interfering
+            element.style.display = 'none';
         });
     }
 });
