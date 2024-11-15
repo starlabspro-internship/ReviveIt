@@ -1,6 +1,6 @@
 ﻿using Application.DTO;
 using Application.Helpers;
-using Application.Interfaces; // Ensure this namespace contains IRefreshTokenRepository
+using Application.Interfaces; 
 using Domain.Constants;
 using Domain.Entities;
 using Microsoft.AspNetCore.Identity;
@@ -12,19 +12,19 @@ namespace Application.Features.Accounts
         private readonly UserManager<Users> _userManager;
         private readonly SignInManager<Users> _signInManager;
         private readonly TokenHelper _tokenHelper;
-        private readonly IRefreshTokenRepository _refreshTokenRepository; // Use the interface here
+        private readonly IRefreshTokenRepository _refreshTokenRepository; 
         private readonly ConfigurationConstant _constant;
 
         public LoginFeature(UserManager<Users> userManager,
                             SignInManager<Users> signInManager,
                             TokenHelper tokenHelper,
-                            IRefreshTokenRepository refreshTokenRepository, // Use interface type here
+                            IRefreshTokenRepository refreshTokenRepository, 
                             ConfigurationConstant constant)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _tokenHelper = tokenHelper;
-            _refreshTokenRepository = refreshTokenRepository; // Assign interface
+            _refreshTokenRepository = refreshTokenRepository; 
             _constant = constant;
         }
 
