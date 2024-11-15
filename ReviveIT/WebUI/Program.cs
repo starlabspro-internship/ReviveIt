@@ -11,6 +11,19 @@ using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using WebUI.MiddleWares;
 
+using Application.Features.Accounts;
+using Application.Helpers;
+using Application.Interfaces;
+using Domain.Constants;
+using Infrastructure.Data;
+using Infrastructure.Repositories;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
+using WebUI.MiddleWares;
+
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllersWithViews();
@@ -22,6 +35,8 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 builder.Services.AddIdentity<Users, IdentityRole>()
     .AddEntityFrameworkStores<ApplicationDbContext>()
     .AddDefaultTokenProviders();
+
+builder.Services.AddHttpContextAccessor();
 
 builder.Services.AddCors(options =>
 {
@@ -39,6 +54,7 @@ builder.Services.AddAuthorization(options =>
 builder.Services.AddScoped<TokenHelper>();
 builder.Services.AddScoped<LoginFeature>();
 builder.Services.AddScoped<RegisterFeature>();
+
 
 builder.Services.AddAuthentication(options =>
 {
@@ -60,13 +76,9 @@ builder.Services.AddAuthentication(options =>
 });
 
 builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
-builder.Services.AddScoped<IJobsRepository, JobsRepository>();
-builder.Services.AddScoped<IJobApplicationsRepository, JobApplicationsRepository>();
-builder.Services.AddScoped<IServicesRepository, ServicesRepository>();
-builder.Services.AddScoped<ISubscriptionsRepository, SubscriptionsRepository>();
-builder.Services.AddScoped<IUsersRepository, UsersRepository>();
-builder.Services.AddScoped<IMessagesRepository, MessagesRepository>();
-builder.Services.AddScoped<IReviewsRepository, ReviewsRepository>();
+
+
+builder.Services.AddHttpContextAccessor();
 
 var app = builder.Build();
 
@@ -90,20 +102,70 @@ if (!app.Environment.IsDevelopment())
     app.UseHsts();
 }
 
-app.UseMiddleware<ExceptionMiddleware>();
-
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
 
+app.UseCors("AllowAll");
+
 app.UseAuthentication();
 app.UseAuthorization();
 
-app.UseCors("AllowAll");
+app.UseMiddleware<ExceptionMiddleware>();
 
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
+
+app.MapControllerRoute(
+    name: "company",
+    pattern: "Company/{action=Index}/{id?}",
+    defaults: new { controller = "Company", action = "Index" });
+
+app.MapControllerRoute(
+    name: "companyInbox",
+    pattern: "Company/Inbox/{id?}",
+    defaults: new { controller = "Company", action = "Inbox" });
+
+app.MapControllerRoute(
+    name: "companyMyAccount",
+    pattern: "Company/MyAccount/{id?}",
+    defaults: new { controller = "Company", action = "MyAccount" });
+
+app.MapControllerRoute(
+    name: "technician",
+    pattern: "Technician/{action=Index}/{id?}",
+    defaults: new { controller = "Technician" });
+
+app.MapControllerRoute(
+    name: "technicianPostedJobs",
+    pattern: "Technician/PostedJobs/{id?}",
+    defaults: new { controller = "Technician", action = "PostedJobs" });
+
+app.MapControllerRoute(
+    name: "technicianMyAccount",
+    pattern: "Technician/Myaccount/{id?}",
+    defaults: new { controller = "Technician", action = "Myaccount" });
+
+app.MapControllerRoute(
+    name: "customer",
+    pattern: "Customer/{action=Inbox}/{id?}",
+    defaults: new { controller = "Customer" });
+
+app.MapControllerRoute(
+    name: "customerTechniciansCompanies",
+    pattern: "Customer/TechniciansCompanies/{id?}",
+    defaults: new { controller = "Customer", action = "TechniciansCompanies" });
+
+app.MapControllerRoute(
+    name: "customerPostJob",
+    pattern: "Customer/PostJob/{id?}",
+    defaults: new { controller = "Customer", action = "PostJob" });
+
+app.MapControllerRoute(
+    name: "customerMyAccount",
+    pattern: "Customer/MyAccount/{id?}",
+    defaults: new { controller = "Customer", action = "MyAccount" });
 
 app.Run();
