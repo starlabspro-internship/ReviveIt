@@ -14,7 +14,6 @@ namespace Application.Helpers
         private readonly IConfiguration _configuration;
         private readonly IHttpContextAccessor _httpContextAccessor;
 
-
         public TokenHelper(IConfiguration configuration, IHttpContextAccessor httpContextAccessor)
         {
             _configuration = configuration;
@@ -38,7 +37,7 @@ namespace Application.Helpers
                 new Claim(JwtRegisteredClaimNames.Sub, user.UserName),
                 new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
                 new Claim(ClaimTypes.Role, user.Role.ToString()),
-                new Claim("UserId", user.Id) 
+                new Claim("UserId", user.Id)
             };
 
             var token = new JwtSecurityToken(
@@ -49,15 +48,7 @@ namespace Application.Helpers
                 signingCredentials: creds
             );
 
-            var tokenString = new JwtSecurityTokenHandler().WriteToken(token);
-
-            Console.WriteLine("Generated Token Claims:");
-            foreach (var claim in claims)
-            {
-                Console.WriteLine($"{claim.Type}: {claim.Value}");
-            }
-
-            return tokenString;
+            return new JwtSecurityTokenHandler().WriteToken(token);
         }
 
         public string GenerateRefreshToken()
