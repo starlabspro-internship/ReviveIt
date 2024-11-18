@@ -1,12 +1,8 @@
-﻿using Domain.Entities;
-using Microsoft.AspNetCore.Identity;
+﻿using Application.DTO;
 using Application.Helpers;
-using System.Threading.Tasks;
-using System;
-using System.Linq;
-using Application.DTO;
-using System.Security.Claims;
 using Application.Interfaces;
+using Microsoft.AspNetCore.Identity;
+using System.Security.Claims;
 
 namespace Application.Features.Accounts
 {
