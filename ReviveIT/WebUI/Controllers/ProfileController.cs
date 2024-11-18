@@ -1,56 +1,59 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 
-public class ProfileController : Controller
+namespace WebUI.Controllers
 {
-    public IActionResult Profile()
+    public class ProfileController : Controller
     {
-        var userProfile = new UserProfileModel
+        public IActionResult Profile()
         {
-            Name = GetUserName() ?? "Unavailable",
-            Email = GetUserEmail() ?? "Unavailable",
-            ProfileType = "Guest"
-        };
-        return View(userProfile);
-    }
-
-    private string GetUserName()
-    {
-        return null; 
-    }
-
-    private string GetUserEmail()
-    {
-        return null; 
-    }
-
-    [HttpPost]
-    public IActionResult UploadProfileImage(IFormFile file)
-    {
-        if (file != null && file.Length > 0)
-        {
-            var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/images", file.FileName);
-
-            using (var stream = new FileStream(filePath, FileMode.Create))
+            var userProfile = new UserProfileModel
             {
-                file.CopyTo(stream);
+                Name = GetUserName() ?? "Unavailable",
+                Email = GetUserEmail() ?? "Unavailable",
+                ProfileType = "Guest"
+            };
+            return View(userProfile);
+        }
+
+        private string GetUserName()
+        {
+            return null;
+        }
+
+        private string GetUserEmail()
+        {
+            return null;
+        }
+
+        [HttpPost]
+        public IActionResult UploadProfileImage(IFormFile file)
+        {
+            if (file != null && file.Length > 0)
+            {
+                var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/images", file.FileName);
+
+                using (var stream = new FileStream(filePath, FileMode.Create))
+                {
+                    file.CopyTo(stream);
+                }
+
+                TempData["ProfileImage"] = "/images/" + file.FileName;
+            }
+            else
+            {
+                TempData["ProfileImageError"] = "No file selected!";
             }
 
-            TempData["ProfileImage"] = "/images/" + file.FileName;
+            return RedirectToAction("Profile");
         }
-        else
+
+        [HttpPost]
+        public IActionResult ChangeProfileType(string profileType)
         {
-            TempData["ProfileImageError"] = "No file selected!";
+            TempData["ProfileType"] = profileType;
+
+            return RedirectToAction("Profile");
         }
 
-        return RedirectToAction("Profile");
     }
-
-    [HttpPost]
-    public IActionResult ChangeProfileType(string profileType)
-    {
-        TempData["ProfileType"] = profileType;
-
-        return RedirectToAction("Profile");
-    }
-
 }
