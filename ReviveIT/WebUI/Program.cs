@@ -11,7 +11,6 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using WebUI.MiddleWares;
-
 using Application.Features.Accounts;
 using Application.Helpers;
 using Application.Interfaces;
@@ -28,15 +27,12 @@ using WebUI.MiddleWares;
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllersWithViews();
-
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"),
         b => b.MigrationsAssembly("Infrastructure")));
-
 builder.Services.AddIdentity<Users, IdentityRole>()
     .AddEntityFrameworkStores<ApplicationDbContext>()
     .AddDefaultTokenProviders();
-
 builder.Services.AddHttpContextAccessor();
 
 builder.Services.AddCors(options =>
@@ -56,8 +52,6 @@ builder.Services.AddScoped<TokenHelper>();
 builder.Services.AddScoped<LoginFeature>();
 builder.Services.AddScoped<RegisterFeature>();
 builder.Services.AddScoped<RefreshTokenRepository>();
-
-
 builder.Services.AddAuthentication(options =>
 {
     options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
