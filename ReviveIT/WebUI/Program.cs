@@ -139,14 +139,23 @@ app.MapControllerRoute(
     defaults: new { controller = "Technician", action = "PostedJobs" });
 
 app.MapControllerRoute(
+    name: "technicianInbox",
+    pattern: "Technician/Inbox/{id?}",
+    defaults: new { controller = "Technician", action = "Inbox" });
+
+app.MapControllerRoute(
     name: "technicianMyAccount",
     pattern: "Technician/Myaccount/{id?}",
     defaults: new { controller = "Technician", action = "Myaccount" });
 
 app.MapControllerRoute(
     name: "customer",
-    pattern: "Customer/{action=Inbox}/{id?}",
+    pattern: "Customer/{action=Index}/{id?}",
     defaults: new { controller = "Customer" });
+app.MapControllerRoute(
+    name: "customerInbox",
+    pattern: "Customer/Inbox/{id?}",
+    defaults: new { controller = "Customer", action = "Inbox" });
 
 app.MapControllerRoute(
     name: "customerTechniciansCompanies",
