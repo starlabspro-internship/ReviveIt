@@ -107,20 +107,18 @@ public class AccountsController : ControllerBase
 
         var user = await _userManager.FindByEmailAsync(model.Email);
 
-        if (user == null)
+        if (user != null)
         {
-            return Ok("If your email is registered, you will receive a password reset email.");
+            var resetToken = await _userManager.GeneratePasswordResetTokenAsync(user);
+
+            var resetLink = _tokenHelper.GeneratePasswordResetLink(resetToken);
+
+            await _emailSender.SendEmailAsync(
+                user.Email,
+                "Reset Your Password",
+                $"Click here to reset your password: <a href='{resetLink}'>Reset Password</a>"
+            );
         }
-
-        var resetToken = await _userManager.GeneratePasswordResetTokenAsync(user);
-
-        var resetLink = _tokenHelper.GeneratePasswordResetLink(resetToken);
-
-        await _emailSender.SendEmailAsync(
-            user.Email,
-            "Reset Your Password",
-            $"Click here to reset your password: <a href='{resetLink}'>Reset Password</a>"
-        );
 
         return Ok("If your email is registered, you will receive a password reset email.");
     }
