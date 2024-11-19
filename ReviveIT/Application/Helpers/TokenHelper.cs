@@ -20,13 +20,6 @@ namespace Application.Helpers
             _httpContextAccessor = httpContextAccessor;
         }
 
-        public string GenerateConfirmationLink(string userId, string token)
-        {
-            var request = _httpContextAccessor.HttpContext.Request;
-            var baseUrl = $"{request.Scheme}://{request.Host}{request.PathBase}";
-            return $"{baseUrl}/api/accounts/confirm-email?userId={userId}&token={Uri.EscapeDataString(token)}";
-        }
-
         public string GenerateToken(Users user)
         {
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration[ConfigurationConstant.Key]));
@@ -57,6 +50,19 @@ namespace Application.Helpers
             using var rng = RandomNumberGenerator.Create();
             rng.GetBytes(randomNumber);
             return Convert.ToBase64String(randomNumber);
+        }
+        public string GenerateConfirmationLink(string userId, string token)
+        {
+            var request = _httpContextAccessor.HttpContext.Request;
+            var baseUrl = $"{request.Scheme}://{request.Host}{request.PathBase}";
+            return $"{baseUrl}/api/accounts/confirm-email?userId={userId}&token={Uri.EscapeDataString(token)}";
+        }
+
+        public string GeneratePasswordResetLink(string token)
+        {
+            var request = _httpContextAccessor.HttpContext.Request;
+            var baseUrl = $"{request.Scheme}://{request.Host}{request.PathBase}";
+            return $"{baseUrl}/AccountRecovery/reset-password?token={Uri.EscapeDataString(token)}";
         }
     }
 }

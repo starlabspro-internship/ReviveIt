@@ -32,7 +32,9 @@ namespace ReviveIt.test.Feature
                 null,
                 null,
                 null,
-                _userManagerMock.Object, _refreshTokenRepositoryMock.Object
+                _userManagerMock.Object,
+                _refreshTokenRepositoryMock.Object,
+                null
             );
         }
 

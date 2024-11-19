@@ -1,10 +1,12 @@
 ﻿using Application.DTO;
 using Application.Features.Accounts;
+using Application.Helpers;
 using Application.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
+using Microsoft.EntityFrameworkCore;
 
 [Route("api/[controller]")]
 [ApiController]
@@ -15,14 +17,16 @@ public class AccountsController : ControllerBase
     private readonly IEmailSender _emailSender;
     private readonly UserManager<Users> _userManager;
     private readonly IRefreshTokenRepository _refreshTokenRepository;
+    private readonly TokenHelper _tokenHelper;
 
-    public AccountsController(LoginFeature loginFeature, RegisterFeature registerFeature, IEmailSender emailSender, UserManager<Users> userManager, IRefreshTokenRepository refreshTokenRepository)
+    public AccountsController(LoginFeature loginFeature, RegisterFeature registerFeature, IEmailSender emailSender, UserManager<Users> userManager, IRefreshTokenRepository refreshTokenRepository, TokenHelper tokenHelper)
     {
         _loginFeature = loginFeature;
         _registerFeature = registerFeature;
         _emailSender = emailSender;
         _userManager = userManager;
         _refreshTokenRepository = refreshTokenRepository;
+        _tokenHelper = tokenHelper;
     }
 
     [HttpPost("login")]
@@ -93,5 +97,66 @@ public class AccountsController : ControllerBase
             return Ok("Email confirmed successfully!");
 
         return BadRequest("Email confirmation failed.");
+    }
+
+    [HttpPost("forgot-password")]
+    public async Task<IActionResult> ForgotPassword([FromBody] ForgotPasswordDto model)
+    {
+        if (!ModelState.IsValid)
+            return BadRequest(new { Success = false, Errors = ModelState.Values.SelectMany(v => v.Errors.Select(e => e.ErrorMessage)) });
+
+        var user = await _userManager.FindByEmailAsync(model.Email);
+
+        if (user != null)
+        {
+            var resetToken = await _userManager.GeneratePasswordResetTokenAsync(user);
+
+            var resetLink = _tokenHelper.GeneratePasswordResetLink(resetToken);
+
+            await _emailSender.SendEmailAsync(
+                user.Email,
+                "Reset Your Password",
+                $"Click here to reset your password: <a href='{resetLink}'>Reset Password</a>"
+            );
+        }
+
+        return Ok("If your email is registered, you will receive a password reset email.");
+    }
+
+    [HttpPost("reset-password")]
+    public async Task<IActionResult> ResetPassword([FromBody] ResetPasswordDto model)
+    {
+        if (string.IsNullOrWhiteSpace(model.Token) || string.IsNullOrWhiteSpace(model.NewPassword))
+        {
+            return BadRequest("Token and NewPassword are required.");
+        }
+
+        Users user = null;
+        foreach (var u in await _userManager.Users.ToListAsync())
+        {
+            if (await _userManager.VerifyUserTokenAsync(u, "Default", "ResetPassword", model.Token))
+            {
+                user = u;
+                break;
+            }
+        }
+
+        if (user == null)
+        {
+            return BadRequest("Invalid or expired token.");
+        }
+
+        var resetResult = await _userManager.ResetPasswordAsync(user, model.Token, model.NewPassword);
+        if (resetResult.Succeeded)
+        {
+            return Ok(new { Success = true, Message = "Password has been successfully reset." });
+        }
+
+        return BadRequest(new
+        {
+            Success = false,
+            Message = "Password reset failed.",
+            Errors = resetResult.Errors.Select(e => e.Description)
+        });
     }
 }
