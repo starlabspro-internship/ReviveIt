@@ -26,28 +26,6 @@ namespace WebUI.Controllers
         }
 
         [HttpPost]
-        public IActionResult UploadProfileImage(IFormFile file)
-        {
-            if (file != null && file.Length > 0)
-            {
-                var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/images", file.FileName);
-
-                using (var stream = new FileStream(filePath, FileMode.Create))
-                {
-                    file.CopyTo(stream);
-                }
-
-                TempData["ProfileImage"] = "/images/" + file.FileName;
-            }
-            else
-            {
-                TempData["ProfileImageError"] = "No file selected!";
-            }
-
-            return RedirectToAction("Profile");
-        }
-
-        [HttpPost]
         public IActionResult ChangeProfileType(string profileType)
         {
             TempData["ProfileType"] = profileType;

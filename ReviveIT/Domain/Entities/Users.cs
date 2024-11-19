@@ -10,6 +10,7 @@ public class Users : IdentityUser
     public int? Experience { get; set; }
     public string? CompanyName { get; set; }
     public string? CompanyAddress { get; set; }
+    public string? ProfilePicture { get; set; }
 }
 public enum UserRole
 {
