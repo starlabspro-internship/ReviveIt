@@ -1,4 +1,4 @@
-﻿:root {
+:root {
     --primary-color: hsl(220, 100%, 50%);
     --secondary-color: hsl(220, 41%, 20%);
     --background-color: hsl(0, 0%, 96%);
@@ -9,94 +9,85 @@
     --transition: 0.25s ease;
     --font-family: "Be Vietnam Pro", sans-serif;
 }
+/* Reset Styles */
 *, *::before, *::after {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
-
 li, a {
-    list-style: none; 
+    list-style: none; /* Remove bullets */
     text-decoration: none;
 }
-
 img, span, input, button {
     display: block;
 }
-
 button {
     font: inherit;
     background: none;
     border: none;
     cursor: pointer;
 }
-
 html {
     font-family: var(--font-family);
     scroll-behavior: smooth;
 }
-
 :focus-visible {
     outline: 2px solid var(--text-color);
     outline-offset: 1px;
 }
+/* Body */
 body {
     margin: 0 auto;
     max-width: 1200px;
     padding: 0 20px;
-    padding-top: 92px; 
+    padding-top: 92px; /* Add padding-top to ensure content starts below the fixed header */
 }
+/* Header and Navbar */
 .header {
     background: var(--white);
-    position: fixed; 
+    position: fixed; /* Ensure the header stays in place */
     top: 0;
     left: 50%;
     transform: translateX(-50%);
     width: 100%;
     max-width: 1200px;
-    height: 72px; 
+    height: 72px; /* Consistent height */
     padding: 0 20px;
     transition: height 0.3s var(--transition);
     z-index: 1000;
 }
-
 .header-container {
     display: flex;
     justify-content: space-between;
     align-items: center;
     height: 100%;
 }
-
 .site-title {
-    font-size: 2rem; 
-    font-weight: 700; 
+    font-size: 2rem; /* Increased font size */
+    font-weight: 700; /* Enhanced font weight */
     margin-right: 60px;
-    color: var(--title-color); 
+    color: var(--title-color); /* Updated color to grey */
 }
-
 .menu-toggle-button {
     display: none;
 }
-
 .main-navbar {
     display: flex;
     align-items: center;
     flex-grow: 1;
 }
-
 .navbar-container {
     display: flex;
     align-items: center;
     justify-content: space-between;
     width: 100%;
 }
-
 .navbar-list {
     display: flex;
     gap: 20px;
-    padding: 0; 
+    padding: 0; /* Ensure no additional padding */
 }
-
 .navbar-link {
     color: var(--text-color);
     display: flex;
@@ -106,75 +97,66 @@ body {
     border-radius: var(--radius);
     transition: background 0.25s var(--transition);
 }
-
     .navbar-link.active {
         color: var(--primary-color);
     }
-
     .navbar-link:hover, .navbar-link:focus {
         background: var(--gray-color);
     }
-
 .user-action-list {
     display: flex;
     align-items: center;
-    gap: 10px;
-    padding: 0;
+    gap: 10px; /* Reduced gap for closer spacing */
+    padding: 0; /* Ensure no additional padding */
 }
-
     .user-action-list a {
-        color: var(--text-color);
+        color: var(--text-color); /* Ensure same color for user action links */
         display: flex;
         align-items: center;
-        gap: 5px; 
+        gap: 5px; /* Adjusted gap for better spacing */
         padding: 10px;
         border-radius: var(--radius);
         transition: background 0.25s var(--transition);
     }
-
         .user-action-list a:hover, .user-action-list a:focus {
             background: var(--gray-color);
         }
-
         .user-action-list a.my-account {
-            border: 1px solid var(--gray-color);
-
-        .user-action-list a.logout {
-            margin-right: 5px;
+            border: 1px solid var(--gray-color); /* Thin grey border for My Account */
         }
+        .user-action-list a.logout {
+            margin-right: 5px; /* Slight margin to keep Log Out and My Account close */
+        }
+/* Content Frame */
 #content-placeholder {
     padding: 0;
     width: 100%;
     max-width: 1200px;
     margin: 0 auto;
 }
-
     #content-placeholder iframe {
         width: 100%;
-        height: calc(100vh - 92px); 
+        height: calc(100vh - 92px); /* Ensure iframe fits within the content area */
         border: none;
     }
+/* Responsive Styles */
 @media (max-width: 768px) {
     .menu-toggle-button {
         display: block;
     }
-
     .main-navbar {
         display: none;
     }
-
     .header.active .main-navbar {
         display: flex;
         flex-direction: column;
         width: 100%;
     }
-
     .navbar-list {
         flex-direction: column;
         align-items: center;
         gap: 10px;
     }
-
     .navbar-link {
         padding: 15px;
         width: 100%;
