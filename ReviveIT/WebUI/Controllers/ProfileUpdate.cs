@@ -58,16 +58,16 @@ namespace WebUI.Controllers
         [HttpPut("update-profile")]
         public async Task<IActionResult> UpdateProfile([FromBody] UpdateProfileDTO updateProfileDTO)
         {
-            var userIdClaim = User.FindFirst("UserId")?.Value; 
+            var userIdClaim = User.FindFirst("UserId")?.Value;
             if (string.IsNullOrEmpty(userIdClaim))
                 return Unauthorized("User ID not found in token");
 
             var result = await _updateProfileFeature.UpdateProfileAsync(userIdClaim, updateProfileDTO);
 
-            if (result)
-                return Ok("Profile updated successfully");
+            if (result.IsSuccess)
+                return Ok(result);
 
-            return BadRequest("Failed to update profile");
+            return BadRequest(result);
         }
     }
 }
