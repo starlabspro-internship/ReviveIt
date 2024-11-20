@@ -1,4 +1,5 @@
-﻿using Application.Features.User;  
+﻿using Application.DTO;
+using Application.Features.User;  
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -10,10 +11,12 @@ namespace WebUI.Controllers
     public class ProfileUpdate : ControllerBase
     {
         private readonly ProfilePictureFeature _profilePictureFeature;
+        private readonly UpdateProfileFeature _updateProfileFeature;
 
-        public ProfileUpdate(ProfilePictureFeature profilePictureFeature)
+        public ProfileUpdate(ProfilePictureFeature profilePictureFeature, UpdateProfileFeature updateProfileFeature)
         {
             _profilePictureFeature = profilePictureFeature;
+            _updateProfileFeature = updateProfileFeature;
         }
 
         [HttpPost("upload")]
@@ -50,6 +53,21 @@ namespace WebUI.Controllers
                 return Ok(result);
 
             return NotFound(result);
+        }
+
+        [HttpPut("update-profile")]
+        public async Task<IActionResult> UpdateProfile([FromBody] UpdateProfileDTO updateProfileDTO)
+        {
+            var userIdClaim = User.FindFirst("UserId")?.Value; 
+            if (string.IsNullOrEmpty(userIdClaim))
+                return Unauthorized("User ID not found in token");
+
+            var result = await _updateProfileFeature.UpdateProfileAsync(userIdClaim, updateProfileDTO);
+
+            if (result)
+                return Ok("Profile updated successfully");
+
+            return BadRequest("Failed to update profile");
         }
     }
 }

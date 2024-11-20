@@ -42,7 +42,9 @@ builder.Services.AddScoped<TokenHelper>();
 builder.Services.AddScoped<LoginFeature>();
 builder.Services.AddScoped<RegisterFeature>();
 builder.Services.AddScoped<RefreshTokenRepository>();
-builder.Services.AddScoped<ProfilePictureFeature>(); 
+builder.Services.AddScoped<ProfilePictureFeature>();
+builder.Services.AddScoped<UpdateProfileFeature>();
+
 builder.Services.AddAuthentication(options =>
 {
     options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
