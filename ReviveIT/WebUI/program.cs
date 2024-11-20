@@ -1,4 +1,5 @@
 ﻿using Application.Features.Accounts;
+using Application.Features.User;
 using Application.Helpers;
 using Application.Interfaces;
 using Domain.Constants;
@@ -41,6 +42,7 @@ builder.Services.AddScoped<TokenHelper>();
 builder.Services.AddScoped<LoginFeature>();
 builder.Services.AddScoped<RegisterFeature>();
 builder.Services.AddScoped<RefreshTokenRepository>();
+builder.Services.AddScoped<ProfilePictureFeature>(); 
 builder.Services.AddAuthentication(options =>
 {
     options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
