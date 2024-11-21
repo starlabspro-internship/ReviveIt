@@ -2,15 +2,19 @@
 using Application.Helpers;
 using Application.Interfaces;
 using Domain.Constants;
+using Domain.Entities;
 using Infrastructure.Data;
 using Infrastructure.Repositories;
 using Infrastructure.Services;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using WebUI.MiddleWares;
+
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -36,6 +40,8 @@ builder.Services.AddAuthorization(options =>
 {
     options.AddPolicy("RequireAuthenticatedUser", policy => policy.RequireAuthenticatedUser());
 });
+
+
 
 builder.Services.AddScoped<TokenHelper>();
 builder.Services.AddScoped<LoginFeature>();
@@ -75,8 +81,13 @@ builder.Services.AddTransient<IEmailSender, EmailSender>();
 builder.Services.AddHttpContextAccessor();
 
 builder.Services.AddSingleton<ConfigurationConstant>();
+builder.Services.AddAuthorization(options => { options.AddPolicy("TechnicianOnly", policy => policy.RequireRole("Technician")); });
+builder.Services.AddAuthorization(options => { options.AddPolicy("CustomerOnly", policy => policy.RequireRole("Customer")); });
+builder.Services.AddAuthorization(options => { options.AddPolicy("CompanyOnly", policy => policy.RequireRole("Company")); });
+
 
 var app = builder.Build();
+
 
 using (var scope = app.Services.CreateScope())
 {
@@ -105,6 +116,7 @@ app.UseCors("AllowAll");
 app.UseAuthentication();
 app.UseAuthorization();
 app.UseMiddleware<ExceptionMiddleware>();
+
 
 app.MapControllerRoute(
     name: "default",

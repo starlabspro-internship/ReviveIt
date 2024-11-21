@@ -1,23 +1,19 @@
 ﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using System.Threading.Tasks;
+using System.Security.Claims;
 
-//[Authorize(Roles = "Company")] - for authorize and ViewBag for testing
-
-[AllowAnonymous]
-[Route("Company")]
 public class CompanyController : Controller
 {
-    [HttpGet("Index")]
+ 
     public IActionResult Index()
     {
         ViewBag.Role = "Company";
         return View();
     }
 
-    [HttpGet("Inbox")]
+    [Authorize(Roles = "Company")]
+
     public IActionResult Inbox()
     {
         ViewBag.Role = "Company";
