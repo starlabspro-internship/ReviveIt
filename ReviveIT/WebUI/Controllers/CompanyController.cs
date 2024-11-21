@@ -5,7 +5,6 @@ using System.Security.Claims;
 
 public class CompanyController : Controller
 {
- 
     public IActionResult Index()
     {
         ViewBag.Role = "Company";
@@ -20,7 +19,6 @@ public class CompanyController : Controller
         return View();
     }
 
-    [HttpGet("Myaccount")]
     public IActionResult Myaccount()
     {
         ViewBag.Role = "Company";
