@@ -87,6 +87,16 @@
         const url = $(this).attr("href");
         makeAuthenticatedRequest(url);
     });
-
+    
+    / function checkAuthentication() {
+          const token = localStorage.getItem("jwtToken");
+    
+          if (!token && !isLoginPage()) {
+              console.error("User is not authenticated, redirecting to login");
+              window.location.href = "/logIn/LogIn";
+          }
+      }
+    
+      checkAuthentication();*/
   
 });
