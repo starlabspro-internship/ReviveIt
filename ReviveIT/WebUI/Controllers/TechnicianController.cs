@@ -1,29 +1,33 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using System.Security.Claims;
 
-public class TechnicianController : Controller
-{
-    public IActionResult Index()
-        {
-        ViewBag.Role = "Technician";
-            return View();
-        }
-
-    [Authorize(Roles = "Technician")]
-    public IActionResult PostedJobs()
+    [Route("Technician")]
+    public class TechnicianController : Controller
+    {
+        [HttpGet("Index")]
+        public IActionResult Index()
         {
             ViewBag.Role = "Technician";
             return View();
         }
 
-    public IActionResult Inbox()
+    [Authorize(Roles = "Company")]
+    [HttpGet("PostedJobs")]
+        public IActionResult PostedJobs()
         {
             ViewBag.Role = "Technician";
             return View();
         }
 
+        [HttpGet("Inbox")]
+        public IActionResult Inbox()
+        {
+            ViewBag.Role = "Technician";
+            return View();
+        }
+
+        [HttpGet("Myaccount")]
         public IActionResult Myaccount()
         {
             ViewBag.Role = "Technician";
