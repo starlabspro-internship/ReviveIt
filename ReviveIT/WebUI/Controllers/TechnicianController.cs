@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
@@ -19,13 +19,15 @@ public class TechnicianController : Controller
             return View();
         }
 
+    [Authorize(Roles = "Technician")]
     public IActionResult Inbox()
         {
             ViewBag.Role = "Technician";
             return View();
         }
 
-        public IActionResult Myaccount()
+    [Authorize(Roles = "Technician")]
+    public IActionResult Myaccount()
         {
             ViewBag.Role = "Technician";
             return View();
