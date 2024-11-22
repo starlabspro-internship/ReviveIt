@@ -5,7 +5,6 @@ using System.Security.Claims;
 
 public class CustomerController : Controller
 {
-   
     public IActionResult Index()
     {
         ViewBag.Role = "Customer";
@@ -19,21 +18,18 @@ public class CustomerController : Controller
         return View();
     }
 
-    
     public IActionResult PostJob()
     {
         ViewBag.Role = "Customer";
         return View();
     }
 
- 
     public IActionResult Inbox()
     {
         ViewBag.Role = "Customer";
         return View();
     }
 
-    
     public IActionResult Myaccount()
     {
         ViewBag.Role = "Customer";
