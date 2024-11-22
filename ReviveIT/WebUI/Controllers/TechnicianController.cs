@@ -10,15 +10,12 @@ public class TechnicianController : Controller
         ViewBag.Role = "Technician";
             return View();
         }
-
     [Authorize(Roles = "Technician")]
     public IActionResult PostedJobs()
-
         {
             ViewBag.Role = "Technician";
             return View();
         }
-
     [Authorize(Roles = "Technician")]
     public IActionResult Inbox()
         {
