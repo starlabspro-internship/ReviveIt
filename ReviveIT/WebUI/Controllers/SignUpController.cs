@@ -2,6 +2,7 @@
 
 namespace WebUI.Controllers
 {
+    [Route("SignUp")]
     public class SignUpController : Controller
     {
         public IActionResult SignUp()

@@ -1,0 +1,158 @@
+﻿@model IEnumerable<Application.DTO.TechnicianViewModel>
+
+@{
+    ViewData["Title"] = "Pros";
+}
+
+<section class="expert_section layout_padding technician-page">
+    <div class="container">
+        <div class="heading_container heading_center">
+            <h2>
+                LOOKING FOR EXPERTS?
+            </h2>
+            <p>
+                Find skilled professionals to fulfill your needs.
+            </p>
+        </div>
+        <div class="row">
+            @foreach (var technician in Model)
+            {
+                <div class="col-md-6 col-lg-4 mx-auto">
+                    <div class="box">
+                        <div class="img-box">
+                            <img src="@technician.ProfilePicture" alt="@technician.FullName's Profile Picture" />
+                        </div>
+                        <div class="detail-box">
+                            <a href="#">
+                                @technician.FullName
+                            </a>
+                            <h6 class="expert_position">
+                                <span>
+                                    @technician.Expertise
+                                </span>
+                                <span>
+                                    @technician.Experience Years of Experience
+                                </span>
+                            </h6>
+                            <span class="expert_rating">
+                                @{
+                                    var fullStars = (int)Math.Floor(technician.Rating);
+                                    var hasHalfStar = technician.Rating - fullStars >= 0.5;
+                                    var emptyStars = 5 - fullStars - (hasHalfStar ? 1 : 0);
+                                }
+
+                                @for (int i = 0; i < fullStars; i++)
+                                {
+                                    <i class="fa fa-star" aria-hidden="true"></i>
+                                }
+
+                                @if (hasHalfStar)
+                                {
+                                    <i class="fa fa-star-half-o" aria-hidden="true"></i>
+                                }
+
+                                @for (int i = 0; i < emptyStars; i++)
+                                {
+                                    <i class="fa fa-star-o" aria-hidden="true"></i>
+                                }
+                            </span>
+                            <p>
+                                @technician.Review
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+        <div class="btn-box">
+            <a href="#">
+                View All Experts
+            </a>
+        </div>
+    </div>
+</section>
+
+<section class="info_section">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-2 info_links">
+                <h4>
+                    Menu
+                </h4>
+                <ul>
+                    <li>
+                        <a href="/Home/Index">
+                            Home
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/RrethNesh/RrethNesh">
+                            About
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/Punet/Punet">
+                            Jobs
+                        </a>
+                    </li>
+                    <li>
+                        <a class="active" href="/Mjeshtrit/Mjeshtrit">
+                            Technicians
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <div class="col-md-3">
+                <h4>
+                    Jobs
+                </h4>
+                <p>
+                    Established fact that a reader will be distracted by the readable content of a page when looking at its
+                    layout. The point of using Lorem Ipsum
+                </p>
+            </div>
+            <div class="col-md-3">
+                <div class="info_social">
+                    <h4>
+                        Social Link
+                    </h4>
+                    <div class="social_container">
+                        <div>
+                            <a href="">
+                                <i class="fa fa-facebook" aria-hidden="true"></i>
+                            </a>
+                        </div>
+                        <div>
+                            <a href="">
+                                <i class="fa fa-twitter" aria-hidden="true"></i>
+                            </a>
+                        </div>
+                        <div>
+                            <a href="">
+                                <i class="fa fa-linkedin" aria-hidden="true"></i>
+                            </a>
+                        </div>
+                        <div>
+                            <a href="">
+                                <i class="fa fa-instagram" aria-hidden="true"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="info_form">
+                    <h4>
+                        Newsletter
+                    </h4>
+                    <form action="">
+                        <input type="text" placeholder="Enter Your Email" />
+                        <button type="submit">
+                            Subscribe
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
