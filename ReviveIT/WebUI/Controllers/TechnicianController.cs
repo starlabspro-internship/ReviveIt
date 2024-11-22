@@ -22,7 +22,6 @@ public class TechnicianController : Controller
             ViewBag.Role = "Technician";
             return View();
         }
-
     [Authorize(Roles = "Technician")]
     public IActionResult Myaccount()
         {
