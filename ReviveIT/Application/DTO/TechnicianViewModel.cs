@@ -15,6 +15,7 @@ namespace Application.DTO
         public string CompanyAddress { get; set; }
         public string Review { get; set; }
         public double Rating { get; set; }
+        public string ProfilePicture { get; set; }
     }
 }
 

@@ -1,10 +1,10 @@
 ﻿@model IEnumerable<Application.DTO.TechnicianViewModel>
 
 @{
-    ViewData["Title"] = "Mjeshtrit";
+    ViewData["Title"] = "Pros";
 }
 
-<section class="expert_section layout_padding">
+<section class="expert_section layout_padding technician-page">
     <div class="container">
         <div class="heading_container heading_center">
             <h2>
@@ -20,7 +20,7 @@
                 <div class="col-md-6 col-lg-4 mx-auto">
                     <div class="box">
                         <div class="img-box">
-                            <img src="~/images/default-expert.jpg" alt="Expert Image">
+                            <img src="@technician.ProfilePicture" alt="@technician.FullName's Profile Picture" />
                         </div>
                         <div class="detail-box">
                             <a href="#">

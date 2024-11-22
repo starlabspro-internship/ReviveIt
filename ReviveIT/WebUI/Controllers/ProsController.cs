@@ -5,17 +5,18 @@ using System.Linq;
 using Infrastructure.Data;
 
 namespace WebUI.Controllers
-{ 
-    public class MjeshtritController : Controller
+{
+    [Route("Pros")]
+    public class ProsController : Controller
     {
         private readonly ApplicationDbContext _context;
 
-        public MjeshtritController(ApplicationDbContext context)
+        public ProsController(ApplicationDbContext context)
         {
             _context = context;
         }
 
-        public async Task<IActionResult> Mjeshtrit()
+        public async Task<IActionResult> Pros()
         {
             var technicians = _context.Users
                 .Where(u => u.Role == UserRole.Technician || u.Role == UserRole.Company)
@@ -26,6 +27,7 @@ namespace WebUI.Controllers
                     Experience = u.Experience ?? 0,
                     CompanyName = u.CompanyName,
                     CompanyAddress = u.CompanyAddress,
+                    ProfilePicture = string.IsNullOrEmpty(u.ProfilePicture) ? "/images/default-expert.jpg" : u.ProfilePicture,
                     Review = _context.Reviews
                             .Where(r => r.UserId == u.Id)
                             .Select(r => r.Content)
@@ -38,7 +40,7 @@ namespace WebUI.Controllers
                 })
                 .Take(3)
                 .ToList();
-            ViewBag.IsMjeshtritPage = true;
+            ViewBag.IsProsPage = true;
             return View(technicians);
         }
     }

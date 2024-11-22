@@ -38,8 +38,9 @@
     <link href="~/css/LogInStyle.css" rel="stylesheet" />
 
     <link href="~/css/SignUp.css" rel="stylesheet" />
+
 </head>
-<body class="@(ViewBag.IsMjeshtritPage == true || ViewBag.IsPunetPage == true || ViewBag.IsAboutPage == true ? "sub_page" : "")">
+<body class="@(ViewBag.IsProsPage == true || ViewBag.IsJobListingsPage == true || ViewBag.IsAboutPage == true ? "sub_page" : "")">
 
     <div class="hero_area">
     <!-- Header section starts -->
@@ -60,13 +61,13 @@
                             <a class="nav-link" href="~/">Home</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" asp-controller="RrethNesh" asp-action="RrethNesh">Rreth nesh</a>
+                            <a class="nav-link" asp-controller="AboutUs" asp-action="AboutUs">About Us</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" asp-controller ="Punet" asp-action="Punet">Punet</a>
+                            <a class="nav-link" asp-controller ="JobListings" asp-action="JobListings">Job Listings</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" asp-controller = "Mjeshtrit" asp-action="Mjeshtrit">Mjeshtrit/Kompanite</a>
+                            <a class="nav-link" asp-controller = "Pros" asp-action="Pros">Hire a Pro</a>
                         </li>
                         <li class="nav-item">
                                 <a class="nav-link" asp-controller="LogIn" asp-action="LogIn">
@@ -91,7 +92,7 @@
         </div>
     </header>
     <!-- End header section -->
-        @(ViewBag.IsMjeshtritPage == true || ViewBag.IsPunetPage == true || ViewBag.IsAboutPage == true ? Html.Raw("</div>") : "")
+        @(ViewBag.IsProsPage == true || ViewBag.IsPunetPage == true || ViewBag.IsAboutPage == true ? Html.Raw("</div>") : "")
 
     <div>
         @RenderBody()
