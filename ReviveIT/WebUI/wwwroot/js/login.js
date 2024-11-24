@@ -1,10 +1,8 @@
-﻿$(document).ready(function () {
-    // Function to check if the user is on the login page
+$(document).ready(function () {
     function isLoginPage() {
-        return window.location.pathname === "/logIn/LogIn";
+        return window.location.pathname.toLowerCase() === "/login/login";
     }
 
-    // Login form submission
     $("#loginForm").submit(function (event) {
         event.preventDefault();
 
@@ -20,50 +18,36 @@
             data: JSON.stringify(loginData),
             success: function (response) {
                 localStorage.setItem("jwtToken", response.token);
-                console.log("Login successful!");
-                
-                // Decode the JWT token to get user role
-                const token = response.token;
-                try {
-                    const payload = KJUR.jws.JWS.readSafeJSONString(b64utoutf8(token.split(".")[1]));
-                    console.log("Token Payload: ", payload);
 
-                    // Retrieve the role from the token
-                    const userRole = payload["http://schemas.microsoft.com/ws/2008/06/identity/claims/role"];
-                    console.log("User Role: ", userRole);
+                const userRole = response.role;
 
-                    // Redirect based on user role
-                    if (userRole === "Technician") {
-                        console.log("Redirecting to Technician/Index");
+                switch (userRole) {
+                    case "Technician":
                         window.location.href = "/Technician/Index";
-                    } else if (userRole === "Company") {
-                        console.log("Redirecting to Company/Index");
+                        break;
+                    case "Company":
                         window.location.href = "/Company/Index";
-                    } else if (userRole === "Customer") {
-                        console.log("Redirecting to Customer/Index");
+                        break;
+                    case "Customer":
                         window.location.href = "/Customer/Index";
-                    } else {
-                        console.log("Redirecting to Home");
-                        window.location.href = "/home"; // k
-                    }
-                } catch (error) {
-                    console.error("Error decoding token: ", error);
-                    alert("Failed to decode token. Please try again.");
+                        break;
+                    default:
+                        window.location.href = "/home";
+                        break;
                 }
             },
             error: function (xhr) {
                 var errorMessage = xhr.responseJSON?.message || "An unexpected error occurred. Please try again later.";
-                console.error("Login error: ", errorMessage);
+                alert(errorMessage);
             }
         });
     });
 
-    // Function to make authenticated AJAX requests
     function makeAuthenticatedRequest(url, method = "GET") {
         const token = localStorage.getItem("jwtToken");
 
         if (!token) {
-            console.error("User is not authenticated");
+            window.location.href = "/logIn/LogIn";
             return;
         }
 
@@ -75,25 +59,37 @@
             },
             success: function (data) {
                 $("body").html(data);
+                window.history.pushState({}, "", url);
             },
             error: function (xhr) {
-                console.error("Access denied. Please login again.");
+                alert("Access denied. Please login again.");
+                window.location.href = "/logIn/LogIn";
             }
         });
     }
 
-    $(document).on("click", ".auth-link", function (e) {
+    $.ajaxSetup({
+        beforeSend: function (xhr) {
+            const token = localStorage.getItem("jwtToken");
+            if (token) {
+                xhr.setRequestHeader("Authorization", `Bearer ${token}`);
+            }
+        }
+    });
+
+    $(document).off("click", ".auth-link").on("click", ".auth-link", function (e) {
         e.preventDefault();
         const url = $(this).attr("href");
         makeAuthenticatedRequest(url);
     });
-function checkAuthentication() {
-          const token = localStorage.getItem("jwtToken");
-    
-          if (!token && !isLoginPage()) {
-              console.error("User is not authenticated, redirecting to login");
-              window.location.href = "/logIn/LogIn";
-          }
-      }
-      checkAuthentication();
+
+    function checkAuthentication() {
+        const token = localStorage.getItem("jwtToken");
+
+        if (!token && !isLoginPage()) {
+            window.location.href = "/logIn/LogIn";
+        }
+    }
+
+    checkAuthentication();
 });
