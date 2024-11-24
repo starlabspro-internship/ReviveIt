@@ -1,9 +1,9 @@
 ﻿using Application.DTO;
 using Application.Helpers;
-using Application.Interfaces; 
-using Domain.Constants;
+using Application.Interfaces;
 using Domain.Entities;
 using Microsoft.AspNetCore.Identity;
+using System.Threading.Tasks;
 
 namespace Application.Features.Accounts
 {
@@ -12,20 +12,14 @@ namespace Application.Features.Accounts
         private readonly UserManager<Users> _userManager;
         private readonly SignInManager<Users> _signInManager;
         private readonly TokenHelper _tokenHelper;
-        private readonly IRefreshTokenRepository _refreshTokenRepository; 
-        private readonly ConfigurationConstant _constant;
 
         public LoginFeature(UserManager<Users> userManager,
                             SignInManager<Users> signInManager,
-                            TokenHelper tokenHelper,
-                            IRefreshTokenRepository refreshTokenRepository, 
-                            ConfigurationConstant constant)
+                            TokenHelper tokenHelper)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _tokenHelper = tokenHelper;
-            _refreshTokenRepository = refreshTokenRepository; 
-            _constant = constant;
         }
 
         public async Task<LoginResultDTO> AuthenticateUser(LoginDto loginDto)
@@ -47,25 +41,10 @@ namespace Application.Features.Accounts
             }
 
             var token = _tokenHelper.GenerateToken(user);
+            var roles = await _userManager.GetRolesAsync(user);
+            var role = roles.FirstOrDefault();
 
-            var refreshToken = _tokenHelper.GenerateRefreshToken();
-
-            var existingRefreshToken = await _refreshTokenRepository.GetByTokenAsync(user.Id);
-            if (existingRefreshToken != null)
-            {
-                await _refreshTokenRepository.RemoveRefreshTokenAsync(user.Id);
-            }
-
-            var userRefreshToken = new UserRefreshToken
-            {
-                UserId = user.Id,
-                Token = refreshToken,
-                ExpiresOn = DateTime.UtcNow.AddDays(7)
-            };
-
-            await _refreshTokenRepository.AddOrUpdateRefreshTokenAsync(userRefreshToken);
-
-            return LoginResultDTO.Success(token);
+            return LoginResultDTO.Success(token, role); 
         }
     }
 }

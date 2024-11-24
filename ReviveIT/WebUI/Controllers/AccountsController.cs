@@ -36,7 +36,11 @@ public class AccountsController : ControllerBase
         if (!result.IsSuccess)
             return Unauthorized(new { Message = result.ErrorMessage });
 
-        return Ok(new { Token = result.Token });
+        var user = await _userManager.FindByEmailAsync(loginDto.Email);
+        var roles = await _userManager.GetRolesAsync(user);
+        var role = roles.FirstOrDefault();
+
+        return Ok(new { Token = result.Token, Role = role });
     }
 
     [Authorize]
@@ -45,7 +49,7 @@ public class AccountsController : ControllerBase
     {
         var email = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
         var user = await _userManager.FindByEmailAsync(email);
-       
+
         if (string.IsNullOrEmpty(user.Id))
         {
             return Unauthorized(new { message = "User ID not found in token." });
