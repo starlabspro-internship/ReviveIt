@@ -13,6 +13,7 @@ namespace Application.Interfaces
         public DbSet<Messages> Messages { get; set; }
         public DbSet<Reviews> Reviews { get; set; }
         public DbSet<UserRefreshToken>UserRefreshTokens { get; set; }
+        public DbSet<Category> Categories { get; set; }
 
         Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);
     }
