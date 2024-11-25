@@ -4,6 +4,7 @@ using Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace WebUI.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241125141137_Categories")]
+    partial class Categories
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -48,36 +51,6 @@ namespace WebUI.Migrations
                     b.HasKey("CategoryID");
 
                     b.ToTable("Categories");
-
-                    b.HasData(
-                        new
-                        {
-                            CategoryID = 1,
-                            CreatedAt = new DateTime(2024, 11, 25, 14, 26, 21, 408, DateTimeKind.Utc).AddTicks(5373),
-                            Name = "Electronics Repair",
-                            UpdatedAt = new DateTime(2024, 11, 25, 14, 26, 21, 408, DateTimeKind.Utc).AddTicks(5373)
-                        },
-                        new
-                        {
-                            CategoryID = 2,
-                            CreatedAt = new DateTime(2024, 11, 25, 14, 26, 21, 408, DateTimeKind.Utc).AddTicks(5375),
-                            Name = "Furniture Restoration",
-                            UpdatedAt = new DateTime(2024, 11, 25, 14, 26, 21, 408, DateTimeKind.Utc).AddTicks(5375)
-                        },
-                        new
-                        {
-                            CategoryID = 3,
-                            CreatedAt = new DateTime(2024, 11, 25, 14, 26, 21, 408, DateTimeKind.Utc).AddTicks(5377),
-                            Name = "Home Appliance Repair",
-                            UpdatedAt = new DateTime(2024, 11, 25, 14, 26, 21, 408, DateTimeKind.Utc).AddTicks(5377)
-                        },
-                        new
-                        {
-                            CategoryID = 4,
-                            CreatedAt = new DateTime(2024, 11, 25, 14, 26, 21, 408, DateTimeKind.Utc).AddTicks(5379),
-                            Name = "Automotive Repair",
-                            UpdatedAt = new DateTime(2024, 11, 25, 14, 26, 21, 408, DateTimeKind.Utc).AddTicks(5379)
-                        });
                 });
 
             modelBuilder.Entity("Domain.Entities.JobApplication", b =>

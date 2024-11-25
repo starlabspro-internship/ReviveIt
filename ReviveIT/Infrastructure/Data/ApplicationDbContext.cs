@@ -17,6 +17,7 @@ namespace Infrastructure.Data
         public DbSet<Messages> Messages { get; set; }
         public DbSet<Reviews> Reviews { get; set; }
         public DbSet<UserRefreshToken>UserRefreshTokens { get; set; }
+        public DbSet<Category> Categories { get; set; }
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
@@ -36,7 +37,15 @@ namespace Infrastructure.Data
             builder.ApplyConfiguration(new ReviewsConfiguration());
 
             builder.ApplyConfiguration(new UserRefreshTokenConfigurations());
-        }
 
+            builder.ApplyConfiguration(new CategoryConfigurations());
+
+            builder.Entity<Category>().HasData(
+              new Category { CategoryID = 1, Name = "Electronics Repair", CreatedAt = DateTime.UtcNow, UpdatedAt = DateTime.UtcNow },
+              new Category { CategoryID = 2, Name = "Furniture Restoration", CreatedAt = DateTime.UtcNow, UpdatedAt = DateTime.UtcNow },
+              new Category { CategoryID = 3, Name = "Home Appliance Repair", CreatedAt = DateTime.UtcNow, UpdatedAt = DateTime.UtcNow },
+              new Category { CategoryID = 4, Name = "Automotive Repair", CreatedAt = DateTime.UtcNow, UpdatedAt = DateTime.UtcNow }
+            );
+        }
     }
 }
