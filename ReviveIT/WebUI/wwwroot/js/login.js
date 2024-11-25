@@ -13,7 +13,6 @@
             contentType: "application/json",
             data: JSON.stringify(loginData),
             success: function (response) {
-                localStorage.setItem("jwtToken", response.token);
                 alert("Login successful!");
                 window.location.href = "/home";
             },
