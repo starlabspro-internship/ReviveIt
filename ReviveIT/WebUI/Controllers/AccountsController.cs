@@ -36,7 +36,9 @@ public class AccountsController : ControllerBase
         if (!result.IsSuccess)
             return Unauthorized(new { Message = result.ErrorMessage });
 
-        return Ok(new { Token = result.Token });
+        SetTokenCookie(result.Token);
+
+        return Ok(new { Message = "Login successful." });
     }
 
     [Authorize]
@@ -157,6 +159,19 @@ public class AccountsController : ControllerBase
             Success = false,
             Message = "Password reset failed.",
             Errors = resetResult.Errors.Select(e => e.Description)
+        });
+    }
+
+    private void SetTokenCookie(string jwtToken)
+    {
+        var secure = Request.IsHttps;
+
+        Response.Cookies.Append("jwtToken", jwtToken, new CookieOptions
+        {
+            HttpOnly = true,
+            Secure = secure,
+            SameSite = SameSiteMode.Strict,
+            Expires = DateTime.UtcNow.AddMinutes(3600),
         });
     }
 }
