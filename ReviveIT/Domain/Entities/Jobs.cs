@@ -22,9 +22,9 @@
 
     public enum JobStatus
     {
-        Open,
-        Closed,
-        InProgress,
-        Completed
+        Open=1,
+        Closed=2,
+        InProgress=3,
+        Completed=4
     }
 }

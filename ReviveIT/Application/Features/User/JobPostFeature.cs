@@ -3,7 +3,6 @@ using Application.Interfaces;
 using Domain.Entities;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
-using System.Security.Claims;
 
 namespace Application.Features.User
 {
@@ -39,13 +38,14 @@ namespace Application.Features.User
 
             var jobPost = new Jobs
             {
+                Status = JobStatus.Open,
                 Title = jobPostDto.Title,
                 Description = jobPostDto.Description,
                 CategoryId = jobPostDto.CategoryId,
                 Price = jobPostDto.Price,
                 CreatedAt = DateTime.UtcNow,
                 UpdatedAt = DateTime.UtcNow,
-                UserId = userId 
+                UserId = userId
             };
 
             _context.Jobs.Add(jobPost);
@@ -64,5 +64,25 @@ namespace Application.Features.User
 
             return JobPostResultDto.SuccessResult(response, "Job post created successfully.");
         }
+
+        public async Task<DeleteJobDto> DeleteJobPostAsync(int jobId, string userId)
+        {
+            var jobPost = await _context.Jobs.FindAsync(jobId);
+            if (jobPost == null)
+            {
+                return DeleteJobDto.Failure("Job post not found.", 404);
+            }
+
+            if (jobPost.UserId != userId)
+            {
+                return DeleteJobDto.Failure("You are not authorized to delete this job post.", 403);
+            }
+
+            _context.Jobs.Remove(jobPost);
+            await _context.SaveChangesAsync();
+
+            return DeleteJobDto.Success("Job post deleted successfully.");
+        }
     }
 }
+

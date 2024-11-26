@@ -22,7 +22,7 @@ namespace WebUI.Controllers
 
             if (string.IsNullOrEmpty(userIdClaim))
             {
-                return Unauthorized("User not authenticated");
+                return Unauthorized(new { success = false, message = "User not authenticated" });
             }
 
             var result = await _jobPostFeature.CreateJobPostAsync(jobPostDto, userIdClaim);
@@ -33,6 +33,26 @@ namespace WebUI.Controllers
             }
 
             return BadRequest(result);
+        }
+
+        [HttpDelete("delete-job/{jobId}")]
+        public async Task<IActionResult> DeleteJobPost(int jobId)
+        {
+            var userIdClaim = User.FindFirst("UserId")?.Value;
+
+            if (string.IsNullOrEmpty(userIdClaim))
+            {
+                return Unauthorized(new { success = false, message = "User not authenticated" });
+            }
+
+            var result = await _jobPostFeature.DeleteJobPostAsync(jobId, userIdClaim);
+
+            if (result.IsSuccessful)
+            {
+                return Ok(new { success = true, message = result.Message });
+            }
+
+            return StatusCode(result.StatusCode, new { success = false, message = result.Message });
         }
     }
 }

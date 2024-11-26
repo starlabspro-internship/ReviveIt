@@ -5,7 +5,6 @@ using Application.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using System.Security.Claims;
 using Microsoft.EntityFrameworkCore;
 
 [Route("api/[controller]")]
@@ -45,15 +44,14 @@ public class AccountsController : ControllerBase
     [HttpPost("logout")]
     public async Task<IActionResult> Logout()
     {
-        var email = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-        var user = await _userManager.FindByEmailAsync(email);
-       
-        if (string.IsNullOrEmpty(user.Id))
+        var userIdClaim = User.FindFirst("UserId")?.Value;
+
+        if (string.IsNullOrEmpty(userIdClaim))
         {
             return Unauthorized(new { message = "User ID not found in token." });
         }
 
-        var result = await _refreshTokenRepository.RemoveRefreshTokenAsync(user.Id);
+        var result = await _refreshTokenRepository.RemoveRefreshTokenAsync(userIdClaim);
 
         if (result)
         {
