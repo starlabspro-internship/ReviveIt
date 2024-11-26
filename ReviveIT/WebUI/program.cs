@@ -98,8 +98,6 @@ builder.Services.AddControllers()
         options.JsonSerializerOptions.WriteIndented = true;
     });
 
-
-
 var app = builder.Build();
 
 using (var scope = app.Services.CreateScope())

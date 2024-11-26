@@ -6,6 +6,5 @@ namespace Application.Interfaces
     {
         Task<JobPostResultDto> CreateJobPostAsync(JobPostDto jobPostDto, string userId);
         Task<DeleteJobDto> DeleteJobPostAsync(int jobId, string userId);
-
     }
 }

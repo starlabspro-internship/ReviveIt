@@ -1,14 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Application.DTO
+﻿namespace Application.DTO
 {
     public class DeleteJobDto
     {
-        public bool IsSuccessful { get; private set; } // Renamed property
+        public bool IsSuccessful { get; private set; } 
         public string Message { get; private set; }
         public object Data { get; private set; }
         public int StatusCode { get; private set; }
