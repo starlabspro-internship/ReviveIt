@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -39,81 +40,105 @@
 
     <link href="~/css/SignUp.css" rel="stylesheet" />
 
+    <link href="~/css/userProfile.css" rel="stylesheet" />
+
 </head>
 <body class="@(ViewBag.IsProsPage == true || ViewBag.IsJobListingsPage == true || ViewBag.IsAboutPage == true ? "sub_page" : "")">
 
     <div class="hero_area">
-    <!-- Header section starts -->
-    <header class="header_section">
-        <div class="container-fluid">
-            <nav class="navbar navbar-expand-lg custom_nav-container">
-                <a class="navbar-brand" href="~/">
-                    <span>ReviveIt</span>
-                </a>
+        <!-- Header section starts -->
+        <header class="header_section">
+            <div class="container-fluid">
+                <nav class="navbar navbar-expand-lg custom_nav-container">
+                    <a class="navbar-brand" href="~/">
+                        <span>ReviveIt</span>
+                    </a>
 
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class=""></span>
-                </button>
+                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class=""></span>
+                    </button>
 
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <ul class="navbar-nav ml-auto">
-                        <li class="nav-item active">
-                            <a class="nav-link" href="~/">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" asp-controller="AboutUs" asp-action="AboutUs">About Us</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" asp-controller ="JobListings" asp-action="JobListings">Job Listings</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" asp-controller = "Pros" asp-action="Pros">Hire a Pro</a>
-                        </li>
-                        <li class="nav-item">
+                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                        <ul class="navbar-nav ml-auto">
+                            <li class="nav-item active">
+                                <a class="nav-link" href="~/">Home</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" asp-controller="AboutUs" asp-action="AboutUs">About Us</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" asp-controller="JobListings" asp-action="JobListings">Job Listings</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" asp-controller="Pros" asp-action="Pros">Hire a Pro</a>
+                            </li>
+                            <li class="nav-item">
                                 <a class="nav-link" asp-controller="LogIn" asp-action="LogIn">
-                                <i class="fa fa-user" aria-hidden="true"></i>
-                                <span>Login</span>
-                            </a>
-                        </li>
-                        <li class="nav-item">
+                                    <i class="fa fa-user" aria-hidden="true"></i>
+                                    <span>Login</span>
+                                </a>
+                            </li>
+                            <li class="nav-item">
                                 <a class="nav-link" asp-controller="SignUp" asp-action="SignUp">
-                                <i class="fa fa-user" aria-hidden="true"></i>
-                                <span>Sign Up</span>
-                            </a>
-                        </li>
-                        <form class="form-inline">
-                            <button class="btn nav_search-btn" type="submit">
-                                <i class="fa fa-search" aria-hidden="true"></i>
-                            </button>
-                        </form>
-                    </ul>
-                </div>
-            </nav>
-        </div>
-    </header>
-    <!-- End header section -->
+                                    <i class="fa fa-user" aria-hidden="true"></i>
+                                    <span>Sign Up</span>
+                                </a>
+                            </li>
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" id="userProfileDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <!-- User Image -->
+                                    <img src="path-to-image.jpg"
+                                         alt="User Profile"
+                                         class="rounded-circle"
+                                         width="40"
+                                         height="40"
+                                         onerror="this.onerror=null;this.src='https://via.placeholder.com/40/6c757d/ffffff?text=U';">
+                                    <!-- User Name -->
+                                    <span class="ml-2">John Doe</span>
+                                </a>
+                                <!-- Dropdown Menu -->
+                                <div class="dropdown-menu" aria-labelledby="userProfileDropdown">
+                                    <a class="dropdown-item" asp-controller="Profile" asp-action="Profile">Profile</a>
+                                    <a class="dropdown-item" asp-controller="Settings" asp-action="Index">Settings</a>
+                                    <a class="dropdown-item" href="#" id="statusDropdown">Status: <span id="statusText">UNA</span></a>
+                                    <a class="dropdown-item" asp-controller="Account" asp-action="LogOut">Log Out</a>
+                                </div>
+                            </li>
+                            <form class="form-inline">
+                                <button class="btn nav_search-btn" type="submit">
+                                    <i class="fa fa-search" aria-hidden="true"></i>
+                                </button>
+                            </form>
+                        </ul>
+                    </div>
+                </nav>
+            </div>
+        </header>
+        <!-- End header section -->
         @(ViewBag.IsProsPage == true || ViewBag.IsPunetPage == true || ViewBag.IsAboutPage == true ? Html.Raw("</div>") : "")
 
-    <div>
-        @RenderBody()
-    </div>
-
-    <!-- Footer section -->
-    <footer class="footer_section">
-        <div class="container">
-            <p>
-                &copy; <span id="displayYear"></span> All Rights Reserved By
-                <a href="https://html.design/">Free Html Templates</a>
-            </p>
+        <div>
+            @RenderBody()
         </div>
-    </footer>
-    <!-- End footer section -->
-    <!-- jQuery and Bootstrap Scripts -->
-    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-    <script src="~/js/bootstrap.bundle.min.js"></script>
+
+        <!-- Footer section -->
+        <footer class="footer_section">
+            <div class="container">
+                <p>
+                    &copy; <span id="displayYear"></span> All Rights Reserved By
+                    <a href="https://html.design/">Free Html Templates</a>
+                </p>
+            </div>
+        </footer>
+        <!-- End footer section -->
+        <!-- jQuery and Bootstrap Scripts -->
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script src="~/js/bootstrap.bundle.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-nice-select/1.1.0/js/jquery.nice-select.min.js"></script>
-    <!-- Custom Script -->
-    <script src="~/js/custom.js"></script>
+        <!-- Custom Script -->
+        <script src="~/js/custom.js"></script>
+        <!-- jQuery and Bootstrap JS -->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
 
 </body>
 </html>
