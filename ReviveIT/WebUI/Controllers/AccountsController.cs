@@ -38,7 +38,7 @@ public class AccountsController : ControllerBase
 
         SetTokenCookie(result.Token);
 
-        return Ok(new { Message = "Login successful." });
+        return Ok(new { Message = "Login successful.", result.Token });
     }
 
     [Authorize]
