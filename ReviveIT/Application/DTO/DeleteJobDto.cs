@@ -22,4 +22,3 @@
             new DeleteJobDto(false, message, null, statusCode);
     }
 }
-
