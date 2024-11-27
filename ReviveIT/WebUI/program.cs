@@ -44,6 +44,8 @@ builder.Services.AddScoped<RegisterFeature>();
 builder.Services.AddScoped<RefreshTokenRepository>();
 builder.Services.AddScoped<ProfilePictureFeature>();
 builder.Services.AddScoped<UpdateProfileFeature>();
+builder.Services.AddScoped<GetAllJobsFeature>();
+builder.Services.AddScoped<GetJobsByUserIDFeature>();
 
 builder.Services.AddAuthentication(options =>
 {

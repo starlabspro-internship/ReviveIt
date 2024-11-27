@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
-    //[Authorize(Roles = "Company")] - for authorize and ViewBag for testing
+namespace WebUI.Controllers
+{
     [AllowAnonymous]
     [Route("Technician")]
     public class TechnicianController : Controller
@@ -35,3 +35,4 @@ using Microsoft.AspNetCore.Mvc;
             return View();
         }
     }
+}

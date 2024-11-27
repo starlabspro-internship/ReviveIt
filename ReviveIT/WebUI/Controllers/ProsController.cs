@@ -1,8 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Domain.Entities;
-using Application.DTO;
-using System.Linq;
+﻿using Application.DTO;
 using Infrastructure.Data;
+using Microsoft.AspNetCore.Mvc;
 
 namespace WebUI.Controllers
 {
