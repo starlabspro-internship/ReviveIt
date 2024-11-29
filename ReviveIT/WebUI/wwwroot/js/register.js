@@ -98,7 +98,7 @@
                 messageContainer.innerHTML = `
                     <p>Registration was successful! A confirmation link has been sent to your email.</p>
                     <p>Please check your email to verify your account.</p>
-                    <a href="/LogIn/LogIn" class="btn btn-primary mt-3" style="display: block; margin: 20px auto; text-align: center;">Go to Login</a>
+                    <a href="/LogIn" class="btn btn-primary mt-3" style="display: block; margin: 20px auto; text-align: center;">Go to Login</a>
                 `;
                 registerForm.parentElement.appendChild(messageContainer);
             } else {
