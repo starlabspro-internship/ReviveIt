@@ -2,34 +2,37 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
-[Route("[controller]")]
-[ApiController]
-public class AccountRecoveryController : Controller
+namespace WebUI.Controllers
 {
-    private readonly UserManager<Users> _userManager;
-    private readonly TokenHelper _tokenHelper;
-
-    public AccountRecoveryController(UserManager<Users> userManager, TokenHelper tokenHelper)
+    [Route("[controller]")]
+    [ApiController]
+    public class AccountRecoveryController : Controller
     {
-        _userManager = userManager;
-        _tokenHelper = tokenHelper;
-    }
+        private readonly UserManager<Users> _userManager;
+        private readonly TokenHelper _tokenHelper;
 
-    [HttpGet("forgot-password")]
-    public IActionResult forgotPassword()
-    {
-        return View();
-    }
-
-    [HttpGet("reset-password")]
-    public IActionResult resetPassword(string token)
-    {
-        if (string.IsNullOrEmpty(token))
+        public AccountRecoveryController(UserManager<Users> userManager, TokenHelper tokenHelper)
         {
-            return NotFound();
+            _userManager = userManager;
+            _tokenHelper = tokenHelper;
         }
 
-        ViewData["Token"] = token;
-        return View();
+        [HttpGet("forgot-password")]
+        public IActionResult forgotPassword()
+        {
+            return View();
+        }
+
+        [HttpGet("reset-password")]
+        public IActionResult resetPassword(string token)
+        {
+            if (string.IsNullOrEmpty(token))
+            {
+                return NotFound();
+            }
+
+            ViewData["Token"] = token;
+            return View();
+        }
     }
 }
