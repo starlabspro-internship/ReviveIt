@@ -57,6 +57,8 @@ public class AccountsController : ControllerBase
 
         if (result)
         {
+            Response.Cookies.Delete("jwtToken");
+            Response.Cookies.Delete("refreshToken");
             return Ok(new { message = "Successfully logged out" });
         }
 
