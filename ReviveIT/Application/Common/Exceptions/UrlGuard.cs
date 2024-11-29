@@ -13,10 +13,10 @@ namespace Application.Common.Exceptions
             public UnsafeUrlException(string message) : base(message) { }
         }
         private static readonly List<string> unsafePatterns = new List<string>
-    {
-        "malware", "phishing", "hacker","virus", "trojan", "exploit", "attack", "unauthorized",
-        "#", "%", "<", ">", "{", "}", "-", "=", "`", "&", "*", "?", "!", "\"", ";", ":", "'", "+", "@"
-    };
+        {
+            "malware", "phishing", "hacker", "virus", "trojan", "exploit", "attack", "unauthorized",
+            "#", "%", "<", ">", "{", "}", "-", "=", "`", "&", "*", "?", "!", ";", "'", "+", "@"
+        };
         public static bool IsUnsafeUrl(string url)
         {
             foreach (var pattern in unsafePatterns)
