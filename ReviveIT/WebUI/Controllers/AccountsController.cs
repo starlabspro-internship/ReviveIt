@@ -57,10 +57,12 @@ namespace WebUI.Controllers
 
             var result = await _refreshTokenRepository.RemoveRefreshTokenAsync(user.Id);
 
-            if (result)
-            {
-                return Ok(new { message = "Successfully logged out" });
-            }
+        if (result)
+        {
+            Response.Cookies.Delete("jwtToken");
+            Response.Cookies.Delete("refreshToken");
+            return Ok(new { message = "Successfully logged out" });
+        }
 
             return NotFound(new { message = "Refresh token not found." });
         }
