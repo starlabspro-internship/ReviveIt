@@ -1,6 +1,7 @@
 ﻿using Application.DTO;
 using Application.Features.User;  
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace WebUI.Controllers
@@ -12,12 +13,45 @@ namespace WebUI.Controllers
     {
         private readonly ProfilePictureFeature _profilePictureFeature;
         private readonly UpdateProfileFeature _updateProfileFeature;
+        private readonly UserManager<Users> _userManager;
 
-        public ProfileUpdate(ProfilePictureFeature profilePictureFeature, UpdateProfileFeature updateProfileFeature)
+        public ProfileUpdate(ProfilePictureFeature profilePictureFeature, UpdateProfileFeature updateProfileFeature, UserManager<Users> userManager)
         {
             _profilePictureFeature = profilePictureFeature;
             _updateProfileFeature = updateProfileFeature;
+            _userManager = userManager;
         }
+
+        [HttpGet("fullname")]
+        public async Task<IActionResult> GetFullName()
+        {
+            var userIdClaim = User.FindFirst("UserId")?.Value;
+            if (string.IsNullOrEmpty(userIdClaim))
+                return Unauthorized("User ID not found in token");
+
+            var user = await _userManager.FindByIdAsync(userIdClaim);
+            if (user == null)
+                return NotFound("User not found");
+
+            return Ok(new { FullName = user.FullName });
+        }
+
+        [HttpGet("role")]
+        public async Task<IActionResult> GetRole()
+        {
+            var userIdClaim = User.FindFirst("UserId")?.Value;
+            if (string.IsNullOrEmpty(userIdClaim))
+                return Unauthorized("User ID not found in token");
+
+            var user = await _userManager.FindByIdAsync(userIdClaim);
+            if (user == null)
+                return NotFound("User not found");
+
+            string roleAsString = user.Role.ToString();
+
+            return Ok(new { Role = roleAsString });
+        }
+
 
         [HttpPost("upload")]
         public async Task<IActionResult> UploadProfilePicture([FromForm] IFormFile profilePicture)

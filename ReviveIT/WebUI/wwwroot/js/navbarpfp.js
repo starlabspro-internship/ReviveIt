@@ -2,16 +2,14 @@
 
 function getCookie(name) {
     const cookies = document.cookie.split("; ");
-    for (const cookie of cookies) {
-        const [key, value] = cookie.split("=");
-        if (key === name) {
-            return decodeURIComponent(value);
-        }
-    }
-    return null;
+    const cookie = cookies.find(cookie => cookie.startsWith(name + "="));
+    return cookie ? decodeURIComponent(cookie.split("=")[1]) : null;
 }
 
 async function fetchNavbarProfilePicture() {
+    const navbarProfilePicture = document.getElementById('navbarProfilePicture');
+    const placeholderUrl = "https://via.placeholder.com/150";
+
     try {
         const response = await fetch(`${apiUrlNavBar}/get`, {
             method: 'GET',
@@ -22,26 +20,13 @@ async function fetchNavbarProfilePicture() {
 
         if (response.ok) {
             const data = await response.json();
-            const navbarProfilePicture = document.getElementById('navbarProfilePicture');
-
-            if (data.profilePictureUrl) {
-                navbarProfilePicture.src = data.profilePictureUrl;
-            } else {
-                navbarProfilePicture.src = "https://via.placeholder.com/150";
-            }
+            navbarProfilePicture.src = data.profilePictureUrl || placeholderUrl;
         } else {
-            console.error("Failed to fetch profile picture for navbar:", response.status);
-            const navbarProfilePicture = document.getElementById('navbarProfilePicture');
-            navbarProfilePicture.src = "https://via.placeholder.com/150";
+            navbarProfilePicture.src = placeholderUrl;
         }
     } catch (error) {
-        console.error("Error fetching navbar profile picture:", error);
-        const navbarProfilePicture = document.getElementById('navbarProfilePicture');
-        navbarProfilePicture.src = "https://via.placeholder.com/150";
+        navbarProfilePicture.src = placeholderUrl;
     }
 }
 
-
-document.addEventListener('DOMContentLoaded', () => {
-    fetchNavbarProfilePicture();
-});
+document.addEventListener('DOMContentLoaded', fetchNavbarProfilePicture);
