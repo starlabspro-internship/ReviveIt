@@ -10,29 +10,19 @@
 
     <title>ReviveIt</title>
 
-    <link rel="stylesheet" type="text/css" href="~/css/bootstrap.css" />
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
 
     <link href="https://fonts.googleapis.com/css?family=Poppins:400,600,700&display=swap" rel="stylesheet">
 
-    <link href="~/css/font-awesome.min.css" rel="stylesheet" />
-
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-nice-select/1.1.0/css/nice-select.min.css" integrity="sha256-mLBIhmBvigTFWPSCtvdu6a76T+3Xyt+K571hupeFLg4=" crossorigin="anonymous" />
-
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
-
     <link href="~/css/style.css" rel="stylesheet" />
-
     <link href="~/css/responsive.css" rel="stylesheet" />
-
     <link href="~/css/LogInStyle.css" rel="stylesheet" />
-
     <link href="~/css/SignUp.css" rel="stylesheet" />
-
     <link href="~/css/userProfile.css" rel="stylesheet" />
 
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-nice-select/1.1.0/css/nice-select.min.css" integrity="sha256-mLBIhmBvigTFWPSCtvdu6a76T+3Xyt+K571hupeFLg4=" crossorigin="anonymous" />
 </head>
 <body class="@(ViewBag.IsProsPage == true || ViewBag.IsJobListingsPage == true || ViewBag.IsAboutPage == true ? "sub_page" : "")">
 
@@ -69,7 +59,7 @@
                             {
                                 <li class="nav-item dropdown">
                                     <a class="nav-link dropdown-toggle" href="#" id="userProfileDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        <img id="navbarProfilePicture" src="https://via.placeholder.com/150" alt="Profile Picture" class="img-fluid rounded-circle" style=" width: 30px; height: 30px; object-fit: cover;" />
+                                        <img id="navbarProfilePicture" src="https://via.placeholder.com/150" alt="Profile Picture" class="img-fluid rounded-circle" style="width: 30px; height: 30px; object-fit: cover;" />
                                         <span id="navbarFullName">John Doe</span>
                                     </a>
                                     <div class="dropdown-menu" aria-labelledby="userProfileDropdown">
@@ -87,7 +77,8 @@
                                                 <i class="fa fa-briefcase mr-2"></i>
                                                 My Job Posts
                                             </a>
-                                        } else if (User.IsInRole("Technician") || User.IsInRole("Company"))
+                                        }
+                                        else if (User.IsInRole("Technician") || User.IsInRole("Company"))
                                         {
                                             <a class="dropdown-item" href="#">
                                                 <i class="fa fa-briefcase mr-2"></i>
@@ -100,8 +91,7 @@
                                         </a>
                                         <a class="dropdown-item" href="#" id="statusDropdown">
                                             <i class="fa fa-info-circle mr-2"></i>
-                                            Status: <span id="statusText">UNA</span> 
-
+                                            Status: <span id="statusText">UNA</span>
                                         </a>
                                         <a href="#" class="dropdown-item" id="logoutButton">
                                             <i class="fa fa-sign-out mr-2"></i>
@@ -109,10 +99,12 @@
                                         </a>
                                     </div>
                                 </li>
+
                                 <script src="~/js/logout.js"></script>
                                 <script src="~/js/navbarpfp.js"></script>
                                 <script src="~/js/navbarFullName.js"></script>
                             }
+
                             else
                             {
                                 <li class="nav-item">
