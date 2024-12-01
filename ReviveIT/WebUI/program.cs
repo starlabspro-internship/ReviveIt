@@ -1,4 +1,5 @@
-﻿using Application.Features.Accounts;
+﻿using System.Text;
+using Application.Features.Accounts;
 using Application.Features.User;
 using Application.Helpers;
 using Application.Interfaces;
@@ -10,7 +11,6 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
-using System.Text;
 using WebUI.MiddleWares;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -45,7 +45,8 @@ builder.Services.AddScoped<RefreshTokenRepository>();
 builder.Services.AddScoped<ProfilePictureFeature>();
 builder.Services.AddScoped<UpdateProfileFeature>();
 builder.Services.AddScoped<GetAllJobsFeature>();
-builder.Services.AddScoped<GetJobsByUserIDFeature>();
+builder.Services.AddScoped<GetJobsByUserIDFeature>(); 
+builder.Services.AddScoped<UserInfoFeature>();
 
 builder.Services.AddAuthentication(options =>
 {

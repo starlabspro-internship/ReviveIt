@@ -14,42 +14,27 @@ namespace WebUI.Controllers
         private readonly ProfilePictureFeature _profilePictureFeature;
         private readonly UpdateProfileFeature _updateProfileFeature;
         private readonly UserManager<Users> _userManager;
+        private readonly UserInfoFeature _userInfoFeature;
 
-        public ProfileUpdate(ProfilePictureFeature profilePictureFeature, UpdateProfileFeature updateProfileFeature, UserManager<Users> userManager)
+        public ProfileUpdate(ProfilePictureFeature profilePictureFeature, UpdateProfileFeature updateProfileFeature, UserManager<Users> userManager, UserInfoFeature userInfoFeature)
         {
             _profilePictureFeature = profilePictureFeature;
             _updateProfileFeature = updateProfileFeature;
             _userManager = userManager;
+            _userInfoFeature = userInfoFeature;
         }
 
-        [HttpGet("fullname")]
-        public async Task<IActionResult> GetFullName()
+        [HttpGet("info")]
+        public async Task<IActionResult> GetUserInfo([FromQuery] string type)
         {
-            var userIdClaim = User.FindFirst("UserId")?.Value;
-            if (string.IsNullOrEmpty(userIdClaim))
-                return Unauthorized("User ID not found in token");
+            var result = await _userInfoFeature.HandleAsync(User, type);
 
-            var user = await _userManager.FindByIdAsync(userIdClaim);
-            if (user == null)
-                return NotFound("User not found");
+            if (result.Success)
+            {
+                return Ok(result.Data);
+            }
 
-            return Ok(new { FullName = user.FullName });
-        }
-
-        [HttpGet("role")]
-        public async Task<IActionResult> GetRole()
-        {
-            var userIdClaim = User.FindFirst("UserId")?.Value;
-            if (string.IsNullOrEmpty(userIdClaim))
-                return Unauthorized("User ID not found in token");
-
-            var user = await _userManager.FindByIdAsync(userIdClaim);
-            if (user == null)
-                return NotFound("User not found");
-
-            string roleAsString = user.Role.ToString();
-
-            return Ok(new { Role = roleAsString });
+            return BadRequest(new { Error = result.Message });
         }
 
 

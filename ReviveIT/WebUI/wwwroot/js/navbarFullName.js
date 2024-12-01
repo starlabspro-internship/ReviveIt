@@ -1,7 +1,7 @@
 ﻿async function fetchFullName() {
     const navbarFullName = document.getElementById('navbarFullName');
     try {
-        const response = await fetch('/api/ProfileUpdate/fullname', {
+        const response = await fetch('/api/ProfileUpdate/info?type=fullname', {
             method: 'GET',
             headers: {
                 'Authorization': `Bearer ${getCookie('jwtToken')}`
@@ -22,7 +22,7 @@
 async function fetchUserRole() {
     const statusText = document.getElementById('statusText');
     try {
-        const response = await fetch('/api/ProfileUpdate/role', {
+        const response = await fetch('/api/ProfileUpdate/info?type=role', {
             method: 'GET',
             headers: {
                 'Authorization': `Bearer ${getCookie('jwtToken')}`
