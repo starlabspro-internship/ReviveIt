@@ -37,7 +37,6 @@ namespace WebUI.Controllers
             return BadRequest(new { Error = result.Message });
         }
 
-
         [HttpPost("upload")]
         public async Task<IActionResult> UploadProfilePicture([FromForm] IFormFile profilePicture)
         {
