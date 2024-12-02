@@ -1,6 +1,15 @@
 ﻿@{
     ViewData["Title"] = "Sign Up Page";
 }
+
+@section Styles{
+    <link href="~/css/SignUp.css" rel="stylesheet" />
+}
+
+@section Scripts{
+    <script src="~/js/SignUp.js"></script>
+}
+
 <div class="hero_area" style="height: auto;">
     <!-- slider section -->
     <section class="slider_section">
@@ -149,4 +158,3 @@
         nameField.style.display = role === "Company" ? "none" : "block";
     }
 </script>
-<script src="~/js/register.js"></script>
