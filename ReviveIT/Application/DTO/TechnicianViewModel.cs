@@ -8,6 +8,7 @@ namespace Application.DTO
 {
     public class TechnicianViewModel
     {
+        public string Id { get; set; }
         public string FullName { get; set; }
         public string Expertise { get; set; }
         public int? Experience { get; set; }

@@ -4,9 +4,17 @@
     ViewData["Title"] = "Pros";
 }
 
+@section Styles{
+    <link rel="stylesheet" href="~/css/pros.css">
+}
+
+@section Scripts{
+    <script src="~/js/pros.js" defer></script>
+}
+
 <section class="expert_section layout_padding technician-page">
     <div class="container">
-        <div class="heading_container heading_center">
+        <div class="heading_container heading_center" style="margin-bottom:20px">
             <h2>
                 LOOKING FOR EXPERTS?
             </h2>
@@ -14,61 +22,21 @@
                 Find skilled professionals to fulfill your needs.
             </p>
         </div>
-        <div class="row">
-            @foreach (var technician in Model)
-            {
-                <div class="col-md-6 col-lg-4 mx-auto">
-                    <div class="box">
-                        <div class="img-box">
-                            <img src="@technician.ProfilePicture" alt="@technician.FullName's Profile Picture" />
-                        </div>
-                        <div class="detail-box">
-                            <a href="#">
-                                @technician.FullName
-                            </a>
-                            <h6 class="expert_position">
-                                <span>
-                                    @technician.Expertise
-                                </span>
-                                <span>
-                                    @technician.Experience Years of Experience
-                                </span>
-                            </h6>
-                            <span class="expert_rating">
-                                @{
-                                    var fullStars = (int)Math.Floor(technician.Rating);
-                                    var hasHalfStar = technician.Rating - fullStars >= 0.5;
-                                    var emptyStars = 5 - fullStars - (hasHalfStar ? 1 : 0);
-                                }
-
-                                @for (int i = 0; i < fullStars; i++)
-                                {
-                                    <i class="fa fa-star" aria-hidden="true"></i>
-                                }
-
-                                @if (hasHalfStar)
-                                {
-                                    <i class="fa fa-star-half-o" aria-hidden="true"></i>
-                                }
-
-                                @for (int i = 0; i < emptyStars; i++)
-                                {
-                                    <i class="fa fa-star-o" aria-hidden="true"></i>
-                                }
-                            </span>
-                            <p>
-                                @technician.Review
-                            </p>
-                        </div>
-                    </div>
-                </div>
-            }
+        <div id="technicianContainer" class="row">
         </div>
+        @if (User.Identity.IsAuthenticated){
         <div class="btn-box">
-            <a href="#">
-                View All Experts
+            <a href="#" id="viewMoreButton">
+               Load More Experts
             </a>
         </div>
+        } else{
+         <div class="btn-box">
+            <a href="/LogIn?returnUrl=/Pros">
+                Log in to See More Experts
+            </a>
+        </div>
+        }
     </div>
 </section>
 
@@ -156,3 +124,4 @@
         </div>
     </div>
 </section>
+
