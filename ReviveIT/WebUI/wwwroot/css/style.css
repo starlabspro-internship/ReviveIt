@@ -273,6 +273,70 @@ a:focus {
           transform: none;
 }
 
+.nav-item.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.nav-link.dropdown-toggle {
+    display: flex;
+    align-items: center;
+    padding: 0.5rem 1rem;
+    font-size: 16px;
+    background-color: transparent;
+    border: none;
+    color: #333;
+}
+
+    .nav-link.dropdown-toggle:hover {
+        color: #007bff;
+    }
+
+#navbarProfilePicture {
+    width: 30px;
+    height: 30px;
+    object-fit: cover;
+    margin-right: 8px;
+}
+
+.dropdown-menu {
+    border-radius: 8px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15) !important;
+    border: 1px solid #ddd !important;
+    min-width: 200px;
+}
+
+.dropdown-item {
+    display: flex;
+    align-items: center;
+    padding: 12px 20px;
+    font-size: 14px;
+    color: #333;
+    transition: background-color 0.3s;
+}
+
+    .dropdown-item:hover {
+        background-color: #f1f1f1;
+        color: #007bff;
+    }
+
+#statusText {
+    font-weight: bold;
+}
+
+#statusDropdown i {
+    color: #28a745;
+}
+
+.dropdown-item i {
+    font-size: 16px;
+    color: #888;
+}
+
+#logoutButton i {
+    color: #dc3545;
+}
+
 .quote_btn-container {
   display: -webkit-box;
   display: -moz-box;
@@ -299,8 +363,6 @@ a:focus {
   color: #08135c;
 }
 
-/*end header section*/
-/* slider section */
 .slider_section {
   -webkit-box-flex: 1;
      -moz-box-flex: 1;

@@ -1,6 +1,7 @@
 ﻿using Application.DTO;
 using Application.Features.User;  
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace WebUI.Controllers
@@ -12,11 +13,28 @@ namespace WebUI.Controllers
     {
         private readonly ProfilePictureFeature _profilePictureFeature;
         private readonly UpdateProfileFeature _updateProfileFeature;
+        private readonly UserManager<Users> _userManager;
+        private readonly UserInfoFeature _userInfoFeature;
 
-        public ProfileUpdate(ProfilePictureFeature profilePictureFeature, UpdateProfileFeature updateProfileFeature)
+        public ProfileUpdate(ProfilePictureFeature profilePictureFeature, UpdateProfileFeature updateProfileFeature, UserManager<Users> userManager, UserInfoFeature userInfoFeature)
         {
             _profilePictureFeature = profilePictureFeature;
             _updateProfileFeature = updateProfileFeature;
+            _userManager = userManager;
+            _userInfoFeature = userInfoFeature;
+        }
+
+        [HttpGet("info")]
+        public async Task<IActionResult> GetUserInfo([FromQuery] string type)
+        {
+            var result = await _userInfoFeature.HandleAsync(User, type);
+
+            if (result.Success)
+            {
+                return Ok(result.Data);
+            }
+
+            return BadRequest(new { Error = result.Message });
         }
 
         [HttpPost("upload")]

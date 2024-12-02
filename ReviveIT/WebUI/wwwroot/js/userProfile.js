@@ -160,22 +160,24 @@ async function getProfilePicture() {
             console.log("Profile picture data:", data);
 
             const profileImage = document.getElementById('profileImage');
-            profileImage.src = `${data.profilePictureUrl}`;
 
-            console.log("Profile:", data.profilePictureUrl);
-
-            profileImage.onerror = function () {
+            if (data.profilePictureUrl) {
+                profileImage.src = `${data.profilePictureUrl}`;
+            } else {
                 profileImage.src = "https://via.placeholder.com/150";
-            };
+            }
         } else {
             console.error("Failed to fetch profile picture:", response.status);
-            alert("Failed to fetch profile picture.");
+            const profileImage = document.getElementById('profileImage');
+            profileImage.src = "https://via.placeholder.com/150";
         }
     } catch (error) {
         console.error("Error fetching profile picture:", error);
-        alert("An error occurred while fetching the profile picture.");
+        const profileImage = document.getElementById('profileImage');
+        profileImage.src = "https://via.placeholder.com/150";
     }
 }
+
 
 async function removeProfilePicture() {
     try {
