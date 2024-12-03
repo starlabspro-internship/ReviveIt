@@ -11,11 +11,13 @@ namespace WebUI.Controllers
     {
         private readonly AddPhotoToPortfolioFeature _addPhotoFeature;
         private readonly DeletePhotoFromPortfolioFeature _deletePhotoFeature;
+        private readonly GetPortfolioPhotosFeature _getPortfolioFeature;
 
-        public PortfolioController(AddPhotoToPortfolioFeature addPhotoFeature, DeletePhotoFromPortfolioFeature deletePhotoFeature)
+        public PortfolioController(AddPhotoToPortfolioFeature addPhotoFeature, DeletePhotoFromPortfolioFeature deletePhotoFeature, GetPortfolioPhotosFeature getPortfolioFeature)
         {
             _addPhotoFeature = addPhotoFeature;
             _deletePhotoFeature = deletePhotoFeature;
+            _getPortfolioFeature = getPortfolioFeature;
         }
 
         [Authorize(Roles = "Technician,Company")]
@@ -50,6 +52,23 @@ namespace WebUI.Controllers
                 return Ok(result);
 
             return BadRequest(result);
+        }
+
+        [Authorize(Roles = "Technician,Company")]
+        [HttpGet("my-portfolio")]
+        public async Task<IActionResult> GetMyPortfolio()
+        {
+            var userIdClaim = User.FindFirst("UserId")?.Value;
+
+            if (string.IsNullOrEmpty(userIdClaim))
+                return Unauthorized(new { Message = "User not authenticated." });
+
+            var result = await _getPortfolioFeature.GetPortfolioPhotosAsync(userIdClaim);
+
+            if (!result.IsSuccess)
+                return BadRequest(result);
+
+            return Ok(result);
         }
     }
 }
