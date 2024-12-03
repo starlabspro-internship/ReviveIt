@@ -17,6 +17,9 @@ namespace Domain.Configurations
             builder.Property(m => m.Timestamp)
                    .HasDefaultValueSql("GETDATE()");
 
+            builder.Property(m => m.Viewed)
+                   .HasDefaultValue(false);
+
             builder.HasOne(m => m.Sender)
                    .WithMany()
                    .HasForeignKey(m => m.SenderID)
@@ -26,6 +29,11 @@ namespace Domain.Configurations
                    .WithMany()
                    .HasForeignKey(m => m.RecipientID)
                    .OnDelete(DeleteBehavior.Restrict);
+
+            builder.HasOne(m => m.ChatSession)
+                   .WithMany(cs => cs.Messages)
+                   .HasForeignKey(m => m.ChatSessionId)
+                   .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }
