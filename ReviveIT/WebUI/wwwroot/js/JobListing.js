@@ -29,15 +29,12 @@ async function getAllJobs() {
 
         if (response.ok) {
             const result = await response.json();
-            console.log("Fetched jobs:", result);
 
             populateJobsContainer(result.jobs);
         } else {
-            console.error("Error fetching jobs, status:", response.status);
             alert("Failed to fetch jobs. Please try again.");
         }
     } catch (error) {
-        console.error("Error fetching jobs:", error);
         alert("An error occurred while fetching jobs.");
     }
 }
@@ -131,7 +128,6 @@ async function submitJobForm(event) {
             alert(`Error: ${result.message}`);
         }
     } catch (error) {
-        console.error('Error posting job:', error);
         alert('An error occurred while posting the job.');
     }
 }
