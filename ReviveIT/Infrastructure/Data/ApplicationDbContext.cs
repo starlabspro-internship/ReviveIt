@@ -18,6 +18,7 @@ namespace Infrastructure.Data
         public DbSet<Reviews> Reviews { get; set; }
         public DbSet<UserRefreshToken>UserRefreshTokens { get; set; }
         public DbSet<Category> Categories { get; set; }
+        public DbSet<PortfolioDocument> PortfolioDocuments { get; set; }
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
@@ -39,6 +40,8 @@ namespace Infrastructure.Data
             builder.ApplyConfiguration(new UserRefreshTokenConfigurations());
 
             builder.ApplyConfiguration(new CategoryConfigurations());
+
+            builder.ApplyConfiguration(new PortfolioDocumentConfiguration());
 
             builder.Entity<Category>().HasData(
               new Category { CategoryID = 1, Name = "Electronics Repair", CreatedAt = DateTime.UtcNow, UpdatedAt = DateTime.UtcNow },
