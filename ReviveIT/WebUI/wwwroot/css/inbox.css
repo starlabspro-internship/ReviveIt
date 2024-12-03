@@ -1,0 +1,159 @@
+﻿body {
+    margin-top: 1px;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    background-color: #142464;
+}
+
+.chat-online {
+    color: #34ce57;
+    background-color: #34ce57;
+    border-radius: 50%;
+    width: 10px;
+    height: 10px;
+    display: inline-block;
+    margin-left: 5px;
+}
+
+.chat-offline {
+    color: #e4606d;
+}
+
+.chat-header {
+    background-color: #007bff;
+    color: white;
+    padding: 20px;
+    font-size: 1.75rem;
+    text-align: center;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+.container {
+    height: 80vh;
+    display: flex;
+    overflow: hidden;
+    border: 4px solid #142464;
+    border-radius: 10px;
+    background-color: #ffffff;
+}
+
+.chat-list {
+    width: 30%;
+    border-right: 4px solid #142464;
+    overflow-y: auto;
+    padding: 10px;
+    max-height: 100%;
+}
+
+.chat-messages-wrapper {
+    width: 70%;
+    display: flex;
+    flex-direction: column;
+    border-left: 4px solid #142464;
+    height: 100%;
+}
+
+.chat-messages {
+    flex-grow: 1;
+    overflow-y: auto;
+    padding: 15px;
+    flex-shrink: 0;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.chat-message-left,
+.chat-message-right {
+    display: flex;
+    flex-shrink: 0;
+}
+
+.chat-message-left {
+    margin-right: auto;
+}
+
+.chat-message-right {
+    flex-direction: row-reverse;
+    margin-left: auto;
+}
+
+.chat-message {
+    display: flex;
+    align-items: flex-start;
+    margin-bottom: 1rem;
+}
+
+    .chat-message .message-content {
+        padding: 10px;
+        border-radius: 10px;
+        background-color: #f1f1f1;
+        max-width: 85%;
+    }
+
+.user-info {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px;
+    border-bottom: 1px solid #dee2e6;
+}
+
+    .user-info .username {
+        font-size: 1.25rem;
+        font-weight: bold;
+    }
+
+    .user-info .status {
+        font-size: 1rem;
+        color: #6c757d;
+    }
+
+    .user-info .options-button {
+        background: none;
+        border: none;
+        cursor: pointer;
+        font-size: 1.5rem;
+    }
+
+.chat-input {
+    padding: 10px 15px;
+    background-color: #f8f9fa;
+    border-top: 1px solid #dee2e6;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-radius: 10px;
+    width: 100%;
+    position: sticky;
+    bottom: 0;
+    z-index: 10;
+}
+
+.input-group {
+    width: 100%;
+}
+
+    .input-group input {
+        border-radius: 20px;
+    }
+
+    .input-group button {
+        border-radius: 20px;
+    }
+
+h3 {
+    font-size: 2rem;
+    color: white;
+    font-weight: bold;
+    margin-left: 17.1rem;
+    margin-bottom: 1rem;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+    position: relative;
+}
+
+.badge.bg-blue {
+    background-color: #007bff !important;
+}

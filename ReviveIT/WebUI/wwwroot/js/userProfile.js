@@ -157,7 +157,6 @@ async function getProfilePicture() {
 
         if (response.ok) {
             const data = await response.json();
-            console.log("Profile picture data:", data);
 
             const profileImage = document.getElementById('profileImage');
 

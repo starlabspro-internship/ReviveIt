@@ -1,4 +1,4 @@
-﻿using Application.Interfaces;
+using Application.Interfaces;
 using Domain.Configurations;
 using Domain.Entities;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
@@ -16,30 +16,26 @@ namespace Infrastructure.Data
         public DbSet<Subscriptions> Subscriptions { get; set; }
         public DbSet<Messages> Messages { get; set; }
         public DbSet<Reviews> Reviews { get; set; }
-        public DbSet<UserRefreshToken>UserRefreshTokens { get; set; }
+        public DbSet<UserRefreshToken> UserRefreshTokens { get; set; }
         public DbSet<Category> Categories { get; set; }
-        public DbSet<ChatSession> ChatSessions { get; set; }
+        public DbSet<PortfolioDocument> PortfolioDocuments { get; set; }
+        public DbSet<ChatSession> ChatSessions { get; set; } 
+
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
 
             builder.ApplyConfiguration(new UsersConfigurations());
-
             builder.ApplyConfiguration(new JobsConfigurations());
-
             builder.ApplyConfiguration(new JobsApplicationsConfigurations());
-
             builder.ApplyConfiguration(new ServicesConfigurations());
-
             builder.ApplyConfiguration(new SubscriptionsConfiguration());
-
             builder.ApplyConfiguration(new MessagesConfigurations());
-
             builder.ApplyConfiguration(new ReviewsConfiguration());
-
             builder.ApplyConfiguration(new UserRefreshTokenConfigurations());
-
             builder.ApplyConfiguration(new CategoryConfigurations());
+            builder.ApplyConfiguration(new PortfolioDocumentConfiguration());
+            builder.ApplyConfiguration(new ChatSessionConfigurations());
 
             builder.Entity<Category>().HasData(
               new Category { CategoryID = 1, Name = "Electronics Repair", CreatedAt = DateTime.UtcNow, UpdatedAt = DateTime.UtcNow },
