@@ -49,6 +49,7 @@ builder.Services.AddScoped<GetJobsByUserIDFeature>();
 builder.Services.AddScoped<UserInfoFeature>();
 builder.Services.AddScoped<AddPhotoToPortfolioFeature>();
 builder.Services.AddScoped<DeletePhotoFromPortfolioFeature>();
+builder.Services.AddScoped<GetPortfolioPhotosFeature>();
 
 builder.Services.AddAuthentication(options =>
 {
