@@ -1135,3 +1135,19 @@ a:focus {
   color: inherit;
 }
 /*# sourceMappingURL=style.css.map */
+
+/* Center the Add Job button */
+.add-job-container {
+    margin-top: 20px;
+}
+
+/* Optional: Style the modal title for better visibility */
+.modal-title {
+    font-weight: bold;
+    color: #333;
+}
+
+/* Optional: Add padding or box shadow to the modal content */
+.modal-content {
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+}
