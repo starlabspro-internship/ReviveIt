@@ -18,6 +18,7 @@ namespace Infrastructure.Data
         public DbSet<Reviews> Reviews { get; set; }
         public DbSet<UserRefreshToken>UserRefreshTokens { get; set; }
         public DbSet<Category> Categories { get; set; }
+        public DbSet<ChatSession> ChatSessions { get; set; }
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
