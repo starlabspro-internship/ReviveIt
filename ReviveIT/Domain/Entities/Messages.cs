@@ -11,9 +11,9 @@
         public string RecipientID { get; set; }
         public Users Recipient { get; set; }
 
-        public int ChatSessionId { get; set; } // For linking to chat sessions
-        public ChatSession ChatSession { get; set; } // Navigation property for chat sessions
+        public int ChatSessionId { get; set; } 
+        public ChatSession ChatSession { get; set; } 
 
-        public bool Viewed { get; set; } // To track if the message has been viewed
+        public bool Viewed { get; set; } 
     }
 }
