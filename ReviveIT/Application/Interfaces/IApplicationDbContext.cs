@@ -17,7 +17,7 @@ namespace Application.Interfaces
         public DbSet<UserRefreshToken> UserRefreshTokens { get; set; }
         public DbSet<Category> Categories { get; set; }
         public DbSet<PortfolioDocument> PortfolioDocuments { get; set; }
-        public DbSet<ChatSession> ChatSessions { get; set; } // Add ChatSessions
+        public DbSet<ChatSession> ChatSessions { get; set; } 
 
         Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);
     }
