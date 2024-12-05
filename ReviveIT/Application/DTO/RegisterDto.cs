@@ -18,5 +18,8 @@ namespace Application.DTO
         public int? Experience { get; set; }
         public string? CompanyName { get; set; }
         public string? CompanyAddress { get; set; }
+
+        [Required(ErrorMessage = "Please select at least one category.")]
+        public List<int> SelectedCategoryIds { get; set; } = new List<int>();
     }
 }

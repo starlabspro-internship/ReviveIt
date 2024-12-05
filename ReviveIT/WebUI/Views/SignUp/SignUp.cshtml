@@ -4,10 +4,11 @@
 
 @section Styles{
     <link href="~/css/SignUp.css" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 }
 
 @section Scripts{
-    <script src="~/js/SignUp.js"></script>
+    <script src="~/js/register.js"></script>
 }
 
 <div class="hero_area" style="height: auto;">
@@ -24,8 +25,8 @@
                                 <form id="registerForm" action="/Accounts/Register" method="post">
                                     <!-- Role Selection -->
                                     <div class="form-group">
-                                        <label for="role">Register As</label>
-                                        <select id="role" name="role" class="form-control" onchange="toggleRoleFields()" required>
+                                        <label for="role" style="width:100%; margin-bottom:1rem;">Register As</label>
+                                        <select id="role" name="role" class="form-control"  onchange="toggleRoleFields()" required>
                                             <option value="">Select a role</option>
                                             <option value="Customer">Customer</option>
                                             <option value="Technician">Technician</option>
@@ -80,13 +81,20 @@
                                     <!-- Additional Fields for Technician -->
                                     <div id="technicianFields" style="display: none;">
                                         <div class="form-group">
-                                            <label for="expertise">Expertise</label>
-                                            <div class="input-group">
+                                            <label for="categories" class="form-label">Categories of Expertise</label>
+                                            <div class="input-group flex-nowrap">
                                                 <div class="input-group-prepend">
-                                                    <span class="input-group-text"><i class="fas fa-cogs"></i></span> <!-- Icon for Expertise -->
+                                                    <span class="input-group-text"><i class="fa fa-cogs"></i></span>
                                                 </div>
-                                                <input type="text" class="form-control" id="expertise" name="expertise" placeholder="Your field of expertise" required>
+                                                <select name="SelectedCategoryIds" id="categories" class="form-control category-select" style="width:auto !important" multiple>
+                                                    <option value="" disabled selected>Select categories of expertise</option>
+                                                    @foreach (var category in Model.Categories)
+                                                    {
+                                                        <option value="@category.CategoryID">@category.Name</option>
+                                                    }
+                                                </select>
                                             </div>
+                                            <div id="selectedChips" class="selected-chips"></div>
                                         </div>
                                         <div class="form-group">
                                             <label for="experience">Years of Experience</label>
@@ -149,7 +157,7 @@
         technicianFields.style.display = role === "Technician" ? "block" : "none";
         companyFields.style.display = role === "Company" ? "block" : "none";
 
-        document.getElementById("expertise").required = (role === "Technician");
+        document.getElementById("categories").required = (role === "Technician");
         document.getElementById("experience").required = (role === "Technician");
         document.getElementById("companyName").required = (role === "Company");
         document.getElementById("companyAddress").required = (role === "Company");

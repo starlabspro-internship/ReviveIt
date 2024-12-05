@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Domain.Entities;
+using Microsoft.AspNetCore.Identity;
 
 public class Users : IdentityUser
 {
@@ -11,6 +12,7 @@ public class Users : IdentityUser
     public string? CompanyName { get; set; }
     public string? CompanyAddress { get; set; }
     public string? ProfilePicture { get; set; }
+    public ICollection<UserCategory> UserCategories { get; set; }
 }
 public enum UserRole
 {

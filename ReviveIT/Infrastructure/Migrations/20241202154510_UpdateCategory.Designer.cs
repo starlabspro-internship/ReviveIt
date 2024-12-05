@@ -4,6 +4,7 @@ using Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace WebUI.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241202154510_UpdateCategory")]
+    partial class UpdateCategory
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -53,527 +56,527 @@ namespace WebUI.Migrations
                         new
                         {
                             CategoryID = 1,
-                            CreatedAt = new DateTime(2024, 12, 3, 8, 58, 6, 764, DateTimeKind.Utc).AddTicks(9075),
+                            CreatedAt = new DateTime(2024, 12, 2, 15, 45, 10, 278, DateTimeKind.Utc).AddTicks(9286),
                             Name = "Electronics Repair",
-                            UpdatedAt = new DateTime(2024, 12, 3, 8, 58, 6, 764, DateTimeKind.Utc).AddTicks(9077)
+                            UpdatedAt = new DateTime(2024, 12, 2, 15, 45, 10, 278, DateTimeKind.Utc).AddTicks(9286)
                         },
                         new
                         {
                             CategoryID = 2,
-                            CreatedAt = new DateTime(2024, 12, 3, 8, 58, 6, 764, DateTimeKind.Utc).AddTicks(9084),
+                            CreatedAt = new DateTime(2024, 12, 2, 15, 45, 10, 278, DateTimeKind.Utc).AddTicks(9288),
                             Name = "Furniture Restoration",
-                            UpdatedAt = new DateTime(2024, 12, 3, 8, 58, 6, 764, DateTimeKind.Utc).AddTicks(9086)
+                            UpdatedAt = new DateTime(2024, 12, 2, 15, 45, 10, 278, DateTimeKind.Utc).AddTicks(9289)
                         },
                         new
                         {
                             CategoryID = 3,
-                            CreatedAt = new DateTime(2024, 12, 3, 8, 58, 6, 764, DateTimeKind.Utc).AddTicks(9091),
+                            CreatedAt = new DateTime(2024, 12, 2, 15, 45, 10, 278, DateTimeKind.Utc).AddTicks(9290),
                             Name = "Home Appliance Repair",
-                            UpdatedAt = new DateTime(2024, 12, 3, 8, 58, 6, 764, DateTimeKind.Utc).AddTicks(9092)
+                            UpdatedAt = new DateTime(2024, 12, 2, 15, 45, 10, 278, DateTimeKind.Utc).AddTicks(9291)
                         },
                         new
                         {
                             CategoryID = 4,
-                            CreatedAt = new DateTime(2024, 12, 3, 8, 58, 6, 764, DateTimeKind.Utc).AddTicks(9097),
+                            CreatedAt = new DateTime(2024, 12, 2, 15, 45, 10, 278, DateTimeKind.Utc).AddTicks(9292),
                             Name = "Automotive Repair",
-                            UpdatedAt = new DateTime(2024, 12, 3, 8, 58, 6, 764, DateTimeKind.Utc).AddTicks(9099)
+                            UpdatedAt = new DateTime(2024, 12, 2, 15, 45, 10, 278, DateTimeKind.Utc).AddTicks(9292)
                         },
                         new
                         {
                             CategoryID = 5,
-                            CreatedAt = new DateTime(2024, 12, 3, 8, 58, 6, 764, DateTimeKind.Utc).AddTicks(9104),
+                            CreatedAt = new DateTime(2024, 12, 2, 15, 45, 10, 278, DateTimeKind.Utc).AddTicks(9294),
                             Name = "Plumbing Services",
-                            UpdatedAt = new DateTime(2024, 12, 3, 8, 58, 6, 764, DateTimeKind.Utc).AddTicks(9105)
+                            UpdatedAt = new DateTime(2024, 12, 2, 15, 45, 10, 278, DateTimeKind.Utc).AddTicks(9294)
                         },
                         new
                         {
                             CategoryID = 6,
-                            CreatedAt = new DateTime(2024, 12, 3, 8, 58, 6, 764, DateTimeKind.Utc).AddTicks(9110),
+                            CreatedAt = new DateTime(2024, 12, 2, 15, 45, 10, 278, DateTimeKind.Utc).AddTicks(9296),
                             Name = "Electrical Repairs",
-                            UpdatedAt = new DateTime(2024, 12, 3, 8, 58, 6, 764, DateTimeKind.Utc).AddTicks(9112)
+                            UpdatedAt = new DateTime(2024, 12, 2, 15, 45, 10, 278, DateTimeKind.Utc).AddTicks(9296)
                         },
                         new
                         {
                             CategoryID = 7,
-                            CreatedAt = new DateTime(2024, 12, 3, 8, 58, 6, 764, DateTimeKind.Utc).AddTicks(9117),
+                            CreatedAt = new DateTime(2024, 12, 2, 15, 45, 10, 278, DateTimeKind.Utc).AddTicks(9297),
                             Name = "Cleaning Services",
-                            UpdatedAt = new DateTime(2024, 12, 3, 8, 58, 6, 764, DateTimeKind.Utc).AddTicks(9119)
+                            UpdatedAt = new DateTime(2024, 12, 2, 15, 45, 10, 278, DateTimeKind.Utc).AddTicks(9298)
                         },
                         new
                         {
                             CategoryID = 8,
-                            CreatedAt = new DateTime(2024, 12, 3, 8, 58, 6, 764, DateTimeKind.Utc).AddTicks(9173),
+                            CreatedAt = new DateTime(2024, 12, 2, 15, 45, 10, 278, DateTimeKind.Utc).AddTicks(9299),
                             Name = "Carpentry",
-                            UpdatedAt = new DateTime(2024, 12, 3, 8, 58, 6, 764, DateTimeKind.Utc).AddTicks(9175)
+                            UpdatedAt = new DateTime(2024, 12, 2, 15, 45, 10, 278, DateTimeKind.Utc).AddTicks(9299)
                         },
                         new
                         {
                             CategoryID = 9,
-                            CreatedAt = new DateTime(2024, 12, 3, 8, 58, 6, 764, DateTimeKind.Utc).AddTicks(9179),
+                            CreatedAt = new DateTime(2024, 12, 2, 15, 45, 10, 278, DateTimeKind.Utc).AddTicks(9301),
                             Name = "Landscaping",
-                            UpdatedAt = new DateTime(2024, 12, 3, 8, 58, 6, 764, DateTimeKind.Utc).AddTicks(9181)
+                            UpdatedAt = new DateTime(2024, 12, 2, 15, 45, 10, 278, DateTimeKind.Utc).AddTicks(9301)
                         },
                         new
                         {
                             CategoryID = 10,
-                            CreatedAt = new DateTime(2024, 12, 3, 8, 58, 6, 764, DateTimeKind.Utc).AddTicks(9186),
+                            CreatedAt = new DateTime(2024, 12, 2, 15, 45, 10, 278, DateTimeKind.Utc).AddTicks(9303),
                             Name = "Painting",
-                            UpdatedAt = new DateTime(2024, 12, 3, 8, 58, 6, 764, DateTimeKind.Utc).AddTicks(9187)
+                            UpdatedAt = new DateTime(2024, 12, 2, 15, 45, 10, 278, DateTimeKind.Utc).AddTicks(9303)
                         },
                         new
                         {
                             CategoryID = 11,
-                            CreatedAt = new DateTime(2024, 12, 3, 8, 58, 6, 764, DateTimeKind.Utc).AddTicks(9192),
+                            CreatedAt = new DateTime(2024, 12, 2, 15, 45, 10, 278, DateTimeKind.Utc).AddTicks(9304),
                             Name = "Roofing",
-                            UpdatedAt = new DateTime(2024, 12, 3, 8, 58, 6, 764, DateTimeKind.Utc).AddTicks(9194)
+                            UpdatedAt = new DateTime(2024, 12, 2, 15, 45, 10, 278, DateTimeKind.Utc).AddTicks(9305)
                         },
                         new
                         {
                             CategoryID = 12,
-                            CreatedAt = new DateTime(2024, 12, 3, 8, 58, 6, 764, DateTimeKind.Utc).AddTicks(9198),
+                            CreatedAt = new DateTime(2024, 12, 2, 15, 45, 10, 278, DateTimeKind.Utc).AddTicks(9306),
                             Name = "HVAC Services",
-                            UpdatedAt = new DateTime(2024, 12, 3, 8, 58, 6, 764, DateTimeKind.Utc).AddTicks(9200)
+                            UpdatedAt = new DateTime(2024, 12, 2, 15, 45, 10, 278, DateTimeKind.Utc).AddTicks(9306)
                         },
                         new
                         {
                             CategoryID = 13,
-                            CreatedAt = new DateTime(2024, 12, 3, 8, 58, 6, 764, DateTimeKind.Utc).AddTicks(9205),
+                            CreatedAt = new DateTime(2024, 12, 2, 15, 45, 10, 278, DateTimeKind.Utc).AddTicks(9307),
                             Name = "Pest Control",
-                            UpdatedAt = new DateTime(2024, 12, 3, 8, 58, 6, 764, DateTimeKind.Utc).AddTicks(9206)
+                            UpdatedAt = new DateTime(2024, 12, 2, 15, 45, 10, 278, DateTimeKind.Utc).AddTicks(9308)
                         },
                         new
                         {
                             CategoryID = 14,
-                            CreatedAt = new DateTime(2024, 12, 3, 8, 58, 6, 764, DateTimeKind.Utc).AddTicks(9211),
+                            CreatedAt = new DateTime(2024, 12, 2, 15, 45, 10, 278, DateTimeKind.Utc).AddTicks(9309),
                             Name = "Moving Services",
-                            UpdatedAt = new DateTime(2024, 12, 3, 8, 58, 6, 764, DateTimeKind.Utc).AddTicks(9212)
+                            UpdatedAt = new DateTime(2024, 12, 2, 15, 45, 10, 278, DateTimeKind.Utc).AddTicks(9310)
                         },
                         new
                         {
                             CategoryID = 15,
-                            CreatedAt = new DateTime(2024, 12, 3, 8, 58, 6, 764, DateTimeKind.Utc).AddTicks(9217),
+                            CreatedAt = new DateTime(2024, 12, 2, 15, 45, 10, 278, DateTimeKind.Utc).AddTicks(9311),
                             Name = "Interior Design",
-                            UpdatedAt = new DateTime(2024, 12, 3, 8, 58, 6, 764, DateTimeKind.Utc).AddTicks(9218)
+                            UpdatedAt = new DateTime(2024, 12, 2, 15, 45, 10, 278, DateTimeKind.Utc).AddTicks(9311)
                         },
                         new
                         {
                             CategoryID = 16,
-                            CreatedAt = new DateTime(2024, 12, 3, 8, 58, 6, 764, DateTimeKind.Utc).AddTicks(9224),
+                            CreatedAt = new DateTime(2024, 12, 2, 15, 45, 10, 278, DateTimeKind.Utc).AddTicks(9313),
                             Name = "IT Support",
-                            UpdatedAt = new DateTime(2024, 12, 3, 8, 58, 6, 764, DateTimeKind.Utc).AddTicks(9226)
+                            UpdatedAt = new DateTime(2024, 12, 2, 15, 45, 10, 278, DateTimeKind.Utc).AddTicks(9313)
                         },
                         new
                         {
                             CategoryID = 17,
-                            CreatedAt = new DateTime(2024, 12, 3, 8, 58, 6, 764, DateTimeKind.Utc).AddTicks(9230),
+                            CreatedAt = new DateTime(2024, 12, 2, 15, 45, 10, 278, DateTimeKind.Utc).AddTicks(9314),
                             Name = "Handyman Services",
-                            UpdatedAt = new DateTime(2024, 12, 3, 8, 58, 6, 764, DateTimeKind.Utc).AddTicks(9232)
+                            UpdatedAt = new DateTime(2024, 12, 2, 15, 45, 10, 278, DateTimeKind.Utc).AddTicks(9315)
                         },
                         new
                         {
                             CategoryID = 18,
-                            CreatedAt = new DateTime(2024, 12, 3, 8, 58, 6, 764, DateTimeKind.Utc).AddTicks(9237),
+                            CreatedAt = new DateTime(2024, 12, 2, 15, 45, 10, 278, DateTimeKind.Utc).AddTicks(9316),
                             Name = "Masonry",
-                            UpdatedAt = new DateTime(2024, 12, 3, 8, 58, 6, 764, DateTimeKind.Utc).AddTicks(9238)
+                            UpdatedAt = new DateTime(2024, 12, 2, 15, 45, 10, 278, DateTimeKind.Utc).AddTicks(9316)
                         },
                         new
                         {
                             CategoryID = 19,
-                            CreatedAt = new DateTime(2024, 12, 3, 8, 58, 6, 764, DateTimeKind.Utc).AddTicks(9242),
+                            CreatedAt = new DateTime(2024, 12, 2, 15, 45, 10, 278, DateTimeKind.Utc).AddTicks(9318),
                             Name = "Welding",
-                            UpdatedAt = new DateTime(2024, 12, 3, 8, 58, 6, 764, DateTimeKind.Utc).AddTicks(9244)
+                            UpdatedAt = new DateTime(2024, 12, 2, 15, 45, 10, 278, DateTimeKind.Utc).AddTicks(9318)
                         },
                         new
                         {
                             CategoryID = 20,
-                            CreatedAt = new DateTime(2024, 12, 3, 8, 58, 6, 764, DateTimeKind.Utc).AddTicks(9249),
+                            CreatedAt = new DateTime(2024, 12, 2, 15, 45, 10, 278, DateTimeKind.Utc).AddTicks(9319),
                             Name = "Security Systems Installation",
-                            UpdatedAt = new DateTime(2024, 12, 3, 8, 58, 6, 764, DateTimeKind.Utc).AddTicks(9250)
+                            UpdatedAt = new DateTime(2024, 12, 2, 15, 45, 10, 278, DateTimeKind.Utc).AddTicks(9320)
                         },
                         new
                         {
                             CategoryID = 21,
-                            CreatedAt = new DateTime(2024, 12, 3, 8, 58, 6, 764, DateTimeKind.Utc).AddTicks(9255),
+                            CreatedAt = new DateTime(2024, 12, 2, 15, 45, 10, 278, DateTimeKind.Utc).AddTicks(9321),
                             Name = "Window Installation",
-                            UpdatedAt = new DateTime(2024, 12, 3, 8, 58, 6, 764, DateTimeKind.Utc).AddTicks(9256)
+                            UpdatedAt = new DateTime(2024, 12, 2, 15, 45, 10, 278, DateTimeKind.Utc).AddTicks(9321)
                         },
                         new
                         {
                             CategoryID = 22,
-                            CreatedAt = new DateTime(2024, 12, 3, 8, 58, 6, 764, DateTimeKind.Utc).AddTicks(9261),
+                            CreatedAt = new DateTime(2024, 12, 2, 15, 45, 10, 278, DateTimeKind.Utc).AddTicks(9323),
                             Name = "Flooring Installation",
-                            UpdatedAt = new DateTime(2024, 12, 3, 8, 58, 6, 764, DateTimeKind.Utc).AddTicks(9262)
+                            UpdatedAt = new DateTime(2024, 12, 2, 15, 45, 10, 278, DateTimeKind.Utc).AddTicks(9323)
                         },
                         new
                         {
                             CategoryID = 23,
-                            CreatedAt = new DateTime(2024, 12, 3, 8, 58, 6, 764, DateTimeKind.Utc).AddTicks(9267),
+                            CreatedAt = new DateTime(2024, 12, 2, 15, 45, 10, 278, DateTimeKind.Utc).AddTicks(9324),
                             Name = "Bathroom Remodeling",
-                            UpdatedAt = new DateTime(2024, 12, 3, 8, 58, 6, 764, DateTimeKind.Utc).AddTicks(9268)
+                            UpdatedAt = new DateTime(2024, 12, 2, 15, 45, 10, 278, DateTimeKind.Utc).AddTicks(9325)
                         },
                         new
                         {
                             CategoryID = 24,
-                            CreatedAt = new DateTime(2024, 12, 3, 8, 58, 6, 764, DateTimeKind.Utc).AddTicks(9273),
+                            CreatedAt = new DateTime(2024, 12, 2, 15, 45, 10, 278, DateTimeKind.Utc).AddTicks(9326),
                             Name = "Kitchen Remodeling",
-                            UpdatedAt = new DateTime(2024, 12, 3, 8, 58, 6, 764, DateTimeKind.Utc).AddTicks(9274)
+                            UpdatedAt = new DateTime(2024, 12, 2, 15, 45, 10, 278, DateTimeKind.Utc).AddTicks(9326)
                         },
                         new
                         {
                             CategoryID = 25,
-                            CreatedAt = new DateTime(2024, 12, 3, 8, 58, 6, 764, DateTimeKind.Utc).AddTicks(9279),
+                            CreatedAt = new DateTime(2024, 12, 2, 15, 45, 10, 278, DateTimeKind.Utc).AddTicks(9328),
                             Name = "Solar Panel Installation",
-                            UpdatedAt = new DateTime(2024, 12, 3, 8, 58, 6, 764, DateTimeKind.Utc).AddTicks(9281)
+                            UpdatedAt = new DateTime(2024, 12, 2, 15, 45, 10, 278, DateTimeKind.Utc).AddTicks(9328)
                         },
                         new
                         {
                             CategoryID = 26,
-                            CreatedAt = new DateTime(2024, 12, 3, 8, 58, 6, 764, DateTimeKind.Utc).AddTicks(9286),
+                            CreatedAt = new DateTime(2024, 12, 2, 15, 45, 10, 278, DateTimeKind.Utc).AddTicks(9329),
                             Name = "Tree Trimming",
-                            UpdatedAt = new DateTime(2024, 12, 3, 8, 58, 6, 764, DateTimeKind.Utc).AddTicks(9287)
+                            UpdatedAt = new DateTime(2024, 12, 2, 15, 45, 10, 278, DateTimeKind.Utc).AddTicks(9330)
                         },
                         new
                         {
                             CategoryID = 27,
-                            CreatedAt = new DateTime(2024, 12, 3, 8, 58, 6, 764, DateTimeKind.Utc).AddTicks(9292),
+                            CreatedAt = new DateTime(2024, 12, 2, 15, 45, 10, 278, DateTimeKind.Utc).AddTicks(9331),
                             Name = "Pool Maintenance",
-                            UpdatedAt = new DateTime(2024, 12, 3, 8, 58, 6, 764, DateTimeKind.Utc).AddTicks(9293)
+                            UpdatedAt = new DateTime(2024, 12, 2, 15, 45, 10, 278, DateTimeKind.Utc).AddTicks(9332)
                         },
                         new
                         {
                             CategoryID = 28,
-                            CreatedAt = new DateTime(2024, 12, 3, 8, 58, 6, 764, DateTimeKind.Utc).AddTicks(9298),
+                            CreatedAt = new DateTime(2024, 12, 2, 15, 45, 10, 278, DateTimeKind.Utc).AddTicks(9333),
                             Name = "Locksmith Services",
-                            UpdatedAt = new DateTime(2024, 12, 3, 8, 58, 6, 764, DateTimeKind.Utc).AddTicks(9299)
+                            UpdatedAt = new DateTime(2024, 12, 2, 15, 45, 10, 278, DateTimeKind.Utc).AddTicks(9333)
                         },
                         new
                         {
                             CategoryID = 29,
-                            CreatedAt = new DateTime(2024, 12, 3, 8, 58, 6, 764, DateTimeKind.Utc).AddTicks(9304),
+                            CreatedAt = new DateTime(2024, 12, 2, 15, 45, 10, 278, DateTimeKind.Utc).AddTicks(9335),
                             Name = "Event Planning",
-                            UpdatedAt = new DateTime(2024, 12, 3, 8, 58, 6, 764, DateTimeKind.Utc).AddTicks(9305)
+                            UpdatedAt = new DateTime(2024, 12, 2, 15, 45, 10, 278, DateTimeKind.Utc).AddTicks(9336)
                         },
                         new
                         {
                             CategoryID = 30,
-                            CreatedAt = new DateTime(2024, 12, 3, 8, 58, 6, 764, DateTimeKind.Utc).AddTicks(9309),
+                            CreatedAt = new DateTime(2024, 12, 2, 15, 45, 10, 278, DateTimeKind.Utc).AddTicks(9337),
                             Name = "Photography",
-                            UpdatedAt = new DateTime(2024, 12, 3, 8, 58, 6, 764, DateTimeKind.Utc).AddTicks(9311)
+                            UpdatedAt = new DateTime(2024, 12, 2, 15, 45, 10, 278, DateTimeKind.Utc).AddTicks(9337)
                         },
                         new
                         {
                             CategoryID = 31,
-                            CreatedAt = new DateTime(2024, 12, 3, 8, 58, 6, 764, DateTimeKind.Utc).AddTicks(9315),
+                            CreatedAt = new DateTime(2024, 12, 2, 15, 45, 10, 278, DateTimeKind.Utc).AddTicks(9338),
                             Name = "Tutoring",
-                            UpdatedAt = new DateTime(2024, 12, 3, 8, 58, 6, 764, DateTimeKind.Utc).AddTicks(9317)
+                            UpdatedAt = new DateTime(2024, 12, 2, 15, 45, 10, 278, DateTimeKind.Utc).AddTicks(9339)
                         },
                         new
                         {
                             CategoryID = 32,
-                            CreatedAt = new DateTime(2024, 12, 3, 8, 58, 6, 764, DateTimeKind.Utc).AddTicks(9321),
+                            CreatedAt = new DateTime(2024, 12, 2, 15, 45, 10, 278, DateTimeKind.Utc).AddTicks(9340),
                             Name = "Courier Services",
-                            UpdatedAt = new DateTime(2024, 12, 3, 8, 58, 6, 764, DateTimeKind.Utc).AddTicks(9323)
+                            UpdatedAt = new DateTime(2024, 12, 2, 15, 45, 10, 278, DateTimeKind.Utc).AddTicks(9341)
                         },
                         new
                         {
                             CategoryID = 33,
-                            CreatedAt = new DateTime(2024, 12, 3, 8, 58, 6, 764, DateTimeKind.Utc).AddTicks(9327),
+                            CreatedAt = new DateTime(2024, 12, 2, 15, 45, 10, 278, DateTimeKind.Utc).AddTicks(9342),
                             Name = "Legal Services",
-                            UpdatedAt = new DateTime(2024, 12, 3, 8, 58, 6, 764, DateTimeKind.Utc).AddTicks(9329)
+                            UpdatedAt = new DateTime(2024, 12, 2, 15, 45, 10, 278, DateTimeKind.Utc).AddTicks(9342)
                         },
                         new
                         {
                             CategoryID = 34,
-                            CreatedAt = new DateTime(2024, 12, 3, 8, 58, 6, 764, DateTimeKind.Utc).AddTicks(9333),
+                            CreatedAt = new DateTime(2024, 12, 2, 15, 45, 10, 278, DateTimeKind.Utc).AddTicks(9343),
                             Name = "Accounting Services",
-                            UpdatedAt = new DateTime(2024, 12, 3, 8, 58, 6, 764, DateTimeKind.Utc).AddTicks(9335)
+                            UpdatedAt = new DateTime(2024, 12, 2, 15, 45, 10, 278, DateTimeKind.Utc).AddTicks(9344)
                         },
                         new
                         {
                             CategoryID = 35,
-                            CreatedAt = new DateTime(2024, 12, 3, 8, 58, 6, 764, DateTimeKind.Utc).AddTicks(9340),
+                            CreatedAt = new DateTime(2024, 12, 2, 15, 45, 10, 278, DateTimeKind.Utc).AddTicks(9345),
                             Name = "Health and Fitness",
-                            UpdatedAt = new DateTime(2024, 12, 3, 8, 58, 6, 764, DateTimeKind.Utc).AddTicks(9341)
+                            UpdatedAt = new DateTime(2024, 12, 2, 15, 45, 10, 278, DateTimeKind.Utc).AddTicks(9345)
                         },
                         new
                         {
                             CategoryID = 36,
-                            CreatedAt = new DateTime(2024, 12, 3, 8, 58, 6, 764, DateTimeKind.Utc).AddTicks(9346),
+                            CreatedAt = new DateTime(2024, 12, 2, 15, 45, 10, 278, DateTimeKind.Utc).AddTicks(9347),
                             Name = "Child Care",
-                            UpdatedAt = new DateTime(2024, 12, 3, 8, 58, 6, 764, DateTimeKind.Utc).AddTicks(9347)
+                            UpdatedAt = new DateTime(2024, 12, 2, 15, 45, 10, 278, DateTimeKind.Utc).AddTicks(9347)
                         },
                         new
                         {
                             CategoryID = 37,
-                            CreatedAt = new DateTime(2024, 12, 3, 8, 58, 6, 764, DateTimeKind.Utc).AddTicks(9352),
+                            CreatedAt = new DateTime(2024, 12, 2, 15, 45, 10, 278, DateTimeKind.Utc).AddTicks(9348),
                             Name = "Elderly Care",
-                            UpdatedAt = new DateTime(2024, 12, 3, 8, 58, 6, 764, DateTimeKind.Utc).AddTicks(9353)
+                            UpdatedAt = new DateTime(2024, 12, 2, 15, 45, 10, 278, DateTimeKind.Utc).AddTicks(9349)
                         },
                         new
                         {
                             CategoryID = 38,
-                            CreatedAt = new DateTime(2024, 12, 3, 8, 58, 6, 764, DateTimeKind.Utc).AddTicks(9358),
+                            CreatedAt = new DateTime(2024, 12, 2, 15, 45, 10, 278, DateTimeKind.Utc).AddTicks(9350),
                             Name = "Pressure Washing",
-                            UpdatedAt = new DateTime(2024, 12, 3, 8, 58, 6, 764, DateTimeKind.Utc).AddTicks(9359)
+                            UpdatedAt = new DateTime(2024, 12, 2, 15, 45, 10, 278, DateTimeKind.Utc).AddTicks(9350)
                         },
                         new
                         {
                             CategoryID = 39,
-                            CreatedAt = new DateTime(2024, 12, 3, 8, 58, 6, 764, DateTimeKind.Utc).AddTicks(9364),
+                            CreatedAt = new DateTime(2024, 12, 2, 15, 45, 10, 278, DateTimeKind.Utc).AddTicks(9351),
                             Name = "Junk Removal",
-                            UpdatedAt = new DateTime(2024, 12, 3, 8, 58, 6, 764, DateTimeKind.Utc).AddTicks(9365)
+                            UpdatedAt = new DateTime(2024, 12, 2, 15, 45, 10, 278, DateTimeKind.Utc).AddTicks(9352)
                         },
                         new
                         {
                             CategoryID = 40,
-                            CreatedAt = new DateTime(2024, 12, 3, 8, 58, 6, 764, DateTimeKind.Utc).AddTicks(9370),
+                            CreatedAt = new DateTime(2024, 12, 2, 15, 45, 10, 278, DateTimeKind.Utc).AddTicks(9353),
                             Name = "Commercial Cleaning",
-                            UpdatedAt = new DateTime(2024, 12, 3, 8, 58, 6, 764, DateTimeKind.Utc).AddTicks(9371)
+                            UpdatedAt = new DateTime(2024, 12, 2, 15, 45, 10, 278, DateTimeKind.Utc).AddTicks(9353)
                         },
                         new
                         {
                             CategoryID = 41,
-                            CreatedAt = new DateTime(2024, 12, 3, 8, 58, 6, 764, DateTimeKind.Utc).AddTicks(9375),
+                            CreatedAt = new DateTime(2024, 12, 2, 15, 45, 10, 278, DateTimeKind.Utc).AddTicks(9355),
                             Name = "Digital Marketing",
-                            UpdatedAt = new DateTime(2024, 12, 3, 8, 58, 6, 764, DateTimeKind.Utc).AddTicks(9377)
+                            UpdatedAt = new DateTime(2024, 12, 2, 15, 45, 10, 278, DateTimeKind.Utc).AddTicks(9355)
                         },
                         new
                         {
                             CategoryID = 42,
-                            CreatedAt = new DateTime(2024, 12, 3, 8, 58, 6, 764, DateTimeKind.Utc).AddTicks(9381),
+                            CreatedAt = new DateTime(2024, 12, 2, 15, 45, 10, 278, DateTimeKind.Utc).AddTicks(9356),
                             Name = "SEO Services",
-                            UpdatedAt = new DateTime(2024, 12, 3, 8, 58, 6, 764, DateTimeKind.Utc).AddTicks(9383)
+                            UpdatedAt = new DateTime(2024, 12, 2, 15, 45, 10, 278, DateTimeKind.Utc).AddTicks(9357)
                         },
                         new
                         {
                             CategoryID = 43,
-                            CreatedAt = new DateTime(2024, 12, 3, 8, 58, 6, 764, DateTimeKind.Utc).AddTicks(9387),
+                            CreatedAt = new DateTime(2024, 12, 2, 15, 45, 10, 278, DateTimeKind.Utc).AddTicks(9358),
                             Name = "Social Media Management",
-                            UpdatedAt = new DateTime(2024, 12, 3, 8, 58, 6, 764, DateTimeKind.Utc).AddTicks(9389)
+                            UpdatedAt = new DateTime(2024, 12, 2, 15, 45, 10, 278, DateTimeKind.Utc).AddTicks(9358)
                         },
                         new
                         {
                             CategoryID = 44,
-                            CreatedAt = new DateTime(2024, 12, 3, 8, 58, 6, 764, DateTimeKind.Utc).AddTicks(9394),
+                            CreatedAt = new DateTime(2024, 12, 2, 15, 45, 10, 278, DateTimeKind.Utc).AddTicks(9360),
                             Name = "Web Development",
-                            UpdatedAt = new DateTime(2024, 12, 3, 8, 58, 6, 764, DateTimeKind.Utc).AddTicks(9395)
+                            UpdatedAt = new DateTime(2024, 12, 2, 15, 45, 10, 278, DateTimeKind.Utc).AddTicks(9360)
                         },
                         new
                         {
                             CategoryID = 45,
-                            CreatedAt = new DateTime(2024, 12, 3, 8, 58, 6, 764, DateTimeKind.Utc).AddTicks(9399),
+                            CreatedAt = new DateTime(2024, 12, 2, 15, 45, 10, 278, DateTimeKind.Utc).AddTicks(9361),
                             Name = "Graphic Design",
-                            UpdatedAt = new DateTime(2024, 12, 3, 8, 58, 6, 764, DateTimeKind.Utc).AddTicks(9401)
+                            UpdatedAt = new DateTime(2024, 12, 2, 15, 45, 10, 278, DateTimeKind.Utc).AddTicks(9361)
                         },
                         new
                         {
                             CategoryID = 46,
-                            CreatedAt = new DateTime(2024, 12, 3, 8, 58, 6, 764, DateTimeKind.Utc).AddTicks(9406),
+                            CreatedAt = new DateTime(2024, 12, 2, 15, 45, 10, 278, DateTimeKind.Utc).AddTicks(9363),
                             Name = "Content Writing",
-                            UpdatedAt = new DateTime(2024, 12, 3, 8, 58, 6, 764, DateTimeKind.Utc).AddTicks(9407)
+                            UpdatedAt = new DateTime(2024, 12, 2, 15, 45, 10, 278, DateTimeKind.Utc).AddTicks(9363)
                         },
                         new
                         {
                             CategoryID = 47,
-                            CreatedAt = new DateTime(2024, 12, 3, 8, 58, 6, 764, DateTimeKind.Utc).AddTicks(9411),
+                            CreatedAt = new DateTime(2024, 12, 2, 15, 45, 10, 278, DateTimeKind.Utc).AddTicks(9364),
                             Name = "Video Editing",
-                            UpdatedAt = new DateTime(2024, 12, 3, 8, 58, 6, 764, DateTimeKind.Utc).AddTicks(9413)
+                            UpdatedAt = new DateTime(2024, 12, 2, 15, 45, 10, 278, DateTimeKind.Utc).AddTicks(9365)
                         },
                         new
                         {
                             CategoryID = 48,
-                            CreatedAt = new DateTime(2024, 12, 3, 8, 58, 6, 764, DateTimeKind.Utc).AddTicks(9417),
+                            CreatedAt = new DateTime(2024, 12, 2, 15, 45, 10, 278, DateTimeKind.Utc).AddTicks(9366),
                             Name = "3D Printing",
-                            UpdatedAt = new DateTime(2024, 12, 3, 8, 58, 6, 764, DateTimeKind.Utc).AddTicks(9419)
+                            UpdatedAt = new DateTime(2024, 12, 2, 15, 45, 10, 278, DateTimeKind.Utc).AddTicks(9366)
                         },
                         new
                         {
                             CategoryID = 49,
-                            CreatedAt = new DateTime(2024, 12, 3, 8, 58, 6, 764, DateTimeKind.Utc).AddTicks(9423),
+                            CreatedAt = new DateTime(2024, 12, 2, 15, 45, 10, 278, DateTimeKind.Utc).AddTicks(9367),
                             Name = "Custom Software Development",
-                            UpdatedAt = new DateTime(2024, 12, 3, 8, 58, 6, 764, DateTimeKind.Utc).AddTicks(9424)
+                            UpdatedAt = new DateTime(2024, 12, 2, 15, 45, 10, 278, DateTimeKind.Utc).AddTicks(9368)
                         },
                         new
                         {
                             CategoryID = 50,
-                            CreatedAt = new DateTime(2024, 12, 3, 8, 58, 6, 764, DateTimeKind.Utc).AddTicks(9429),
+                            CreatedAt = new DateTime(2024, 12, 2, 15, 45, 10, 278, DateTimeKind.Utc).AddTicks(9369),
                             Name = "Mobile App Development",
-                            UpdatedAt = new DateTime(2024, 12, 3, 8, 58, 6, 764, DateTimeKind.Utc).AddTicks(9430)
+                            UpdatedAt = new DateTime(2024, 12, 2, 15, 45, 10, 278, DateTimeKind.Utc).AddTicks(9369)
                         },
                         new
                         {
                             CategoryID = 51,
-                            CreatedAt = new DateTime(2024, 12, 3, 8, 58, 6, 764, DateTimeKind.Utc).AddTicks(9434),
+                            CreatedAt = new DateTime(2024, 12, 2, 15, 45, 10, 278, DateTimeKind.Utc).AddTicks(9371),
                             Name = "Photography Editing",
-                            UpdatedAt = new DateTime(2024, 12, 3, 8, 58, 6, 764, DateTimeKind.Utc).AddTicks(9436)
+                            UpdatedAt = new DateTime(2024, 12, 2, 15, 45, 10, 278, DateTimeKind.Utc).AddTicks(9371)
                         },
                         new
                         {
                             CategoryID = 52,
-                            CreatedAt = new DateTime(2024, 12, 3, 8, 58, 6, 764, DateTimeKind.Utc).AddTicks(9440),
+                            CreatedAt = new DateTime(2024, 12, 2, 15, 45, 10, 278, DateTimeKind.Utc).AddTicks(9372),
                             Name = "Data Entry Services",
-                            UpdatedAt = new DateTime(2024, 12, 3, 8, 58, 6, 764, DateTimeKind.Utc).AddTicks(9442)
+                            UpdatedAt = new DateTime(2024, 12, 2, 15, 45, 10, 278, DateTimeKind.Utc).AddTicks(9372)
                         },
                         new
                         {
                             CategoryID = 53,
-                            CreatedAt = new DateTime(2024, 12, 3, 8, 58, 6, 764, DateTimeKind.Utc).AddTicks(9446),
+                            CreatedAt = new DateTime(2024, 12, 2, 15, 45, 10, 278, DateTimeKind.Utc).AddTicks(9374),
                             Name = "Virtual Assistance",
-                            UpdatedAt = new DateTime(2024, 12, 3, 8, 58, 6, 764, DateTimeKind.Utc).AddTicks(9448)
+                            UpdatedAt = new DateTime(2024, 12, 2, 15, 45, 10, 278, DateTimeKind.Utc).AddTicks(9374)
                         },
                         new
                         {
                             CategoryID = 54,
-                            CreatedAt = new DateTime(2024, 12, 3, 8, 58, 6, 764, DateTimeKind.Utc).AddTicks(9452),
+                            CreatedAt = new DateTime(2024, 12, 2, 15, 45, 10, 278, DateTimeKind.Utc).AddTicks(9375),
                             Name = "Business Consulting",
-                            UpdatedAt = new DateTime(2024, 12, 3, 8, 58, 6, 764, DateTimeKind.Utc).AddTicks(9454)
+                            UpdatedAt = new DateTime(2024, 12, 2, 15, 45, 10, 278, DateTimeKind.Utc).AddTicks(9376)
                         },
                         new
                         {
                             CategoryID = 55,
-                            CreatedAt = new DateTime(2024, 12, 3, 8, 58, 6, 764, DateTimeKind.Utc).AddTicks(9458),
+                            CreatedAt = new DateTime(2024, 12, 2, 15, 45, 10, 278, DateTimeKind.Utc).AddTicks(9423),
                             Name = "Market Research",
-                            UpdatedAt = new DateTime(2024, 12, 3, 8, 58, 6, 764, DateTimeKind.Utc).AddTicks(9460)
+                            UpdatedAt = new DateTime(2024, 12, 2, 15, 45, 10, 278, DateTimeKind.Utc).AddTicks(9424)
                         },
                         new
                         {
                             CategoryID = 56,
-                            CreatedAt = new DateTime(2024, 12, 3, 8, 58, 6, 764, DateTimeKind.Utc).AddTicks(9464),
+                            CreatedAt = new DateTime(2024, 12, 2, 15, 45, 10, 278, DateTimeKind.Utc).AddTicks(9425),
                             Name = "Project Management",
-                            UpdatedAt = new DateTime(2024, 12, 3, 8, 58, 6, 764, DateTimeKind.Utc).AddTicks(9466)
+                            UpdatedAt = new DateTime(2024, 12, 2, 15, 45, 10, 278, DateTimeKind.Utc).AddTicks(9426)
                         },
                         new
                         {
                             CategoryID = 57,
-                            CreatedAt = new DateTime(2024, 12, 3, 8, 58, 6, 764, DateTimeKind.Utc).AddTicks(9470),
+                            CreatedAt = new DateTime(2024, 12, 2, 15, 45, 10, 278, DateTimeKind.Utc).AddTicks(9427),
                             Name = "Branding",
-                            UpdatedAt = new DateTime(2024, 12, 3, 8, 58, 6, 764, DateTimeKind.Utc).AddTicks(9471)
+                            UpdatedAt = new DateTime(2024, 12, 2, 15, 45, 10, 278, DateTimeKind.Utc).AddTicks(9427)
                         },
                         new
                         {
                             CategoryID = 58,
-                            CreatedAt = new DateTime(2024, 12, 3, 8, 58, 6, 764, DateTimeKind.Utc).AddTicks(9476),
+                            CreatedAt = new DateTime(2024, 12, 2, 15, 45, 10, 278, DateTimeKind.Utc).AddTicks(9428),
                             Name = "Event Coordination",
-                            UpdatedAt = new DateTime(2024, 12, 3, 8, 58, 6, 764, DateTimeKind.Utc).AddTicks(9478)
+                            UpdatedAt = new DateTime(2024, 12, 2, 15, 45, 10, 278, DateTimeKind.Utc).AddTicks(9429)
                         },
                         new
                         {
                             CategoryID = 59,
-                            CreatedAt = new DateTime(2024, 12, 3, 8, 58, 6, 764, DateTimeKind.Utc).AddTicks(9482),
+                            CreatedAt = new DateTime(2024, 12, 2, 15, 45, 10, 278, DateTimeKind.Utc).AddTicks(9430),
                             Name = "Public Relations",
-                            UpdatedAt = new DateTime(2024, 12, 3, 8, 58, 6, 764, DateTimeKind.Utc).AddTicks(9483)
+                            UpdatedAt = new DateTime(2024, 12, 2, 15, 45, 10, 278, DateTimeKind.Utc).AddTicks(9430)
                         },
                         new
                         {
                             CategoryID = 60,
-                            CreatedAt = new DateTime(2024, 12, 3, 8, 58, 6, 764, DateTimeKind.Utc).AddTicks(9488),
+                            CreatedAt = new DateTime(2024, 12, 2, 15, 45, 10, 278, DateTimeKind.Utc).AddTicks(9432),
                             Name = "Translation Services",
-                            UpdatedAt = new DateTime(2024, 12, 3, 8, 58, 6, 764, DateTimeKind.Utc).AddTicks(9489)
+                            UpdatedAt = new DateTime(2024, 12, 2, 15, 45, 10, 278, DateTimeKind.Utc).AddTicks(9432)
                         },
                         new
                         {
                             CategoryID = 61,
-                            CreatedAt = new DateTime(2024, 12, 3, 8, 58, 6, 764, DateTimeKind.Utc).AddTicks(9494),
+                            CreatedAt = new DateTime(2024, 12, 2, 15, 45, 10, 278, DateTimeKind.Utc).AddTicks(9433),
                             Name = "Voiceover Services",
-                            UpdatedAt = new DateTime(2024, 12, 3, 8, 58, 6, 764, DateTimeKind.Utc).AddTicks(9495)
+                            UpdatedAt = new DateTime(2024, 12, 2, 15, 45, 10, 278, DateTimeKind.Utc).AddTicks(9434)
                         },
                         new
                         {
                             CategoryID = 62,
-                            CreatedAt = new DateTime(2024, 12, 3, 8, 58, 6, 764, DateTimeKind.Utc).AddTicks(9500),
+                            CreatedAt = new DateTime(2024, 12, 2, 15, 45, 10, 278, DateTimeKind.Utc).AddTicks(9435),
                             Name = "Legal Consultation",
-                            UpdatedAt = new DateTime(2024, 12, 3, 8, 58, 6, 764, DateTimeKind.Utc).AddTicks(9501)
+                            UpdatedAt = new DateTime(2024, 12, 2, 15, 45, 10, 278, DateTimeKind.Utc).AddTicks(9435)
                         },
                         new
                         {
                             CategoryID = 63,
-                            CreatedAt = new DateTime(2024, 12, 3, 8, 58, 6, 764, DateTimeKind.Utc).AddTicks(9506),
+                            CreatedAt = new DateTime(2024, 12, 2, 15, 45, 10, 278, DateTimeKind.Utc).AddTicks(9437),
                             Name = "Property Management",
-                            UpdatedAt = new DateTime(2024, 12, 3, 8, 58, 6, 764, DateTimeKind.Utc).AddTicks(9507)
+                            UpdatedAt = new DateTime(2024, 12, 2, 15, 45, 10, 278, DateTimeKind.Utc).AddTicks(9437)
                         },
                         new
                         {
                             CategoryID = 64,
-                            CreatedAt = new DateTime(2024, 12, 3, 8, 58, 6, 764, DateTimeKind.Utc).AddTicks(9511),
+                            CreatedAt = new DateTime(2024, 12, 2, 15, 45, 10, 278, DateTimeKind.Utc).AddTicks(9438),
                             Name = "Real Estate Services",
-                            UpdatedAt = new DateTime(2024, 12, 3, 8, 58, 6, 764, DateTimeKind.Utc).AddTicks(9513)
+                            UpdatedAt = new DateTime(2024, 12, 2, 15, 45, 10, 278, DateTimeKind.Utc).AddTicks(9439)
                         },
                         new
                         {
                             CategoryID = 65,
-                            CreatedAt = new DateTime(2024, 12, 3, 8, 58, 6, 764, DateTimeKind.Utc).AddTicks(9517),
+                            CreatedAt = new DateTime(2024, 12, 2, 15, 45, 10, 278, DateTimeKind.Utc).AddTicks(9440),
                             Name = "Insurance Services",
-                            UpdatedAt = new DateTime(2024, 12, 3, 8, 58, 6, 764, DateTimeKind.Utc).AddTicks(9519)
+                            UpdatedAt = new DateTime(2024, 12, 2, 15, 45, 10, 278, DateTimeKind.Utc).AddTicks(9440)
                         },
                         new
                         {
                             CategoryID = 66,
-                            CreatedAt = new DateTime(2024, 12, 3, 8, 58, 6, 764, DateTimeKind.Utc).AddTicks(9523),
+                            CreatedAt = new DateTime(2024, 12, 2, 15, 45, 10, 278, DateTimeKind.Utc).AddTicks(9441),
                             Name = "Financial Planning",
-                            UpdatedAt = new DateTime(2024, 12, 3, 8, 58, 6, 764, DateTimeKind.Utc).AddTicks(9525)
+                            UpdatedAt = new DateTime(2024, 12, 2, 15, 45, 10, 278, DateTimeKind.Utc).AddTicks(9442)
                         },
                         new
                         {
                             CategoryID = 67,
-                            CreatedAt = new DateTime(2024, 12, 3, 8, 58, 6, 764, DateTimeKind.Utc).AddTicks(9529),
+                            CreatedAt = new DateTime(2024, 12, 2, 15, 45, 10, 278, DateTimeKind.Utc).AddTicks(9443),
                             Name = "Investment Advice",
-                            UpdatedAt = new DateTime(2024, 12, 3, 8, 58, 6, 764, DateTimeKind.Utc).AddTicks(9531)
+                            UpdatedAt = new DateTime(2024, 12, 2, 15, 45, 10, 278, DateTimeKind.Utc).AddTicks(9443)
                         },
                         new
                         {
                             CategoryID = 68,
-                            CreatedAt = new DateTime(2024, 12, 3, 8, 58, 6, 764, DateTimeKind.Utc).AddTicks(9535),
+                            CreatedAt = new DateTime(2024, 12, 2, 15, 45, 10, 278, DateTimeKind.Utc).AddTicks(9445),
                             Name = "Tax Preparation",
-                            UpdatedAt = new DateTime(2024, 12, 3, 8, 58, 6, 764, DateTimeKind.Utc).AddTicks(9536)
+                            UpdatedAt = new DateTime(2024, 12, 2, 15, 45, 10, 278, DateTimeKind.Utc).AddTicks(9445)
                         },
                         new
                         {
                             CategoryID = 69,
-                            CreatedAt = new DateTime(2024, 12, 3, 8, 58, 6, 764, DateTimeKind.Utc).AddTicks(9541),
+                            CreatedAt = new DateTime(2024, 12, 2, 15, 45, 10, 278, DateTimeKind.Utc).AddTicks(9446),
                             Name = "Debt Counseling",
-                            UpdatedAt = new DateTime(2024, 12, 3, 8, 58, 6, 764, DateTimeKind.Utc).AddTicks(9542)
+                            UpdatedAt = new DateTime(2024, 12, 2, 15, 45, 10, 278, DateTimeKind.Utc).AddTicks(9447)
                         },
                         new
                         {
                             CategoryID = 70,
-                            CreatedAt = new DateTime(2024, 12, 3, 8, 58, 6, 764, DateTimeKind.Utc).AddTicks(9547),
+                            CreatedAt = new DateTime(2024, 12, 2, 15, 45, 10, 278, DateTimeKind.Utc).AddTicks(9448),
                             Name = "Retirement Planning",
-                            UpdatedAt = new DateTime(2024, 12, 3, 8, 58, 6, 764, DateTimeKind.Utc).AddTicks(9548)
+                            UpdatedAt = new DateTime(2024, 12, 2, 15, 45, 10, 278, DateTimeKind.Utc).AddTicks(9448)
                         },
                         new
                         {
                             CategoryID = 71,
-                            CreatedAt = new DateTime(2024, 12, 3, 8, 58, 6, 764, DateTimeKind.Utc).AddTicks(9552),
+                            CreatedAt = new DateTime(2024, 12, 2, 15, 45, 10, 278, DateTimeKind.Utc).AddTicks(9450),
                             Name = "Mortgage Advice",
-                            UpdatedAt = new DateTime(2024, 12, 3, 8, 58, 6, 764, DateTimeKind.Utc).AddTicks(9554)
+                            UpdatedAt = new DateTime(2024, 12, 2, 15, 45, 10, 278, DateTimeKind.Utc).AddTicks(9450)
                         },
                         new
                         {
                             CategoryID = 72,
-                            CreatedAt = new DateTime(2024, 12, 3, 8, 58, 6, 764, DateTimeKind.Utc).AddTicks(9558),
+                            CreatedAt = new DateTime(2024, 12, 2, 15, 45, 10, 278, DateTimeKind.Utc).AddTicks(9451),
                             Name = "Estate Planning",
-                            UpdatedAt = new DateTime(2024, 12, 3, 8, 58, 6, 764, DateTimeKind.Utc).AddTicks(9559)
+                            UpdatedAt = new DateTime(2024, 12, 2, 15, 45, 10, 278, DateTimeKind.Utc).AddTicks(9452)
                         },
                         new
                         {
                             CategoryID = 73,
-                            CreatedAt = new DateTime(2024, 12, 3, 8, 58, 6, 764, DateTimeKind.Utc).AddTicks(9563),
+                            CreatedAt = new DateTime(2024, 12, 2, 15, 45, 10, 278, DateTimeKind.Utc).AddTicks(9453),
                             Name = "Human Resources",
-                            UpdatedAt = new DateTime(2024, 12, 3, 8, 58, 6, 764, DateTimeKind.Utc).AddTicks(9565)
+                            UpdatedAt = new DateTime(2024, 12, 2, 15, 45, 10, 278, DateTimeKind.Utc).AddTicks(9453)
                         },
                         new
                         {
                             CategoryID = 74,
-                            CreatedAt = new DateTime(2024, 12, 3, 8, 58, 6, 764, DateTimeKind.Utc).AddTicks(9569),
+                            CreatedAt = new DateTime(2024, 12, 2, 15, 45, 10, 278, DateTimeKind.Utc).AddTicks(9455),
                             Name = "Recruitment Services",
-                            UpdatedAt = new DateTime(2024, 12, 3, 8, 58, 6, 764, DateTimeKind.Utc).AddTicks(9571)
+                            UpdatedAt = new DateTime(2024, 12, 2, 15, 45, 10, 278, DateTimeKind.Utc).AddTicks(9455)
                         },
                         new
                         {
                             CategoryID = 75,
-                            CreatedAt = new DateTime(2024, 12, 3, 8, 58, 6, 764, DateTimeKind.Utc).AddTicks(9575),
+                            CreatedAt = new DateTime(2024, 12, 2, 15, 45, 10, 278, DateTimeKind.Utc).AddTicks(9456),
                             Name = "Employee Training",
-                            UpdatedAt = new DateTime(2024, 12, 3, 8, 58, 6, 764, DateTimeKind.Utc).AddTicks(9576)
+                            UpdatedAt = new DateTime(2024, 12, 2, 15, 45, 10, 278, DateTimeKind.Utc).AddTicks(9456)
                         });
                 });
 
@@ -824,30 +827,6 @@ namespace WebUI.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("Subscriptions");
-                });
-
-            modelBuilder.Entity("Domain.Entities.UserCategory", b =>
-                {
-                    b.Property<int>("UserCategoryId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("UserCategoryId"));
-
-                    b.Property<int>("CategoryId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("UserId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasKey("UserCategoryId");
-
-                    b.HasIndex("CategoryId");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("UserCategories");
                 });
 
             modelBuilder.Entity("Domain.Entities.UserRefreshToken", b =>
@@ -1202,25 +1181,6 @@ namespace WebUI.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("Domain.Entities.UserCategory", b =>
-                {
-                    b.HasOne("Category", "Category")
-                        .WithMany("UserCategories")
-                        .HasForeignKey("CategoryId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Users", "User")
-                        .WithMany("UserCategories")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Category");
-
-                    b.Navigation("User");
-                });
-
             modelBuilder.Entity("Domain.Entities.UserRefreshToken", b =>
                 {
                     b.HasOne("Users", "User")
@@ -1286,18 +1246,11 @@ namespace WebUI.Migrations
             modelBuilder.Entity("Category", b =>
                 {
                     b.Navigation("Jobs");
-
-                    b.Navigation("UserCategories");
                 });
 
             modelBuilder.Entity("Domain.Entities.Jobs", b =>
                 {
                     b.Navigation("JobApplications");
-                });
-
-            modelBuilder.Entity("Users", b =>
-                {
-                    b.Navigation("UserCategories");
                 });
 #pragma warning restore 612, 618
         }
