@@ -1,4 +1,6 @@
-﻿namespace ReviveIt.test.Helpers
+﻿using Domain.Entities;
+
+namespace ReviveIt.test.Helpers
 {
     public class MockTokenHelper 
     {

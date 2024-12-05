@@ -1,4 +1,5 @@
-﻿using Infrastructure.Data;
+﻿using Domain.Entities;
+using Infrastructure.Data;
 
 namespace ReviveIt.test.Providers;
 

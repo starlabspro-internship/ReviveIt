@@ -1,7 +1,5 @@
 ﻿using Domain.Entities;
 using Microsoft.EntityFrameworkCore;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace Application.Interfaces
 {
@@ -17,7 +15,9 @@ namespace Application.Interfaces
         public DbSet<UserRefreshToken> UserRefreshTokens { get; set; }
         public DbSet<Category> Categories { get; set; }
         public DbSet<PortfolioDocument> PortfolioDocuments { get; set; }
-        public DbSet<ChatSession> ChatSessions { get; set; } 
+        public DbSet<ChatSession> ChatSessions { get; set; }
+        public DbSet<SelectedJobApplicant> SelectedJobApplicants { get; set; }
+
 
         Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);
     }

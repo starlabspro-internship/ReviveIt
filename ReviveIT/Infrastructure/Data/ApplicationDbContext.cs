@@ -20,6 +20,7 @@ namespace Infrastructure.Data
         public DbSet<Category> Categories { get; set; }
         public DbSet<PortfolioDocument> PortfolioDocuments { get; set; }
         public DbSet<ChatSession> ChatSessions { get; set; } 
+        public DbSet<SelectedJobApplicant> SelectedJobApplicants { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -36,6 +37,7 @@ namespace Infrastructure.Data
             builder.ApplyConfiguration(new CategoryConfigurations());
             builder.ApplyConfiguration(new PortfolioDocumentConfiguration());
             builder.ApplyConfiguration(new ChatSessionConfigurations());
+            builder.ApplyConfiguration(new SelectedJobApplicantConfigurations());
 
             builder.Entity<Category>().HasData(
               new Category { CategoryID = 1, Name = "Electronics Repair", CreatedAt = DateTime.UtcNow, UpdatedAt = DateTime.UtcNow },

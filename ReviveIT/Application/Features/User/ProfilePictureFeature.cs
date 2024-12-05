@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Hosting;   
 using Application.DTO;
+using Domain.Entities;
 
 namespace Application.Features.User
 {

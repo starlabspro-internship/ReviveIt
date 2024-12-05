@@ -4,6 +4,7 @@ using Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace WebUI.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241205092434_SelectedJobApplicants")]
+    partial class SelectedJobApplicants
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -53,30 +56,30 @@ namespace WebUI.Migrations
                         new
                         {
                             CategoryID = 1,
-                            CreatedAt = new DateTime(2024, 12, 5, 9, 46, 55, 178, DateTimeKind.Utc).AddTicks(2809),
+                            CreatedAt = new DateTime(2024, 12, 5, 9, 24, 33, 681, DateTimeKind.Utc).AddTicks(2416),
                             Name = "Electronics Repair",
-                            UpdatedAt = new DateTime(2024, 12, 5, 9, 46, 55, 178, DateTimeKind.Utc).AddTicks(2809)
+                            UpdatedAt = new DateTime(2024, 12, 5, 9, 24, 33, 681, DateTimeKind.Utc).AddTicks(2417)
                         },
                         new
                         {
                             CategoryID = 2,
-                            CreatedAt = new DateTime(2024, 12, 5, 9, 46, 55, 178, DateTimeKind.Utc).AddTicks(2811),
+                            CreatedAt = new DateTime(2024, 12, 5, 9, 24, 33, 681, DateTimeKind.Utc).AddTicks(2419),
                             Name = "Furniture Restoration",
-                            UpdatedAt = new DateTime(2024, 12, 5, 9, 46, 55, 178, DateTimeKind.Utc).AddTicks(2812)
+                            UpdatedAt = new DateTime(2024, 12, 5, 9, 24, 33, 681, DateTimeKind.Utc).AddTicks(2419)
                         },
                         new
                         {
                             CategoryID = 3,
-                            CreatedAt = new DateTime(2024, 12, 5, 9, 46, 55, 178, DateTimeKind.Utc).AddTicks(2814),
+                            CreatedAt = new DateTime(2024, 12, 5, 9, 24, 33, 681, DateTimeKind.Utc).AddTicks(2421),
                             Name = "Home Appliance Repair",
-                            UpdatedAt = new DateTime(2024, 12, 5, 9, 46, 55, 178, DateTimeKind.Utc).AddTicks(2814)
+                            UpdatedAt = new DateTime(2024, 12, 5, 9, 24, 33, 681, DateTimeKind.Utc).AddTicks(2422)
                         },
                         new
                         {
                             CategoryID = 4,
-                            CreatedAt = new DateTime(2024, 12, 5, 9, 46, 55, 178, DateTimeKind.Utc).AddTicks(2816),
+                            CreatedAt = new DateTime(2024, 12, 5, 9, 24, 33, 681, DateTimeKind.Utc).AddTicks(2423),
                             Name = "Automotive Repair",
-                            UpdatedAt = new DateTime(2024, 12, 5, 9, 46, 55, 178, DateTimeKind.Utc).AddTicks(2816)
+                            UpdatedAt = new DateTime(2024, 12, 5, 9, 24, 33, 681, DateTimeKind.Utc).AddTicks(2424)
                         });
                 });
 
@@ -331,6 +334,38 @@ namespace WebUI.Migrations
                     b.ToTable("Reviews");
                 });
 
+            modelBuilder.Entity("Domain.Entities.SelectedJobApplicant", b =>
+                {
+                    b.Property<int>("SelectedApplicantID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("SelectedApplicantID"));
+
+                    b.Property<int>("ApplicationID")
+                        .HasColumnType("int");
+
+                    b.Property<int>("JobID")
+                        .HasColumnType("int");
+
+                    b.Property<string>("SelectedByUserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTime>("SelectedDate")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("SelectedApplicantID");
+
+                    b.HasIndex("ApplicationID");
+
+                    b.HasIndex("JobID");
+
+                    b.HasIndex("SelectedByUserId");
+
+                    b.ToTable("SelectedJobApplicants");
+                });
+
             modelBuilder.Entity("Domain.Entities.Service", b =>
                 {
                     b.Property<int>("ServiceID")
@@ -577,44 +612,6 @@ namespace WebUI.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("SelectedJobApplicant", b =>
-                {
-                    b.Property<int>("SelectedApplicantID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("SelectedApplicantID"));
-
-                    b.Property<int>("ApplicationID")
-                        .HasColumnType("int");
-
-                    b.Property<int>("JobID")
-                        .HasColumnType("int");
-
-                    b.Property<string>("SelectedApplicantUserId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("SelectedByUserId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<DateTime>("SelectedDate")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("SelectedApplicantID");
-
-                    b.HasIndex("ApplicationID");
-
-                    b.HasIndex("JobID");
-
-                    b.HasIndex("SelectedApplicantUserId");
-
-                    b.HasIndex("SelectedByUserId");
-
-                    b.ToTable("SelectedJobApplicants");
-                });
-
             modelBuilder.Entity("Users", b =>
                 {
                     b.Property<string>("Id")
@@ -833,6 +830,33 @@ namespace WebUI.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("Domain.Entities.SelectedJobApplicant", b =>
+                {
+                    b.HasOne("Domain.Entities.JobApplication", "JobApplication")
+                        .WithMany()
+                        .HasForeignKey("ApplicationID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Domain.Entities.Jobs", "Job")
+                        .WithMany("SelectedJobApplicants")
+                        .HasForeignKey("JobID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Users", "SelectedByUser")
+                        .WithMany()
+                        .HasForeignKey("SelectedByUserId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Job");
+
+                    b.Navigation("JobApplication");
+
+                    b.Navigation("SelectedByUser");
+                });
+
             modelBuilder.Entity("Domain.Entities.Service", b =>
                 {
                     b.HasOne("Users", "User")
@@ -915,41 +939,6 @@ namespace WebUI.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("SelectedJobApplicant", b =>
-                {
-                    b.HasOne("Domain.Entities.JobApplication", "JobApplication")
-                        .WithMany()
-                        .HasForeignKey("ApplicationID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Domain.Entities.Jobs", "Job")
-                        .WithMany("SelectedJobApplicants")
-                        .HasForeignKey("JobID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Users", "SelectedApplicantUser")
-                        .WithMany()
-                        .HasForeignKey("SelectedApplicantUserId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("Users", "SelectedByUser")
-                        .WithMany()
-                        .HasForeignKey("SelectedByUserId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.Navigation("Job");
-
-                    b.Navigation("JobApplication");
-
-                    b.Navigation("SelectedApplicantUser");
-
-                    b.Navigation("SelectedByUser");
                 });
 
             modelBuilder.Entity("Category", b =>
