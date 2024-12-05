@@ -51,6 +51,7 @@ builder.Services.AddScoped<AddPhotoToPortfolioFeature>();
 builder.Services.AddScoped<DeletePhotoFromPortfolioFeature>();
 builder.Services.AddScoped<GetPortfolioPhotosFeature>();
 builder.Services.AddScoped<ApplyForJobFeature>();
+builder.Services.AddScoped<DeleteJobApplicationFeature>();
 
 builder.Services.AddAuthentication(options =>
 {

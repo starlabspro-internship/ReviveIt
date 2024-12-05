@@ -10,10 +10,12 @@ namespace WebUI.Controllers
     public class JobApplicationController : ControllerBase 
     {
         private readonly ApplyForJobFeature _applyForJobFeature;
+        private readonly DeleteJobApplicationFeature _deleteJobApplicationFeature;
 
-        public JobApplicationController(ApplyForJobFeature applyForJobFeature)
+        public JobApplicationController(ApplyForJobFeature applyForJobFeature, DeleteJobApplicationFeature deleteJobApplicationFeature)
         {
             _applyForJobFeature = applyForJobFeature;
+            _deleteJobApplicationFeature = deleteJobApplicationFeature;
         }
 
         [Authorize(Roles = "Technician,Company")]
@@ -31,6 +33,23 @@ namespace WebUI.Controllers
                 return Ok(result); 
 
             return BadRequest(result); 
+        }
+
+        [Authorize(Roles = "Technician,Company")]
+        [HttpDelete("delete-job-application/{applicationId}")]
+        public async Task<IActionResult> DeleteJobApplication(int applicationId)
+        {
+            var userIdClaim = User.FindFirst("UserId")?.Value;
+
+            if (string.IsNullOrEmpty(userIdClaim))
+                return Unauthorized(new { Message = "User not authenticated." });
+
+            var result = await _deleteJobApplicationFeature.DeleteJobApplicationAsync(applicationId, userIdClaim);
+
+            if (result.Success)
+                return Ok(result);
+
+            return BadRequest(result);
         }
     }
 }
