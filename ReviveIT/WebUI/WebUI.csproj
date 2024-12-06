@@ -1,41 +1,43 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
-    <TargetFramework>net8.0</TargetFramework>
-    <Nullable>enable</Nullable>
-    <ImplicitUsings>enable</ImplicitUsings>
+	<TargetFramework>net8.0</TargetFramework>
+	<Nullable>enable</Nullable>
+	<ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="wwwroot\css\css\**" />
-    <Content Remove="wwwroot\css\css\**" />
-    <EmbeddedResource Remove="wwwroot\css\css\**" />
-    <None Remove="wwwroot\css\css\**" />
+	<Compile Remove="wwwroot\css\css\**" />
+	<Content Remove="wwwroot\css\css\**" />
+	<EmbeddedResource Remove="wwwroot\css\css\**" />
+	<None Remove="wwwroot\css\css\**" />
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="BCrypt.Net-Next" Version="4.0.3" />
-    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="8.0.10" />
-    <PackageReference Include="Microsoft.AspNetCore.Hosting" Version="2.2.7" />
-    <PackageReference Include="Microsoft.AspNetCore.Hosting.Abstractions" Version="2.2.0" />
-    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="8.0.10" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.10" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="8.0.10" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="8.0.10">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-    </PackageReference>
-	  <PackageReference Include="Microsoft.Extensions.Hosting" Version="9.0.0" />
-	  <PackageReference Include="Microsoft.Extensions.Logging.Console" Version="9.0.0" />
+	<PackageReference Include="BCrypt.Net-Next" Version="4.0.3" />
+	<PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="8.0.10" />
+	<PackageReference Include="Microsoft.AspNetCore.Hosting" Version="2.2.7" />
+	<PackageReference Include="Microsoft.AspNetCore.Hosting.Abstractions" Version="2.2.0" />
+	<PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="8.0.10" />
+	<PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.10" />
+	<PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="8.0.10" />
+	<PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="8.0.10">
+	  <PrivateAssets>all</PrivateAssets>
+	  <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+	</PackageReference>
+	<PackageReference Include="Microsoft.Extensions.Hosting" Version="9.0.0" />
+	<PackageReference Include="Microsoft.Extensions.Logging.Console" Version="9.0.0" />
+	<PackageReference Include="Microsoft.AspNetCore.SignalR.Core" Version="1.1.0" />
+	<PackageReference Include="Microsoft.AspNetCore.SignalR.Client" Version="1.1.0" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Application\Application.csproj" />
-    <ProjectReference Include="..\Infrastructure\Infrastructure.csproj" />
+	<ProjectReference Include="..\Application\Application.csproj" />
+	<ProjectReference Include="..\Infrastructure\Infrastructure.csproj" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="wwwroot\images\Portfolio\" />
+	<Folder Include="wwwroot\images\Portfolio\" />
   </ItemGroup>
 
 </Project>

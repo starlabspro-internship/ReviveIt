@@ -7,11 +7,13 @@ using Domain.Constants;
 using Infrastructure.Data;
 using Infrastructure.Repositories;
 using Infrastructure.Services;
+using Infrastructure.Hubs;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using WebUI.MiddleWares;
+using Microsoft.AspNetCore.SignalR;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -45,7 +47,7 @@ builder.Services.AddScoped<RefreshTokenRepository>();
 builder.Services.AddScoped<ProfilePictureFeature>();
 builder.Services.AddScoped<UpdateProfileFeature>();
 builder.Services.AddScoped<GetAllJobsFeature>();
-builder.Services.AddScoped<GetJobsByUserIDFeature>(); 
+builder.Services.AddScoped<GetJobsByUserIDFeature>();
 builder.Services.AddScoped<UserInfoFeature>();
 builder.Services.AddScoped<AddPhotoToPortfolioFeature>();
 builder.Services.AddScoped<DeletePhotoFromPortfolioFeature>();
@@ -93,8 +95,8 @@ builder.Services.AddScoped<IJobPostFeature, JobPostFeature>();
 builder.Services.AddTransient<IEmailSender, EmailSender>();
 
 builder.Services.AddHttpContextAccessor();
-
 builder.Services.AddSingleton<ConfigurationConstant>();
+builder.Services.AddSignalR();
 
 builder.Services.AddControllers()
     .AddJsonOptions(options =>
@@ -133,6 +135,7 @@ app.UseCors("AllowAll");
 app.UseAuthentication();
 app.UseAuthorization();
 app.UseMiddleware<ExceptionMiddleware>();
+app.MapHub<ChatHub>("/chatHub"); 
 
 app.MapControllerRoute(
     name: "default",
