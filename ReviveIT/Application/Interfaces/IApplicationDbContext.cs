@@ -18,7 +18,6 @@ namespace Application.Interfaces
         public DbSet<ChatSession> ChatSessions { get; set; }
         public DbSet<SelectedJobApplicant> SelectedJobApplicants { get; set; }
 
-
         Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);
     }
 }
