@@ -18,6 +18,7 @@
         public decimal Price { get; set; } 
 
         public ICollection<JobApplication> JobApplications { get; set; }
+        public ICollection<SelectedJobApplicant> SelectedJobApplicants { get; set; }
     }
 
     public enum JobStatus

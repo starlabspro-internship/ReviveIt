@@ -1,6 +1,7 @@
 ﻿using Application.DTO;
 using Application.Helpers;
 using Application.Interfaces;
+using Domain.Entities;
 using Microsoft.AspNetCore.Identity;
 using System.Security.Claims;
 

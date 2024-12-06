@@ -1,9 +1,11 @@
 ﻿using System.Text;
+using Application.Features;
 using Application.Features.Accounts;
 using Application.Features.User;
 using Application.Helpers;
 using Application.Interfaces;
 using Domain.Constants;
+using Domain.Entities;
 using Infrastructure.Data;
 using Infrastructure.Repositories;
 using Infrastructure.Services;
@@ -50,6 +52,10 @@ builder.Services.AddScoped<UserInfoFeature>();
 builder.Services.AddScoped<AddPhotoToPortfolioFeature>();
 builder.Services.AddScoped<DeletePhotoFromPortfolioFeature>();
 builder.Services.AddScoped<GetPortfolioPhotosFeature>();
+builder.Services.AddScoped<ApplyForJobFeature>();
+builder.Services.AddScoped<DeleteJobApplicationFeature>();
+builder.Services.AddScoped<SelectJobApplicantFeature>();
+builder.Services.AddScoped<GetJobApplicationsByJobIdFeature>();
 
 builder.Services.AddAuthentication(options =>
 {
