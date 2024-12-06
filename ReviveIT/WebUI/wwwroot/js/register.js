@@ -23,10 +23,13 @@
         const role = roleMapping[document.getElementById("role").value];
         const name = document.getElementById("name").value.trim();
 
-        const expertise = document.getElementById("expertise")?.value || null;
         const experience = document.getElementById("experience")?.value || null;
         const companyName = document.getElementById("companyName")?.value || null;
         const companyAddress = document.getElementById("companyAddress")?.value || null;
+        const selectedCategoryIds = Array.from(
+            document.getElementById("categories")?.selectedOptions || []
+        ).map(option => parseInt(option.value))
+         .filter(value => !isNaN(value));
 
         if (!email || !validateEmail(email)) {
             alert("Please enter a valid email address.");
@@ -50,11 +53,6 @@
             return;
         }
 
-        if (role === 2 && !expertise) {
-            alert("Please specify your expertise.");
-            return;
-        }
-
         if (role === 2 && !experience) {
             alert("Please specify your years of experience.");
             return;
@@ -71,10 +69,10 @@
             confirmPassword,
             role,
             name: role === 1 || role === 2 ? name : null,
-            expertise: role === 2 ? expertise : null,
             experience: role === 2 ? experience : null,
             companyName: role === 3 ? companyName : null,
-            companyAddress: role === 3 ? companyAddress : null
+            companyAddress: role === 3 ? companyAddress : null,
+            selectedCategoryIds: role === 2 ? selectedCategoryIds : []
         };
 
         registerForm.style.display = "none";
@@ -125,4 +123,55 @@
         const passwordPattern = /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[\W_]).{8,}$/;
         return passwordPattern.test(password);
     }
+
+    $(document).ready(function () {
+        try {
+            const $categories = $('#categories').select2({
+                placeholder: "Select categories of expertise",
+                closeOnSelect: true,
+                allowClear: true,
+                width: '100%',
+                templateSelection: function () {
+                    return '';
+                }
+            });
+
+            const $selectedChips = $('#selectedChips');
+
+            function updateChips() {
+                const selectedValues = $categories.val() || [];
+                $selectedChips.empty();
+                selectedValues.forEach(value => {
+                    const text = $categories.find(`option[value="${value}"]`).text();
+
+                    const chipHtml = `
+                <div class="selected-chip" data-value="${value}">
+                    <span>${text}</span>
+                    <button type="button" class="remove-chip" data-value="${value}">&times;</button>
+                </div>
+                `;
+                    $selectedChips.append(chipHtml);
+                });
+            }
+
+            $selectedChips.on('click', '.remove-chip', function () {
+                const valueToRemove = $(this).data('value');
+
+                const updatedValues = ($categories.val() || []).filter(val => val !== valueToRemove);
+
+                $categories.find(`option[value="${valueToRemove}"]`).remove();
+                $categories.val(updatedValues).trigger('change');
+
+                updateChips();
+            });
+
+            $categories.on('change', function () {
+                updateChips();
+            });
+
+            updateChips();
+        } catch (error) {
+            console.error("Error initializing Select2:", error);
+        }
+    });
 });

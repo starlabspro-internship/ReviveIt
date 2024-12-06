@@ -14,6 +14,7 @@ namespace Application.Interfaces
         public DbSet<Reviews> Reviews { get; set; }
         public DbSet<UserRefreshToken> UserRefreshTokens { get; set; }
         public DbSet<Category> Categories { get; set; }
+        public DbSet<UserCategory> UserCategories { get; set; }
         public DbSet<PortfolioDocument> PortfolioDocuments { get; set; }
         public DbSet<ChatSession> ChatSessions { get; set; }
         public DbSet<SelectedJobApplicant> SelectedJobApplicants { get; set; }

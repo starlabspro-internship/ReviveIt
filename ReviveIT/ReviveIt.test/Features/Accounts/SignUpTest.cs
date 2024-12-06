@@ -12,6 +12,7 @@ namespace ReviveIt.test.Feature
     {
         private readonly Mock<UserManager<Users>> _userManagerMock;
         private readonly Mock<IEmailSender> _emailSenderMock;
+        private readonly Mock<IApplicationDbContext> _contextMock;
         private readonly TokenHelper _tokenHelper;
         private readonly RegisterFeature _registerFeature;
 
@@ -23,9 +24,10 @@ namespace ReviveIt.test.Feature
 
             _userManagerMock = SetupUserManagerMock();
             _emailSenderMock = new Mock<IEmailSender>();
-            _tokenHelper = new TokenHelper(configuration, new Mock<Microsoft.AspNetCore.Http.IHttpContextAccessor>().Object);
+            _contextMock = new Mock<IApplicationDbContext>();
 
-            _registerFeature = new RegisterFeature(_userManagerMock.Object, _tokenHelper, _emailSenderMock.Object);
+            _tokenHelper = new TokenHelper(configuration, new Mock<Microsoft.AspNetCore.Http.IHttpContextAccessor>().Object);
+            _registerFeature = new RegisterFeature(_userManagerMock.Object, _tokenHelper, _emailSenderMock.Object, _contextMock.Object);
         }
 
         private Mock<UserManager<Users>> SetupUserManagerMock()

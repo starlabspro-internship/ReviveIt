@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Domain.Entities;
+using Microsoft.AspNetCore.Identity;
 
 namespace Domain.Entities
 {
@@ -14,6 +15,7 @@ namespace Domain.Entities
         public string? CompanyAddress { get; set; }
         public string? ProfilePicture { get; set; }
 
+        public ICollection<UserCategory> UserCategories { get; set; }
         public ICollection<PortfolioDocument> Portfolios { get; set; } = new List<PortfolioDocument>();
     }
     public enum UserRole
