@@ -128,7 +128,7 @@
         try {
             const $categories = $('#categories').select2({
                 placeholder: "Select categories of expertise",
-                closeOnSelect: false,
+                closeOnSelect: true,
                 allowClear: true,
                 width: '100%',
                 templateSelection: function () {
