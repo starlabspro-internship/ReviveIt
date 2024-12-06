@@ -6,6 +6,7 @@ using System.Text;
 using Domain.Constants;
 using Microsoft.AspNetCore.Http;
 using System.Security.Cryptography;
+using Domain.Entities;
 
 namespace Application.Helpers
 {

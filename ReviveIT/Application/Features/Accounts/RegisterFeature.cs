@@ -1,7 +1,9 @@
 ﻿using Application.DTO;
 using Application.Helpers;
 using Application.Interfaces;
+using Domain.Entities;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;
 
 namespace Application.Features.Accounts
@@ -11,12 +13,14 @@ namespace Application.Features.Accounts
         private readonly UserManager<Users> _userManager;
         private readonly TokenHelper _tokenHelper;
         private readonly IEmailSender _emailSender;
+        private readonly IApplicationDbContext _context;
 
-        public RegisterFeature(UserManager<Users> userManager, TokenHelper tokenHelper, IEmailSender emailSender)
+        public RegisterFeature(UserManager<Users> userManager, TokenHelper tokenHelper, IEmailSender emailSender, IApplicationDbContext context)
         {
             _userManager = userManager;
             _tokenHelper = tokenHelper;
             _emailSender = emailSender;
+            _context = context;
         }
 
         public async Task<RegisterResultDto> RegisterUserAsync(RegisterDto dto)
@@ -64,6 +68,8 @@ namespace Application.Features.Accounts
                 new Claim("CompanyAddress", user.CompanyAddress ?? "")
             });
 
+            await SaveUserCategoriesAsync(user.Id, dto.SelectedCategoryIds);
+
             var token = _tokenHelper.GenerateToken(user);
             await SendEmailConfirmationAsync(user);
             return new RegisterResultDto { Success = true, Token = token, Message = "Registration successful! Please check your email to confirm your account." };
@@ -77,11 +83,37 @@ namespace Application.Features.Accounts
             FullName = dto.Name,
             CreatedAt = DateTime.UtcNow,
             UpdatedAt = DateTime.UtcNow,
-            Expertise = dto.Expertise,
             Experience = dto.Experience,
             CompanyName = dto.CompanyName,
-            CompanyAddress = dto.CompanyAddress
+            CompanyAddress = dto.CompanyAddress,
+            Expertise = string.Join(",", dto.SelectedCategoryIds)
         };
+
+        private async Task SaveUserCategoriesAsync(string userId, List<int> categoryIds)
+        {
+            var expertiseNames = await _context.Categories
+                .Where(c => categoryIds.Contains(c.CategoryID))
+                .Select(c => c.Name)
+                .ToListAsync();
+
+            var expertiseString = string.Join(",", expertiseNames);
+
+            var user = await _context.Users.FindAsync(userId);
+            if (user != null)
+            {
+                user.Expertise = expertiseString;
+                _context.Users.Update(user);
+            }
+
+            var userCategories = categoryIds.Select(categoryId => new UserCategory
+            {
+                UserId = userId,
+                CategoryId = categoryId
+            }).ToList();
+
+            _context.UserCategories.AddRange(userCategories);
+            await _context.SaveChangesAsync();
+        }
 
         private async Task SendEmailConfirmationAsync(Users user)
         {

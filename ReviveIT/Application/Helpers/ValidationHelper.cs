@@ -1,5 +1,6 @@
 ﻿using System.Text.RegularExpressions;
 using Application.DTO;
+using Domain.Entities;
 
 namespace Application.Helpers
 {
@@ -70,11 +71,7 @@ namespace Application.Helpers
                         message = "Full name is required for Technician role.";
                         return false;
                     }
-                    if (string.IsNullOrWhiteSpace(dto.Expertise))
-                    {
-                        message = "Expertise is required for Technician role.";
-                        return false;
-                    }
+
                     if (dto.Experience == null)
                     {
                         message = "Experience is required for Technician role.";

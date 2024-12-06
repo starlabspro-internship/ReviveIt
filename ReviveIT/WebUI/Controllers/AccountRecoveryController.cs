@@ -1,4 +1,5 @@
 ﻿using Application.Helpers;
+using Domain.Entities;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
