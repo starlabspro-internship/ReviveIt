@@ -1,4 +1,5 @@
 ﻿using Application.DTO;
+using Domain.Entities;
 using Microsoft.AspNetCore.Identity;
 
 namespace Application.Features.User

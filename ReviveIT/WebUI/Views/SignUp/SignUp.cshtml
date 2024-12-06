@@ -12,7 +12,6 @@
 }
 
 <div class="hero_area" style="height: auto;">
-    <!-- slider section -->
     <section class="slider_section">
         <div class="container d-flex justify-content-center pb-5">
             <section class="register_section">
@@ -23,7 +22,6 @@
                                 <h3 class="text-center mb-4">Register at ReviveIt</h3>
 
                                 <form id="registerForm" action="/Accounts/Register" method="post">
-                                    <!-- Role Selection -->
                                     <div class="form-group">
                                         <label for="role" style="width:100%; margin-bottom:1rem;">Register As</label>
                                         <select id="role" name="role" class="form-control"  onchange="toggleRoleFields()" required>
@@ -34,7 +32,6 @@
                                         </select>
                                     </div>
 
-                                    <!-- Name Input Group -->
                                     <div class="form-group" id="nameField">
                                         <label for="name">Full Name</label>
                                         <div class="input-group">
@@ -45,7 +42,6 @@
                                         </div>
                                     </div>
 
-                                    <!-- Email Input Group -->
                                     <div class="form-group">
                                         <label for="email">Email Address</label>
                                         <div class="input-group">
@@ -56,7 +52,6 @@
                                         </div>
                                     </div>
 
-                                    <!-- Password Input Group -->
                                     <div class="form-group">
                                         <label for="password">Password</label>
                                         <div class="input-group">
@@ -67,7 +62,6 @@
                                         </div>
                                     </div>
 
-                                    <!-- Confirm Password Input Group -->
                                     <div class="form-group">
                                         <label for="confirm_password">Confirm Password</label>
                                         <div class="input-group">
@@ -78,7 +72,6 @@
                                         </div>
                                     </div>
 
-                                    <!-- Additional Fields for Technician -->
                                     <div id="technicianFields" style="display: none;">
                                         <div class="form-group">
                                             <label for="categories" class="form-label">Categories of Expertise</label>
@@ -100,20 +93,19 @@
                                             <label for="experience">Years of Experience</label>
                                             <div class="input-group">
                                                 <div class="input-group-prepend">
-                                                    <span class="input-group-text"><i class="fas fa-calendar-alt"></i></span> <!-- Icon for Years of Experience -->
+                                                    <span class="input-group-text"><i class="fas fa-calendar-alt"></i></span> 
                                                 </div>
                                                 <input type="number" class="form-control" id="experience" name="experience" min="0" placeholder="Experience in years" required>
                                             </div>
                                         </div>
                                     </div>
 
-                                    <!-- Additional Fields for Company -->
                                     <div id="companyFields" style="display: none;">
                                         <div class="form-group">
                                             <label for="companyName">Company Name</label>
                                             <div class="input-group">
                                                 <div class="input-group-prepend">
-                                                    <span class="input-group-text"><i class="fa fa-building"></i></span> <!-- Icon for company name -->
+                                                    <span class="input-group-text"><i class="fa fa-building"></i></span> 
                                                 </div>
                                                 <input type="text" class="form-control" id="companyName" name="companyName" placeholder="Enter company name" required>
                                             </div>
@@ -122,7 +114,7 @@
                                             <label for="companyAddress">Company Address</label>
                                             <div class="input-group">
                                                 <div class="input-group-prepend">
-                                                    <span class="input-group-text"><i class="fa fa-map-marker-alt"></i></span> <!-- Icon for company address -->
+                                                    <span class="input-group-text"><i class="fa fa-map-marker-alt"></i></span> 
                                                 </div>
                                                 <input type="text" class="form-control" id="companyAddress" name="companyAddress" placeholder="Enter company address" required>
                                             </div>
@@ -132,7 +124,6 @@
                                     <button type="submit" class="btn btn-primary btn-block">Register</button>
                                 </form>
 
-                                <!-- Already have an account -->
                                 <div id= "logInRedirect" class="text-center mt-3">
                                     <p>Already have an account? <a href="~/login">Login</a></p>
                                 </div>
@@ -145,7 +136,6 @@
     </section>
 </div>
 
-<!-- end slider section -->
 
 <script>
     function toggleRoleFields() {

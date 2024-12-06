@@ -2,6 +2,7 @@
 using Application.Features.Accounts;
 using Application.Helpers;
 using Application.Interfaces;
+using Domain.Entities;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 

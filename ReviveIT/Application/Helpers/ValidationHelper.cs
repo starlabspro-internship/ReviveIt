@@ -1,5 +1,6 @@
 ﻿using System.Text.RegularExpressions;
 using Application.DTO;
+using Domain.Entities;
 
 namespace Application.Helpers
 {

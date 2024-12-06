@@ -1,0 +1,86 @@
+﻿@{
+    Layout = "_Layout";
+}
+
+@section Styles{
+    <link rel="stylesheet" href="~/css/inbox.css" />
+}
+
+<main class="content flex-grow-1">
+    <h3 class="mb-3 my-3">Messages</h3>
+
+    <div class="container p-0">
+        <!-- Left column (User list) -->
+        <div class="chat-list">
+            <input type="text" class="form-control my-3" placeholder="Search...">
+            
+            <a href="#" class="list-group-item list-group-item-action border-0">
+                <div class="badge bg-blue float-right">5</div>
+                <div class="d-flex align-items-start">
+                    <div class="rounded-circle mr-1" style="width: 40px; height: 40px; background-color: #ddd;"></div>
+                    <div class="flex-grow-1 ml-3">
+                        Genc Bajgora
+                        <div class="small"><span class="fas fa-circle chat-online"></span> Online</div>
+                    </div>
+                </div>
+            </a>
+
+            <a href="#" class="list-group-item list-group-item-action border-0">
+                <div class="badge bg-blue float-right">3</div>
+                <div class="d-flex align-items-start">
+                    <div class="rounded-circle mr-1" style="width: 40px; height: 40px; background-color: #ddd;"></div>
+                    <div class="flex-grow-1 ml-3">
+                        Roni Sopi
+                        <div class="small"><span class="fas fa-circle chat-online"></span> Online</div>
+                    </div>
+                </div>
+            </a>
+        </div>
+
+        <div class="chat-messages-wrapper">
+            <div class="user-info">
+                <div>
+                    <div class="username">Roni Sopi</div>
+                    <div class="status"><em>Technician</em></div>
+                </div>
+                <!-- Three dots button for more options -->
+                <button class="options-button">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="1"></circle>
+                        <circle cx="19" cy="12" r="1"></circle>
+                        <circle cx="5" cy="12" r="1"></circle>
+                    </svg>
+                </button>
+            </div>
+
+            <!-- Chat Messages -->
+            <div class="chat-messages" id="chat-messages">
+                <div class="chat-message chat-message-right">
+                    <div class="rounded-circle mr-1" style="width: 40px; height: 40px; background-color: #ddd;"></div>
+                    <div class="message-content">
+                        <div class="font-weight-bold mb-1">You</div>
+                        Hello, I have an appliance that's not working properly.
+                    </div>
+                </div>
+
+                <div class="chat-message chat-message-left">
+                    <div class="rounded-circle mr-1" style="width: 40px; height: 40px; background-color: #ddd;"></div>
+                    <div class="message-content">
+                        <div class="font-weight-bold mb-1">Roni Sopi</div>
+                        Hi there! I'd be happy to help you with service-related questions or issues. Could you provide a bit more detail about the appliance?
+                    </div>
+                </div>
+            </div>
+
+            <div class="chat-input">
+                <div class="input-group w-100">
+                    <input type="text" class="form-control" placeholder="Type a message...">
+                    <div class="input-group-append">
+                        <button class="btn btn-primary">Send</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+<script src="~/js/inbox.js"></script>

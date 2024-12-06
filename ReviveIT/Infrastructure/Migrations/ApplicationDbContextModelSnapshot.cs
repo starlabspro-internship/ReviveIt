@@ -668,6 +668,9 @@ namespace WebUI.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("MessageID"));
 
+                    b.Property<int>("ChatSessionId")
+                        .HasColumnType("int");
+
                     b.Property<string>("MessageContent")
                         .IsRequired()
                         .HasMaxLength(500)
@@ -686,13 +689,63 @@ namespace WebUI.Migrations
                         .HasColumnType("datetime2")
                         .HasDefaultValueSql("GETDATE()");
 
+                    b.Property<bool>("Viewed")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bit")
+                        .HasDefaultValue(false);
+
                     b.HasKey("MessageID");
+
+                    b.HasIndex("ChatSessionId");
 
                     b.HasIndex("RecipientID");
 
                     b.HasIndex("SenderID");
 
                     b.ToTable("Messages");
+                });
+
+            modelBuilder.Entity("Domain.Entities.PortfolioDocument", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FilePath")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.Property<string>("FileType")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<DateTime>("UploadedAt")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValueSql("GETDATE()");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("PortfolioDocuments");
                 });
 
             modelBuilder.Entity("Domain.Entities.Reviews", b =>
@@ -1007,6 +1060,44 @@ namespace WebUI.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
+            modelBuilder.Entity("SelectedJobApplicant", b =>
+                {
+                    b.Property<int>("SelectedApplicantID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("SelectedApplicantID"));
+
+                    b.Property<int>("ApplicationID")
+                        .HasColumnType("int");
+
+                    b.Property<int>("JobID")
+                        .HasColumnType("int");
+
+                    b.Property<string>("SelectedApplicantUserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("SelectedByUserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTime>("SelectedDate")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("SelectedApplicantID");
+
+                    b.HasIndex("ApplicationID");
+
+                    b.HasIndex("JobID");
+
+                    b.HasIndex("SelectedApplicantUserId");
+
+                    b.HasIndex("SelectedByUserId");
+
+                    b.ToTable("SelectedJobApplicants");
+                });
+
             modelBuilder.Entity("Users", b =>
                 {
                     b.Property<string>("Id")
@@ -1104,6 +1195,32 @@ namespace WebUI.Migrations
                     b.ToTable("AspNetUsers", (string)null);
                 });
 
+            modelBuilder.Entity("Domain.Entities.ChatSession", b =>
+                {
+                    b.HasOne("Users", "Company")
+                        .WithMany()
+                        .HasForeignKey("CompanyId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("Users", "Customer")
+                        .WithMany()
+                        .HasForeignKey("CustomerId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("Users", "Technician")
+                        .WithMany()
+                        .HasForeignKey("TechnicianId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Company");
+
+                    b.Navigation("Customer");
+
+                    b.Navigation("Technician");
+                });
+
             modelBuilder.Entity("Domain.Entities.JobApplication", b =>
                 {
                     b.HasOne("Domain.Entities.Jobs", "Job")
@@ -1144,6 +1261,12 @@ namespace WebUI.Migrations
 
             modelBuilder.Entity("Domain.Entities.Messages", b =>
                 {
+                    b.HasOne("Domain.Entities.ChatSession", "ChatSession")
+                        .WithMany("Messages")
+                        .HasForeignKey("ChatSessionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("Users", "Recipient")
                         .WithMany()
                         .HasForeignKey("RecipientID")
@@ -1156,9 +1279,22 @@ namespace WebUI.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
+                    b.Navigation("ChatSession");
+
                     b.Navigation("Recipient");
 
                     b.Navigation("Sender");
+                });
+
+            modelBuilder.Entity("Domain.Entities.PortfolioDocument", b =>
+                {
+                    b.HasOne("Users", "User")
+                        .WithMany("Portfolios")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("Domain.Entities.Reviews", b =>
@@ -1283,6 +1419,41 @@ namespace WebUI.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("SelectedJobApplicant", b =>
+                {
+                    b.HasOne("Domain.Entities.JobApplication", "JobApplication")
+                        .WithMany()
+                        .HasForeignKey("ApplicationID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Domain.Entities.Jobs", "Job")
+                        .WithMany("SelectedJobApplicants")
+                        .HasForeignKey("JobID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Users", "SelectedApplicantUser")
+                        .WithMany()
+                        .HasForeignKey("SelectedApplicantUserId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("Users", "SelectedByUser")
+                        .WithMany()
+                        .HasForeignKey("SelectedByUserId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Job");
+
+                    b.Navigation("JobApplication");
+
+                    b.Navigation("SelectedApplicantUser");
+
+                    b.Navigation("SelectedByUser");
+                });
+
             modelBuilder.Entity("Category", b =>
                 {
                     b.Navigation("Jobs");
@@ -1290,9 +1461,21 @@ namespace WebUI.Migrations
                     b.Navigation("UserCategories");
                 });
 
+            modelBuilder.Entity("Domain.Entities.ChatSession", b =>
+                {
+                    b.Navigation("Messages");
+                });
+
             modelBuilder.Entity("Domain.Entities.Jobs", b =>
                 {
                     b.Navigation("JobApplications");
+
+                    b.Navigation("SelectedJobApplicants");
+                });
+
+            modelBuilder.Entity("Users", b =>
+                {
+                    b.Navigation("Portfolios");
                 });
 
             modelBuilder.Entity("Users", b =>
