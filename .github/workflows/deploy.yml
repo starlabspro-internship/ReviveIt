@@ -1,50 +1,26 @@
 name: Deploy to Server
-
 on:
   push:
     branches:
       - main
-
 jobs:
   deploy:
     runs-on: ubuntu-latest
-
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v2
-
-    - name: Set up .NET SDK
-      uses: actions/setup-dotnet@v3
-      with:
-        dotnet-version: '8.0.110'
-
-    - name: Restore dependencies
-      run: |
-        cd ReviveIt/ReviveIT
-        dotnet restore ReviveIT.sln
-
-    - name: Build the project
-      run: |
-        cd ReviveIt/ReviveIT
-        dotnet build ReviveIT.sln --configuration Release
-
-    - name: Publish the project
-      run: |
-        cd ReviveIt/ReviveIT
-        dotnet publish ReviveIT.sln --configuration Release --output ./publish
-
-    - name: Deploy to remote server using SCP
+    - uses: actions/checkout@v4
+    - name: Deploy to Server
       env:
         SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
         HOST: ${{ secrets.HOST }}
         USER: ${{ secrets.USER }}
-        REMOTE_PATH: '/var/www/ReviveIt/ReviveIT/WebUI'
       run: |
+        ssh-keyscan $HOST >> ~/.ssh/known_hosts
         echo "$SSH_PRIVATE_KEY" | ssh-add -
-        scp -r ReviveIt/ReviveIT/publish/* $USER@$HOST:$REMOTE_PATH
-        ssh -o StrictHostKeyChecking=no $USER@$HOST 'sudo systemctl restart reviveit.service'
-
-    - name: Verify deployment
-      run: |
-        curl -f http://$HOST
-
+        ssh $USER@$HOST '
+          cd /var/www/ReviveIt &&
+          git pull origin main &&
+          cd ReviveIT &&
+          dotnet restore &&
+          dotnet publish -c Release -o ./publish &&
+          sudo systemctl restart reviveit.service
+        '
