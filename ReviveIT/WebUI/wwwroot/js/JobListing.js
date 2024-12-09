@@ -2,8 +2,7 @@
     getJobs: "https://localhost:7018/api/GetJobs",
     jobPost: "https://localhost:7018/api/Job",
     jobApplications: "https://localhost:7018/api/jobapplication",
-    userInfo: "https://localhost:7018/api/ProfileUpdate/info",
-    categories: "https://localhost:7018/api/categories/getCategories"
+    userInfo: "https://localhost:7018/api/ProfileUpdate/info"
 };
 
 function getCookie(name) {
@@ -44,28 +43,20 @@ async function checkUserRole() {
     return data ? data.role : null;
 }
 
-async function fetchCategories() {
-    const categories = await fetchData(apiUrls.categories);
-    if (categories) {
-        const jobCategoryDropdown = document.getElementById('jobCategory');
-        categories.forEach(category => {
-            const option = document.createElement('option');
-            option.value = category.categoryID;
-            option.textContent = category.name;
-            jobCategoryDropdown.appendChild(option);
-        });
-    }
-}
-
-async function getAllJobs() {
-    const userRole = await checkUserRole();
-    const userCreatedJobs = await fetchData(`${apiUrls.getJobs}/get-jobs-by-user-id`, {
+async function getUserCreatedJobs() {
+    const data = await fetchData(`${apiUrls.getJobs}/get-jobs-by-user-id`, {
         method: 'GET',
         headers: {
             'Authorization': `Bearer ${getCookie('jwtToken')}`,
             'Content-Type': 'application/json'
         }
     });
+    return data ? data.jobs || [] : [];
+}
+
+async function getAllJobs() {
+    const userRole = await checkUserRole();
+    const userCreatedJobs = await getUserCreatedJobs();
 
     const jobsData = await fetchData(`${apiUrls.getJobs}/get-all-jobs`, {
         method: 'GET',
@@ -76,27 +67,34 @@ async function getAllJobs() {
     });
 
     if (jobsData && jobsData.jobs) {
-        const updatedJobs = await Promise.all(jobsData.jobs.map(async (job) => {
-            job.isUserCreated = userCreatedJobs?.some(userJob => userJob.jobID === job.jobID);
-            const applicationStatus = await fetchData(`${apiUrls.jobApplications}/has-applied/${job.jobID}`, {
-                method: 'GET',
-                headers: {
-                    'Authorization': `Bearer ${getCookie('jwtToken')}`,
-                    'Content-Type': 'application/json'
-                }
-            });
-            job.hasApplied = applicationStatus?.hasApplied || false;
-            job.applicationId = applicationStatus?.applicationId || null;
+        const sortedJobs = jobsData.jobs.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+
+        const updatedJobs = await Promise.all(sortedJobs.map(async (job) => {
+            job.isUserCreated = userCreatedJobs.some(userJob => userJob.jobID === job.jobID);
+            const applicationStatus = await checkIfUserApplied(job.jobID);
+            job.hasApplied = applicationStatus.hasApplied;
+            job.applicationId = applicationStatus.applicationId;
             return job;
         }));
 
         populateJobsContainer(updatedJobs, userRole);
     } else {
-        populateJobsContainer([], userRole);
+        alert("Failed to fetch jobs. Please try again.");
     }
 }
 
-function populateJobsContainer(jobs, userRole) {
+async function checkIfUserApplied(jobId) {
+    const data = await fetchData(`${apiUrls.jobApplications}/has-applied/${jobId}`, {
+        method: 'GET',
+        headers: {
+            'Authorization': `Bearer ${getCookie('jwtToken')}`,
+            'Content-Type': 'application/json'
+        }
+    });
+    return data ? { hasApplied: data.hasApplied, applicationId: data.applicationId } : { hasApplied: false, applicationId: null };
+}
+
+function populateJobsContainer(jobs, userRole = null) {
     const jobsContainer = document.getElementById('jobsContainer');
     jobsContainer.innerHTML = '';
 
@@ -121,13 +119,13 @@ function createJobCard(job, userRole) {
                     <div class="detail-box">
                         <h5>${job.title || 'N/A'}</h5>
                         <div class="detail-info">
-                            <h6><i class="fa fa-th-list" aria-hidden="true"></i> ${job.categoryName || 'N/A'}</h6>
-                            <h6><i class="fa fa-info-circle" aria-hidden="true"></i> ${job.status || 'N/A'}</h6>
-                            <h6><i class="fa fa-list" aria-hidden="true"></i> ${job.description || 'N/A'}</h6>
+                            <h6><i class="fa fa-th-list" aria-hidden="true"></i><span>${job.categoryName || 'N/A'}</span></h6>
+                            <h6><i class="fa fa-info-circle" aria-hidden="true"></i><span>${job.status || 'N/A'}</span></h6>
+                            <h6><i class="fa fa-list" aria-hidden="true"></i><span>${job.description || 'N/A'}</span></h6>
                         </div>
                     </div>
                 </div>
-                <div class="option-box">
+                <div class="option-box" style="margin-top: 1em">
                     ${job.isUserCreated ? `<p class="text-muted">This is your job listing</p>` : createJobActionButtons(job, userRole)}
                 </div>
             </div>
@@ -185,12 +183,8 @@ async function applyForJob(event) {
     }
 }
 
-let isJobPostingInProgress = false;
 async function submitJobForm(event) {
     event.preventDefault();
-
-    if (isJobPostingInProgress) return;
-    isJobPostingInProgress = true;
 
     const jobData = {
         jobID: 0,
@@ -217,8 +211,21 @@ async function submitJobForm(event) {
         document.getElementById('jobForm').reset();
         await getAllJobs();
     }
+}
 
-    isJobPostingInProgress = false;
+function fetchCategories() {
+    fetch('/api/categories/getCategories')
+        .then(response => response.json())
+        .then(data => {
+            const jobCategoryDropdown = document.getElementById('jobCategory');
+            data.forEach(category => {
+                const option = document.createElement('option');
+                option.value = category.categoryID;
+                option.textContent = category.name;
+                jobCategoryDropdown.appendChild(option);
+            });
+        })
+        .catch(error => console.error('Error fetching categories:', error));
 }
 
 document.addEventListener('DOMContentLoaded', function () {
@@ -226,5 +233,7 @@ document.addEventListener('DOMContentLoaded', function () {
     getAllJobs();
 
     const jobForm = document.getElementById('jobForm');
-    jobForm.addEventListener('submit', submitJobForm);
+    if (jobForm) {
+        jobForm.addEventListener('submit', submitJobForm);
+    }
 });
