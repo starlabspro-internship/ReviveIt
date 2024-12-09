@@ -18,27 +18,20 @@ jobs:
       with:
         dotnet-version: '8.0.110'
 
-    - name: Check directory structure (Debug)
-      run: |
-        echo "Listing files in the repo:"
-        ls -R
-
     - name: Restore dependencies
       run: |
-        # Debugging the directory structure
-        ls -R
-        cd ReviveIt/ReviveIT/WebUI
-        dotnet restore
+        cd ReviveIt/ReviveIT
+        dotnet restore ReviveIT.sln
 
     - name: Build the project
       run: |
-        cd ReviveIt/ReviveIT/WebUI
-        dotnet build --configuration Release
+        cd ReviveIt/ReviveIT
+        dotnet build ReviveIT.sln --configuration Release
 
     - name: Publish the project
       run: |
-        cd ReviveIt/ReviveIT/WebUI
-        dotnet publish --configuration Release --output ./publish
+        cd ReviveIt/ReviveIT
+        dotnet publish ReviveIT.sln --configuration Release --output ./publish
 
     - name: Deploy to remote server using SCP
       env:
@@ -48,7 +41,7 @@ jobs:
         REMOTE_PATH: '/var/www/ReviveIt/ReviveIT/WebUI'
       run: |
         echo "$SSH_PRIVATE_KEY" | ssh-add -
-        scp -r ReviveIt/ReviveIT/WebUI/publish/* $USER@$HOST:$REMOTE_PATH
+        scp -r ReviveIt/ReviveIT/publish/* $USER@$HOST:$REMOTE_PATH
         ssh -o StrictHostKeyChecking=no $USER@$HOST 'sudo systemctl restart reviveit.service'
 
     - name: Verify deployment
