@@ -1,7 +1,7 @@
 ﻿@{
-    ViewData["Tittle"] = "About Us";
+    ViewData["Title"] = "About Us";
+    bool textUpdated = ViewBag.TextUpdated != null && (bool)ViewBag.TextUpdated;
 }
-<!-- about section -->
 
 <section class="about_section layout_padding">
     <div class="container">
@@ -9,19 +9,33 @@
             <div class="col-md-6">
                 <div class="detail-box">
                     <div class="heading_container">
-                        <h2>
-                            About Us
-                        </h2>
+                        <h2>About Us</h2>
                     </div>
-                    <p>
-                        Normal distribution of letters, as opposed to using 'Content here, content here', making it look like
-                        readable English. Many desktop publishing packages and web page editors has a more-or-less normal
-                        distribution of letters, as opposed to using 'Content here, content here', making it look like readable
-                        English. Many desktop publishing packages and web page editors
-                    </p>
-                    <a href="">
-                        Read More
-                    </a>
+                    <div id="about-text">
+                        <p>Welcome to ReviveIt! We are a community-driven platform connecting clients with global and local professional technicians and companies across various service categories. Our mission is to create a user-friendly environment that facilitates seamless interactions between customers, technicians, and companies.</p>
+                        <p>Our platform provides solutions for anything that needs to be fixed, ensuring that all your service needs are met efficiently and effectively.</p>
+                        @if (textUpdated)
+                        {
+                            <p id="additional-text">At ReviveIt, customers can browse and hire technicians or companies, communicate securely via messages, and manage their profiles effortlessly. Technicians and companies can offer their services, respond to client posts, and manage their profiles and subscriptions.</p>
+                            <p id="additional-text-2">
+                                Key Features include:
+                                <ul>
+                                    <li>Customized sign-up forms for customers, technicians, and companies.</li>
+                                    <li>Easy-to-use profile management interfaces.</li>
+                                    <li>Secure messaging system for efficient communication.</li>
+                                    <li>Detailed job posts from clients and responsive feedback from technicians.</li>
+                                    <li>Optional subscription plans for enhanced services and features.</li>
+                                </ul>
+                                Join us in creating a collaborative community where professional services are just a click away. From plumbing and electrical work to IT support and appliance repair, find the right expert for the job at ReviveIt.
+                            </p>
+                        }
+                    </div>
+                    @if (!textUpdated)
+                    {
+                        <form id="updateForm" asp-action="UpdateText" method="post">
+                            <button type="submit" id="read-more-button" class="btn btn-primary">Read More</button>
+                        </form>
+                    }
                 </div>
             </div>
             <div class="col-md-6">
@@ -32,6 +46,23 @@
         </div>
     </div>
 </section>
+
+@section Scripts {
+    <script>
+        document.getElementById('updateForm').addEventListener('submit', function (e) {
+            e.preventDefault();
+            const button = document.getElementById('read-more-button');
+            const text = document.getElementById('about-text');
+            button.innerText = 'ReviveIt';
+            setTimeout(() => {
+                button.style.display = 'none';
+                text.innerHTML += '<p>ReviveIt</p>'; // Append with <p> for consistent formatting
+                text.innerHTML += '<p>Another appended text</p>';
+                document.getElementById('updateForm').submit();
+            }, 1000);
+        });
+    </script>
+}
 
 <!-- end about section -->
 <!-- info section -->
