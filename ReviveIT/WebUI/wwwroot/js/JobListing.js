@@ -5,13 +5,21 @@
     userInfo: "https://localhost:7018/api/ProfileUpdate/info"
 };
 
+async function fetchData(url, options = {}) {
+    try {
+        const response = await fetch(url, options);
+        if (!response.ok) throw new Error('Network response was not ok');
+        return await response.json();
+    } catch (error) {
+        return null;
+    }
+}
+
 function getCookie(name) {
-    const cookies = document.cookie.split("; ");
-    for (const cookie of cookies) {
-        const [key, value] = cookie.split("=");
-        if (key === name) {
-            return decodeURIComponent(value);
-        }
+    const cookies = document.cookie.split(';');
+    for (let cookie of cookies) {
+        const [key, value] = cookie.trim().split('=');
+        if (key === name) return decodeURIComponent(value);
     }
     return null;
 }
@@ -19,17 +27,6 @@ function getCookie(name) {
 function openModal() {
     const modal = new bootstrap.Modal(document.getElementById('jobModal'));
     modal.show();
-}
-
-async function fetchData(url, options = {}) {
-    try {
-        const response = await fetch(url, options);
-        if (!response.ok) throw new Error('Network response was not ok');
-        return await response.json();
-    } catch (error) {
-        console.error("Fetch error:", error);
-        return null;
-    }
 }
 
 async function checkUserRole() {
@@ -52,6 +49,17 @@ async function getUserCreatedJobs() {
         }
     });
     return data ? data.jobs || [] : [];
+}
+
+async function checkIfUserApplied(jobId) {
+    const data = await fetchData(`${apiUrls.jobApplications}/has-applied/${jobId}`, {
+        method: 'GET',
+        headers: {
+            'Authorization': `Bearer ${getCookie('jwtToken')}`,
+            'Content-Type': 'application/json'
+        }
+    });
+    return data ? { hasApplied: data.hasApplied, applicationId: data.applicationId } : { hasApplied: false, applicationId: null };
 }
 
 async function getAllJobs() {
@@ -78,27 +86,14 @@ async function getAllJobs() {
         }));
 
         populateJobsContainer(updatedJobs, userRole);
-    } else {
-        alert("Failed to fetch jobs. Please try again.");
     }
 }
 
-async function checkIfUserApplied(jobId) {
-    const data = await fetchData(`${apiUrls.jobApplications}/has-applied/${jobId}`, {
-        method: 'GET',
-        headers: {
-            'Authorization': `Bearer ${getCookie('jwtToken')}`,
-            'Content-Type': 'application/json'
-        }
-    });
-    return data ? { hasApplied: data.hasApplied, applicationId: data.applicationId } : { hasApplied: false, applicationId: null };
-}
-
-function populateJobsContainer(jobs, userRole = null) {
+function populateJobsContainer(jobs, userRole) {
     const jobsContainer = document.getElementById('jobsContainer');
     jobsContainer.innerHTML = '';
 
-    if (!Array.isArray(jobs) || jobs.length === 0) {
+    if (!jobs.length) {
         jobsContainer.innerHTML = `<p>No jobs found.</p>`;
         return;
     }
@@ -134,7 +129,7 @@ function createJobCard(job, userRole) {
 }
 
 function createJobActionButtons(job, userRole) {
-    if (['Technician', 'Company', 'Admin'].includes(userRole)) {
+    if (userRole === 'Technician' || userRole === 'Company' || userRole === 'Admin') {
         return job.hasApplied
             ? `<button class="delete-btn" data-application-id="${job.applicationId}">Revoke Application</button>`
             : `<button class="apply-btn" data-job-id="${job.jobID}">Apply Now</button>`;
@@ -183,8 +178,12 @@ async function applyForJob(event) {
     }
 }
 
+let isJobPostingInProgress = false;
 async function submitJobForm(event) {
     event.preventDefault();
+
+    if (isJobPostingInProgress) return;
+    isJobPostingInProgress = true;
 
     const jobData = {
         jobID: 0,
@@ -211,6 +210,8 @@ async function submitJobForm(event) {
         document.getElementById('jobForm').reset();
         await getAllJobs();
     }
+
+    isJobPostingInProgress = false;
 }
 
 function fetchCategories() {
@@ -234,6 +235,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     const jobForm = document.getElementById('jobForm');
     if (jobForm) {
+        jobForm.removeEventListener('submit', submitJobForm);
         jobForm.addEventListener('submit', submitJobForm);
     }
 });
