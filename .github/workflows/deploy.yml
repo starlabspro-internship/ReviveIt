@@ -14,17 +14,15 @@ jobs:
         SSH_PRIVATE_KEY: ${{ secrets.REVIVEIT_DEPLOY_KEY }}
       run: |
         mkdir -p ~/.ssh
-        echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
-        chmod 600 ~/.ssh/id_rsa
-        ssh-keyscan ${{ secrets.HOST }} >> ~/.ssh/known_hosts
+        echo "$SSH_PRIVATE_KEY" > ~/.ssh/reviveit_id_rsa
+        chmod 600 ~/.ssh/reviveit_id_rsa
     
     - name: Deploy to Server
       env:
         HOST: ${{ secrets.HOST }}
         USER: ${{ secrets.USER }}
       run: |
-        ssh -v \
-            -i ~/.ssh/id_rsa \
+        ssh -i ~/.ssh/reviveit_id_rsa \
             -o StrictHostKeyChecking=no \
             $USER@$HOST '
           set -e
