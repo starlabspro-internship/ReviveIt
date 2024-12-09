@@ -46,7 +46,7 @@
                         <li class="nav-item">
                             <a class="nav-link" asp-controller="AboutUs" asp-action="AboutUs">About Us</a>
                         </li>
-                        @if(User.IsInRole("Technician") || User.IsInRole("Company") || (!User.Identity.IsAuthenticated)){
+                        @if(User.Identity.IsAuthenticated){
                         <li class="nav-item">
                             <a class="nav-link" asp-controller="JobListings" asp-action="JobListings">Job Listings</a>
                         </li>
