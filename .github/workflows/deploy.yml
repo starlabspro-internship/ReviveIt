@@ -8,15 +8,19 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4
-    - name: Deploy to Server
+    - name: Setup SSH
       env:
         SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+      run: |
+        mkdir -p ~/.ssh
+        echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
+        chmod 600 ~/.ssh/id_rsa
+    - name: Deploy to Server
+      env:
         HOST: ${{ secrets.HOST }}
         USER: ${{ secrets.USER }}
       run: |
-        mkdir -p ~/.ssh
-        echo "$SSH_PRIVATE_KEY" | ssh-add -
-        ssh -o StrictHostKeyChecking=no $USER@$HOST '
+        ssh -i ~/.ssh/id_rsa -o StrictHostKeyChecking=no $USER@$HOST '
           cd /var/www/ReviveIt &&
           git pull origin main &&
           cd ReviveIT &&
