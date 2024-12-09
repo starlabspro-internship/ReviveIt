@@ -1,44 +1,56 @@
-name: Deploy ReviveIt to Domain
+name: Deploy to Server
 
 on:
   push:
     branches:
-      - main
+      - main  # Trigger the deployment when pushing to the `main` branch
 
 jobs:
-  build-and-deploy:
+  deploy:
     runs-on: ubuntu-latest
 
     steps:
-      # Checkout the repository
-      - name: Checkout Code
-        uses: actions/checkout@v3
+    # Checkout the repository
+    - name: Checkout code
+      uses: actions/checkout@v2
 
-      # Setup .NET SDK
-      - name: Setup .NET
-        uses: actions/setup-dotnet@v3
-        with:
-          dotnet-version: '8.0.x'
+    # Set up .NET SDK
+    - name: Set up .NET SDK
+      uses: actions/setup-dotnet@v3
+      with:
+        dotnet-version: '8.0.110'  # Specify the .NET version you're using
 
-      # Restore dependencies
-      - name: Restore Dependencies
-        run: dotnet restore
+    # Install dependencies
+    - name: Restore dependencies
+      run: dotnet restore
 
-      # Publish the application
-      - name: Publish Application
-        run: dotnet publish -c Release -o out
+    # Build the project
+    - name: Build the project
+      run: dotnet build --configuration Release
 
-      # Deploy to Server (via SCP)
-      - name: Deploy to Server
-        uses: appleboy/scp-action@v0.2.3
-        with:
-          host: 188.245.97.198  # Your server IP
-          username: root
-          key: ${{ secrets.SSH_PRIVATE_KEY }}  # Store your SSH private key in GitHub secrets
-          source: ./out/  # The 'out' folder from dotnet publish
-          target: /var/www/ReviveIt/  # Path on the server
+    # Publish the project (for deployment)
+    - name: Publish the project
+      run: dotnet publish --configuration Release --output ./publish
 
-      # Restart the service to apply the new code
-      - name: Restart ReviveIt Service
-        run: ssh -i ~/.ssh/id_rsa root@188.245.97.198 "systemctl restart reviveit.service"
+    # Copy files to the remote server using SCP
+    - name: Deploy to remote server using SCP
+      env:
+        SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}  # The SSH private key stored in GitHub secrets
+        HOST: ${{ secrets.HOST }}  # The server IP or hostname stored in GitHub secrets
+        USER: ${{ secrets.USER }}  # The SSH username for the remote server
+        REMOTE_PATH: '/var/www/ReviveIt/ReviveIT/WebUI'  # The path on the server where the project should be deployed
+      run: |
+        # Add SSH key to SSH agent
+        echo "$SSH_PRIVATE_KEY" | ssh-add -
+        
+        # Copy files to the server using SCP
+        scp -r ./publish/* $USER@$HOST:$REMOTE_PATH
+        
+        # Restart the application service (reviveit.service) on the remote server
+        ssh -o StrictHostKeyChecking=no $USER@$HOST 'sudo systemctl restart reviveit.service'
+
+    # Verify the deployment
+    - name: Verify deployment
+      run: |
+        curl -f http://$HOST  # Ensure the application is accessible
 
