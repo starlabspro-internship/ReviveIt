@@ -1,0 +1,44 @@
+name: Deploy ReviveIt to Localhost
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Checkout the repository
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      # Setup .NET
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: '8.0.x'
+
+      # Restore dependencies
+      - name: Restore Dependencies
+        run: dotnet restore
+
+      # Publish the application
+      - name: Publish Application
+        run: dotnet publish -c Release -o out
+
+      # Deploy to Server
+      - name: Deploy to Server
+        uses: appleboy/scp-action@v0.2.3
+        with:
+          host: 188.245.97.198
+          username: root
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          source: ./out/
+          target: /var/www/ReviveIt/
+
+      # Restart Service
+      - name: Restart ReviveIt Service
+        run: ssh -i ~/.ssh/id_rsa root@188.245.97.198 "systemctl restart reviveit.service"
+
