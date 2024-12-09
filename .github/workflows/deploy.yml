@@ -9,16 +9,22 @@ jobs:
     steps:
     - uses: actions/checkout@v4
     
-    - name: Deploy to Server
+    - name: Setup SSH
       env:
         SSH_PRIVATE_KEY: ${{ secrets.REVIVEIT_DEPLOY_KEY }}
+      run: |
+        mkdir -p ~/.ssh
+        echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
+        chmod 600 ~/.ssh/id_rsa
+        ssh-keyscan ${{ secrets.HOST }} >> ~/.ssh/known_hosts
+    
+    - name: Deploy to Server
+      env:
         HOST: ${{ secrets.HOST }}
         USER: ${{ secrets.USER }}
       run: |
-        mkdir -p ~/.ssh
-        echo "$SSH_PRIVATE_KEY" > ~/.ssh/reviveit_id_rsa
-        chmod 600 ~/.ssh/reviveit_id_rsa
-        ssh -i ~/.ssh/reviveit_id_rsa \
+        ssh -v \
+            -i ~/.ssh/id_rsa \
             -o StrictHostKeyChecking=no \
             $USER@$HOST '
           set -e
