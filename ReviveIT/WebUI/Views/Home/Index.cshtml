@@ -94,12 +94,8 @@
                                             </select>
                                         </div>
                                          <div class="form-group col-lg-3">
-                                            <select name="" class="form-control wide" id="inputDepartmentName">
-                                                <option value="Normal distribution ">SEO Expert </option>
-                                                <option value="Normal distribution ">Web Designer </option>
-                                                <option value="Normal distribution ">Web Developer</option>
-                                                <option value="Normal distribution ">Graphic Deesigner</option>
-                                                <option value="Normal distribution ">Content Writer</option>
+                                            <select name="SelectedCategoryIds" class="form-control wide" id="categories">
+                                                <option value="" >All Categories</option>
                                             </select>
                                         </div> 
                                         <div class="form-group col-lg-3">
@@ -674,3 +670,18 @@
         </div>
     </div>
 </section>
+
+<script>
+    fetch('/api/categories/getCategories')
+        .then(response => response.json())
+        .then(data => {
+            const categoriesDropdown = document.getElementById('categories');
+            data.forEach(category => {
+                const option = document.createElement('option');
+                option.value = category.categoryID;
+                option.textContent = category.name;
+                categoriesDropdown.appendChild(option);
+            });
+        })
+        .catch(error => console.error('Error fetching categories:', error));
+</script>

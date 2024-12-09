@@ -2,6 +2,7 @@
 using Application.Features;
 using Application.Features.Accounts;
 using Application.Features.User;
+using Application.Features.Categories;
 using Application.Helpers;
 using Application.Interfaces;
 using Domain.Constants;
@@ -59,6 +60,7 @@ builder.Services.AddScoped<DeleteJobApplicationFeature>();
 builder.Services.AddScoped<SelectJobApplicantFeature>();
 builder.Services.AddScoped<GetJobApplicationsByJobIdFeature>();
 builder.Services.AddScoped<GetJobApplicationInfo>();
+builder.Services.AddScoped<GetCategoriesFeature>();
 
 builder.Services.AddAuthentication(options =>
 {

@@ -214,7 +214,23 @@ async function submitJobForm(event) {
     isJobPostingInProgress = false;
 }
 
+function fetchCategories() {
+    fetch('/api/categories/getCategories')
+        .then(response => response.json())
+        .then(data => {
+            const jobCategoryDropdown = document.getElementById('jobCategory');
+            data.forEach(category => {
+                const option = document.createElement('option');
+                option.value = category.categoryID;
+                option.textContent = category.name;
+                jobCategoryDropdown.appendChild(option);
+            });
+        })
+        .catch(error => console.error('Error fetching categories:', error));
+}
+
 document.addEventListener('DOMContentLoaded', function () {
+    fetchCategories();
     getAllJobs();
 
     const jobForm = document.getElementById('jobForm');
