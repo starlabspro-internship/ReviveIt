@@ -18,8 +18,15 @@ jobs:
       with:
         dotnet-version: '8.0.110'
 
+    - name: Check directory structure (Debug)
+      run: |
+        echo "Listing files in the repo:"
+        ls -R
+
     - name: Restore dependencies
       run: |
+        # Debugging the directory structure
+        ls -R
         cd ReviveIt/ReviveIT/WebUI
         dotnet restore
 
