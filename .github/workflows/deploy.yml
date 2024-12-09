@@ -1,4 +1,4 @@
-name: Deploy ReviveIt to Localhost
+name: Deploy ReviveIt to Domain
 
 on:
   push:
@@ -14,7 +14,7 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v3
 
-      # Setup .NET
+      # Setup .NET SDK
       - name: Setup .NET
         uses: actions/setup-dotnet@v3
         with:
@@ -28,17 +28,17 @@ jobs:
       - name: Publish Application
         run: dotnet publish -c Release -o out
 
-      # Deploy to Server
+      # Deploy to Server (via SCP)
       - name: Deploy to Server
         uses: appleboy/scp-action@v0.2.3
         with:
-          host: 188.245.97.198
+          host: 188.245.97.198  # Your server IP
           username: root
-          key: ${{ secrets.SSH_PRIVATE_KEY }}
-          source: ./out/
-          target: /var/www/ReviveIt/
+          key: ${{ secrets.SSH_PRIVATE_KEY }}  # Store your SSH private key in GitHub secrets
+          source: ./out/  # The 'out' folder from dotnet publish
+          target: /var/www/ReviveIt/  # Path on the server
 
-      # Restart Service
+      # Restart the service to apply the new code
       - name: Restart ReviveIt Service
         run: ssh -i ~/.ssh/id_rsa root@188.245.97.198 "systemctl restart reviveit.service"
 
