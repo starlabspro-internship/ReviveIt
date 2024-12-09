@@ -14,9 +14,9 @@ jobs:
         HOST: ${{ secrets.HOST }}
         USER: ${{ secrets.USER }}
       run: |
-        ssh-keyscan $HOST >> ~/.ssh/known_hosts
+        mkdir -p ~/.ssh
         echo "$SSH_PRIVATE_KEY" | ssh-add -
-        ssh $USER@$HOST '
+        ssh -o StrictHostKeyChecking=no $USER@$HOST '
           cd /var/www/ReviveIt &&
           git pull origin main &&
           cd ReviveIT &&
