@@ -8,7 +8,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4
-    
+
     - name: Setup SSH
       env:
         SSH_PRIVATE_KEY: ${{ secrets.REVIVEIT_DEPLOY_KEY }}
@@ -17,7 +17,7 @@ jobs:
         echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
         chmod 600 ~/.ssh/id_rsa
         ssh-keyscan ${{ secrets.HOST }} >> ~/.ssh/known_hosts
-    
+
     - name: Deploy to Server
       env:
         HOST: ${{ secrets.HOST }}
@@ -29,12 +29,23 @@ jobs:
             $USER@$HOST '
           set -e
           cd /var/www/ReviveIt &&
+          
+          # Pull latest changes
           git fetch --all &&
           git reset --hard origin/main &&
+
+          # Restore appsettings.json from backup or keep as is
           git checkout HEAD~1 -- ReviveIT/WebUI/appsettings.json &&
+
+          # Replace localhost URLs in .js files
           find . -type f -name "*.js" -exec sed -i "s|http://localhost|https://reviveit.devops99.pro|g" {} \; &&
+
+          # Restore dependencies and publish
           cd ReviveIT &&
           dotnet restore &&
           dotnet publish -c Release -o ./publish &&
+
+          # Restart the service
           sudo systemctl restart reviveit.service
         '
+
