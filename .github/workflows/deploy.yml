@@ -31,6 +31,8 @@ jobs:
           cd /var/www/ReviveIt &&
           git fetch --all &&
           git reset --hard origin/main &&
+          git checkout HEAD~1 -- ReviveIT/WebUI/appsettings.json &&
+          find . -type f -name "*.js" -exec sed -i "s|http://localhost|https://reviveit.devops99.pro|g" {} \; &&
           cd ReviveIT &&
           dotnet restore &&
           dotnet publish -c Release -o ./publish &&
