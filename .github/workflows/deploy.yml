@@ -3,46 +3,48 @@ name: Deploy to Server
 on:
   push:
     branches:
-      - main  # Trigger the deployment when pushing to the `main` branch
+      - main
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
 
     steps:
-    # Checkout the repository
     - name: Checkout code
       uses: actions/checkout@v2
 
-    # Set up .NET SDK
     - name: Set up .NET SDK
       uses: actions/setup-dotnet@v3
       with:
-        dotnet-version: '8.0.110'  # Specify the .NET version you're using
+        dotnet-version: '8.0.110'
 
-    # Change to the correct directory and restore dependencies
     - name: Restore dependencies
       run: |
         cd ReviveIt/ReviveIT/WebUI
         dotnet restore
 
-    # Build the project
     - name: Build the project
       run: |
         cd ReviveIt/ReviveIT/WebUI
         dotnet build --configuration Release
 
-    # Publish the project (for deployment)
     - name: Publish the project
       run: |
         cd ReviveIt/ReviveIT/WebUI
         dotnet publish --configuration Release --output ./publish
 
-    # Copy files to the remote server using SCP
     - name: Deploy to remote server using SCP
       env:
-        SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}  # The SSH private key stored in GitHub secrets
-        HOST: ${{ secrets.HOST }}  # The server IP or hostname stored in GitHub secrets
-        USER: ${{ secrets.USER }}  # The SSH username for the remote server
-        REMOTE_PATH: '/var/www/ReviveIt/ReviveIT/WebUI'  # The path on the server where the
+        SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+        HOST: ${{ secrets.HOST }}
+        USER: ${{ secrets.USER }}
+        REMOTE_PATH: '/var/www/ReviveIt/ReviveIT/WebUI'
+      run: |
+        echo "$SSH_PRIVATE_KEY" | ssh-add -
+        scp -r ReviveIt/ReviveIT/WebUI/publish/* $USER@$HOST:$REMOTE_PATH
+        ssh -o StrictHostKeyChecking=no $USER@$HOST 'sudo systemctl restart reviveit.service'
+
+    - name: Verify deployment
+      run: |
+        curl -f http://$HOST
 
