@@ -23,7 +23,6 @@
 	<PackageReference Include="Microsoft.Extensions.Hosting" Version="9.0.0" />
 	<PackageReference Include="Microsoft.Extensions.Logging.Console" Version="9.0.0" />
 	<PackageReference Include="Microsoft.AspNetCore.SignalR.Core" Version="1.1.0" />
-	<!-- Add this line -->
   </ItemGroup>
 
 </Project>
