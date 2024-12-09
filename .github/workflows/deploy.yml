@@ -20,17 +20,23 @@ jobs:
       with:
         dotnet-version: '8.0.110'  # Specify the .NET version you're using
 
-    # Install dependencies
+    # Change to the correct directory and restore dependencies
     - name: Restore dependencies
-      run: dotnet restore
+      run: |
+        cd ReviveIt/ReviveIT/WebUI
+        dotnet restore
 
     # Build the project
     - name: Build the project
-      run: dotnet build --configuration Release
+      run: |
+        cd ReviveIt/ReviveIT/WebUI
+        dotnet build --configuration Release
 
     # Publish the project (for deployment)
     - name: Publish the project
-      run: dotnet publish --configuration Release --output ./publish
+      run: |
+        cd ReviveIt/ReviveIT/WebUI
+        dotnet publish --configuration Release --output ./publish
 
     # Copy files to the remote server using SCP
     - name: Deploy to remote server using SCP
@@ -38,19 +44,5 @@ jobs:
         SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}  # The SSH private key stored in GitHub secrets
         HOST: ${{ secrets.HOST }}  # The server IP or hostname stored in GitHub secrets
         USER: ${{ secrets.USER }}  # The SSH username for the remote server
-        REMOTE_PATH: '/var/www/ReviveIt/ReviveIT/WebUI'  # The path on the server where the project should be deployed
-      run: |
-        # Add SSH key to SSH agent
-        echo "$SSH_PRIVATE_KEY" | ssh-add -
-        
-        # Copy files to the server using SCP
-        scp -r ./publish/* $USER@$HOST:$REMOTE_PATH
-        
-        # Restart the application service (reviveit.service) on the remote server
-        ssh -o StrictHostKeyChecking=no $USER@$HOST 'sudo systemctl restart reviveit.service'
-
-    # Verify the deployment
-    - name: Verify deployment
-      run: |
-        curl -f http://$HOST  # Ensure the application is accessible
+        REMOTE_PATH: '/var/www/ReviveIt/ReviveIT/WebUI'  # The path on the server where the
 
