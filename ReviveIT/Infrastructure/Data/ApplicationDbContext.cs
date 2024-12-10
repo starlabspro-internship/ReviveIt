@@ -22,6 +22,8 @@ namespace Infrastructure.Data
         public DbSet<PortfolioDocument> PortfolioDocuments { get; set; }
         public DbSet<ChatSession> ChatSessions { get; set; } 
         public DbSet<SelectedJobApplicant> SelectedJobApplicants { get; set; }
+        public DbSet<City> Cities { get; set; }
+        public DbSet<OperatingCity> OperatingCities { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -39,6 +41,9 @@ namespace Infrastructure.Data
             builder.ApplyConfiguration(new PortfolioDocumentConfiguration());
             builder.ApplyConfiguration(new ChatSessionConfigurations());
             builder.ApplyConfiguration(new SelectedJobApplicantConfigurations());
+            builder.ApplyConfiguration(new UserCategoryConfigurations());
+            builder.ApplyConfiguration(new CityConfigurations());
+            builder.ApplyConfiguration(new OperatingCityConfigurations());
 
             builder.Entity<Category>().HasData(
             new Category { CategoryID = 1, Name = "Electronics Repair", CreatedAt = DateTime.UtcNow, UpdatedAt = DateTime.UtcNow },
@@ -117,6 +122,35 @@ namespace Infrastructure.Data
             new Category { CategoryID = 74, Name = "Recruitment Services", CreatedAt = DateTime.UtcNow, UpdatedAt = DateTime.UtcNow },
             new Category { CategoryID = 75, Name = "Employee Training", CreatedAt = DateTime.UtcNow, UpdatedAt = DateTime.UtcNow }
             );
+
+            builder.Entity<City>().HasData(
+                new City { CityId = 1, CityName = "Deçan" },
+                new City { CityId = 2, CityName = "Dragash" },
+                new City { CityId = 3, CityName = "Drenas" },
+                new City { CityId = 4, CityName = "Ferizaj" },
+                new City { CityId = 5, CityName = "Fushë Kosovë" },
+                new City { CityId = 6, CityName = "Gjakovë" },
+                new City { CityId = 7, CityName = "Gjilan" },
+                new City { CityId = 8, CityName = "Istog" },
+                new City { CityId = 9, CityName = "Kaçanik" },
+                new City { CityId = 10, CityName = "Kamenicë" },
+                new City { CityId = 11, CityName = "Klinë" },
+                new City { CityId = 12, CityName = "Lipjan" },
+                new City { CityId = 13, CityName = "Malishevë" },
+                new City { CityId = 14, CityName = "Mitrovicë" },
+                new City { CityId = 15, CityName = "Obiliq" },
+                new City { CityId = 16, CityName = "Pejë" },
+                new City { CityId = 17, CityName = "Podujevë" },
+                new City { CityId = 18, CityName = "Prishtinë" },
+                new City { CityId = 19, CityName = "Prizren" },
+                new City { CityId = 20, CityName = "Rahovec" },
+                new City { CityId = 21, CityName = "Skenderaj" },
+                new City { CityId = 22, CityName = "Suharekë" },
+                new City { CityId = 23, CityName = "Shtërpcë" },
+                new City { CityId = 24, CityName = "Shtime" },
+                new City { CityId = 25, CityName = "Viti" },
+                new City { CityId = 26, CityName = "Vushtrri" }
+                );
         }
     }
 }
