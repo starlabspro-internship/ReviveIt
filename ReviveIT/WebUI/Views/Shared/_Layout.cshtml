@@ -58,7 +58,7 @@
                         {
                             <li class="nav-item">
                                 <a class="nav-link" asp-controller="Inbox" asp-action="Inbox">
-                                        <span class="material-icons-round">mail_outline</span> Inbox
+                                       Inbox
                                 </a>
                             </li>
                         }
@@ -132,7 +132,7 @@
             </nav>
         </div>
     </header>
-    @(ViewBag.IsProsPage == true || ViewBag.IsPunetPage == true || ViewBag.IsAboutPage == true ? Html.Raw("</div>") : "")
+    @(ViewBag.IsAboutPage == true ? Html.Raw("</div>") : "")
 
     <div>
         @RenderBody()
