@@ -9,9 +9,9 @@ namespace Infrastructure.Repositories
     {
         public CityRepository(ApplicationDbContext context) : base(context){}
 
-        public async Task<IEnumerable<City>> GetAllCitiesAsync()
+        public async Task<List<City>> GetAllCitiesAsync()
         {
-            return await _context.Set<City>().ToListAsync();
+            return await _context.Cities.ToListAsync();
         }
     }
 }

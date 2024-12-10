@@ -17,6 +17,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using WebUI.MiddleWares;
 using Microsoft.AspNetCore.SignalR;
+using Application.Features.Cities;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -61,6 +62,7 @@ builder.Services.AddScoped<SelectJobApplicantFeature>();
 builder.Services.AddScoped<GetJobApplicationsByJobIdFeature>();
 builder.Services.AddScoped<GetJobApplicationInfo>();
 builder.Services.AddScoped<GetCategoriesFeature>();
+builder.Services.AddScoped<GetCitiesFeature>();
 
 builder.Services.AddAuthentication(options =>
 {
