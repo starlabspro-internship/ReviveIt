@@ -40,8 +40,13 @@ async function loadTechnicians() {
     const container = document.getElementById('technicianContainer');
     const totalRendered = container.childElementCount;
 
+    // Check if buttons exist before hiding
+    const viewMoreButton = document.getElementById('viewMoreButton');
+    const loginToSeeMoreButton = document.getElementById('loginToSeeMoreButton');
+
     if (totalRendered >= data.total) {
-        document.getElementById('viewMoreButton').style.display = 'none';
+        if (viewMoreButton) viewMoreButton.style.display = 'none';
+        if (loginToSeeMoreButton) loginToSeeMoreButton.style.display = 'none';
     } else {
         skipCount += takeCount;
     }
@@ -52,8 +57,8 @@ function renderTechnicians(technicians) {
 
     technicians.forEach(technician => {
         const profileLink = isAuthenticated
-            ? `/Profile/${technician.Id}`
-            : `/LogIn?returnUrl=/Profile/${technician.Id}`;
+            ? `/ProsProfileView/${technician.id}`
+            : `/LogIn?returnUrl=/ProsProfileView/${technician.id}`;
 
         const technicianHtml = `
             <div class="col-md-6 col-lg-4 mx-auto">
@@ -62,9 +67,7 @@ function renderTechnicians(technicians) {
                         <img src="${technician.profilePicture}" alt="${technician.fullName}'s Profile Picture" style="width: 100%; height: auto; object-fit: cover;"/>
                     </div>
                     <div class="detail-box">
-                        <a href="${profileLink}">
-                            ${technician.fullName}
-                        </a>
+                        <a href="${profileLink}">${technician.fullName}</a>
                         <h6 class="expert_position">
                             <span>${technician.expertise}</span>
                             <span>${technician.experience} Years of Experience</span>
@@ -108,11 +111,19 @@ document.addEventListener('DOMContentLoaded', async () => {
     loadTechnicians();
 
     const viewMoreButton = document.getElementById('viewMoreButton');
+    const loginToSeeMoreButton = document.getElementById('loginToSeeMoreButton');
 
     if (viewMoreButton) {
         viewMoreButton.addEventListener('click', (e) => {
             e.preventDefault();
             loadTechnicians();
+        });
+    }
+
+    if (loginToSeeMoreButton) {
+        loginToSeeMoreButton.addEventListener('click', (e) => {
+            e.preventDefault();
+            window.location.href = '/LogIn';
         });
     }
 });

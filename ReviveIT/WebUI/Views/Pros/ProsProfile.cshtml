@@ -1,0 +1,208 @@
+﻿@{
+    ViewData["Title"] = "Technician Profile";
+}
+
+<style>
+    body {
+        margin: 0;
+        padding: 0;
+        font-family: Arial, sans-serif;
+        background-color: #f4f4f4;
+        display: flex;
+        flex-direction: column;
+        min-height: 100vh;
+    }
+
+    .profile-section {
+        padding: 40px 20px;
+        background-color: #fff;
+        border-radius: 8px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        margin: 20px auto;
+        max-width: 1200px;
+        flex-grow: 1; /* Makes sure this div grows and fills available space */
+        min-height: 400px; /* Ensures the profile section takes up enough space */
+        display: flex;
+        justify-content: space-between; /* Space between left and right sections */
+    }
+
+    .left-side, .right-side {
+        width: 48%; /* Both sections take 48% of the space */
+    }
+
+    .profile-picture {
+        text-align: center;
+        margin-bottom: 20px;
+    }
+
+        .profile-picture img {
+            border-radius: 50%;
+            width: 150px;
+            height: 150px;
+            object-fit: cover;
+            border: 3px solid #ccc;
+        }
+
+    .profile-details {
+        padding-left: 20px;
+    }
+
+        .profile-details h2 {
+            font-size: 2.5em;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        .profile-details h5 {
+            font-size: 1.5em;
+            color: #555;
+        }
+
+        .profile-details p {
+            font-size: 1.2em;
+            color: #777;
+            line-height: 1.5;
+        }
+
+    .portfolio, .contact-info, .description {
+        margin-top: 20px;
+    }
+
+    .portfolio-item {
+        margin-bottom: 20px;
+    }
+
+        .portfolio-item img {
+            max-width: 100%;
+            height: auto;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+        }
+
+        .portfolio-item h5 {
+            font-size: 1.2em;
+            color: #333;
+        }
+
+        .portfolio-item a {
+            color: #007bff;
+            text-decoration: none;
+        }
+
+            .portfolio-item a:hover {
+                text-decoration: underline;
+            }
+</style>
+
+<section class="profile-section">
+    <!-- Left Side: Profile Picture and Textual Information -->
+    <div class="left-side">
+        <div class="profile-picture">
+            <img id="profilePicture" src="https://via.placeholder.com/150" alt="Profile Picture">
+        </div>
+        <div class="profile-details">
+            <h2 id="technicianFullName">Donat Goslaci</h2>
+            <h5 id="technicianExpertise">Web Development, Custom Software Development</h5>
+            <p id="technicianExperience">Experience: 3 years</p>
+
+            <div id="technicianContact" class="contact-info">
+                <h4>Contact Information</h4>
+                <p>Email: <span id="technicianEmail">gosalci38@gmail.com</span></p>
+                <p>Phone: <span id="technicianPhone">No Phone Number Provided</span></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Right Side: Portfolio and Description -->
+    <div class="right-side">
+        <div id="technicianPortfolio" class="portfolio">
+            <h4>Portfolio</h4>
+            <p>No portfolios available.</p>
+        </div>
+
+        <!-- Placeholder for Description (will be added later) -->
+        <div id="technicianDescription" class="description">
+            <h4>Description</h4>
+            <p>No description available.</p>
+        </div>
+    </div>
+</section>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function () {
+        const technicianId = "@ViewBag.TechnicianId"; // Use the technician ID from ViewBag
+
+        $.ajax({
+            url: `https://localhost:7018/api/ProsProfile/GetTechnicianProfile/${technicianId}`,
+            method: "GET",
+            success: function (data) {
+                if (data) {
+                    // Set profile picture (fallback if not available)
+                    $("#profilePicture").attr("src", data.profilePicture || "https://via.placeholder.com/150");
+
+                    // Set Profile Details
+                    $("#technicianFullName").text(data.fullName || "No Name Provided");
+                    $("#technicianExpertise").text(data.expertise || "No Expertise Provided");
+                    $("#technicianExperience").text(`Experience: ${data.experience || "No Experience Available"}`);
+
+                    // Handle portfolio
+                    if (Array.isArray(data.portfolios) && data.portfolios.length > 0) {
+                        let portfolioHtml = "";
+                        data.portfolios.forEach(portfolio => {
+                            // Check if the portfolio is an image
+                            if (portfolio.filePath.match(/\.(jpeg|jpg|gif|png)$/)) {
+                                portfolioHtml += `<div class="portfolio-item">
+                                                    <h5>${portfolio.title}</h5>
+                                                    <img src="${portfolio.filePath}" alt="${portfolio.title}" class="portfolio-image" />
+                                                </div>`;
+                            }
+                            // Check if it's a document (PDF, DOCX, etc.)
+                            else if (portfolio.filePath.match(/\.(pdf|docx|pptx)$/)) {
+                                portfolioHtml += `<div class="portfolio-item">
+                                                    <h5>${portfolio.title}</h5>
+                                                    <embed src="${portfolio.filePath}" width="100%" height="400px" type="application/pdf" />
+                                                    <p><a href="${portfolio.filePath}" target="_blank">View or Download Document</a></p>
+                                                </div>`;
+                            }
+                            // For other types of files (e.g., videos)
+                            else {
+                                portfolioHtml += `<div class="portfolio-item">
+                                                    <h5>${portfolio.title}</h5>
+                                                    <a href="${portfolio.filePath}" target="_blank">View File</a>
+                                                </div>`;
+                            }
+                        });
+                        $("#technicianPortfolio").html(`
+                            <h4>Portfolio</h4>
+                            ${portfolioHtml}
+                        `);
+                    } else {
+                        $("#technicianPortfolio").html("<p>No portfolios available.</p>");
+                    }
+
+                    // Set Description (if available)
+                    if (data.description) {
+                        $("#technicianDescription").html(`
+                            <h4>Description</h4>
+                            <p>${data.description}</p>
+                        `);
+                    } else {
+                        $("#technicianDescription").html("<p>No description available.</p>");
+                    }
+
+                    // Set Contact Information
+                    $("#technicianContact").html(`
+                        <h4>Contact Information</h4>
+                        <p>Email: ${data.email || "No Email Provided"}</p>
+                        <p>Phone: ${data.phoneNumber || "No Phone Number Provided"}</p>
+                    `);
+                }
+            },
+            error: function (xhr, status, error) {
+                console.error("Failed to fetch technician profile:", xhr.responseText);
+            }
+        });
+    });
+</script>
