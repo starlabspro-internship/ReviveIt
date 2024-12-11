@@ -1,0 +1,57 @@
+name: Deploy to Server
+on:
+  push:
+    branches:
+      - main
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Setup SSH
+      env:
+        SSH_PRIVATE_KEY: ${{ secrets.REVIVEIT_DEPLOY_KEY }}
+      run: |
+        mkdir -p ~/.ssh
+        echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
+        chmod 600 ~/.ssh/id_rsa
+        ssh-keyscan ${{ secrets.HOST }} >> ~/.ssh/known_hosts
+
+    - name: Deploy to Server
+      env:
+        HOST: ${{ secrets.HOST }}
+        USER: ${{ secrets.USER }}
+      run: |
+        ssh -v \
+            -i ~/.ssh/id_rsa \
+            -o StrictHostKeyChecking=no \
+            $USER@$HOST '
+          set -e
+          cd /var/www/ReviveIt &&
+          
+          # Back up appsettings.json
+          if [ -f ReviveIT/WebUI/appsettings.json ]; then
+            cp ReviveIT/WebUI/appsettings.json /tmp/appsettings.json.backup
+          fi &&
+
+          # Pull latest changes
+          git fetch --all &&
+          git reset --hard origin/main &&
+
+          # Restore appsettings.json
+          if [ -f /tmp/appsettings.json.backup ]; then
+            mv /tmp/appsettings.json.backup ReviveIT/WebUI/appsettings.json
+          fi &&
+
+          # Replace localhost URLs in .js files
+          find . -type f -name "*.js" -exec sed -i "s|http://localhost|https://reviveit.devops99.pro|g" {} + &&
+
+          # Restore dependencies and publish
+          cd ReviveIT &&
+          dotnet restore &&
+          dotnet publish -c Release -o ./publish &&
+
+          # Restart the service
+          sudo systemctl restart reviveit.service
+        '
