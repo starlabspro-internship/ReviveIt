@@ -1,4 +1,4 @@
-﻿const apiUrlNavBar = "https://localhost:7018/api/ProfileUpdate";
+﻿const apiUrlNavBar = "https://reviveit.devops99.pro/api/ProfileUpdate";
 
 function getCookie(name) {
     const cookies = document.cookie.split("; ");
