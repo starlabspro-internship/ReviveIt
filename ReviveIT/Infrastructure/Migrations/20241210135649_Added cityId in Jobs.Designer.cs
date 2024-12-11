@@ -4,6 +4,7 @@ using Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace WebUI.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241210135649_Added cityId in Jobs")]
+    partial class AddedcityIdinJobs
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -47,7 +50,7 @@ namespace WebUI.Migrations
 
                     b.HasKey("CategoryID");
 
-                    b.ToTable("Categories", (string)null);
+                    b.ToTable("Categories");
                 });
 
             modelBuilder.Entity("Domain.Entities.ChatSession", b =>
@@ -85,7 +88,7 @@ namespace WebUI.Migrations
 
                     b.HasIndex("TechnicianId");
 
-                    b.ToTable("ChatSessions", (string)null);
+                    b.ToTable("ChatSessions");
                 });
 
             modelBuilder.Entity("Domain.Entities.City", b =>
@@ -102,7 +105,7 @@ namespace WebUI.Migrations
 
                     b.HasKey("CityId");
 
-                    b.ToTable("Cities", (string)null);
+                    b.ToTable("Cities");
 
                     b.HasData(
                         new
@@ -266,7 +269,7 @@ namespace WebUI.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("JobApplications", (string)null);
+                    b.ToTable("JobApplications");
                 });
 
             modelBuilder.Entity("Domain.Entities.Jobs", b =>
@@ -322,7 +325,7 @@ namespace WebUI.Migrations
 
                     b.HasIndex("cityId");
 
-                    b.ToTable("Jobs", (string)null);
+                    b.ToTable("Jobs");
                 });
 
             modelBuilder.Entity("Domain.Entities.Messages", b =>
@@ -367,7 +370,7 @@ namespace WebUI.Migrations
 
                     b.HasIndex("SenderID");
 
-                    b.ToTable("Messages", (string)null);
+                    b.ToTable("Messages");
                 });
 
             modelBuilder.Entity("Domain.Entities.OperatingCity", b =>
@@ -391,7 +394,7 @@ namespace WebUI.Migrations
 
                     b.HasIndex("userId");
 
-                    b.ToTable("OperatingCities", (string)null);
+                    b.ToTable("OperatingCities");
                 });
 
             modelBuilder.Entity("Domain.Entities.PortfolioDocument", b =>
@@ -434,7 +437,7 @@ namespace WebUI.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("PortfolioDocuments", (string)null);
+                    b.ToTable("PortfolioDocuments");
                 });
 
             modelBuilder.Entity("Domain.Entities.Reviews", b =>
@@ -476,7 +479,7 @@ namespace WebUI.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Reviews", (string)null);
+                    b.ToTable("Reviews");
                 });
 
             modelBuilder.Entity("Domain.Entities.SelectedJobApplicant", b =>
@@ -514,7 +517,7 @@ namespace WebUI.Migrations
 
                     b.HasIndex("SelectedByUserId");
 
-                    b.ToTable("SelectedJobApplicants", (string)null);
+                    b.ToTable("SelectedJobApplicants");
                 });
 
             modelBuilder.Entity("Domain.Entities.Service", b =>
@@ -558,7 +561,7 @@ namespace WebUI.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Services", (string)null);
+                    b.ToTable("Services");
                 });
 
             modelBuilder.Entity("Domain.Entities.Subscriptions", b =>
@@ -603,7 +606,7 @@ namespace WebUI.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Subscriptions", (string)null);
+                    b.ToTable("Subscriptions");
                 });
 
             modelBuilder.Entity("Domain.Entities.UserCategory", b =>
@@ -627,7 +630,7 @@ namespace WebUI.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("UserCategories", (string)null);
+                    b.ToTable("UserCategories");
                 });
 
             modelBuilder.Entity("Domain.Entities.UserRefreshToken", b =>
@@ -651,7 +654,7 @@ namespace WebUI.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("UserRefreshTokens", (string)null);
+                    b.ToTable("UserRefreshTokens");
                 });
 
             modelBuilder.Entity("Domain.Entities.Users", b =>

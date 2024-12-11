@@ -87,10 +87,8 @@
                                             <input type="text" class="form-control" id="inputPatientName" placeholder="Keywords">
                                         </div>
                                         <div class="form-group col-lg-3">
-                                            <select name="" class="form-control wide" id="inputDoctorName">
-                                                <option value="Normal distribution ">All Locations</option>
-                                                <option value="Normal distribution ">Location 2 </option>
-                                                <option value="Normal distribution ">Location 3 </option>
+                                            <select name="SelectedCitiesIds" class="form-control wide" id="cities">
+                                                <option value="">All Locations</option>
                                             </select>
                                         </div>
                                          <div class="form-group col-lg-3">
@@ -684,4 +682,19 @@
             });
         })
         .catch(error => console.error('Error fetching categories:', error));
+</script>
+
+<script>
+    fetch('/api/city/getCities')
+        .then(response => response.json())
+        .then(data => {
+            console.log("data", data);
+            const citiesDropdown = document.getElementById('cities');
+            data.forEach(city => {
+                const option = document.createElement('option');
+                option.value = city.cityId;
+                option.textContent = city.cityName;
+                citiesDropdown.appendChild(option);
+            })
+        })
 </script>
