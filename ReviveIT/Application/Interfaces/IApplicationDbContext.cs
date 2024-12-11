@@ -18,6 +18,8 @@ namespace Application.Interfaces
         public DbSet<PortfolioDocument> PortfolioDocuments { get; set; }
         public DbSet<ChatSession> ChatSessions { get; set; }
         public DbSet<SelectedJobApplicant> SelectedJobApplicants { get; set; }
+        public DbSet<City> Cities { get; set; }
+        public DbSet<OperatingCity> OperatingCities { get; set; }
 
         Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);
     }
