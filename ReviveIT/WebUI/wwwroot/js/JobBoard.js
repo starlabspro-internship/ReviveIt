@@ -27,7 +27,6 @@ document.getElementById("addJobBtn").addEventListener("click", () => {
         </div>
     </div>
 </div>
-
         `;
 
         document.getElementById("jobsContainer").innerHTML += jobCard;
