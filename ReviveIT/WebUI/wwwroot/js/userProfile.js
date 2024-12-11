@@ -1,4 +1,4 @@
-﻿const apiUrl = "https://localhost:7018/api/ProfileUpdate";
+﻿const apiUrl = "https://reviveit.devops99.pro/api/ProfileUpdate";
 
 function getCookie(name) {
     const cookies = document.cookie.split("; ");

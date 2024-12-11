@@ -1,8 +1,8 @@
 ﻿const apiUrls = {
-    getJobs: "https://localhost:7018/api/GetJobs",
-    jobPost: "https://localhost:7018/api/Job",
-    jobApplications: "https://localhost:7018/api/jobapplication",
-    userInfo: "https://localhost:7018/api/ProfileUpdate/info"
+    getJobs: "https://reviveit.devops99.pro/api/GetJobs",
+    jobPost: "https://reviveit.devops99.pro/api/Job",
+    jobApplications: "https://reviveit.devops99.pro/api/jobapplication",
+    userInfo: "https://reviveit.devops99.pro/api/ProfileUpdate/info"
 };
 
 async function fetchData(url, options = {}) {
