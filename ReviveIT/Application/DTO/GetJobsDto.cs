@@ -8,5 +8,6 @@
         public string Status { get; set; }
         public DateTime CreatedAt { get; set; }
         public string CategoryName { get; set; }
+        public string CityName { get; set; }
     }
 }

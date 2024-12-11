@@ -24,7 +24,12 @@ namespace Domain.Configurations
             builder.HasOne(e => e.Category)
                    .WithMany(c => c.Jobs)
                    .HasForeignKey(e => e.CategoryId)
-                   .OnDelete(DeleteBehavior.SetNull); 
+                   .OnDelete(DeleteBehavior.SetNull);
+
+            builder.HasOne(e => e.City)
+                   .WithMany()
+                   .HasForeignKey(e => e.cityId)
+                   .OnDelete(DeleteBehavior.Restrict);
         }
     }
 }

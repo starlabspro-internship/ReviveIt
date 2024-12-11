@@ -17,6 +17,9 @@
 
         public decimal Price { get; set; } 
 
+        public int cityId { get; set; }
+        public City City { get; set; }
+
         public ICollection<JobApplication> JobApplications { get; set; }
         public ICollection<SelectedJobApplicant> SelectedJobApplicants { get; set; }
     }

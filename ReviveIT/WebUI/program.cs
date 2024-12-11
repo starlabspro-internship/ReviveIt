@@ -17,6 +17,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using WebUI.MiddleWares;
 using Microsoft.AspNetCore.SignalR;
+using Application.Features.Cities;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -62,6 +63,8 @@ builder.Services.AddScoped<GetJobApplicationsByJobIdFeature>();
 builder.Services.AddScoped<GetJobApplicationInfo>();
 builder.Services.AddScoped<GetCategoriesFeature>();
 builder.Services.AddScoped<GetTechnicianProfileFeature>();
+builder.Services.AddScoped<GetCitiesFeature>();
+
 
 builder.Services.AddAuthentication(options =>
 {
@@ -103,6 +106,8 @@ builder.Services.AddScoped<IApplicationDbContext, ApplicationDbContext>();
 builder.Services.AddScoped<IRefreshTokenRepository, RefreshTokenRepository>();
 builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
 builder.Services.AddScoped<IUserCategoryRepository, UserCategoryRepository>();
+builder.Services.AddScoped<ICityRepository, CityRepository>();
+builder.Services.AddScoped<IOperatingCityRepository, OperatingCityRepository>();
 builder.Services.AddScoped<IJobPostFeature, JobPostFeature>();
 builder.Services.AddTransient<IEmailSender, EmailSender>();
 

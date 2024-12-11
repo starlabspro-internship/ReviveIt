@@ -107,6 +107,7 @@ function populateJobsContainer(jobs, userRole) {
 }
 
 function createJobCard(job, userRole) {
+    console.log(job);
     return `
         <div class="col-lg-6">
             <div class="box">
@@ -117,6 +118,7 @@ function createJobCard(job, userRole) {
                             <h6><i class="fa fa-th-list" aria-hidden="true"></i><span>${job.categoryName || 'N/A'}</span></h6>
                             <h6><i class="fa fa-info-circle" aria-hidden="true"></i><span>${job.status || 'N/A'}</span></h6>
                             <h6><i class="fa fa-list" aria-hidden="true"></i><span>${job.description || 'N/A'}</span></h6>
+                            <h6><i class="fa fa-map-marker-alt" aria-hidden="true"></i><span>${job.cityName || 'N/A'}</span></h6>
                         </div>
                     </div>
                 </div>
@@ -192,8 +194,10 @@ async function submitJobForm(event) {
         status: "Available",
         createdAt: new Date().toISOString(),
         categoryId: parseInt(document.getElementById('jobCategory').value.trim(), 10),
+        cityId: parseInt(document.getElementById('jobCity').value.trim(), 10),
         price: parseFloat(document.getElementById('jobPrice').value) || 0
     };
+    console.log("jobdata", jobData);
 
     const response = await fetchData(`${apiUrls.jobPost}/create-job`, {
         method: 'POST',
@@ -229,8 +233,24 @@ function fetchCategories() {
         .catch(error => console.error('Error fetching categories:', error));
 }
 
+function fetchCitites() {
+    fetch('/api/city/getCities')
+        .then(response => response.json())
+        .then(data => {
+            console.log("data", data);
+            const citiesDropdown = document.getElementById('jobCity');
+            data.forEach(city => {
+                const option = document.createElement('option');
+                option.value = city.cityId;
+                option.textContent = city.cityName;
+                citiesDropdown.appendChild(option);
+            })
+        })
+}
+
 document.addEventListener('DOMContentLoaded', function () {
     fetchCategories();
+    fetchCitites();
     getAllJobs();
 
     const jobForm = document.getElementById('jobForm');
