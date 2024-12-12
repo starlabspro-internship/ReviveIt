@@ -1,6 +1,4 @@
-﻿const apiUrlNavBar = "https://localhost:7018/api/ProfileUpdate";
-
-function getCookie(name) {
+﻿function getCookie(name) {
     const cookies = document.cookie.split("; ");
     const cookie = cookies.find(cookie => cookie.startsWith(name + "="));
     return cookie ? decodeURIComponent(cookie.split("=")[1]) : null;
@@ -11,7 +9,7 @@ async function fetchNavbarProfilePicture() {
     const placeholderUrl = "https://via.placeholder.com/150";
 
     try {
-        const response = await fetch(`${apiUrlNavBar}/get`, {
+        const response = await fetch(`api/ProfileUpdate/get`, {
             method: 'GET',
             headers: {
                 'Authorization': `Bearer ${getCookie('jwtToken')}`

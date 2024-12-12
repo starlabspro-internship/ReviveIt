@@ -3,6 +3,11 @@ const initialPageSize = 3;
 const additionalPageSize = 6;
 let isAuthenticated = false;
 
+const urlParams = new URLSearchParams(window.location.search);
+let keywords = urlParams.get('keywords') || '';
+let selectedCityId = urlParams.get('selectedCityId');
+let selectedCategoryId = urlParams.get('selectedCategoryId');
+
 async function checkAuthenticationStatus() {
     const response = await fetch('/Pros/api/IsAuthenticated', {
         credentials: 'include',
@@ -19,7 +24,20 @@ async function checkAuthenticationStatus() {
 async function loadTechnicians() {
     const takeCount = skipCount === 0 ? initialPageSize : additionalPageSize;
 
-    const response = await fetch(`/Pros/api/GetPros?skipCount=${skipCount}&takeCount=${takeCount}`, {
+    const urlParams = new URLSearchParams(window.location.search);
+    const keywords = urlParams.get('keywords') || null;
+    const selectedCityId = urlParams.get('SelectedCitiesIds') || null;
+    const selectedCategoryId = urlParams.get('SelectedCategoryIds') || null;
+
+    const params = new URLSearchParams({
+        skipCount,
+        takeCount,
+        ...(keywords && { keywords }),
+        ...(selectedCityId && { selectedCityId }),
+        ...(selectedCategoryId && {selectedCategoryId})
+    });
+
+    const response = await fetch(`/Pros/api/GetPros?${params.toString()}`, {
         credentials: 'include',
     });
 

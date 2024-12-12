@@ -81,10 +81,10 @@
                     <div class="container">
                         <div class="row">
                             <div class="col">
-                                <form>
+                                <form method="GET" action="/Pros">
                                     <div class="form-row ">
                                         <div class="form-group col-lg-3">
-                                            <input type="text" class="form-control" id="inputPatientName" placeholder="Keywords">
+                                            <input type="text" name ="keywords" class="form-control" id="keywords" placeholder="Keywords">
                                         </div>
                                         <div class="form-group col-lg-3">
                                             <select name="SelectedCitiesIds" class="form-control wide" id="cities">
@@ -98,7 +98,7 @@
                                         </div> 
                                         <div class="form-group col-lg-3">
                                             <div class="btn-box">
-                                                <button type="submit" class="btn ">Submit Now</button>
+                                                <button type="submit" class="btn" id="applyFiltersButton">Submit Now</button>
                                             </div>
                                         </div>
                                     </div>
@@ -688,7 +688,6 @@
     fetch('/api/city/getCities')
         .then(response => response.json())
         .then(data => {
-            console.log("data", data);
             const citiesDropdown = document.getElementById('cities');
             data.forEach(city => {
                 const option = document.createElement('option');
