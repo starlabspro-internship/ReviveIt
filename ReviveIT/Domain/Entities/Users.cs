@@ -14,11 +14,13 @@ namespace Domain.Entities
         public string? CompanyName { get; set; }
         public string? CompanyAddress { get; set; }
         public string? ProfilePicture { get; set; }
+        public string? Description { get; set; }
 
         public ICollection<UserCategory> UserCategories { get; set; }
         public ICollection<OperatingCity> OperatingCities { get; set; }
         public ICollection<PortfolioDocument> Portfolios { get; set; } = new List<PortfolioDocument>();
     }
+
     public enum UserRole
     {
         Admin,

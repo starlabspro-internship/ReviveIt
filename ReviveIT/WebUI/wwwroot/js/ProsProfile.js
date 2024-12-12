@@ -3,7 +3,7 @@
         return;
     }
 
-    const profileUrl = `https://reviveit.devops99.pro/api/prosprofileapi/GetTechnicianProfile/${technicianId}`;
+    const profileUrl = `https://localhost:7018/api/prosprofileapi/GetTechnicianProfile/${technicianId}`;
 
     $.ajax({
         url: profileUrl,

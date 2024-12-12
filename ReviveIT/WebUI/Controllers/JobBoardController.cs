@@ -2,7 +2,6 @@
 
 namespace WebUI.Controllers
 {
-    [Route("JobBoard")]
     public class JobBoardController : Controller
     {
         [HttpGet("JobBoard")]
