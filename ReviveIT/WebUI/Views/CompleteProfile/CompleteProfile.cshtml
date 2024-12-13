@@ -1,0 +1,50 @@
+﻿@{
+    ViewData["Title"] = "Complete Your Profile";
+}
+
+@section Styles {
+    <link href="~/css/ProfileComplete.css" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+}
+
+@section Scripts {
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="~/js/profileComplete.js"></script>
+}
+
+<div class="profile_complete_area">
+    <section class="profile_section">
+        <div class="container d-flex justify-content-center pb-5">
+            <section class="profile_form_section">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-12 mx-auto">
+                            <div class="card p-4 shadow-lg">
+                                <h3 class="text-center mb-4">Complete Your Profile</h3>
+
+                                <form id="profileForm">
+                                    <div class="form-group" id="phoneField">
+                                        <label for="phone">Phone Number</label>
+                                        <div class="input-group">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text"><i class="fa fa-phone"></i></span>
+                                            </div>
+                                            <input type="text" class="form-control" id="phone" name="phone" placeholder="Enter your phone number" required>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group" id="descriptionField">
+                                        <label for="description">Profile Description</label>
+                                        <textarea class="form-control" id="description" name="description" rows="4" placeholder="Tell us about yourself" required></textarea>
+                                    </div>
+
+                                    <button type="submit" class="btn btn-primary btn-block">Save Profile</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </section>
+</div>
