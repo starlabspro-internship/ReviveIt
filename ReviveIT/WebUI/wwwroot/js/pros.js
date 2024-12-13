@@ -102,7 +102,7 @@ function renderTechnicians(technicians) {
                         <a href="${profileLink}" style="color:black">${technician.fullName}</a>
                         <h6 class="expert_position">
                             <span style="color:black">${technician.expertise}</span>
-                            <span style="color:black">${technician.experience} Years of Experience</span>
+                            <span style="color:black" class="text-right">${technician.experience} Years of Experience</span>
                         </h6>
                         <span class="expert_rating" style="color:black">
                             ${generateStars(technician.rating)}
