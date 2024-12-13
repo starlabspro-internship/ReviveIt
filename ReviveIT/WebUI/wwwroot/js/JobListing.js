@@ -23,7 +23,7 @@ function openModal() {
 }
 
 async function checkUserRole() {
-    const data = await fetchData(`api/ProfileUpdate/info?type=role`, {
+    const data = await fetchData(`ProfileUpdate/api/info?type=role`, {
         method: 'GET',
         headers: {
             'Authorization': `Bearer ${getCookie('jwtToken')}`,

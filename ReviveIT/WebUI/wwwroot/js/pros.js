@@ -193,19 +193,11 @@ document.addEventListener('DOMContentLoaded', async () => {
     });
 
     const viewMoreButton = document.getElementById('viewMoreButton');
-    const loginToSeeMoreButton = document.getElementById('loginToSeeMoreButton');
 
     if (viewMoreButton) {
         viewMoreButton.addEventListener('click', (e) => {
             e.preventDefault();
             loadTechnicians(false);
-        });
-    }
-
-    if (loginToSeeMoreButton) {
-        loginToSeeMoreButton.addEventListener('click', (e) => {
-            e.preventDefault();
-            window.location.href = '/LogIn';
         });
     }
 });
