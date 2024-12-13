@@ -89,27 +89,25 @@ function renderTechnicians(technicians) {
 
     technicians.forEach(technician => {
         const profileLink = isAuthenticated
-            ? `/Profile/${technician.Id}`
-            : `/LogIn?returnUrl=/Profile/${technician.Id}`;
+            ? `/ProsProfileView/${technician.id}`
+            : `/LogIn?returnUrl=/ProsProfileView/${technician.id}`;
 
         const technicianHtml = `
             <div class="col-md-6 col-lg-4 mx-auto">
                 <div class="box">
                     <div class="img-box">
-                        <img src="${technician.profilePicture}" alt="${technician.fullName}'s Profile Picture" style="width: 100%; height: auto; object-fit: cover;"/>
+                        <img src="${technician.profilePicture}" alt="${technician.fullName}'s Profile Picture" style="width: 100%; height: auto; object-fit: cover; color:black"/>
                     </div>
-                    <div class="detail-box">
-                        <a href="${profileLink}">
-                            ${technician.fullName}
-                        </a>
+                    <div class="detail-box" style="background-color:white">
+                        <a href="${profileLink}" style="color:black">${technician.fullName}</a>
                         <h6 class="expert_position">
-                            <span>${technician.expertise}</span>
-                            <span>${technician.experience} Years of Experience</span>
+                            <span style="color:black">${technician.expertise}</span>
+                            <span style="color:black">${technician.experience} Years of Experience</span>
                         </h6>
-                        <span class="expert_rating">
+                        <span class="expert_rating" style="color:black">
                             ${generateStars(technician.rating)}
                         </span>
-                        <p>${technician.review}</p>
+                        <p style="color:black">${technician.review}</p>
                     </div>
                 </div>
             </div>`;
@@ -195,11 +193,19 @@ document.addEventListener('DOMContentLoaded', async () => {
     });
 
     const viewMoreButton = document.getElementById('viewMoreButton');
+    const loginToSeeMoreButton = document.getElementById('loginToSeeMoreButton');
 
     if (viewMoreButton) {
         viewMoreButton.addEventListener('click', (e) => {
             e.preventDefault();
             loadTechnicians(false);
+        });
+    }
+
+    if (loginToSeeMoreButton) {
+        loginToSeeMoreButton.addEventListener('click', (e) => {
+            e.preventDefault();
+            window.location.href = '/LogIn';
         });
     }
 });

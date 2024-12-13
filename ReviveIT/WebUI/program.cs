@@ -62,7 +62,9 @@ builder.Services.AddScoped<SelectJobApplicantFeature>();
 builder.Services.AddScoped<GetJobApplicationsByJobIdFeature>();
 builder.Services.AddScoped<GetJobApplicationInfo>();
 builder.Services.AddScoped<GetCategoriesFeature>();
+builder.Services.AddScoped<GetTechnicianProfileFeature>();
 builder.Services.AddScoped<GetCitiesFeature>();
+
 
 builder.Services.AddAuthentication(options =>
 {

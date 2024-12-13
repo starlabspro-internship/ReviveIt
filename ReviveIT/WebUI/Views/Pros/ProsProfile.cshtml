@@ -1,0 +1,46 @@
+﻿@{
+    ViewData["Title"] = "Technician Profile";
+}
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/ProsProfile.css" />
+}
+
+@section Scripts {
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" defer></script>
+    <script>
+        const technicianId = "@ViewBag.TechnicianId";
+    </script>
+    <script src="~/js/ProsProfile.js" defer></script>
+}
+
+<section class="profile-section">
+    <div class="left-side">
+        <div class="profile-picture">
+            <img id="profilePicture" src="https://via.placeholder.com/150" alt="Profile Picture">
+        </div>
+        <div class="profile-details">
+            <h2 id="technicianFullName"></h2>
+            <h5 id="technicianExpertise"></h5>
+            <p id="technicianExperience"></p>
+
+            <div id="technicianContact" class="contact-info">
+                <h4>Contact Information</h4>
+                <p>Email: <span id="technicianEmail"></span></p>
+                <p>Phone: <span id="technicianPhone"></span></p>
+            </div>
+
+            <div id="technicianDescription" class="description">
+                <h4>Description</h4>
+                <p>No description available.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="right-side">
+        <div id="technicianPortfolio" class="portfolio">
+            <h4>Portfolio</h4>
+            <p>No portfolios available.</p>
+        </div>
+    </div>
+</section>
