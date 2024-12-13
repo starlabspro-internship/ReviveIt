@@ -1,6 +1,4 @@
-﻿const apiUrl = "https://reviveit.devops99.pro/api/ProfileUpdate";
-
-function getCookie(name) {
+﻿function getCookie(name) {
     const cookies = document.cookie.split("; ");
     for (const cookie of cookies) {
         const [key, value] = cookie.split("=");
@@ -85,7 +83,7 @@ async function uploadProfileImage() {
     formData.append("ProfilePicture", file);
 
     try {
-        const response = await fetch(`${apiUrl}/upload`, {
+        const response = await fetch(`/ProfileUpdate/api/upload`, {
             method: 'POST',
             headers: {
                 'Authorization': `Bearer ${getCookie('jwtToken')}`
@@ -148,7 +146,7 @@ cropper = new Cropper(cropperImage, {
 
 async function getProfilePicture() {
     try {
-        const response = await fetch(`${apiUrl}/get`, {
+        const response = await fetch(`/ProfileUpdate/api/get`, {
             method: 'GET',
             headers: {
                 'Authorization': `Bearer ${getCookie('jwtToken')}`
@@ -180,7 +178,7 @@ async function getProfilePicture() {
 
 async function removeProfilePicture() {
     try {
-        const response = await fetch(`${apiUrl}/remove`, {
+        const response = await fetch(`/ProfileUpdate/api/remove`, {
             method: 'DELETE',
             headers: {
                 'Authorization': `Bearer ${getCookie('jwtToken')}`
@@ -216,7 +214,7 @@ async function updateProfileImage(event) {
     };
 
     try {
-        const response = await fetch(`${apiUrl}/update-profile`, {
+        const response = await fetch(`/ProfileUpdate/api/update-profile`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',

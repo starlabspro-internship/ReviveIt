@@ -23,11 +23,36 @@ namespace WebUI.Controllers
         }
 
         [HttpGet("api/GetPros")]
-        public IActionResult GetPros(int skipCount = 0, int takeCount = 3)
+        public IActionResult GetPros(string? keywords, int? selectedCityId, int? selectedCategoryId, int skipCount = 0, int takeCount = 3)
         {
-            var technicians = GetTechnicians(skipCount, takeCount);
-            var totalCount = _context.Users.Count(u => u.Role == UserRole.Technician || u.Role == UserRole.Company);
-            
+            var query = _context.Users
+                .Where(u => u.Role == UserRole.Technician || u.Role == UserRole.Company)
+                .AsQueryable();
+
+            if (!string.IsNullOrEmpty(keywords))
+            {
+                query = query.Where(u =>
+                    u.FullName.Contains(keywords) ||
+                    u.Expertise.Contains(keywords) ||
+                    u.CompanyName.Contains(keywords));
+            }
+
+            if (selectedCityId.HasValue)
+            {
+                query = query.Where(u =>
+                    _context.OperatingCities.Any(oc => oc.userId == u.Id && oc.CityId == selectedCityId.Value));
+            }
+
+            if (selectedCategoryId.HasValue)
+            {
+                query = query.Where(u =>
+                    _context.UserCategories.Any(uc => uc.UserId == u.Id && uc.CategoryId == selectedCategoryId.Value));
+            }
+
+            var totalCount = query.Count();
+
+            var technicians = GetTechnicians(skipCount, takeCount, query);
+
             return Ok(new
             {
                 data = technicians,
@@ -42,10 +67,12 @@ namespace WebUI.Controllers
             return Ok(new { isAuthenticated });
         }
 
-        private List<TechnicianViewModel> GetTechnicians(int skipCount, int takeCount)
+        private List<TechnicianViewModel> GetTechnicians(int skipCount, int takeCount, IQueryable<Users>? filteredQuery = null)
         {
-            var users = _context.Users
-                .Where(u => u.Role == UserRole.Technician || u.Role == UserRole.Company)
+            var query = filteredQuery ?? _context.Users
+                .Where(u => u.Role == UserRole.Technician || u.Role == UserRole.Company);
+
+            var users = query
                 .OrderBy(u => u.Id)
                 .Skip(skipCount)
                 .Take(takeCount)

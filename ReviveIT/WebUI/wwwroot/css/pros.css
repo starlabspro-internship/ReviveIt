@@ -75,3 +75,23 @@
     color: #fff;
     margin-bottom: 0;
 }
+
+#applyFiltersButton {
+    display: inline-block;
+    padding: 7px 45px;
+    background-color: #e41a2b;
+    color: #ffffff;
+    border-radius: 5px;
+    -webkit-transition: all .3s;
+    -o-transition: all .3s;
+    -moz-transition: all .3s;
+    transition: all .3s;
+    border: 1px solid #e41a2b;
+    outline: none;
+    text-transform: uppercase;
+}
+
+    #applyFiltersButton:hover {
+        background-color: transparent;
+        color: #e41a2b;
+    }

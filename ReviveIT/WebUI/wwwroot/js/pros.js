@@ -16,10 +16,40 @@ async function checkAuthenticationStatus() {
     }
 }
 
-async function loadTechnicians() {
+function getFilterParameters(useUrl = false) {
+    if (useUrl) {
+        const urlParams = new URLSearchParams(window.location.search);
+        return {
+            keywords: urlParams.get('keywords'),
+            selectedCityId: urlParams.get('SelectedCityId'),
+            selectedCategoryId: urlParams.get('SelectedCategoryId'),
+        };
+    } else {
+        return {
+            keywords: document.getElementById('keywords').value || null,
+            selectedCityId: document.getElementById('filterCities').value || null,
+            selectedCategoryId: document.getElementById('filterCategories').value || null,
+        };
+    }
+}
+
+async function loadTechnicians(clear = false, useUrl = false) {
+    if (clear) {
+        skipCount = 0;
+    }
     const takeCount = skipCount === 0 ? initialPageSize : additionalPageSize;
 
-    const response = await fetch(`/Pros/api/GetPros?skipCount=${skipCount}&takeCount=${takeCount}`, {
+    const { keywords, selectedCityId, selectedCategoryId } = getFilterParameters(useUrl);
+
+    const params = new URLSearchParams({
+        skipCount,
+        takeCount,
+        ...(keywords && { keywords }),
+        ...(selectedCityId && { selectedCityId }),
+        ...(selectedCategoryId && {selectedCategoryId})
+    });
+
+    const response = await fetch(`/Pros/api/GetPros?${params.toString()}`, {
         credentials: 'include',
     });
 
@@ -31,6 +61,10 @@ async function loadTechnicians() {
 
     const data = await response.json();
 
+    if (clear) {
+        document.getElementById('technicianContainer').innerHTML = '';
+    }
+
     if (skipCount === 0) {
         document.getElementById('technicianContainer').innerHTML = '';
     }
@@ -41,12 +75,11 @@ async function loadTechnicians() {
     const totalRendered = container.childElementCount;
 
     const viewMoreButton = document.getElementById('viewMoreButton');
-    const loginToSeeMoreButton = document.getElementById('loginToSeeMoreButton');
 
-    if (totalRendered >= data.total) {
-        if (viewMoreButton) viewMoreButton.style.display = 'none';
-        if (loginToSeeMoreButton) loginToSeeMoreButton.style.display = 'none';
+    if (data.total <= initialPageSize || totalRendered >= data.total) {
+        viewMoreButton.style.display = 'none';
     } else {
+        viewMoreButton.style.display = 'block';
         skipCount += takeCount;
     }
 }
@@ -69,7 +102,7 @@ function renderTechnicians(technicians) {
                         <a href="${profileLink}" style="color:black">${technician.fullName}</a>
                         <h6 class="expert_position">
                             <span style="color:black">${technician.expertise}</span>
-                            <span style="color:black">${technician.experience} Years of Experience</span>
+                            <span style="color:black" class="text-right">${technician.experience} Years of Experience</span>
                         </h6>
                         <span class="expert_rating" style="color:black">
                             ${generateStars(technician.rating)}
@@ -105,24 +138,66 @@ function generateStars(rating) {
     return starsHtml;
 }
 
+function fetchCategories(selectedCategoryId = null) {
+    fetch('/api/categories/getCategories')
+        .then(response => response.json())
+        .then(data => {
+            const jobCategoryDropdown = document.getElementById('filterCategories');
+            data.forEach(category => {
+                const option = document.createElement('option');
+                option.value = category.categoryID;
+                option.textContent = category.name;
+                jobCategoryDropdown.appendChild(option);
+            });
+            if (selectedCategoryId) {
+                jobCategoryDropdown.value = selectedCategoryId;
+            }
+        })
+        .catch(error => console.error('Error fetching categories:', error));
+}
+
+function fetchCitites(selectedCityId = null) {
+    fetch('/api/city/getCities')
+        .then(response => response.json())
+        .then(data => {
+            const citiesDropdown = document.getElementById('filterCities');
+            data.forEach(city => {
+                const option = document.createElement('option');
+                option.value = city.cityId;
+                option.textContent = city.cityName;
+                citiesDropdown.appendChild(option);
+            });
+            if (selectedCityId) {
+                citiesDropdown.value = selectedCityId;
+            }
+        })
+}
+
 document.addEventListener('DOMContentLoaded', async () => {
     await checkAuthenticationStatus();
-    loadTechnicians();
+
+    const { keywords, selectedCityId, selectedCategoryId } = getFilterParameters(true);
+
+    await Promise.all([
+        fetchCategories(selectedCategoryId),
+        fetchCitites(selectedCityId),
+    ]);
+    if (keywords) document.getElementById('keywords').value = keywords;
+
+    loadTechnicians(true, true);
+
+    document.getElementById('applyFiltersButton').addEventListener('click', (e) => {
+        e.preventDefault();
+        skipCount = 0;
+        loadTechnicians(true, false);
+    });
 
     const viewMoreButton = document.getElementById('viewMoreButton');
-    const loginToSeeMoreButton = document.getElementById('loginToSeeMoreButton');
 
     if (viewMoreButton) {
         viewMoreButton.addEventListener('click', (e) => {
             e.preventDefault();
-            loadTechnicians();
-        });
-    }
-
-    if (loginToSeeMoreButton) {
-        loginToSeeMoreButton.addEventListener('click', (e) => {
-            e.preventDefault();
-            window.location.href = '/LogIn';
+            loadTechnicians(false);
         });
     }
 });
