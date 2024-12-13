@@ -9,7 +9,7 @@ async function fetchNavbarProfilePicture() {
     const placeholderUrl = "https://via.placeholder.com/150";
 
     try {
-        const response = await fetch(`api/ProfileUpdate/get`, {
+        const response = await fetch(`/ProfileUpdate/api/get`, {
             method: 'GET',
             headers: {
                 'Authorization': `Bearer ${getCookie('jwtToken')}`

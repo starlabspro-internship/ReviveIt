@@ -83,7 +83,7 @@ async function uploadProfileImage() {
     formData.append("ProfilePicture", file);
 
     try {
-        const response = await fetch(`api/ProfileUpdate/upload`, {
+        const response = await fetch(`/ProfileUpdate/api/upload`, {
             method: 'POST',
             headers: {
                 'Authorization': `Bearer ${getCookie('jwtToken')}`
@@ -146,7 +146,7 @@ cropper = new Cropper(cropperImage, {
 
 async function getProfilePicture() {
     try {
-        const response = await fetch(`api/ProfileUpdate/get`, {
+        const response = await fetch(`/ProfileUpdate/api/get`, {
             method: 'GET',
             headers: {
                 'Authorization': `Bearer ${getCookie('jwtToken')}`
@@ -178,7 +178,7 @@ async function getProfilePicture() {
 
 async function removeProfilePicture() {
     try {
-        const response = await fetch(`api/ProfileUpdate/remove`, {
+        const response = await fetch(`/ProfileUpdate/api/remove`, {
             method: 'DELETE',
             headers: {
                 'Authorization': `Bearer ${getCookie('jwtToken')}`
@@ -214,7 +214,7 @@ async function updateProfileImage(event) {
     };
 
     try {
-        const response = await fetch(`api/ProfileUpdate/update-profile`, {
+        const response = await fetch(`/ProfileUpdate/api/update-profile`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',

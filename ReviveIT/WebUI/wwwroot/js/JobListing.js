@@ -224,7 +224,7 @@ function fetchCategories() {
         .catch(error => console.error('Error fetching categories:', error));
 }
 
-function fetchCitites() {
+function fetchCities() {
     fetch('/api/city/getCities')
         .then(response => response.json())
         .then(data => {
@@ -240,7 +240,7 @@ function fetchCitites() {
 
 document.addEventListener('DOMContentLoaded', function () {
     fetchCategories();
-    fetchCitites();
+    fetchCities();
     getAllJobs();
 
     const jobForm = document.getElementById('jobForm');
