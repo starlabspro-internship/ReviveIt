@@ -1,0 +1,39 @@
+version: '3.8'
+
+services:
+  reviveit:
+    build:
+      context: .
+      dockerfile: WebUI/Dockerfile
+    image: reviveit:latest
+    container_name: reviveit-app
+    ports:
+      - "80:80"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Production
+      - ConnectionStrings__DefaultConnection=Server=sql_server_container;Database=ReviveItDb;User Id=sa;Password=YourStrongPassword!;TrustServerCertificate=True
+      - Jwt__Key=UmV2aXZlSXRTdXBlclNlY3JldEtleTIwMjQkQCNKV1QhQXV0aA==
+      - Jwt__Issuer=https://reviveit.devops99.pro/
+      - Jwt__Audience=https://reviveit.devops99.pro/
+      - Jwt__ExpiresInMinutes=3600
+      - Jwt__RefreshTokenExpiresInDays=7
+    depends_on:
+      - sql_server
+    networks:
+      - reviveit-network
+
+  sql_server:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: sql_server_container
+    environment:
+      - ACCEPT_EULA=Y
+      - SA_PASSWORD=YourStrongPassword!
+    ports:
+      - "1434:1433"
+    networks:
+      - reviveit-network
+
+networks:
+  reviveit-network:
+    driver: bridge
+
