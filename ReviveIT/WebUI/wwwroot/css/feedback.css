@@ -1,4 +1,4 @@
-﻿body {
+body {
     background-color: #f0f0f0;
     font-family: 'Arial', sans-serif;
     margin: 0;
@@ -10,9 +10,8 @@
 
 .feedback-container {
     width: 50%;
-    // margin: 20px auto;
     padding: 5px;
-    min-height: 75vh; 
+    min-height: 75vh;
     background-color: #fff;
     border-radius: 8px;
     margin-top: 25px;
@@ -26,23 +25,23 @@
 }
 
 .form-group {
-    margin-top: 20x;
-   
+    margin-top: 20px;
 }
 
 .form-control {
     background-color: #f9f9f9;
     color: #333;
     border: 1px solid #ccc;
-    height: 90px; 
-    max-height: 90px; 
-    overflow: hidden; 
+    height: 90px;
+    max-height: 90px;
+    overflow: hidden;
     resize: none;
+}
 
 textarea {
-    height: 120px; 
-    max-height: 120px; 
-    resize: none; 
+    height: 120px;
+    max-height: 120px;
+    resize: none;
 }
 
 .btn-primary {
@@ -51,8 +50,8 @@ textarea {
     border: none;
     padding: 10px 20px;
     cursor: pointer;
-    margin-top: 5px; 
-    margin-bottom: 0px; /
+    margin-top: 5px;
+    margin-bottom: 0px;
 }
 
 .rating-scale {
