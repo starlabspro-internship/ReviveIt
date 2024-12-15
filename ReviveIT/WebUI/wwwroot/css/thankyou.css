@@ -1,0 +1,62 @@
+﻿body.thankyou-page {
+    background-color: #f0f0f0; 
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    height: 100vh; 
+    display: flex;
+    flex-direction: column;
+    overflow: hidden; 
+}
+
+.thank-you-container {
+    text-align: center;
+    padding: 50px 20px;
+    padding-bottom: 97px; 
+    flex: 1; 
+}
+
+.thank-you-message {
+    font-size: 24px;
+    color: #4CAF50; 
+    font-weight: bold; 
+}
+
+.thank-you-subtext {
+    font-size: 18px;
+    color: #777;
+    font-style: italic;
+}
+
+.feedback-summary {
+    margin-top: 30px;
+    padding: 20px;
+    background-color: #f9f9f9; 
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    display: inline-block;
+    text-align: left;
+    max-width: 600px; 
+    margin-left: auto; 
+    margin-right: auto; 
+}
+
+    .feedback-summary dt {
+        margin-top: 20px;
+        font-weight: normal; 
+        font-size: 20px;
+        color: #666; 
+    }
+
+    .feedback-summary dd {
+        display: flex;
+        align-items: center;
+        font-size: 18px;
+        margin-left: 10px; 
+    }
+
+        .feedback-summary dd .check-icon {
+            color: #4CAF50; 
+            margin-left: 10px;
+            font-size: 24px;
+        }
+
