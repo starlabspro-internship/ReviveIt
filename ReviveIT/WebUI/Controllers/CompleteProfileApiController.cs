@@ -36,6 +36,7 @@ namespace WebUI.Controllers
                 return NotFound(new { Success = false, Message = "User not found." });
             }
 
+            // Update phone number
             if (!string.IsNullOrEmpty(profileDto.Phone))
             {
                 var existingUserWithPhone = await _userManager.Users
@@ -49,6 +50,7 @@ namespace WebUI.Controllers
                 user.PhoneNumber = profileDto.Phone;
             }
 
+            // Update description
             if (!string.IsNullOrEmpty(profileDto.Description))
             {
                 user.Description = profileDto.Description;
@@ -72,11 +74,23 @@ namespace WebUI.Controllers
                 await _context.OperatingCities.AddRangeAsync(operatingCities);
             }
 
+            // Check if profile is complete
+            if (!string.IsNullOrEmpty(user.PhoneNumber) &&
+                !string.IsNullOrEmpty(user.Description) &&
+                profileDto.Cities != null && profileDto.Cities.Any())
+            {
+                user.CompletedProfile = true; // Set CompletedProfile to true
+            }
+            else
+            {
+                user.CompletedProfile = false; // Ensure it's false if conditions aren't met
+            }
+
             var result = await _userManager.UpdateAsync(user);
 
             if (result.Succeeded)
             {
-                await _context.SaveChangesAsync();  // Save changes to the OperatingCity table
+                await _context.SaveChangesAsync(); // Save changes to OperatingCity table
                 return Ok(new { Success = true, Message = "Profile and cities updated successfully." });
             }
             else
@@ -84,13 +98,13 @@ namespace WebUI.Controllers
                 return BadRequest(new { Success = false, Message = "There was an error updating your profile." });
             }
         }
-    }
 
 
-public class CompleteProfileDto
-    {
-        public string Phone { get; set; }
-        public string Description { get; set; }
-        public List<int> Cities { get; set; }  // List of selected city IDs
+        public class CompleteProfileDto
+        {
+            public string Phone { get; set; }
+            public string Description { get; set; }
+            public List<int> Cities { get; set; }  // List of selected city IDs
+        }
     }
 }

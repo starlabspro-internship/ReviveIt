@@ -14,6 +14,7 @@ namespace Domain.Entities
         public string? CompanyAddress { get; set; }
         public string? ProfilePicture { get; set; }
         public string? Description { get; set; }
+        public bool CompletedProfile { get; set; } = false;
 
         public ICollection<UserCategory> UserCategories { get; set; }
         public ICollection<OperatingCity> OperatingCities { get; set; }
