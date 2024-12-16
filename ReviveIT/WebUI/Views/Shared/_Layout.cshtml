@@ -22,7 +22,6 @@
 <body class="@(ViewBag.IsProsPage == true || ViewBag.IsJobListingsPage == true || ViewBag.IsAboutPage == true || ViewBag.IsCompleteProfilePage == true ? "sub_page" : "")">
 
     <div class="hero_area">
-        <!-- Check if this is the CompleteProfile page, if not, display the navbar -->
         @if (ViewBag.IsCompleteProfilePage != true)
         {
             <header class="header_section">
