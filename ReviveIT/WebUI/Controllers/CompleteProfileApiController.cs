@@ -1,4 +1,5 @@
 ﻿using Domain.Entities;
+using Infrastructure.Data;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -10,10 +11,12 @@ namespace WebUI.Controllers
     public class CompleteProfileApiController : ControllerBase
     {
         private readonly UserManager<Users> _userManager;
+        private readonly ApplicationDbContext _context;
 
-        public CompleteProfileApiController(UserManager<Users> userManager)
+        public CompleteProfileApiController(UserManager<Users> userManager, ApplicationDbContext context)
         {
             _userManager = userManager;
+            _context = context;
         }
 
         [HttpPost("CompleteProfile")]
@@ -51,11 +54,30 @@ namespace WebUI.Controllers
                 user.Description = profileDto.Description;
             }
 
+            // Remove existing cities for this user
+            var existingOperatingCities = await _context.OperatingCities
+                .Where(oc => oc.userId == userIdClaim)
+                .ToListAsync();
+            _context.OperatingCities.RemoveRange(existingOperatingCities);
+
+            // Add new selected cities
+            if (profileDto.Cities != null && profileDto.Cities.Any())
+            {
+                var operatingCities = profileDto.Cities.Select(cityId => new OperatingCity
+                {
+                    CityId = cityId,
+                    userId = userIdClaim
+                }).ToList();
+
+                await _context.OperatingCities.AddRangeAsync(operatingCities);
+            }
+
             var result = await _userManager.UpdateAsync(user);
 
             if (result.Succeeded)
             {
-                return Ok(new { Success = true, Message = "Profile updated successfully." });
+                await _context.SaveChangesAsync();  // Save changes to the OperatingCity table
+                return Ok(new { Success = true, Message = "Profile and cities updated successfully." });
             }
             else
             {
@@ -64,9 +86,11 @@ namespace WebUI.Controllers
         }
     }
 
-    public class CompleteProfileDto
+
+public class CompleteProfileDto
     {
         public string Phone { get; set; }
         public string Description { get; set; }
+        public List<int> Cities { get; set; }  // List of selected city IDs
     }
 }
