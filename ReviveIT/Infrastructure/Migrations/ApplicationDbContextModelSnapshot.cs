@@ -47,533 +47,193 @@ namespace WebUI.Migrations
 
                     b.HasKey("CategoryID");
 
-                    b.ToTable("Categories");
+                    b.ToTable("Categories", (string)null);
+                });
+
+            modelBuilder.Entity("Domain.Entities.ChatSession", b =>
+                {
+                    b.Property<int>("ChatSessionId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ChatSessionId"));
+
+                    b.Property<string>("CompanyId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("CustomerId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTime?>("EndTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("StartTime")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValueSql("GETDATE()");
+
+                    b.Property<string>("TechnicianId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("ChatSessionId");
+
+                    b.HasIndex("CompanyId");
+
+                    b.HasIndex("CustomerId");
+
+                    b.HasIndex("TechnicianId");
+
+                    b.ToTable("ChatSessions", (string)null);
+                });
+
+            modelBuilder.Entity("Domain.Entities.City", b =>
+                {
+                    b.Property<int>("CityId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CityId"));
+
+                    b.Property<string>("CityName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("CityId");
+
+                    b.ToTable("Cities", (string)null);
 
                     b.HasData(
                         new
                         {
-                            CategoryID = 1,
-                            CreatedAt = new DateTime(2024, 12, 3, 8, 58, 6, 764, DateTimeKind.Utc).AddTicks(9075),
-                            Name = "Electronics Repair",
-                            UpdatedAt = new DateTime(2024, 12, 3, 8, 58, 6, 764, DateTimeKind.Utc).AddTicks(9077)
+                            CityId = 1,
+                            CityName = "Deçan"
                         },
                         new
                         {
-                            CategoryID = 2,
-                            CreatedAt = new DateTime(2024, 12, 3, 8, 58, 6, 764, DateTimeKind.Utc).AddTicks(9084),
-                            Name = "Furniture Restoration",
-                            UpdatedAt = new DateTime(2024, 12, 3, 8, 58, 6, 764, DateTimeKind.Utc).AddTicks(9086)
+                            CityId = 2,
+                            CityName = "Dragash"
                         },
                         new
                         {
-                            CategoryID = 3,
-                            CreatedAt = new DateTime(2024, 12, 3, 8, 58, 6, 764, DateTimeKind.Utc).AddTicks(9091),
-                            Name = "Home Appliance Repair",
-                            UpdatedAt = new DateTime(2024, 12, 3, 8, 58, 6, 764, DateTimeKind.Utc).AddTicks(9092)
+                            CityId = 3,
+                            CityName = "Drenas"
                         },
                         new
                         {
-                            CategoryID = 4,
-                            CreatedAt = new DateTime(2024, 12, 3, 8, 58, 6, 764, DateTimeKind.Utc).AddTicks(9097),
-                            Name = "Automotive Repair",
-                            UpdatedAt = new DateTime(2024, 12, 3, 8, 58, 6, 764, DateTimeKind.Utc).AddTicks(9099)
+                            CityId = 4,
+                            CityName = "Ferizaj"
                         },
                         new
                         {
-                            CategoryID = 5,
-                            CreatedAt = new DateTime(2024, 12, 3, 8, 58, 6, 764, DateTimeKind.Utc).AddTicks(9104),
-                            Name = "Plumbing Services",
-                            UpdatedAt = new DateTime(2024, 12, 3, 8, 58, 6, 764, DateTimeKind.Utc).AddTicks(9105)
+                            CityId = 5,
+                            CityName = "Fushë Kosovë"
                         },
                         new
                         {
-                            CategoryID = 6,
-                            CreatedAt = new DateTime(2024, 12, 3, 8, 58, 6, 764, DateTimeKind.Utc).AddTicks(9110),
-                            Name = "Electrical Repairs",
-                            UpdatedAt = new DateTime(2024, 12, 3, 8, 58, 6, 764, DateTimeKind.Utc).AddTicks(9112)
+                            CityId = 6,
+                            CityName = "Gjakovë"
                         },
                         new
                         {
-                            CategoryID = 7,
-                            CreatedAt = new DateTime(2024, 12, 3, 8, 58, 6, 764, DateTimeKind.Utc).AddTicks(9117),
-                            Name = "Cleaning Services",
-                            UpdatedAt = new DateTime(2024, 12, 3, 8, 58, 6, 764, DateTimeKind.Utc).AddTicks(9119)
+                            CityId = 7,
+                            CityName = "Gjilan"
                         },
                         new
                         {
-                            CategoryID = 8,
-                            CreatedAt = new DateTime(2024, 12, 3, 8, 58, 6, 764, DateTimeKind.Utc).AddTicks(9173),
-                            Name = "Carpentry",
-                            UpdatedAt = new DateTime(2024, 12, 3, 8, 58, 6, 764, DateTimeKind.Utc).AddTicks(9175)
+                            CityId = 8,
+                            CityName = "Istog"
                         },
                         new
                         {
-                            CategoryID = 9,
-                            CreatedAt = new DateTime(2024, 12, 3, 8, 58, 6, 764, DateTimeKind.Utc).AddTicks(9179),
-                            Name = "Landscaping",
-                            UpdatedAt = new DateTime(2024, 12, 3, 8, 58, 6, 764, DateTimeKind.Utc).AddTicks(9181)
+                            CityId = 9,
+                            CityName = "Kaçanik"
                         },
                         new
                         {
-                            CategoryID = 10,
-                            CreatedAt = new DateTime(2024, 12, 3, 8, 58, 6, 764, DateTimeKind.Utc).AddTicks(9186),
-                            Name = "Painting",
-                            UpdatedAt = new DateTime(2024, 12, 3, 8, 58, 6, 764, DateTimeKind.Utc).AddTicks(9187)
+                            CityId = 10,
+                            CityName = "Kamenicë"
                         },
                         new
                         {
-                            CategoryID = 11,
-                            CreatedAt = new DateTime(2024, 12, 3, 8, 58, 6, 764, DateTimeKind.Utc).AddTicks(9192),
-                            Name = "Roofing",
-                            UpdatedAt = new DateTime(2024, 12, 3, 8, 58, 6, 764, DateTimeKind.Utc).AddTicks(9194)
+                            CityId = 11,
+                            CityName = "Klinë"
                         },
                         new
                         {
-                            CategoryID = 12,
-                            CreatedAt = new DateTime(2024, 12, 3, 8, 58, 6, 764, DateTimeKind.Utc).AddTicks(9198),
-                            Name = "HVAC Services",
-                            UpdatedAt = new DateTime(2024, 12, 3, 8, 58, 6, 764, DateTimeKind.Utc).AddTicks(9200)
+                            CityId = 12,
+                            CityName = "Lipjan"
                         },
                         new
                         {
-                            CategoryID = 13,
-                            CreatedAt = new DateTime(2024, 12, 3, 8, 58, 6, 764, DateTimeKind.Utc).AddTicks(9205),
-                            Name = "Pest Control",
-                            UpdatedAt = new DateTime(2024, 12, 3, 8, 58, 6, 764, DateTimeKind.Utc).AddTicks(9206)
+                            CityId = 13,
+                            CityName = "Malishevë"
                         },
                         new
                         {
-                            CategoryID = 14,
-                            CreatedAt = new DateTime(2024, 12, 3, 8, 58, 6, 764, DateTimeKind.Utc).AddTicks(9211),
-                            Name = "Moving Services",
-                            UpdatedAt = new DateTime(2024, 12, 3, 8, 58, 6, 764, DateTimeKind.Utc).AddTicks(9212)
+                            CityId = 14,
+                            CityName = "Mitrovicë"
                         },
                         new
                         {
-                            CategoryID = 15,
-                            CreatedAt = new DateTime(2024, 12, 3, 8, 58, 6, 764, DateTimeKind.Utc).AddTicks(9217),
-                            Name = "Interior Design",
-                            UpdatedAt = new DateTime(2024, 12, 3, 8, 58, 6, 764, DateTimeKind.Utc).AddTicks(9218)
+                            CityId = 15,
+                            CityName = "Obiliq"
                         },
                         new
                         {
-                            CategoryID = 16,
-                            CreatedAt = new DateTime(2024, 12, 3, 8, 58, 6, 764, DateTimeKind.Utc).AddTicks(9224),
-                            Name = "IT Support",
-                            UpdatedAt = new DateTime(2024, 12, 3, 8, 58, 6, 764, DateTimeKind.Utc).AddTicks(9226)
+                            CityId = 16,
+                            CityName = "Pejë"
                         },
                         new
                         {
-                            CategoryID = 17,
-                            CreatedAt = new DateTime(2024, 12, 3, 8, 58, 6, 764, DateTimeKind.Utc).AddTicks(9230),
-                            Name = "Handyman Services",
-                            UpdatedAt = new DateTime(2024, 12, 3, 8, 58, 6, 764, DateTimeKind.Utc).AddTicks(9232)
+                            CityId = 17,
+                            CityName = "Podujevë"
                         },
                         new
                         {
-                            CategoryID = 18,
-                            CreatedAt = new DateTime(2024, 12, 3, 8, 58, 6, 764, DateTimeKind.Utc).AddTicks(9237),
-                            Name = "Masonry",
-                            UpdatedAt = new DateTime(2024, 12, 3, 8, 58, 6, 764, DateTimeKind.Utc).AddTicks(9238)
+                            CityId = 18,
+                            CityName = "Prishtinë"
                         },
                         new
                         {
-                            CategoryID = 19,
-                            CreatedAt = new DateTime(2024, 12, 3, 8, 58, 6, 764, DateTimeKind.Utc).AddTicks(9242),
-                            Name = "Welding",
-                            UpdatedAt = new DateTime(2024, 12, 3, 8, 58, 6, 764, DateTimeKind.Utc).AddTicks(9244)
+                            CityId = 19,
+                            CityName = "Prizren"
                         },
                         new
                         {
-                            CategoryID = 20,
-                            CreatedAt = new DateTime(2024, 12, 3, 8, 58, 6, 764, DateTimeKind.Utc).AddTicks(9249),
-                            Name = "Security Systems Installation",
-                            UpdatedAt = new DateTime(2024, 12, 3, 8, 58, 6, 764, DateTimeKind.Utc).AddTicks(9250)
+                            CityId = 20,
+                            CityName = "Rahovec"
                         },
                         new
                         {
-                            CategoryID = 21,
-                            CreatedAt = new DateTime(2024, 12, 3, 8, 58, 6, 764, DateTimeKind.Utc).AddTicks(9255),
-                            Name = "Window Installation",
-                            UpdatedAt = new DateTime(2024, 12, 3, 8, 58, 6, 764, DateTimeKind.Utc).AddTicks(9256)
+                            CityId = 21,
+                            CityName = "Skenderaj"
                         },
                         new
                         {
-                            CategoryID = 22,
-                            CreatedAt = new DateTime(2024, 12, 3, 8, 58, 6, 764, DateTimeKind.Utc).AddTicks(9261),
-                            Name = "Flooring Installation",
-                            UpdatedAt = new DateTime(2024, 12, 3, 8, 58, 6, 764, DateTimeKind.Utc).AddTicks(9262)
+                            CityId = 22,
+                            CityName = "Suharekë"
                         },
                         new
                         {
-                            CategoryID = 23,
-                            CreatedAt = new DateTime(2024, 12, 3, 8, 58, 6, 764, DateTimeKind.Utc).AddTicks(9267),
-                            Name = "Bathroom Remodeling",
-                            UpdatedAt = new DateTime(2024, 12, 3, 8, 58, 6, 764, DateTimeKind.Utc).AddTicks(9268)
+                            CityId = 23,
+                            CityName = "Shtërpcë"
                         },
                         new
                         {
-                            CategoryID = 24,
-                            CreatedAt = new DateTime(2024, 12, 3, 8, 58, 6, 764, DateTimeKind.Utc).AddTicks(9273),
-                            Name = "Kitchen Remodeling",
-                            UpdatedAt = new DateTime(2024, 12, 3, 8, 58, 6, 764, DateTimeKind.Utc).AddTicks(9274)
+                            CityId = 24,
+                            CityName = "Shtime"
                         },
                         new
                         {
-                            CategoryID = 25,
-                            CreatedAt = new DateTime(2024, 12, 3, 8, 58, 6, 764, DateTimeKind.Utc).AddTicks(9279),
-                            Name = "Solar Panel Installation",
-                            UpdatedAt = new DateTime(2024, 12, 3, 8, 58, 6, 764, DateTimeKind.Utc).AddTicks(9281)
+                            CityId = 25,
+                            CityName = "Viti"
                         },
                         new
                         {
-                            CategoryID = 26,
-                            CreatedAt = new DateTime(2024, 12, 3, 8, 58, 6, 764, DateTimeKind.Utc).AddTicks(9286),
-                            Name = "Tree Trimming",
-                            UpdatedAt = new DateTime(2024, 12, 3, 8, 58, 6, 764, DateTimeKind.Utc).AddTicks(9287)
-                        },
-                        new
-                        {
-                            CategoryID = 27,
-                            CreatedAt = new DateTime(2024, 12, 3, 8, 58, 6, 764, DateTimeKind.Utc).AddTicks(9292),
-                            Name = "Pool Maintenance",
-                            UpdatedAt = new DateTime(2024, 12, 3, 8, 58, 6, 764, DateTimeKind.Utc).AddTicks(9293)
-                        },
-                        new
-                        {
-                            CategoryID = 28,
-                            CreatedAt = new DateTime(2024, 12, 3, 8, 58, 6, 764, DateTimeKind.Utc).AddTicks(9298),
-                            Name = "Locksmith Services",
-                            UpdatedAt = new DateTime(2024, 12, 3, 8, 58, 6, 764, DateTimeKind.Utc).AddTicks(9299)
-                        },
-                        new
-                        {
-                            CategoryID = 29,
-                            CreatedAt = new DateTime(2024, 12, 3, 8, 58, 6, 764, DateTimeKind.Utc).AddTicks(9304),
-                            Name = "Event Planning",
-                            UpdatedAt = new DateTime(2024, 12, 3, 8, 58, 6, 764, DateTimeKind.Utc).AddTicks(9305)
-                        },
-                        new
-                        {
-                            CategoryID = 30,
-                            CreatedAt = new DateTime(2024, 12, 3, 8, 58, 6, 764, DateTimeKind.Utc).AddTicks(9309),
-                            Name = "Photography",
-                            UpdatedAt = new DateTime(2024, 12, 3, 8, 58, 6, 764, DateTimeKind.Utc).AddTicks(9311)
-                        },
-                        new
-                        {
-                            CategoryID = 31,
-                            CreatedAt = new DateTime(2024, 12, 3, 8, 58, 6, 764, DateTimeKind.Utc).AddTicks(9315),
-                            Name = "Tutoring",
-                            UpdatedAt = new DateTime(2024, 12, 3, 8, 58, 6, 764, DateTimeKind.Utc).AddTicks(9317)
-                        },
-                        new
-                        {
-                            CategoryID = 32,
-                            CreatedAt = new DateTime(2024, 12, 3, 8, 58, 6, 764, DateTimeKind.Utc).AddTicks(9321),
-                            Name = "Courier Services",
-                            UpdatedAt = new DateTime(2024, 12, 3, 8, 58, 6, 764, DateTimeKind.Utc).AddTicks(9323)
-                        },
-                        new
-                        {
-                            CategoryID = 33,
-                            CreatedAt = new DateTime(2024, 12, 3, 8, 58, 6, 764, DateTimeKind.Utc).AddTicks(9327),
-                            Name = "Legal Services",
-                            UpdatedAt = new DateTime(2024, 12, 3, 8, 58, 6, 764, DateTimeKind.Utc).AddTicks(9329)
-                        },
-                        new
-                        {
-                            CategoryID = 34,
-                            CreatedAt = new DateTime(2024, 12, 3, 8, 58, 6, 764, DateTimeKind.Utc).AddTicks(9333),
-                            Name = "Accounting Services",
-                            UpdatedAt = new DateTime(2024, 12, 3, 8, 58, 6, 764, DateTimeKind.Utc).AddTicks(9335)
-                        },
-                        new
-                        {
-                            CategoryID = 35,
-                            CreatedAt = new DateTime(2024, 12, 3, 8, 58, 6, 764, DateTimeKind.Utc).AddTicks(9340),
-                            Name = "Health and Fitness",
-                            UpdatedAt = new DateTime(2024, 12, 3, 8, 58, 6, 764, DateTimeKind.Utc).AddTicks(9341)
-                        },
-                        new
-                        {
-                            CategoryID = 36,
-                            CreatedAt = new DateTime(2024, 12, 3, 8, 58, 6, 764, DateTimeKind.Utc).AddTicks(9346),
-                            Name = "Child Care",
-                            UpdatedAt = new DateTime(2024, 12, 3, 8, 58, 6, 764, DateTimeKind.Utc).AddTicks(9347)
-                        },
-                        new
-                        {
-                            CategoryID = 37,
-                            CreatedAt = new DateTime(2024, 12, 3, 8, 58, 6, 764, DateTimeKind.Utc).AddTicks(9352),
-                            Name = "Elderly Care",
-                            UpdatedAt = new DateTime(2024, 12, 3, 8, 58, 6, 764, DateTimeKind.Utc).AddTicks(9353)
-                        },
-                        new
-                        {
-                            CategoryID = 38,
-                            CreatedAt = new DateTime(2024, 12, 3, 8, 58, 6, 764, DateTimeKind.Utc).AddTicks(9358),
-                            Name = "Pressure Washing",
-                            UpdatedAt = new DateTime(2024, 12, 3, 8, 58, 6, 764, DateTimeKind.Utc).AddTicks(9359)
-                        },
-                        new
-                        {
-                            CategoryID = 39,
-                            CreatedAt = new DateTime(2024, 12, 3, 8, 58, 6, 764, DateTimeKind.Utc).AddTicks(9364),
-                            Name = "Junk Removal",
-                            UpdatedAt = new DateTime(2024, 12, 3, 8, 58, 6, 764, DateTimeKind.Utc).AddTicks(9365)
-                        },
-                        new
-                        {
-                            CategoryID = 40,
-                            CreatedAt = new DateTime(2024, 12, 3, 8, 58, 6, 764, DateTimeKind.Utc).AddTicks(9370),
-                            Name = "Commercial Cleaning",
-                            UpdatedAt = new DateTime(2024, 12, 3, 8, 58, 6, 764, DateTimeKind.Utc).AddTicks(9371)
-                        },
-                        new
-                        {
-                            CategoryID = 41,
-                            CreatedAt = new DateTime(2024, 12, 3, 8, 58, 6, 764, DateTimeKind.Utc).AddTicks(9375),
-                            Name = "Digital Marketing",
-                            UpdatedAt = new DateTime(2024, 12, 3, 8, 58, 6, 764, DateTimeKind.Utc).AddTicks(9377)
-                        },
-                        new
-                        {
-                            CategoryID = 42,
-                            CreatedAt = new DateTime(2024, 12, 3, 8, 58, 6, 764, DateTimeKind.Utc).AddTicks(9381),
-                            Name = "SEO Services",
-                            UpdatedAt = new DateTime(2024, 12, 3, 8, 58, 6, 764, DateTimeKind.Utc).AddTicks(9383)
-                        },
-                        new
-                        {
-                            CategoryID = 43,
-                            CreatedAt = new DateTime(2024, 12, 3, 8, 58, 6, 764, DateTimeKind.Utc).AddTicks(9387),
-                            Name = "Social Media Management",
-                            UpdatedAt = new DateTime(2024, 12, 3, 8, 58, 6, 764, DateTimeKind.Utc).AddTicks(9389)
-                        },
-                        new
-                        {
-                            CategoryID = 44,
-                            CreatedAt = new DateTime(2024, 12, 3, 8, 58, 6, 764, DateTimeKind.Utc).AddTicks(9394),
-                            Name = "Web Development",
-                            UpdatedAt = new DateTime(2024, 12, 3, 8, 58, 6, 764, DateTimeKind.Utc).AddTicks(9395)
-                        },
-                        new
-                        {
-                            CategoryID = 45,
-                            CreatedAt = new DateTime(2024, 12, 3, 8, 58, 6, 764, DateTimeKind.Utc).AddTicks(9399),
-                            Name = "Graphic Design",
-                            UpdatedAt = new DateTime(2024, 12, 3, 8, 58, 6, 764, DateTimeKind.Utc).AddTicks(9401)
-                        },
-                        new
-                        {
-                            CategoryID = 46,
-                            CreatedAt = new DateTime(2024, 12, 3, 8, 58, 6, 764, DateTimeKind.Utc).AddTicks(9406),
-                            Name = "Content Writing",
-                            UpdatedAt = new DateTime(2024, 12, 3, 8, 58, 6, 764, DateTimeKind.Utc).AddTicks(9407)
-                        },
-                        new
-                        {
-                            CategoryID = 47,
-                            CreatedAt = new DateTime(2024, 12, 3, 8, 58, 6, 764, DateTimeKind.Utc).AddTicks(9411),
-                            Name = "Video Editing",
-                            UpdatedAt = new DateTime(2024, 12, 3, 8, 58, 6, 764, DateTimeKind.Utc).AddTicks(9413)
-                        },
-                        new
-                        {
-                            CategoryID = 48,
-                            CreatedAt = new DateTime(2024, 12, 3, 8, 58, 6, 764, DateTimeKind.Utc).AddTicks(9417),
-                            Name = "3D Printing",
-                            UpdatedAt = new DateTime(2024, 12, 3, 8, 58, 6, 764, DateTimeKind.Utc).AddTicks(9419)
-                        },
-                        new
-                        {
-                            CategoryID = 49,
-                            CreatedAt = new DateTime(2024, 12, 3, 8, 58, 6, 764, DateTimeKind.Utc).AddTicks(9423),
-                            Name = "Custom Software Development",
-                            UpdatedAt = new DateTime(2024, 12, 3, 8, 58, 6, 764, DateTimeKind.Utc).AddTicks(9424)
-                        },
-                        new
-                        {
-                            CategoryID = 50,
-                            CreatedAt = new DateTime(2024, 12, 3, 8, 58, 6, 764, DateTimeKind.Utc).AddTicks(9429),
-                            Name = "Mobile App Development",
-                            UpdatedAt = new DateTime(2024, 12, 3, 8, 58, 6, 764, DateTimeKind.Utc).AddTicks(9430)
-                        },
-                        new
-                        {
-                            CategoryID = 51,
-                            CreatedAt = new DateTime(2024, 12, 3, 8, 58, 6, 764, DateTimeKind.Utc).AddTicks(9434),
-                            Name = "Photography Editing",
-                            UpdatedAt = new DateTime(2024, 12, 3, 8, 58, 6, 764, DateTimeKind.Utc).AddTicks(9436)
-                        },
-                        new
-                        {
-                            CategoryID = 52,
-                            CreatedAt = new DateTime(2024, 12, 3, 8, 58, 6, 764, DateTimeKind.Utc).AddTicks(9440),
-                            Name = "Data Entry Services",
-                            UpdatedAt = new DateTime(2024, 12, 3, 8, 58, 6, 764, DateTimeKind.Utc).AddTicks(9442)
-                        },
-                        new
-                        {
-                            CategoryID = 53,
-                            CreatedAt = new DateTime(2024, 12, 3, 8, 58, 6, 764, DateTimeKind.Utc).AddTicks(9446),
-                            Name = "Virtual Assistance",
-                            UpdatedAt = new DateTime(2024, 12, 3, 8, 58, 6, 764, DateTimeKind.Utc).AddTicks(9448)
-                        },
-                        new
-                        {
-                            CategoryID = 54,
-                            CreatedAt = new DateTime(2024, 12, 3, 8, 58, 6, 764, DateTimeKind.Utc).AddTicks(9452),
-                            Name = "Business Consulting",
-                            UpdatedAt = new DateTime(2024, 12, 3, 8, 58, 6, 764, DateTimeKind.Utc).AddTicks(9454)
-                        },
-                        new
-                        {
-                            CategoryID = 55,
-                            CreatedAt = new DateTime(2024, 12, 3, 8, 58, 6, 764, DateTimeKind.Utc).AddTicks(9458),
-                            Name = "Market Research",
-                            UpdatedAt = new DateTime(2024, 12, 3, 8, 58, 6, 764, DateTimeKind.Utc).AddTicks(9460)
-                        },
-                        new
-                        {
-                            CategoryID = 56,
-                            CreatedAt = new DateTime(2024, 12, 3, 8, 58, 6, 764, DateTimeKind.Utc).AddTicks(9464),
-                            Name = "Project Management",
-                            UpdatedAt = new DateTime(2024, 12, 3, 8, 58, 6, 764, DateTimeKind.Utc).AddTicks(9466)
-                        },
-                        new
-                        {
-                            CategoryID = 57,
-                            CreatedAt = new DateTime(2024, 12, 3, 8, 58, 6, 764, DateTimeKind.Utc).AddTicks(9470),
-                            Name = "Branding",
-                            UpdatedAt = new DateTime(2024, 12, 3, 8, 58, 6, 764, DateTimeKind.Utc).AddTicks(9471)
-                        },
-                        new
-                        {
-                            CategoryID = 58,
-                            CreatedAt = new DateTime(2024, 12, 3, 8, 58, 6, 764, DateTimeKind.Utc).AddTicks(9476),
-                            Name = "Event Coordination",
-                            UpdatedAt = new DateTime(2024, 12, 3, 8, 58, 6, 764, DateTimeKind.Utc).AddTicks(9478)
-                        },
-                        new
-                        {
-                            CategoryID = 59,
-                            CreatedAt = new DateTime(2024, 12, 3, 8, 58, 6, 764, DateTimeKind.Utc).AddTicks(9482),
-                            Name = "Public Relations",
-                            UpdatedAt = new DateTime(2024, 12, 3, 8, 58, 6, 764, DateTimeKind.Utc).AddTicks(9483)
-                        },
-                        new
-                        {
-                            CategoryID = 60,
-                            CreatedAt = new DateTime(2024, 12, 3, 8, 58, 6, 764, DateTimeKind.Utc).AddTicks(9488),
-                            Name = "Translation Services",
-                            UpdatedAt = new DateTime(2024, 12, 3, 8, 58, 6, 764, DateTimeKind.Utc).AddTicks(9489)
-                        },
-                        new
-                        {
-                            CategoryID = 61,
-                            CreatedAt = new DateTime(2024, 12, 3, 8, 58, 6, 764, DateTimeKind.Utc).AddTicks(9494),
-                            Name = "Voiceover Services",
-                            UpdatedAt = new DateTime(2024, 12, 3, 8, 58, 6, 764, DateTimeKind.Utc).AddTicks(9495)
-                        },
-                        new
-                        {
-                            CategoryID = 62,
-                            CreatedAt = new DateTime(2024, 12, 3, 8, 58, 6, 764, DateTimeKind.Utc).AddTicks(9500),
-                            Name = "Legal Consultation",
-                            UpdatedAt = new DateTime(2024, 12, 3, 8, 58, 6, 764, DateTimeKind.Utc).AddTicks(9501)
-                        },
-                        new
-                        {
-                            CategoryID = 63,
-                            CreatedAt = new DateTime(2024, 12, 3, 8, 58, 6, 764, DateTimeKind.Utc).AddTicks(9506),
-                            Name = "Property Management",
-                            UpdatedAt = new DateTime(2024, 12, 3, 8, 58, 6, 764, DateTimeKind.Utc).AddTicks(9507)
-                        },
-                        new
-                        {
-                            CategoryID = 64,
-                            CreatedAt = new DateTime(2024, 12, 3, 8, 58, 6, 764, DateTimeKind.Utc).AddTicks(9511),
-                            Name = "Real Estate Services",
-                            UpdatedAt = new DateTime(2024, 12, 3, 8, 58, 6, 764, DateTimeKind.Utc).AddTicks(9513)
-                        },
-                        new
-                        {
-                            CategoryID = 65,
-                            CreatedAt = new DateTime(2024, 12, 3, 8, 58, 6, 764, DateTimeKind.Utc).AddTicks(9517),
-                            Name = "Insurance Services",
-                            UpdatedAt = new DateTime(2024, 12, 3, 8, 58, 6, 764, DateTimeKind.Utc).AddTicks(9519)
-                        },
-                        new
-                        {
-                            CategoryID = 66,
-                            CreatedAt = new DateTime(2024, 12, 3, 8, 58, 6, 764, DateTimeKind.Utc).AddTicks(9523),
-                            Name = "Financial Planning",
-                            UpdatedAt = new DateTime(2024, 12, 3, 8, 58, 6, 764, DateTimeKind.Utc).AddTicks(9525)
-                        },
-                        new
-                        {
-                            CategoryID = 67,
-                            CreatedAt = new DateTime(2024, 12, 3, 8, 58, 6, 764, DateTimeKind.Utc).AddTicks(9529),
-                            Name = "Investment Advice",
-                            UpdatedAt = new DateTime(2024, 12, 3, 8, 58, 6, 764, DateTimeKind.Utc).AddTicks(9531)
-                        },
-                        new
-                        {
-                            CategoryID = 68,
-                            CreatedAt = new DateTime(2024, 12, 3, 8, 58, 6, 764, DateTimeKind.Utc).AddTicks(9535),
-                            Name = "Tax Preparation",
-                            UpdatedAt = new DateTime(2024, 12, 3, 8, 58, 6, 764, DateTimeKind.Utc).AddTicks(9536)
-                        },
-                        new
-                        {
-                            CategoryID = 69,
-                            CreatedAt = new DateTime(2024, 12, 3, 8, 58, 6, 764, DateTimeKind.Utc).AddTicks(9541),
-                            Name = "Debt Counseling",
-                            UpdatedAt = new DateTime(2024, 12, 3, 8, 58, 6, 764, DateTimeKind.Utc).AddTicks(9542)
-                        },
-                        new
-                        {
-                            CategoryID = 70,
-                            CreatedAt = new DateTime(2024, 12, 3, 8, 58, 6, 764, DateTimeKind.Utc).AddTicks(9547),
-                            Name = "Retirement Planning",
-                            UpdatedAt = new DateTime(2024, 12, 3, 8, 58, 6, 764, DateTimeKind.Utc).AddTicks(9548)
-                        },
-                        new
-                        {
-                            CategoryID = 71,
-                            CreatedAt = new DateTime(2024, 12, 3, 8, 58, 6, 764, DateTimeKind.Utc).AddTicks(9552),
-                            Name = "Mortgage Advice",
-                            UpdatedAt = new DateTime(2024, 12, 3, 8, 58, 6, 764, DateTimeKind.Utc).AddTicks(9554)
-                        },
-                        new
-                        {
-                            CategoryID = 72,
-                            CreatedAt = new DateTime(2024, 12, 3, 8, 58, 6, 764, DateTimeKind.Utc).AddTicks(9558),
-                            Name = "Estate Planning",
-                            UpdatedAt = new DateTime(2024, 12, 3, 8, 58, 6, 764, DateTimeKind.Utc).AddTicks(9559)
-                        },
-                        new
-                        {
-                            CategoryID = 73,
-                            CreatedAt = new DateTime(2024, 12, 3, 8, 58, 6, 764, DateTimeKind.Utc).AddTicks(9563),
-                            Name = "Human Resources",
-                            UpdatedAt = new DateTime(2024, 12, 3, 8, 58, 6, 764, DateTimeKind.Utc).AddTicks(9565)
-                        },
-                        new
-                        {
-                            CategoryID = 74,
-                            CreatedAt = new DateTime(2024, 12, 3, 8, 58, 6, 764, DateTimeKind.Utc).AddTicks(9569),
-                            Name = "Recruitment Services",
-                            UpdatedAt = new DateTime(2024, 12, 3, 8, 58, 6, 764, DateTimeKind.Utc).AddTicks(9571)
-                        },
-                        new
-                        {
-                            CategoryID = 75,
-                            CreatedAt = new DateTime(2024, 12, 3, 8, 58, 6, 764, DateTimeKind.Utc).AddTicks(9575),
-                            Name = "Employee Training",
-                            UpdatedAt = new DateTime(2024, 12, 3, 8, 58, 6, 764, DateTimeKind.Utc).AddTicks(9576)
+                            CityId = 26,
+                            CityName = "Vushtrri"
                         });
                 });
 
@@ -606,7 +266,7 @@ namespace WebUI.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("JobApplications");
+                    b.ToTable("JobApplications", (string)null);
                 });
 
             modelBuilder.Entity("Domain.Entities.Jobs", b =>
@@ -651,13 +311,18 @@ namespace WebUI.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
+                    b.Property<int>("cityId")
+                        .HasColumnType("int");
+
                     b.HasKey("JobID");
 
                     b.HasIndex("CategoryId");
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Jobs");
+                    b.HasIndex("cityId");
+
+                    b.ToTable("Jobs", (string)null);
                 });
 
             modelBuilder.Entity("Domain.Entities.Messages", b =>
@@ -702,7 +367,31 @@ namespace WebUI.Migrations
 
                     b.HasIndex("SenderID");
 
-                    b.ToTable("Messages");
+                    b.ToTable("Messages", (string)null);
+                });
+
+            modelBuilder.Entity("Domain.Entities.OperatingCity", b =>
+                {
+                    b.Property<int>("OperatingCityId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("OperatingCityId"));
+
+                    b.Property<int>("CityId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("userId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("OperatingCityId");
+
+                    b.HasIndex("CityId");
+
+                    b.HasIndex("userId");
+
+                    b.ToTable("OperatingCities", (string)null);
                 });
 
             modelBuilder.Entity("Domain.Entities.PortfolioDocument", b =>
@@ -745,7 +434,7 @@ namespace WebUI.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("PortfolioDocuments");
+                    b.ToTable("PortfolioDocuments", (string)null);
                 });
 
             modelBuilder.Entity("Domain.Entities.Reviews", b =>
@@ -787,7 +476,45 @@ namespace WebUI.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Reviews");
+                    b.ToTable("Reviews", (string)null);
+                });
+
+            modelBuilder.Entity("Domain.Entities.SelectedJobApplicant", b =>
+                {
+                    b.Property<int>("SelectedApplicantID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("SelectedApplicantID"));
+
+                    b.Property<int>("ApplicationID")
+                        .HasColumnType("int");
+
+                    b.Property<int>("JobID")
+                        .HasColumnType("int");
+
+                    b.Property<string>("SelectedApplicantUserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("SelectedByUserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTime>("SelectedDate")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("SelectedApplicantID");
+
+                    b.HasIndex("ApplicationID");
+
+                    b.HasIndex("JobID");
+
+                    b.HasIndex("SelectedApplicantUserId");
+
+                    b.HasIndex("SelectedByUserId");
+
+                    b.ToTable("SelectedJobApplicants", (string)null);
                 });
 
             modelBuilder.Entity("Domain.Entities.Service", b =>
@@ -831,7 +558,7 @@ namespace WebUI.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Services");
+                    b.ToTable("Services", (string)null);
                 });
 
             modelBuilder.Entity("Domain.Entities.Subscriptions", b =>
@@ -876,7 +603,7 @@ namespace WebUI.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Subscriptions");
+                    b.ToTable("Subscriptions", (string)null);
                 });
 
             modelBuilder.Entity("Domain.Entities.UserCategory", b =>
@@ -900,7 +627,7 @@ namespace WebUI.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("UserCategories");
+                    b.ToTable("UserCategories", (string)null);
                 });
 
             modelBuilder.Entity("Domain.Entities.UserRefreshToken", b =>
@@ -924,7 +651,104 @@ namespace WebUI.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("UserRefreshTokens");
+                    b.ToTable("UserRefreshTokens", (string)null);
+                });
+
+            modelBuilder.Entity("Domain.Entities.Users", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("AccessFailedCount")
+                        .HasColumnType("int");
+
+                    b.Property<string>("CompanyAddress")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CompanyName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ConcurrencyStamp")
+                        .IsConcurrencyToken()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValueSql("GETDATE()");
+
+                    b.Property<string>("Email")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<bool>("EmailConfirmed")
+                        .HasColumnType("bit");
+
+                    b.Property<int?>("Experience")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Expertise")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FullName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("LockoutEnabled")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTimeOffset?>("LockoutEnd")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<string>("NormalizedEmail")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<string>("NormalizedUserName")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<string>("PasswordHash")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PhoneNumber")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("PhoneNumberConfirmed")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("ProfilePicture")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Role")
+                        .HasMaxLength(50)
+                        .HasColumnType("int");
+
+                    b.Property<string>("SecurityStamp")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("TwoFactorEnabled")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime>("UpdatedAt")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValueSql("GETDATE()");
+
+                    b.Property<string>("UserName")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("NormalizedEmail")
+                        .HasDatabaseName("EmailIndex");
+
+                    b.HasIndex("NormalizedUserName")
+                        .IsUnique()
+                        .HasDatabaseName("UserNameIndex")
+                        .HasFilter("[NormalizedUserName] IS NOT NULL");
+
+                    b.ToTable("AspNetUsers", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -1060,155 +884,20 @@ namespace WebUI.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("SelectedJobApplicant", b =>
-                {
-                    b.Property<int>("SelectedApplicantID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("SelectedApplicantID"));
-
-                    b.Property<int>("ApplicationID")
-                        .HasColumnType("int");
-
-                    b.Property<int>("JobID")
-                        .HasColumnType("int");
-
-                    b.Property<string>("SelectedApplicantUserId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("SelectedByUserId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<DateTime>("SelectedDate")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("SelectedApplicantID");
-
-                    b.HasIndex("ApplicationID");
-
-                    b.HasIndex("JobID");
-
-                    b.HasIndex("SelectedApplicantUserId");
-
-                    b.HasIndex("SelectedByUserId");
-
-                    b.ToTable("SelectedJobApplicants");
-                });
-
-            modelBuilder.Entity("Users", b =>
-                {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<int>("AccessFailedCount")
-                        .HasColumnType("int");
-
-                    b.Property<string>("CompanyAddress")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("CompanyName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("ConcurrencyStamp")
-                        .IsConcurrencyToken()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("datetime2")
-                        .HasDefaultValueSql("GETDATE()");
-
-                    b.Property<string>("Email")
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
-
-                    b.Property<bool>("EmailConfirmed")
-                        .HasColumnType("bit");
-
-                    b.Property<int?>("Experience")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Expertise")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("FullName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("LockoutEnabled")
-                        .HasColumnType("bit");
-
-                    b.Property<DateTimeOffset?>("LockoutEnd")
-                        .HasColumnType("datetimeoffset");
-
-                    b.Property<string>("NormalizedEmail")
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
-
-                    b.Property<string>("NormalizedUserName")
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
-
-                    b.Property<string>("PasswordHash")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PhoneNumber")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("PhoneNumberConfirmed")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("ProfilePicture")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("Role")
-                        .HasMaxLength(50)
-                        .HasColumnType("int");
-
-                    b.Property<string>("SecurityStamp")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("TwoFactorEnabled")
-                        .HasColumnType("bit");
-
-                    b.Property<DateTime>("UpdatedAt")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("datetime2")
-                        .HasDefaultValueSql("GETDATE()");
-
-                    b.Property<string>("UserName")
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("NormalizedEmail")
-                        .HasDatabaseName("EmailIndex");
-
-                    b.HasIndex("NormalizedUserName")
-                        .IsUnique()
-                        .HasDatabaseName("UserNameIndex")
-                        .HasFilter("[NormalizedUserName] IS NOT NULL");
-
-                    b.ToTable("AspNetUsers", (string)null);
-                });
-
             modelBuilder.Entity("Domain.Entities.ChatSession", b =>
                 {
-                    b.HasOne("Users", "Company")
+                    b.HasOne("Domain.Entities.Users", "Company")
                         .WithMany()
                         .HasForeignKey("CompanyId")
                         .OnDelete(DeleteBehavior.Restrict);
 
-                    b.HasOne("Users", "Customer")
+                    b.HasOne("Domain.Entities.Users", "Customer")
                         .WithMany()
                         .HasForeignKey("CustomerId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("Users", "Technician")
+                    b.HasOne("Domain.Entities.Users", "Technician")
                         .WithMany()
                         .HasForeignKey("TechnicianId")
                         .OnDelete(DeleteBehavior.Restrict)
@@ -1229,7 +918,7 @@ namespace WebUI.Migrations
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.HasOne("Users", "User")
+                    b.HasOne("Domain.Entities.Users", "User")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.NoAction)
@@ -1248,13 +937,21 @@ namespace WebUI.Migrations
                         .OnDelete(DeleteBehavior.SetNull)
                         .IsRequired();
 
-                    b.HasOne("Users", "User")
+                    b.HasOne("Domain.Entities.Users", "User")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
+                    b.HasOne("Domain.Entities.City", "City")
+                        .WithMany()
+                        .HasForeignKey("cityId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
                     b.Navigation("Category");
+
+                    b.Navigation("City");
 
                     b.Navigation("User");
                 });
@@ -1267,13 +964,13 @@ namespace WebUI.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Users", "Recipient")
+                    b.HasOne("Domain.Entities.Users", "Recipient")
                         .WithMany()
                         .HasForeignKey("RecipientID")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("Users", "Sender")
+                    b.HasOne("Domain.Entities.Users", "Sender")
                         .WithMany()
                         .HasForeignKey("SenderID")
                         .OnDelete(DeleteBehavior.Restrict)
@@ -1286,9 +983,28 @@ namespace WebUI.Migrations
                     b.Navigation("Sender");
                 });
 
+            modelBuilder.Entity("Domain.Entities.OperatingCity", b =>
+                {
+                    b.HasOne("Domain.Entities.City", "City")
+                        .WithMany("OperatingCities")
+                        .HasForeignKey("CityId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Domain.Entities.Users", "User")
+                        .WithMany("OperatingCities")
+                        .HasForeignKey("userId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("City");
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("Domain.Entities.PortfolioDocument", b =>
                 {
-                    b.HasOne("Users", "User")
+                    b.HasOne("Domain.Entities.Users", "User")
                         .WithMany("Portfolios")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -1305,7 +1021,7 @@ namespace WebUI.Migrations
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.HasOne("Users", "User")
+                    b.HasOne("Domain.Entities.Users", "User")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.NoAction)
@@ -1316,9 +1032,44 @@ namespace WebUI.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("Domain.Entities.SelectedJobApplicant", b =>
+                {
+                    b.HasOne("Domain.Entities.JobApplication", "JobApplication")
+                        .WithMany()
+                        .HasForeignKey("ApplicationID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Domain.Entities.Jobs", "Job")
+                        .WithMany("SelectedJobApplicants")
+                        .HasForeignKey("JobID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Domain.Entities.Users", "SelectedApplicantUser")
+                        .WithMany()
+                        .HasForeignKey("SelectedApplicantUserId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("Domain.Entities.Users", "SelectedByUser")
+                        .WithMany()
+                        .HasForeignKey("SelectedByUserId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Job");
+
+                    b.Navigation("JobApplication");
+
+                    b.Navigation("SelectedApplicantUser");
+
+                    b.Navigation("SelectedByUser");
+                });
+
             modelBuilder.Entity("Domain.Entities.Service", b =>
                 {
-                    b.HasOne("Users", "User")
+                    b.HasOne("Domain.Entities.Users", "User")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.NoAction)
@@ -1329,7 +1080,7 @@ namespace WebUI.Migrations
 
             modelBuilder.Entity("Domain.Entities.Subscriptions", b =>
                 {
-                    b.HasOne("Users", "User")
+                    b.HasOne("Domain.Entities.Users", "User")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.NoAction)
@@ -1346,7 +1097,7 @@ namespace WebUI.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Users", "User")
+                    b.HasOne("Domain.Entities.Users", "User")
                         .WithMany("UserCategories")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -1359,7 +1110,7 @@ namespace WebUI.Migrations
 
             modelBuilder.Entity("Domain.Entities.UserRefreshToken", b =>
                 {
-                    b.HasOne("Users", "User")
+                    b.HasOne("Domain.Entities.Users", "User")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -1379,7 +1130,7 @@ namespace WebUI.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
                 {
-                    b.HasOne("Users", null)
+                    b.HasOne("Domain.Entities.Users", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -1388,7 +1139,7 @@ namespace WebUI.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
-                    b.HasOne("Users", null)
+                    b.HasOne("Domain.Entities.Users", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -1403,7 +1154,7 @@ namespace WebUI.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Users", null)
+                    b.HasOne("Domain.Entities.Users", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -1412,46 +1163,11 @@ namespace WebUI.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
                 {
-                    b.HasOne("Users", null)
+                    b.HasOne("Domain.Entities.Users", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("SelectedJobApplicant", b =>
-                {
-                    b.HasOne("Domain.Entities.JobApplication", "JobApplication")
-                        .WithMany()
-                        .HasForeignKey("ApplicationID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Domain.Entities.Jobs", "Job")
-                        .WithMany("SelectedJobApplicants")
-                        .HasForeignKey("JobID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Users", "SelectedApplicantUser")
-                        .WithMany()
-                        .HasForeignKey("SelectedApplicantUserId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("Users", "SelectedByUser")
-                        .WithMany()
-                        .HasForeignKey("SelectedByUserId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.Navigation("Job");
-
-                    b.Navigation("JobApplication");
-
-                    b.Navigation("SelectedApplicantUser");
-
-                    b.Navigation("SelectedByUser");
                 });
 
             modelBuilder.Entity("Category", b =>
@@ -1466,6 +1182,11 @@ namespace WebUI.Migrations
                     b.Navigation("Messages");
                 });
 
+            modelBuilder.Entity("Domain.Entities.City", b =>
+                {
+                    b.Navigation("OperatingCities");
+                });
+
             modelBuilder.Entity("Domain.Entities.Jobs", b =>
                 {
                     b.Navigation("JobApplications");
@@ -1473,13 +1194,12 @@ namespace WebUI.Migrations
                     b.Navigation("SelectedJobApplicants");
                 });
 
-            modelBuilder.Entity("Users", b =>
+            modelBuilder.Entity("Domain.Entities.Users", b =>
                 {
-                    b.Navigation("Portfolios");
-                });
+                    b.Navigation("OperatingCities");
 
-            modelBuilder.Entity("Users", b =>
-                {
+                    b.Navigation("Portfolios");
+
                     b.Navigation("UserCategories");
                 });
 #pragma warning restore 612, 618

@@ -46,7 +46,7 @@
                         <li class="nav-item">
                             <a class="nav-link" asp-controller="AboutUs" asp-action="AboutUs">About Us</a>
                         </li>
-                        @if(User.IsInRole("Technician") || User.IsInRole("Company") || (!User.Identity.IsAuthenticated)){
+                        @if(User.Identity.IsAuthenticated){
                         <li class="nav-item">
                             <a class="nav-link" asp-controller="JobListings" asp-action="JobListings">Job Listings</a>
                         </li>
@@ -58,7 +58,7 @@
                         {
                             <li class="nav-item">
                                 <a class="nav-link" asp-controller="Inbox" asp-action="Inbox">
-                                        <span class="material-icons-round">mail_outline</span> Inbox
+                                       Inbox
                                 </a>
                             </li>
                         }
@@ -132,7 +132,7 @@
             </nav>
         </div>
     </header>
-    @(ViewBag.IsProsPage == true || ViewBag.IsPunetPage == true || ViewBag.IsAboutPage == true ? Html.Raw("</div>") : "")
+    @(ViewBag.IsAboutPage == true ? Html.Raw("</div>") : "")
 
     <div>
         @RenderBody()
@@ -144,7 +144,7 @@
                 <div class="container">
                     <p>
                         &copy; <span id="displayYear"></span> All Rights Reserved By
-                        <a href="https://html.design/">Free Html Templates</a>
+                        <a href="https://github.com/starlabspro-internship">ReviveIt</a>
                     </p>
                 </div>
             </footer>

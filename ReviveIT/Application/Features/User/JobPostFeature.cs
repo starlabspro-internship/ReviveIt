@@ -36,12 +36,19 @@ namespace Application.Features.User
                 return JobPostResultDto.FailureResult("Category not found.");
             }
 
+            var city = await _context.Cities.FindAsync(jobPostDto.CityId);
+            if(city==null)
+            {
+                return JobPostResultDto.FailureResult("City not found");
+            }
+
             var jobPost = new Jobs
             {
                 Status = JobStatus.Open,
                 Title = jobPostDto.Title,
                 Description = jobPostDto.Description,
                 CategoryId = jobPostDto.CategoryId,
+                cityId = jobPostDto.CityId,
                 Price = jobPostDto.Price,
                 CreatedAt = DateTime.UtcNow,
                 UpdatedAt = DateTime.UtcNow,
@@ -59,7 +66,8 @@ namespace Application.Features.User
                 Status = jobPost.Status.ToString(),
                 CreatedAt = jobPost.CreatedAt,
                 Price = jobPost.Price,
-                CategoryName = category.Name 
+                CategoryName = category.Name,
+                CityName = city.CityName
             };
 
             return JobPostResultDto.SuccessResult(response, "Job post created successfully.");

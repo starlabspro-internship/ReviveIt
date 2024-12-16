@@ -1,37 +1,59 @@
-﻿@{
-    ViewData["Tittle"] = "About Us";
+@{
+    ViewData["Title"] = "About Us";
 }
-<!-- about section -->
-
 <section class="about_section layout_padding">
     <div class="container">
         <div class="row">
             <div class="col-md-6">
                 <div class="detail-box">
                     <div class="heading_container">
-                        <h2>
-                            About Us
-                        </h2>
+                        <h2>About Us</h2>
                     </div>
-                    <p>
-                        Normal distribution of letters, as opposed to using 'Content here, content here', making it look like
-                        readable English. Many desktop publishing packages and web page editors has a more-or-less normal
-                        distribution of letters, as opposed to using 'Content here, content here', making it look like readable
-                        English. Many desktop publishing packages and web page editors
-                    </p>
-                    <a href="">
-                        Read More
-                    </a>
+                    <div id="about-text">
+                        <p>Welcome to ReviveIt! We are a community-driven platform connecting clients with global and local professional technicians and companies across various service categories. Our mission is to create a user-friendly environment that facilitates seamless interactions between customers, technicians, and companies.</p>
+                        <p>Our platform provides solutions for anything that needs to be fixed, ensuring that all your service needs are met efficiently and effectively.</p>
+                        <div id="additional-content" style="display: none;">
+                            <p>At ReviveIt, customers can browse and hire technicians or companies, communicate securely via messages, and manage their profiles effortlessly. Technicians and companies can offer their services, respond to client posts, and manage their profiles and subscriptions.</p>
+                            <p>
+                                Key Features include:
+                                <ul>
+                                    <li>Customized sign-up forms for customers, technicians, and companies.</li>
+                                    <li>Easy-to-use profile management interfaces.</li>
+                                    <li>Secure messaging system for efficient communication.</li>
+                                    <li>Detailed job posts from clients and responsive feedback from technicians.</li>
+                                    <li>Optional subscription plans for enhanced services and features.</li>
+                                </ul>
+                                Join us in creating a collaborative community where professional services are just a click away. From plumbing and electrical work to IT support and appliance repair, find the right expert for the job at ReviveIt.
+                            </p>
+                        </div>
+                    </div>
+                    <button type="button" id="read-more-button" class="btn btn-primary">Read More</button>
                 </div>
             </div>
             <div class="col-md-6">
                 <div class="img-box">
-                    <img src="~/images/about-img.jpg" alt="">
+                    <img src="~/images/about-img.jpg" alt="About Us">
                 </div>
             </div>
         </div>
     </div>
 </section>
+
+@section Scripts {
+    <script>
+        document.getElementById('read-more-button').addEventListener('click', function () {
+            const button = document.getElementById('read-more-button');
+            const additionalContent = document.getElementById('additional-content');
+            if (button.innerText === 'Read More') {
+                button.innerText = 'Read Less';
+                additionalContent.style.display = 'block';
+            } else {
+                button.innerText = 'Read More';
+                additionalContent.style.display = 'none';
+            }
+        });
+    </script>
+}
 
 <!-- end about section -->
 <!-- info section -->
@@ -44,22 +66,17 @@
                 </h4>
                 <ul>
                     <li>
-                        <a href="index.html">
+                        <a href="Home">
                             Home
                         </a>
                     </li>
-                    <li class="active">
-                        <a href="about.html">
-                            About Us
-                        </a>
-                    </li>
                     <li>
-                        <a href="job.html">
+                        <a href="JobListings">
                             Job Listings
                         </a>
                     </li>
                     <li>
-                        <a href="freelancer.html">
+                        <a href="Pros">
                             Hire a Pro
                         </a>
                     </li>

@@ -8,16 +8,16 @@ using Microsoft.AspNetCore.Mvc;
 namespace WebUI.Controllers
 {
     [Authorize]
-    [Route("api/[controller]")]
+    [Route("ProfileUpdate")]
     [ApiController]
-    public class ProfileUpdate : ControllerBase
+    public class ProfileUpdateController : ControllerBase
     {
         private readonly ProfilePictureFeature _profilePictureFeature;
         private readonly UpdateProfileFeature _updateProfileFeature;
         private readonly UserManager<Users> _userManager;
         private readonly UserInfoFeature _userInfoFeature;
 
-        public ProfileUpdate(ProfilePictureFeature profilePictureFeature, UpdateProfileFeature updateProfileFeature, UserManager<Users> userManager, UserInfoFeature userInfoFeature)
+        public ProfileUpdateController(ProfilePictureFeature profilePictureFeature, UpdateProfileFeature updateProfileFeature, UserManager<Users> userManager, UserInfoFeature userInfoFeature)
         {
             _profilePictureFeature = profilePictureFeature;
             _updateProfileFeature = updateProfileFeature;
@@ -25,7 +25,7 @@ namespace WebUI.Controllers
             _userInfoFeature = userInfoFeature;
         }
 
-        [HttpGet("info")]
+        [HttpGet("api/info")]
         public async Task<IActionResult> GetUserInfo([FromQuery] string type)
         {
             var result = await _userInfoFeature.HandleAsync(User, type);
@@ -38,7 +38,7 @@ namespace WebUI.Controllers
             return BadRequest(new { Error = result.Message });
         }
 
-        [HttpPost("upload")]
+        [HttpPost("api/upload")]
         public async Task<IActionResult> UploadProfilePicture([FromForm] IFormFile profilePicture)
         {
             var userIdClaim = User.FindFirst("UserId")?.Value;
@@ -50,7 +50,7 @@ namespace WebUI.Controllers
             return BadRequest(result);
         }
 
-        [HttpDelete("remove")]
+        [HttpDelete("api/remove")]
         public async Task<IActionResult> RemoveProfilePicture()
         {
             var userIdClaim = User.FindFirst("UserId")?.Value;
@@ -62,7 +62,7 @@ namespace WebUI.Controllers
             return BadRequest(result);
         }
 
-        [HttpGet("get")]
+        [HttpGet("api/get")]
         public async Task<IActionResult> GetProfilePicture()
         {
             var userIdClaim = User.FindFirst("UserId")?.Value;
@@ -74,7 +74,7 @@ namespace WebUI.Controllers
             return NotFound(result);
         }
 
-        [HttpPut("update-profile")]
+        [HttpPut("api/update-profile")]
         public async Task<IActionResult> UpdateProfile([FromBody] UpdateProfileDTO updateProfileDTO)
         {
             var userIdClaim = User.FindFirst("UserId")?.Value;

@@ -1,4 +1,98 @@
-﻿document.addEventListener("DOMContentLoaded", function () {
+﻿function toggleRoleFields() {
+    const role = document.getElementById("role").value;
+
+    const technicianFields = document.getElementById("technicianFields");
+    const companyFields = document.getElementById("companyFields");
+
+    technicianFields.style.display = role === "Technician" ? "block" : "none";
+    companyFields.style.display = role === "Company" ? "block" : "none";
+
+    document.getElementById("categories").required = (role === "Technician");
+    document.getElementById("experience").required = (role === "Technician");
+    document.getElementById("companyName").required = (role === "Company");
+    document.getElementById("companyAddress").required = (role === "Company");
+
+    const nameField = document.getElementById("nameField");
+    nameField.style.display = role === "Company" ? "none" : "block";
+}
+
+function fetchCategories() {
+    fetch('/api/categories/getCategories')
+        .then(response => response.json())
+        .then(data => {
+            const categoriesDropdown = document.getElementById('categories');
+            data.forEach(category => {
+                const option = document.createElement('option');
+                option.value = category.categoryID;
+                option.textContent = category.name;
+                categoriesDropdown.appendChild(option);
+            });
+        })
+        .catch(error => console.error('Error fetching categories:', error));
+}
+
+function initializeCategorySelect() {
+    try {
+        const $categories = $('#categories').select2({
+            placeholder: "Select categories of expertise",
+            closeOnSelect: true,
+            allowClear: true,
+            width: '100%',
+            templateSelection: function () {
+                return '';
+            }
+        });
+
+        const $selectedChips = $('#selectedChips');
+
+        function updateChips() {
+            const selectedValues = $categories.val() || [];
+            $selectedChips.empty();
+            selectedValues.forEach(value => {
+                const text = $categories.find(`option[value="${value}"]`).text();
+
+                const chipHtml = `
+                    <div class="selected-chip" data-value="${value}">
+                        <span>${text}</span>
+                        <button type="button" class="remove-chip" data-value="${value}">&times;</button>
+                    </div>
+                `;
+                $selectedChips.append(chipHtml);
+            });
+        }
+
+        $selectedChips.on('click', '.remove-chip', function () {
+            const valueToRemove = $(this).data('value');
+
+            const updatedValues = ($categories.val() || []).filter(val => val !== valueToRemove);
+
+            $categories.find(`option[value="${valueToRemove}"]`).remove();
+            $categories.val(updatedValues).trigger('change');
+
+            updateChips();
+        });
+
+        $categories.on('change', function () {
+            updateChips();
+        });
+
+        updateChips();
+    } catch (error) {
+        console.error("Error initializing Select2:", error);
+    }
+}
+
+function validateEmail(email) {
+    const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    return emailPattern.test(email);
+}
+
+function validatePassword(password) {
+    const passwordPattern = /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[\W_]).{8,}$/;
+    return passwordPattern.test(password);
+}
+
+function setupFormSubmission() {
     const registerForm = document.getElementById("registerForm");
     const loginRedirectLink = document.getElementById("logInRedirect");
 
@@ -29,7 +123,7 @@
         const selectedCategoryIds = Array.from(
             document.getElementById("categories")?.selectedOptions || []
         ).map(option => parseInt(option.value))
-         .filter(value => !isNaN(value));
+            .filter(value => !isNaN(value));
 
         if (!email || !validateEmail(email)) {
             alert("Please enter a valid email address.");
@@ -113,65 +207,10 @@
             spinner.style.display = "none";
         }
     });
+}
 
-    function validateEmail(email) {
-        const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-        return emailPattern.test(email);
-    }
-
-    function validatePassword(password) {
-        const passwordPattern = /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[\W_]).{8,}$/;
-        return passwordPattern.test(password);
-    }
-
-    $(document).ready(function () {
-        try {
-            const $categories = $('#categories').select2({
-                placeholder: "Select categories of expertise",
-                closeOnSelect: true,
-                allowClear: true,
-                width: '100%',
-                templateSelection: function () {
-                    return '';
-                }
-            });
-
-            const $selectedChips = $('#selectedChips');
-
-            function updateChips() {
-                const selectedValues = $categories.val() || [];
-                $selectedChips.empty();
-                selectedValues.forEach(value => {
-                    const text = $categories.find(`option[value="${value}"]`).text();
-
-                    const chipHtml = `
-                <div class="selected-chip" data-value="${value}">
-                    <span>${text}</span>
-                    <button type="button" class="remove-chip" data-value="${value}">&times;</button>
-                </div>
-                `;
-                    $selectedChips.append(chipHtml);
-                });
-            }
-
-            $selectedChips.on('click', '.remove-chip', function () {
-                const valueToRemove = $(this).data('value');
-
-                const updatedValues = ($categories.val() || []).filter(val => val !== valueToRemove);
-
-                $categories.find(`option[value="${valueToRemove}"]`).remove();
-                $categories.val(updatedValues).trigger('change');
-
-                updateChips();
-            });
-
-            $categories.on('change', function () {
-                updateChips();
-            });
-
-            updateChips();
-        } catch (error) {
-            console.error("Error initializing Select2:", error);
-        }
-    });
+document.addEventListener("DOMContentLoaded", function () {
+    fetchCategories();
+    initializeCategorySelect();
+    setupFormSubmission();
 });
