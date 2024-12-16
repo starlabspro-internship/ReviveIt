@@ -6,6 +6,7 @@
         public string? ErrorMessage { get; set; }
         public string? Token { get; set; }
         public bool IsEmailNotConfirmed { get; set; }
+        public string returnUrl { get; set; }
 
         public static LoginResultDTO Success(string token)
         {
