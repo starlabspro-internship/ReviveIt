@@ -13,8 +13,13 @@
             contentType: "application/json",
             data: JSON.stringify(loginData),
             success: function (response) {
-                alert("Login successful!");
-                window.location.href = "/home";
+                if (response.isEmailNotConfirmed) {
+                    console.log(response.isEmailNotConfirmed);
+                    window.location.href = "/ResendEmailConfirmation?email=" + encodeURIComponent(loginData.email);
+                } else {
+                    alert("Login successful!");
+                    window.location.href = "/home";
+                }
             },
             error: function (xhr) {
                 var errorMessage = xhr.responseJSON?.message || "An unexpected error occurred. Please try again later.";

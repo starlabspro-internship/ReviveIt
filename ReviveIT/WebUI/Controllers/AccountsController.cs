@@ -36,6 +36,12 @@ namespace WebUI.Controllers
         public async Task<IActionResult> Login([FromBody] LoginDto loginDto)
         {
             var result = await _loginFeature.AuthenticateUser(loginDto);
+
+            if (result.IsEmailNotConfirmed)
+            {
+                return Ok(new { isEmailNotConfirmed = true, message = "Email not confirmed!" });
+            }
+
             if (!result.IsSuccess)
                 return Unauthorized(new { Message = result.ErrorMessage });
 
