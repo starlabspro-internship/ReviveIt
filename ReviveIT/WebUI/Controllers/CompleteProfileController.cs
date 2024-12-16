@@ -7,6 +7,7 @@ namespace WebUI.Controllers
         [HttpGet("CompleteProfile")]
         public IActionResult CompleteProfile()
         {
+            ViewBag.IsCompleteProfilePage = true;
             return View();
         }
     }
