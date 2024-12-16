@@ -3,7 +3,7 @@
         return;
     }
 
-    const profileUrl = `https://localhost:7018/api/prosprofileapi/GetTechnicianProfile/${technicianId}`;
+    const profileUrl = `/api/prosprofileapi/GetTechnicianProfile/${technicianId}`;
 
     $.ajax({
         url: profileUrl,

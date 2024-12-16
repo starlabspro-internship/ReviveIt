@@ -1,11 +1,4 @@
-﻿const apiUrls = {
-    getJobs: "https://localhost:7018/api/GetJobs",
-    jobPost: "https://localhost:7018/api/Job",
-    jobApplications: "https://localhost:7018/api/jobapplication",
-    userInfo: "https://localhost:7018/api/ProfileUpdate/info"
-};
-
-async function fetchData(url, options = {}) {
+﻿async function fetchData(url, options = {}) {
     try {
         const response = await fetch(url, options);
         if (!response.ok) throw new Error('Network response was not ok');
@@ -30,7 +23,7 @@ function openModal() {
 }
 
 async function checkUserRole() {
-    const data = await fetchData(`${apiUrls.userInfo}?type=role`, {
+    const data = await fetchData(`ProfileUpdate/api/info?type=role`, {
         method: 'GET',
         headers: {
             'Authorization': `Bearer ${getCookie('jwtToken')}`,
@@ -41,7 +34,7 @@ async function checkUserRole() {
 }
 
 async function getUserCreatedJobs() {
-    const data = await fetchData(`${apiUrls.getJobs}/get-jobs-by-user-id`, {
+    const data = await fetchData(`api/GetJobs/get-jobs-by-user-id`, {
         method: 'GET',
         headers: {
             'Authorization': `Bearer ${getCookie('jwtToken')}`,
@@ -52,7 +45,7 @@ async function getUserCreatedJobs() {
 }
 
 async function checkIfUserApplied(jobId) {
-    const data = await fetchData(`${apiUrls.jobApplications}/has-applied/${jobId}`, {
+    const data = await fetchData(`/api/jobapplication/has-applied/${jobId}`, {
         method: 'GET',
         headers: {
             'Authorization': `Bearer ${getCookie('jwtToken')}`,
@@ -66,7 +59,7 @@ async function getAllJobs() {
     const userRole = await checkUserRole();
     const userCreatedJobs = await getUserCreatedJobs();
 
-    const jobsData = await fetchData(`${apiUrls.getJobs}/get-all-jobs`, {
+    const jobsData = await fetchData(`/api/GetJobs/get-all-jobs`, {
         method: 'GET',
         headers: {
             'Authorization': `Bearer ${getCookie('jwtToken')}`,
@@ -107,7 +100,6 @@ function populateJobsContainer(jobs, userRole) {
 }
 
 function createJobCard(job, userRole) {
-    console.log(job);
     return `
         <div class="col-lg-6">
             <div class="box">
@@ -151,7 +143,7 @@ function addJobEventListeners() {
 
 async function deleteJobApplication(event) {
     const applicationId = event.target.getAttribute('data-application-id');
-    const response = await fetchData(`${apiUrls.jobApplications}/delete-job-application/${applicationId}`, {
+    const response = await fetchData(`/api/jobapplication/delete-job-application/${applicationId}`, {
         method: 'DELETE',
         headers: {
             'Authorization': `Bearer ${getCookie('jwtToken')}`,
@@ -166,7 +158,7 @@ async function deleteJobApplication(event) {
 
 async function applyForJob(event) {
     const jobId = event.target.getAttribute('data-job-id');
-    const response = await fetchData(`${apiUrls.jobApplications}/apply-for-job/${jobId}`, {
+    const response = await fetchData(`/api/jobapplication/apply-for-job/${jobId}`, {
         method: 'POST',
         headers: {
             'Authorization': `Bearer ${getCookie('jwtToken')}`,
@@ -197,9 +189,8 @@ async function submitJobForm(event) {
         cityId: parseInt(document.getElementById('jobCity').value.trim(), 10),
         price: parseFloat(document.getElementById('jobPrice').value) || 0
     };
-    console.log("jobdata", jobData);
 
-    const response = await fetchData(`${apiUrls.jobPost}/create-job`, {
+    const response = await fetchData(`/api/Job/create-job`, {
         method: 'POST',
         headers: {
             'Authorization': `Bearer ${getCookie('jwtToken')}`,
@@ -233,11 +224,10 @@ function fetchCategories() {
         .catch(error => console.error('Error fetching categories:', error));
 }
 
-function fetchCitites() {
+function fetchCities() {
     fetch('/api/city/getCities')
         .then(response => response.json())
         .then(data => {
-            console.log("data", data);
             const citiesDropdown = document.getElementById('jobCity');
             data.forEach(city => {
                 const option = document.createElement('option');
@@ -250,7 +240,7 @@ function fetchCitites() {
 
 document.addEventListener('DOMContentLoaded', function () {
     fetchCategories();
-    fetchCitites();
+    fetchCities();
     getAllJobs();
 
     const jobForm = document.getElementById('jobForm');
