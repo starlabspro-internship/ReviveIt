@@ -37,7 +37,8 @@ namespace Application.Features.User
                 Description = job.Description,
                 Status = job.Status.ToString(),
                 CreatedAt = job.CreatedAt,
-                CategoryName = job.Category?.Name
+                CategoryName = job.Category?.Name,
+                CityName = job.City?.CityName
             }).ToList();
 
             return new GetJobsByUserResultDto

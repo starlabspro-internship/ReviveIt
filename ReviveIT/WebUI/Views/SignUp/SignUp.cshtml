@@ -77,17 +77,19 @@
                                             <label for="categories" class="form-label">Categories of Expertise</label>
                                             <div class="input-group flex-nowrap">
                                                 <div class="input-group-prepend">
-                                                    <span class="input-group-text" style="width:38px;"><i class="fa fa-cogs"></i></span>
+                                                    <span class="input-group-text" style="width:38px;">
+                                                        <i class="fa fa-cogs"></i>
+                                                    </span>
                                                 </div>
-                                                <select name="SelectedCategoryIds" id="categories" class="form-control category-select" style="width:auto !important" multiple>
-                                                    <option value="" disabled selected>Select categories of expertise</option>
-                                                    @foreach (var category in Model.Categories)
-                                                    {
-                                                        <option value="@category.CategoryID">@category.Name</option>
-                                                    }
+                                                <select name="SelectedCategoryIds"
+                                                        id="categories"
+                                                        class="form-control category-select"
+                                                        style="width:auto !important"
+                                                        multiple>
+                                                    <option value="" disabled>Select categories of expertise</option>
                                                 </select>
                                             </div>
-                                            <div id="selectedChips" class="selected-chips"></div>
+                                            <div id="selectedChips" class="selected-chips mt-2"></div>
                                         </div>
                                         <div class="form-group">
                                             <label for="experience">Years of Experience</label>
@@ -136,23 +138,3 @@
     </section>
 </div>
 
-
-<script>
-    function toggleRoleFields() {
-        const role = document.getElementById("role").value;
-
-        const technicianFields = document.getElementById("technicianFields");
-        const companyFields = document.getElementById("companyFields");
-
-        technicianFields.style.display = role === "Technician" ? "block" : "none";
-        companyFields.style.display = role === "Company" ? "block" : "none";
-
-        document.getElementById("categories").required = (role === "Technician");
-        document.getElementById("experience").required = (role === "Technician");
-        document.getElementById("companyName").required = (role === "Company");
-        document.getElementById("companyAddress").required = (role === "Company");
-
-        const nameField = document.getElementById("nameField");
-        nameField.style.display = role === "Company" ? "none" : "block";
-    }
-</script>

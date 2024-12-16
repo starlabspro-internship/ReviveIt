@@ -3,6 +3,9 @@ using Application.Features;
 using Application.Features.User;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using System.Security.Claims;
+using Application.Interfaces;
 
 namespace WebUI.Controllers
 {
@@ -14,16 +17,22 @@ namespace WebUI.Controllers
         private readonly DeleteJobApplicationFeature _deleteJobApplicationFeature;
         private readonly SelectJobApplicantFeature _selectJobApplicantFeature;
         private readonly GetJobApplicationsByJobIdFeature _getJobApplicationsByJobIdFeature;
+        private readonly IApplicationDbContext _context;
+        private readonly GetJobApplicationInfo _getJobApplicationInfo;
 
         public JobApplicationController(ApplyForJobFeature applyForJobFeature,
             DeleteJobApplicationFeature deleteJobApplicationFeature,
             SelectJobApplicantFeature selectJobApplicantFeature,
-            GetJobApplicationsByJobIdFeature getJobApplicationsByJobIdFeature) 
+            GetJobApplicationsByJobIdFeature getJobApplicationsByJobIdFeature,
+            IApplicationDbContext context,
+            GetJobApplicationInfo getJobApplicationInfo) 
         {
             _applyForJobFeature = applyForJobFeature;
             _deleteJobApplicationFeature = deleteJobApplicationFeature;
             _selectJobApplicantFeature = selectJobApplicantFeature;
             _getJobApplicationsByJobIdFeature = getJobApplicationsByJobIdFeature;
+            _context = context;
+            _getJobApplicationInfo = getJobApplicationInfo;
         }
 
         [Authorize(Roles = "Technician,Company")]
@@ -94,5 +103,19 @@ namespace WebUI.Controllers
             return Ok(applications);
         }
 
+        [HttpGet("has-applied/{jobId}")]
+        public async Task<IActionResult> HasUserAppliedForJob(int jobId)
+        {
+            var userIdClaim = User.FindFirst("UserId")?.Value;
+
+            if (string.IsNullOrEmpty(userIdClaim))
+            {
+                return Unauthorized();  
+            }
+
+            var result = await _getJobApplicationInfo.CheckIfUserAppliedForJobAsync(jobId, userIdClaim);
+
+            return Ok(result);
+        }
     }
 }

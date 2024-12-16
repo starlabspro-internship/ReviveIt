@@ -2,6 +2,7 @@
 using Application.Features;
 using Application.Features.Accounts;
 using Application.Features.User;
+using Application.Features.Categories;
 using Application.Helpers;
 using Application.Interfaces;
 using Domain.Constants;
@@ -9,11 +10,14 @@ using Domain.Entities;
 using Infrastructure.Data;
 using Infrastructure.Repositories;
 using Infrastructure.Services;
+using Infrastructure.Hubs;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using WebUI.MiddleWares;
+using Microsoft.AspNetCore.SignalR;
+using Application.Features.Cities;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -47,7 +51,7 @@ builder.Services.AddScoped<RefreshTokenRepository>();
 builder.Services.AddScoped<ProfilePictureFeature>();
 builder.Services.AddScoped<UpdateProfileFeature>();
 builder.Services.AddScoped<GetAllJobsFeature>();
-builder.Services.AddScoped<GetJobsByUserIDFeature>(); 
+builder.Services.AddScoped<GetJobsByUserIDFeature>();
 builder.Services.AddScoped<UserInfoFeature>();
 builder.Services.AddScoped<AddPhotoToPortfolioFeature>();
 builder.Services.AddScoped<DeletePhotoFromPortfolioFeature>();
@@ -56,6 +60,11 @@ builder.Services.AddScoped<ApplyForJobFeature>();
 builder.Services.AddScoped<DeleteJobApplicationFeature>();
 builder.Services.AddScoped<SelectJobApplicantFeature>();
 builder.Services.AddScoped<GetJobApplicationsByJobIdFeature>();
+builder.Services.AddScoped<GetJobApplicationInfo>();
+builder.Services.AddScoped<GetCategoriesFeature>();
+builder.Services.AddScoped<GetTechnicianProfileFeature>();
+builder.Services.AddScoped<GetCitiesFeature>();
+
 
 builder.Services.AddAuthentication(options =>
 {
@@ -97,12 +106,14 @@ builder.Services.AddScoped<IApplicationDbContext, ApplicationDbContext>();
 builder.Services.AddScoped<IRefreshTokenRepository, RefreshTokenRepository>();
 builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
 builder.Services.AddScoped<IUserCategoryRepository, UserCategoryRepository>();
+builder.Services.AddScoped<ICityRepository, CityRepository>();
+builder.Services.AddScoped<IOperatingCityRepository, OperatingCityRepository>();
 builder.Services.AddScoped<IJobPostFeature, JobPostFeature>();
 builder.Services.AddTransient<IEmailSender, EmailSender>();
 
 builder.Services.AddHttpContextAccessor();
-
 builder.Services.AddSingleton<ConfigurationConstant>();
+builder.Services.AddSignalR();
 
 builder.Services.AddControllers()
     .AddJsonOptions(options =>
@@ -141,6 +152,7 @@ app.UseCors("AllowAll");
 app.UseAuthentication();
 app.UseAuthorization();
 app.UseMiddleware<ExceptionMiddleware>();
+app.MapHub<ChatHub>("/chatHub"); 
 
 app.MapControllerRoute(
     name: "default",
