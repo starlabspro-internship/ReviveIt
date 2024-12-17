@@ -11,132 +11,120 @@
     <title>ReviveIt</title>
 
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
-
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
-
     <link href="https://fonts.googleapis.com/css?family=Poppins:400,600,700&display=swap" rel="stylesheet">
-
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
-
     <link href="~/css/style.css" rel="stylesheet" />
     <link href="~/css/responsive.css" rel="stylesheet" />
 
     @RenderSection("Styles", required: false)
-
 </head>
-<body class="@(ViewBag.IsProsPage == true || ViewBag.IsJobListingsPage == true || ViewBag.IsAboutPage == true ? "sub_page" : "")">
+<body class="@(ViewBag.IsProsPage == true || ViewBag.IsJobListingsPage == true || ViewBag.IsAboutPage == true || ViewBag.IsCompleteProfilePage == true ? "sub_page" : "")">
 
-<div class="hero_area">
-    <header class="header_section">
-        <div class="container-fluid">
-            <nav class="navbar navbar-expand-lg custom_nav-container">
-                <a class="navbar-brand" href="~/">
-                    <span>ReviveIt</span>
-                </a>
+    <div class="hero_area">
+        @if (ViewBag.IsCompleteProfilePage != true)
+        {
+            <header class="header_section">
+                <div class="container-fluid">
+                    <nav class="navbar navbar-expand-lg custom_nav-container">
+                        <a class="navbar-brand" href="~/">
+                            <span>ReviveIt</span>
+                        </a>
 
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class=""></span>
-                </button>
+                        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                            <span class=""></span>
+                        </button>
 
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <ul class="navbar-nav ml-auto">
-                        <li class="nav-item active">
-                            <a class="nav-link" href="~/">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" asp-controller="AboutUs" asp-action="AboutUs">About Us</a>
-                        </li>
-                        @if(User.Identity.IsAuthenticated){
-                        <li class="nav-item">
-                            <a class="nav-link" asp-controller="JobListings" asp-action="JobListings">Job Listings</a>
-                        </li>
-                        }
-                        <li class="nav-item">
-                            <a class="nav-link" asp-controller="Pros" asp-action="Pros">Hire a Pro</a>
-                        </li>
-                        @if (User.Identity.IsAuthenticated)
-                        {
-                            <li class="nav-item">
-                                <a class="nav-link" asp-controller="Inbox" asp-action="Inbox">
-                                       Inbox
-                                </a>
-                            </li>
-                        }
-                        @if (User.Identity.IsAuthenticated)
-                        {
-                            <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle" href="#" id="userProfileDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    <img id="navbarProfilePicture" src="https://via.placeholder.com/150" alt="Profile Picture" class="img-fluid rounded-circle" style="width: 30px; height: 30px; object-fit: cover;" />
-                                    <span id="navbarFullName">John Doe</span>
-                                </a>
-                                <div class="dropdown-menu" aria-labelledby="userProfileDropdown">
-                                    <a class="dropdown-item" asp-controller="Profile" asp-action="Profile">
-                                        <i class="fa fa-user mr-2"></i>
-                                        Profile
-                                    </a>
-                                    <a class="dropdown-item" href="#">
-                                        <i class="fa fa-envelope mr-2"></i>
-                                        Inbox
-                                    </a>
-                                    @if (User.IsInRole("Customer"))
-                                    {
-                                        <a class="dropdown-item" href="#">
-                                            <i class="fa fa-briefcase mr-2"></i>
-                                            My Job Posts
+                        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                            <ul class="navbar-nav ml-auto">
+                                <li class="nav-item active">
+                                    <a class="nav-link" href="~/">Home</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" asp-controller="AboutUs" asp-action="AboutUs">About Us</a>
+                                </li>
+                                @if (User.Identity.IsAuthenticated)
+                                {
+                                    <li class="nav-item">
+                                        <a class="nav-link" asp-controller="JobListings" asp-action="JobListings">Job Listings</a>
+                                    </li>
+                                }
+                                <li class="nav-item">
+                                    <a class="nav-link" asp-controller="Pros" asp-action="Pros">Hire a Pro</a>
+                                </li>
+                                @if (User.Identity.IsAuthenticated)
+                                {
+                                    <li class="nav-item">
+                                        <a class="nav-link" asp-controller="Inbox" asp-action="Inbox">Inbox</a>
+                                    </li>
+                                }
+                                @if (User.Identity.IsAuthenticated)
+                                {
+                                    <li class="nav-item dropdown">
+                                        <a class="nav-link dropdown-toggle" href="#" id="userProfileDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            <img id="navbarProfilePicture" src="https://via.placeholder.com/150" alt="Profile Picture" class="img-fluid rounded-circle" style="width: 30px; height: 30px; object-fit: cover;" />
+                                            <span id="navbarFullName">John Doe</span>
                                         </a>
-                                    }
-                                    else if (User.IsInRole("Technician") || User.IsInRole("Company"))
-                                    {
-                                        <a class="dropdown-item" href="#">
-                                            <i class="fa fa-briefcase mr-2"></i>
-                                            My Jobs
+                                        <div class="dropdown-menu" aria-labelledby="userProfileDropdown">
+                                            <a class="dropdown-item" asp-controller="Profile" asp-action="Profile">
+                                                <i class="fa fa-user mr-2"></i>Profile
+                                            </a>
+                                            <a class="dropdown-item" href="#">
+                                                <i class="fa fa-envelope mr-2"></i>Inbox
+                                            </a>
+                                            @if (User.IsInRole("Customer"))
+                                            {
+                                                <a class="dropdown-item" href="#">
+                                                    <i class="fa fa-briefcase mr-2"></i>My Job Posts
+                                                </a>
+                                            }
+                                            else if (User.IsInRole("Technician") || User.IsInRole("Company"))
+                                            {
+                                                <a class="dropdown-item" href="#">
+                                                    <i class="fa fa-briefcase mr-2"></i>My Jobs
+                                                </a>
+                                            }
+                                            <a class="dropdown-item" asp-controller="Settings" asp-action="Index">
+                                                <i class="fa fa-cog mr-2"></i>Settings
+                                            </a>
+                                            <a class="dropdown-item" href="#" id="statusDropdown">
+                                                <i class="fa fa-info-circle mr-2"></i>Status: <span id="statusText">UNA</span>
+                                            </a>
+                                            <a href="#" class="dropdown-item" id="logoutButton">
+                                                <i class="fa fa-sign-out mr-2"></i>Log Out
+                                            </a>
+                                        </div>
+                                    </li>
+
+                                    <script src="~/js/logout.js"></script>
+                                    <script src="~/js/navbarpfp.js"></script>
+                                    <script src="~/js/navbarFullName.js"></script>
+                                }
+                                else
+                                {
+                                    <li class="nav-item">
+                                        <a class="nav-link" asp-controller="LogIn" asp-action="LogIn">
+                                            <i class="fa fa-user" aria-hidden="true"></i> <span>Login</span>
                                         </a>
-                                    }
-                                    <a class="dropdown-item" asp-controller="Settings" asp-action="Index">
-                                        <i class="fa fa-cog mr-2"></i>
-                                        Settings
-                                    </a>
-                                    <a class="dropdown-item" href="#" id="statusDropdown">
-                                        <i class="fa fa-info-circle mr-2"></i>
-                                        Status: <span id="statusText">UNA</span>
-                                    </a>
-                                    <a href="#" class="dropdown-item" id="logoutButton">
-                                        <i class="fa fa-sign-out mr-2"></i>
-                                        Log Out
-                                    </a>
-                                </div>
-                            </li>
-
-                            <script src="~/js/logout.js"></script>
-                            <script src="~/js/navbarpfp.js"></script>
-                            <script src="~/js/navbarFullName.js"></script>
-                        }
-
-                        else
-                        {
-                            <li class="nav-item">
-                                <a class="nav-link" asp-controller="LogIn" asp-action="LogIn">
-                                    <i class="fa fa-user" aria-hidden="true"></i>
-                                    <span>Login</span>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" asp-controller="SignUp" asp-action="SignUp">
-                                    <i class="fa fa-user" aria-hidden="true"></i>
-                                    <span>Sign Up</span>
-                                </a>
-                            </li>
-                        }
-                    </ul>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" asp-controller="SignUp" asp-action="SignUp">
+                                            <i class="fa fa-user" aria-hidden="true"></i> <span>Sign Up</span>
+                                        </a>
+                                    </li>
+                                }
+                            </ul>
+                        </div>
+                    </nav>
                 </div>
-            </nav>
-        </div>
-    </header>
-    @(ViewBag.IsAboutPage == true ? Html.Raw("</div>") : "")
+            </header>
+        }
 
-    <div>
-        @RenderBody()
-    </div>
+        @(ViewBag.IsAboutPage == true ? Html.Raw("</div>") : "")
+
+        <div>
+            @RenderBody()
+        </div>
 
         @if (ViewContext.RouteData.Values["controller"].ToString() != "Inbox")
         {
@@ -149,11 +137,14 @@
                 </div>
             </footer>
         }
+    </div>
+
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/js/bootstrap.min.js"></script>
     <script src="~/js/custom.js"></script>
+
     @RenderSection("Scripts", required: false)
 </body>
 </html>

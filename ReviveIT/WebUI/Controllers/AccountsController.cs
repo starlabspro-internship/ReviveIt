@@ -41,7 +41,7 @@ namespace WebUI.Controllers
 
             SetTokenCookie(result.Token);
 
-            return Ok(new { Message = "Login successful.", result.Token });
+            return Ok(new { Message = "Login successful.", result.Token, redirectToProfile = result.RedirectToProfile });
         }
 
         [Authorize]
