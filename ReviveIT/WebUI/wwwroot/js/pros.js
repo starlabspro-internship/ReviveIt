@@ -77,9 +77,13 @@ async function loadTechnicians(clear = false, useUrl = false) {
     const viewMoreButton = document.getElementById('viewMoreButton');
 
     if (data.total <= initialPageSize || totalRendered >= data.total) {
-        viewMoreButton.style.display = 'none';
+        if (viewMoreButton) {
+            viewMoreButton.style.display = 'none';
+        }
     } else {
-        viewMoreButton.style.display = 'block';
+        if (viewMoreButton) {
+            viewMoreButton.style.display = 'block';
+        }
         skipCount += takeCount;
     }
 }
@@ -143,14 +147,16 @@ function fetchCategories(selectedCategoryId = null) {
         .then(response => response.json())
         .then(data => {
             const jobCategoryDropdown = document.getElementById('filterCategories');
-            data.forEach(category => {
-                const option = document.createElement('option');
-                option.value = category.categoryID;
-                option.textContent = category.name;
-                jobCategoryDropdown.appendChild(option);
-            });
-            if (selectedCategoryId) {
-                jobCategoryDropdown.value = selectedCategoryId;
+            if (jobCategoryDropdown) {
+                data.forEach(category => {
+                    const option = document.createElement('option');
+                    option.value = category.categoryID;
+                    option.textContent = category.name;
+                    jobCategoryDropdown.appendChild(option);
+                });
+                if (selectedCategoryId) {
+                    jobCategoryDropdown.value = selectedCategoryId;
+                }
             }
         })
         .catch(error => console.error('Error fetching categories:', error));
@@ -161,14 +167,16 @@ function fetchCitites(selectedCityId = null) {
         .then(response => response.json())
         .then(data => {
             const citiesDropdown = document.getElementById('filterCities');
-            data.forEach(city => {
-                const option = document.createElement('option');
-                option.value = city.cityId;
-                option.textContent = city.cityName;
-                citiesDropdown.appendChild(option);
-            });
-            if (selectedCityId) {
-                citiesDropdown.value = selectedCityId;
+            if (citiesDropdown) {
+                data.forEach(city => {
+                    const option = document.createElement('option');
+                    option.value = city.cityId;
+                    option.textContent = city.cityName;
+                    citiesDropdown.appendChild(option);
+                });
+                if (selectedCityId) {
+                    citiesDropdown.value = selectedCityId;
+                }
             }
         })
 }
@@ -186,11 +194,15 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     loadTechnicians(true, true);
 
-    document.getElementById('applyFiltersButton').addEventListener('click', (e) => {
-        e.preventDefault();
-        skipCount = 0;
-        loadTechnicians(true, false);
-    });
+    const applyFiltersButton = document.getElementById('applyFiltersButton');
+
+    if (applyFiltersButton) {
+        applyFiltersButton.addEventListener('click', (e) => {
+            e.preventDefault();
+            skipCount = 0;
+            loadTechnicians(true, false);
+        });
+    }
 
     const viewMoreButton = document.getElementById('viewMoreButton');
 
