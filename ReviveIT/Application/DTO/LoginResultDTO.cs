@@ -6,15 +6,17 @@
         public string? ErrorMessage { get; set; }
         public string? Token { get; set; }
         public bool IsEmailNotConfirmed { get; set; }
-        public string returnUrl { get; set; }
+        public bool RedirectToProfile { get; set; }
+        public string? ReturnUrl { get; set; }
 
-        public static LoginResultDTO Success(string token)
+        public static LoginResultDTO Success(string token, bool redirectToProfile = false)
         {
             return new LoginResultDTO
             {
                 IsSuccess = true,
                 Token = token,
-                IsEmailNotConfirmed = false
+                IsEmailNotConfirmed = false,
+                RedirectToProfile = redirectToProfile
             };
         }
 

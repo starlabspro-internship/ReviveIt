@@ -53,6 +53,18 @@ namespace Application.Features.Accounts
 
             var token = _tokenHelper.GenerateToken(user);
 
+            var roles = await _userManager.GetRolesAsync(user);
+            bool isTechnicianOrCompany = roles.Contains("Technician") || roles.Contains("Company");
+
+            bool redirectToProfile = false;
+            if (isTechnicianOrCompany)
+            {
+                if (!user.CompletedProfile)
+                {
+                    redirectToProfile = true;
+                }
+            }
+
             var refreshToken = _tokenHelper.GenerateRefreshToken();
 
             var existingRefreshToken = await _refreshTokenRepository.GetByTokenAsync(user.Id);
@@ -70,7 +82,7 @@ namespace Application.Features.Accounts
 
             await _refreshTokenRepository.AddOrUpdateRefreshTokenAsync(userRefreshToken);
 
-            return LoginResultDTO.Success(token);
+            return LoginResultDTO.Success(token, redirectToProfile);
         }
     }
 }

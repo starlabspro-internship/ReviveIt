@@ -17,14 +17,16 @@
             success: function (response) {
                 if (response.isEmailNotConfirmed) {
                     window.location.href = "/ResendEmailConfirmation?email=" + encodeURIComponent(loginData.email);
-                } else {
+                } else if (response.redirectToProfile) {
+                    window.location.href = "/CompleteProfile";
+                } else { 
                     alert("Login successful!");
                     window.location.href = response.returnUrl;
                 }
             },
             error: function (xhr) {
                 var errorMessage = xhr.responseJSON?.message || "An unexpected error occurred. Please try again later.";
-                alert(errorMessage); 
+                alert(errorMessage);
             }
         });
     });
