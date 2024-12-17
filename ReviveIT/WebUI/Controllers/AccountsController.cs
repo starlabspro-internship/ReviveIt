@@ -57,7 +57,7 @@ namespace WebUI.Controllers
                 IsSuccess = true,
                 Token = result.Token,
                 IsEmailNotConfirmed = false,
-                returnUrl = returnUrl
+                ReturnUrl = returnUrl
             });
         }
 
