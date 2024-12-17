@@ -1,5 +1,3 @@
-﻿const userApiUrl = "/api/ProfileUpdate";
-
 ﻿function getCookie(name) {
     const cookies = document.cookie.split("; ");
     for (const cookie of cookies) {
@@ -18,13 +16,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
 async function fetchName() {
     const userName = document.getElementById('UserName');
-    if (!userName) {
-        console.error("Element with ID 'UserName' not found.");
-        return;
-    }
+    if (!userName) return;
 
     try {
-        const response = await fetch('/api/ProfileUpdate/info?type=fullname', {
+        const response = await fetch('/ProfileUpdate/api/info?type=fullname', {
             method: 'GET',
             headers: {
                 'Authorization': `Bearer ${getCookie('jwtToken')}`
@@ -33,26 +28,21 @@ async function fetchName() {
 
         if (response.ok) {
             const data = await response.json();
-            userName.textContent = data.fullName || "John Doe";
+            userName.textContent = data.fullName || "";
         } else {
-            console.error("Failed to fetch full name:", response.status);
             userName.textContent = "John Doe";
         }
     } catch (error) {
-        console.error("Error fetching full name:", error);
         userName.textContent = "John Doe";
     }
 }
 
 async function fetchRole() {
     const userRole = document.getElementById('userRole');
-    if (!userRole) {
-        console.error("Element with ID 'userRole' not found.");
-        return;
-    }
+    if (!userRole) return;
 
     try {
-        const response = await fetch('/api/ProfileUpdate/info?type=role', {
+        const response = await fetch('/ProfileUpdate/api/info?type=role', {
             method: 'GET',
             headers: {
                 'Authorization': `Bearer ${getCookie('jwtToken')}`
@@ -69,55 +59,12 @@ async function fetchRole() {
             };
             userRole.textContent = roles[data.role] || "Unknown";
         } else {
-            console.error("Failed to fetch role:", response.status);
             userRole.textContent = "Error";
         }
     } catch (error) {
-        console.error("Error fetching role:", error);
         userRole.textContent = "Error";
     }
 }
-
-function populateDaysOfWeek() {
-    const daysOfWeek = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
-    const daysAvailable = document.getElementById("daysAvailable");
-
-    daysAvailable.innerHTML = "";
-
-    daysOfWeek.forEach(day => {
-        const option = document.createElement("option");
-        option.value = day;
-        option.textContent = day;
-        daysAvailable.appendChild(option);
-    });
-}
-
-function populateMonths() {
-    const months = [
-        "January", "February", "March", "April", "May", "June",
-        "July", "August", "September", "October", "November", "December"
-    ];
-    const monthsUnavailable = document.getElementById("monthsUnavailable");
-
-    monthsUnavailable.innerHTML = "";
-
-    months.forEach(month => {
-        const option = document.createElement("option");
-        option.value = month;
-        option.textContent = month;
-        monthsUnavailable.appendChild(option);
-    });
-}
-
-function toggleAvailability() {
-    const availabilityOptions = document.getElementById("availabilityOptions");
-    availabilityOptions.classList.toggle("d-none");
-}
-
-window.onload = function () {
-    populateDaysOfWeek();
-    populateMonths();
-};
 
 let cropper;
 const cropperModal = document.getElementById('cropperModal');
@@ -152,7 +99,7 @@ async function uploadProfileImage() {
     formData.append("ProfilePicture", file);
 
     try {
-        const response = await fetch(`${userApiUrl}/upload`, {
+        const response = await fetch('/ProfileUpdate/api/upload', {
             method: 'POST',
             headers: {
                 'Authorization': `Bearer ${getCookie('jwtToken')}`
@@ -166,11 +113,9 @@ async function uploadProfileImage() {
             getProfilePicture();
         } else {
             const error = await response.json();
-            console.error("Upload failed:", error);
             alert(`Failed to upload: ${error.message || 'Unknown error'}`);
         }
     } catch (error) {
-        console.error("Error uploading profile picture:", error);
         alert("An error occurred while uploading the profile picture.");
     }
 }
@@ -198,6 +143,7 @@ function cancelCrop() {
         cropper = null;
     }
 }
+
 cropper = new Cropper(cropperImage, {
     aspectRatio: 1,
     viewMode: 1,
@@ -215,7 +161,7 @@ cropper = new Cropper(cropperImage, {
 
 async function getProfilePicture() {
     try {
-        const response = await fetch(`${userApiUrl}/get`, {
+        const response = await fetch('/ProfileUpdate/api/get', {
             method: 'GET',
             headers: {
                 'Authorization': `Bearer ${getCookie('jwtToken')}`
@@ -233,12 +179,10 @@ async function getProfilePicture() {
                 profileImage.src = "https://via.placeholder.com/150";
             }
         } else {
-            console.error("Failed to fetch profile picture:", response.status);
             const profileImage = document.getElementById('profileImage');
             profileImage.src = "https://via.placeholder.com/150";
         }
     } catch (error) {
-        console.error("Error fetching profile picture:", error);
         const profileImage = document.getElementById('profileImage');
         profileImage.src = "https://via.placeholder.com/150";
     }
@@ -246,7 +190,7 @@ async function getProfilePicture() {
 
 async function removeProfilePicture() {
     try {
-        const response = await fetch(`${userApiUrl}/remove`, {
+        const response = await fetch('/ProfileUpdate/api/remove', {
             method: 'DELETE',
             headers: {
                 'Authorization': `Bearer ${getCookie('jwtToken')}`
@@ -261,12 +205,11 @@ async function removeProfilePicture() {
             alert("Failed to remove profile picture.");
         }
     } catch (error) {
-        console.error("Error removing profile picture:", error);
+        alert("Error removing profile picture.");
     }
 }
 
 async function updateProfileImage(event) {
-
     const fileInput = document.getElementById("imageUpload");
 
     if (fileInput.files.length === 0) {
@@ -282,7 +225,7 @@ async function updateProfileImage(event) {
     };
 
     try {
-        const response = await fetch(`${userApiUrl}/update-profile`, {
+        const response = await fetch('/ProfileUpdate/api/update-profile', {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',
@@ -293,15 +236,12 @@ async function updateProfileImage(event) {
 
         if (response.ok) {
             alert("Profile picture updated successfully!");
-            
             getProfilePicture();
         } else {
             const error = await response.json();
-            console.error("Failed to update profile picture:", error);
             alert(`Failed to update profile picture: ${error.message || 'Unknown error'}`);
         }
     } catch (error) {
-        console.error("Error updating profile picture:", error);
         alert("An error occurred while updating the profile picture.");
     }
 }
