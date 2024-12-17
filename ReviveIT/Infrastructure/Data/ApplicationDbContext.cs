@@ -24,11 +24,13 @@ namespace Infrastructure.Data
         public DbSet<SelectedJobApplicant> SelectedJobApplicants { get; set; }
         public DbSet<City> Cities { get; set; }
         public DbSet<OperatingCity> OperatingCities { get; set; }
+        public DbSet<Feedback> Feedbacks { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
 
+            builder.ApplyConfiguration(new FeedbackConfiguration());
             builder.ApplyConfiguration(new UsersConfigurations());
             builder.ApplyConfiguration(new JobsConfigurations());
             builder.ApplyConfiguration(new JobsApplicationsConfigurations());

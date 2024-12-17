@@ -1,0 +1,69 @@
+﻿@using Domain.Entities
+@model Feedback
+
+@{
+    ViewData["Title"] = "Provide Feedback";
+    Layout = "_Layout";
+}
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/feedback.css" />
+}
+
+<div class="container feedback-container">
+    <h2>@ViewData["Title"]</h2>
+    <form method="post" asp-action="Submit" id="feedbackForm">
+        @Html.AntiForgeryToken()
+        <div class="form-group" style="margin-top: 20px;">
+            <label for="Message" class="control-label" style="font-weight: 600;">Message</label>
+            <textarea asp-for="Message" class="form-control" id="Message" placeholder="Your feedback..." maxlength="500" style="height:120px; resize:none;"></textarea>
+            <span asp-validation-for="Message" class="text-danger"></span>
+        </div>
+   
+        <div class="form-group" style="margin: 20px 0;">
+            <label style="font-weight: 600;" for="SurveyResponse">How likely are you to recommend our service to a friend or colleague? (0-10) (Optional)</label>
+            <div class="rating-scale" id="rating-scale" style="margin: 10px 0;">
+                @for (int i = 0; i <= 10; i++)
+                {
+                    <span data-value="@i">@i</span>
+                }
+            </div>
+            <div style="display: flex; justify-content: space-between;">
+                <span>0 - Extremely Unlikely</span>
+                <span>10 - Extremely Likely</span>
+            </div>
+            <input type="hidden" asp-for="SurveyResponse" id="SurveyResponse" value="">
+        </div>
+      
+        <div class="form-group">
+            <label for="FeatureSuggestion" class="control-label" style="font-weight: 600;">Feature Suggestion (Optional)</label>
+            <textarea asp-for="FeatureSuggestion" id="FeatureSuggestion" class="form-control" placeholder="We'd love to hear your suggestions." maxlength="500" style="height:120px; resize:none;"></textarea>
+            <span asp-validation-for="FeatureSuggestion" class="text-danger"></span>
+        </div>
+     
+        <div class="form-group">
+            <button type="submit" class="btn btn-primary" id="submitButton">SEND FEEDBACK</button>
+        </div>
+    </form>
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        document.querySelectorAll('.rating-scale span').forEach(span => {
+            span.addEventListener('click', function () {
+                document.querySelectorAll('.rating-scale span').forEach(s => s.classList.remove('selected'));
+                this.classList.add('selected');
+                document.getElementById('SurveyResponse').value = this.getAttribute('data-value');
+            });
+        });
+
+        document.querySelectorAll('textarea').forEach(textarea => {
+            textarea.style.height = '120px';
+            textarea.style.resize = 'none';
+        });
+
+        document.getElementById('feedbackForm').addEventListener('submit', function () {
+            document.getElementById('submitButton').disabled = true;
+        });
+    });
+</script>

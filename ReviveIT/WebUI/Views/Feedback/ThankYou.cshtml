@@ -1,0 +1,53 @@
+﻿@model Domain.Entities.Feedback
+
+@{
+    ViewData["Title"] = "Thank You";
+    Layout = "~/Views/Shared/_Layout.cshtml"; 
+}
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/thankyou.css" />
+}
+
+<body class="thankyou-page">
+    <div class="thank-you-container">
+        <div class="thank-you-message">
+            <h2>Thank You!</h2>
+        </div>
+        <div class="thank-you-subtext">
+            <p>Your feedback has been successfully submitted</p>
+        </div>
+        @if (Model != null)
+        {
+            <div class="feedback-summary">
+                <dl>
+                    @if (!string.IsNullOrEmpty(Model.Message))
+                    {
+                        <dt>Message:</dt>
+                        <dd>
+                            <span class="check-icon">&#10004;</span>
+                        </dd>
+                    }
+                    @if (Model.SurveyResponse.HasValue)
+                    {
+                        <dt>Survey Response:</dt>
+                        <dd>
+                            <span class="check-icon">&#10004;</span>
+                        </dd>
+                    }
+                    @if (!string.IsNullOrEmpty(Model.FeatureSuggestion))
+                    {
+                        <dt>Feature Suggestion:</dt>
+                        <dd>
+                            <span class="check-icon">&#10004;</span>
+                        </dd>
+                    }
+                </dl>
+            </div>
+        }
+    </div>
+
+    <footer>
+    
+    </footer>
+</body>
