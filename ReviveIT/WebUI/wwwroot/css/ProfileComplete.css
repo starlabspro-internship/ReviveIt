@@ -1,0 +1,95 @@
+﻿#profileSection {
+    background-image: linear-gradient(to right, rgba(8, 19, 92, 0.9), rgba(8, 19, 92, 0.9)), url(../images/slider-bg.jpg);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 250px;
+}
+
+#profileContainer {
+    max-width: 100%;
+}
+
+#profileFormSection {
+    margin-top: 20px;
+}
+
+#formCard {
+    padding: 40px;
+    background-color: #fff;
+    border-radius: 10px;
+}
+
+#leftright {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px; 
+    flex-wrap: wrap; 
+}
+
+#formTitle {
+    font-size: 24px;
+    color: #333;
+    font-weight: bold;
+}
+
+#phoneField, #descriptionField, #cityField {
+    margin-bottom: 20px;
+}
+
+.form-label {
+    font-size: 16px;
+    font-weight: bold;
+    color: #333;
+}
+
+.form-control {
+    border-radius: 8px;
+    padding: 12px;
+    font-size: 14px;
+}
+
+#phoneField .input-group-prepend {
+    background-color: #f0f0f0;
+    border-radius: 8px 0 0 8px;
+}
+
+#submitBtn {
+    background-color: #007bff;
+    color: white;
+    padding: 12px;
+    border-radius: 8px;
+    font-size: 16px;
+    width: 100%;
+    border: none;
+    cursor: pointer;
+}
+
+    #submitBtn:hover {
+        background-color: #0056b3;
+    }
+
+.select2-container--default .select2-selection--multiple {
+    border-radius: 8px;
+    padding: 0px;
+    font-size: 14px;
+}
+
+    .select2-container--default .select2-selection--multiple .select2-selection__rendered {
+        font-size: 14px;
+    }
+
+.select2-container--default .select2-selection__choice {
+    background-color: #007bff;
+    color: black;
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+.select2-container--default .select2-selection__choice__remove {
+    color: white;
+}
