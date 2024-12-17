@@ -50,93 +50,98 @@
                             <p id="userRole">Specialist</p>
                         </div>
 
-                        <div class="row d-flex align-items-stretch">
-                            <div class="col-md-6 d-flex align-items-stretch">
-                                <div class="card w-100 border p-3">
-                                    <h5>Skills and Services</h5>
-                                    <ul class="list-unstyled mb-4">
-                                        <li><i class=""></i> Nan</li>
-                                        <li><i class=""></i> Nana</li>
-                                        <li><i class=""></i> Nothin</li>
-                                    </ul>
-                                    <button class="btn btn-secondary btn-sm edit-button d-none" onclick="editSkills()">Edit Skills</button>
+                        @if (User.IsInRole("Technician") || User.IsInRole("Company"))
+                        {
+                            <div class="row d-flex align-items-stretch">
+                                <div class="col-md-6 d-flex align-items-stretch">
+                                    <div class="card w-100 border p-3">
+                                        <h5>Skills and Services</h5>
+                                        <ul class="list-unstyled mb-4">
+                                            <li><i class=""></i> Nan</li>
+                                            <li><i class=""></i> Nana</li>
+                                            <li><i class=""></i> Nothin</li>
+                                        </ul>
+                                        <button class="btn btn-secondary btn-sm edit-button d-none" onclick="editSkills()">Edit Skills</button>
 
-                                    <h5 class="mt-4">Work Experience</h5>
-                                    <p>Over 10 years of experience handling various tasks.</p>
-                                    <button class="btn btn-secondary btn-sm edit-button d-none" onclick="editExperience()">Edit Work Experience</button>
-                                </div>
-                            </div>
-
-                            <div class="col-md-6 d-flex align-items-stretch">
-                                <div class="card w-100 border p-3">
-                                    <h5>Portfolio</h5>
-                                    <div class="row mb-4" id="portfolioContainer">
-                                        <div class="d-flex justify-content-center align-items-center">
-
-                                        </div>
+                                        <h5 class="mt-4">Work Experience</h5>
+                                        <p>Over 10 years of experience handling various tasks.</p>
+                                        <button class="btn btn-secondary btn-sm edit-button d-none" onclick="editExperience()">Edit Work Experience</button>
                                     </div>
+                                </div>
 
-                                    <button class="btn btn-secondary btn-sm" onclick="openModal()">Upload New Portfolio Image</button>
+                                <div class="col-md-6 d-flex align-items-stretch">
+                                    <div class="card w-100 border p-3">
+                                        <h5>Portfolio</h5>
+                                        <div class="row mb-4" id="portfolioContainer">
+                                            <div class="d-flex justify-content-center align-items-center">
 
-                                    <div id="jobModal" class="modal fade" tabindex="-1" aria-hidden="true">
-                                        <div class="modal-dialog modal-lg">
-                                            <div class="modal-content">
-                                                <div class="modal-header">
-                                                    <h5 class="modal-title">Add Portfolio Image</h5>
-                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                                </div>
-                                                <div class="modal-body">
-                                                    <form id="jobForm" onsubmit="uploadPortfolioImage(event)">
-                                                        <div class="mb-3">
-                                                            <label for="portfolioTitle" class="form-label">Portfolio Title</label>
-                                                            <input type="text" class="form-control" id="portfolioTitle" name="portfolioTitle" placeholder="Enter portfolio title" required>
-                                                        </div>
-                                                        <div class="mb-3">
-                                                            <label for="portfolioDescription" class="form-label">Description</label>
-                                                            <textarea class="form-control" id="portfolioDescription" name="portfolioDescription" placeholder="Enter portfolio description" rows="4" required></textarea>
-                                                        </div>
-                                                        <div class="mb-3">
-                                                            <label for="portfolioPhoto" class="form-label">Photo</label>
-                                                            <input type="file" class="form-control" id="portfolioPhoto" name="portfolioPhoto" accept="image/*" required>
-                                                        </div>
-                                                        <button type="submit" class="btn btn-success w-100">Add Portfolio</button>
-                                                    </form>
+                                            </div>
+                                        </div>
+
+                                        <button class="btn btn-secondary btn-sm" onclick="openModal()">Upload New Portfolio Image</button>
+
+                                        <div id="jobModal" class="modal fade" tabindex="-1" aria-hidden="true">
+                                            <div class="modal-dialog modal-lg">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title">Add Portfolio Image</h5>
+                                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <form id="jobForm" onsubmit="uploadPortfolioImage(event)">
+                                                            <div class="mb-3">
+                                                                <label for="portfolioTitle" class="form-label">Portfolio Title</label>
+                                                                <input type="text" class="form-control" id="portfolioTitle" name="portfolioTitle" placeholder="Enter portfolio title" required>
+                                                            </div>
+                                                            <div class="mb-3">
+                                                                <label for="portfolioDescription" class="form-label">Description</label>
+                                                                <textarea class="form-control" id="portfolioDescription" name="portfolioDescription" placeholder="Enter portfolio description" rows="4" required></textarea>
+                                                            </div>
+                                                            <div class="mb-3">
+                                                                <label for="portfolioPhoto" class="form-label">Photo</label>
+                                                                <input type="file" class="form-control" id="portfolioPhoto" name="portfolioPhoto" accept="image/*" required>
+                                                            </div>
+                                                            <button type="submit" class="btn btn-success w-100">Add Portfolio</button>
+                                                        </form>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
 
-                                    <h5 class="mt-4">Client Reviews</h5>
+                                        <h5 class="mt-4">Client Reviews</h5>
 
-                                    <div>
-                                        <p><i class="bi bi-star-fill text-warning"></i> "John is incredibly reliable!" - <i>Jane Smith</i></p>
-                                        <p><i class="bi bi-star-fill text-warning"></i> "Excellent work on my deck." - <i>Mark Doe</i></p>
+                                        <div>
+                                            <p><i class="bi bi-star-fill text-warning"></i> "John is incredibly reliable!" - <i>Jane Smith</i></p>
+                                            <p><i class="bi bi-star-fill text-warning"></i> "Excellent work on my deck." - <i>Mark Doe</i></p>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
 
-                        <div class="mt-4">
-                            <div class="card p-3">
-                                <h5>Availability</h5>
-                                <div class="form-check form-switch mb-3">
-                                    <input class="form-check-input" type="checkbox" id="availabilityToggle" onchange="toggleAvailability()">
-                                    <label class="form-check-label" for="availabilityToggle">Set Availability</label>
+                            @* TO BE FIXED *@
+                        @*     <div class="mt-4">
+                                <div class="card p-3">
+                                    <h5>Availability</h5>
+                                    <div class="form-check form-switch mb-3">
+                                        <input class="form-check-input" type="checkbox" id="availabilityToggle" onchange="toggleAvailability()">
+                                        <label class="form-check-label" for="availabilityToggle">Set Availability</label>
+                                    </div>
+                                    <div id="availabilityOptions" class="d-none">
+                                        <p>Select your availability:</p>
+                                        <label for="daysAvailable">Days Available:</label>
+                                        <select id="daysAvailable" class="form-control mb-3" multiple></select>
+
+                                        <label for="monthsUnavailable">Unavailable Months:</label>
+                                        <select id="monthsUnavailable" class="form-control mb-3" multiple></select>
+
+                                        <label for="specificDates">Additional Unavailable Dates:</label>
+                                        <input type="date" class="form-control mb-3" id="specificDates" multiple>
+                                    </div>
                                 </div>
-                                <div id="availabilityOptions" class="d-none">
-                                    <p>Select your availability:</p>
-                                    <label for="daysAvailable">Days Available:</label>
-                                    <select id="daysAvailable" class="form-control mb-3" multiple></select>
+                            </div> *@
 
-                                    <label for="monthsUnavailable">Unavailable Months:</label>
-                                    <select id="monthsUnavailable" class="form-control mb-3" multiple></select>
-
-                                    <label for="specificDates">Additional Unavailable Dates:</label>
-                                    <input type="date" class="form-control mb-3" id="specificDates" multiple>
-                                </div>
-                            </div>
-                        </div>
-
+                            <script src="~/js/Portofolio.js"></script>
+                        }
                         <div class="text-center mt-4">
                             <h5>Social Links</h5>
                             <div class="social-icons">
@@ -161,6 +166,3 @@
         </div>
     </section>
 </div>
-
-<script src="~/js/userProfile.js"></script>
-<script src="~/js/Portofolio.js"></script>

@@ -153,4 +153,46 @@ async function deletePortfolioImage(portfolioDocumentId) {
     }
 }
 
+/*TO BE FIXED*/
+//function populateDaysOfWeek() {
+//    const daysOfWeek = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
+//    const daysAvailable = document.getElementById("daysAvailable");
+
+//    daysAvailable.innerHTML = "";
+
+//    daysOfWeek.forEach(day => {
+//        const option = document.createElement("option");
+//        option.value = day;
+//        option.textContent = day;
+//        daysAvailable.appendChild(option);
+//    });
+//}
+
+//function populateMonths() {
+//    const months = [
+//        "January", "February", "March", "April", "May", "June",
+//        "July", "August", "September", "October", "November", "December"
+//    ];
+//    const monthsUnavailable = document.getElementById("monthsUnavailable");
+
+//    monthsUnavailable.innerHTML = "";
+
+//    months.forEach(month => {
+//        const option = document.createElement("option");
+//        option.value = month;
+//        option.textContent = month;
+//        monthsUnavailable.appendChild(option);
+//    });
+//}
+
+//function toggleAvailability() {
+//    const availabilityOptions = document.getElementById("availabilityOptions");
+//    availabilityOptions.classList.toggle("d-none");
+//}
+
+//window.onload = function () {
+//    populateDaysOfWeek();
+//    populateMonths();
+//};
+
 document.addEventListener("DOMContentLoaded", getPortfolio);
