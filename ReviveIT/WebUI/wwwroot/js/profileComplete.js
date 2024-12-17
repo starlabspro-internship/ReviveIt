@@ -1,20 +1,16 @@
 ﻿$(document).ready(function () {
-    const token = localStorage.getItem('jwtToken');
-    if (!token) {
-        alert("You are not authenticated. Please log in.");
-        window.location.href = '/login';
-        return;
+    function getCookie(name) {
+        const match = document.cookie.match(new RegExp('(^| )' + name + '=([^;]+)'));
+        return match ? match[2] : null;
     }
 
+    const token = getCookie('jwtToken'); 
     const cityDropdown = $('#city');
 
     function fetchCities() {
         $.ajax({
             url: '/api/City/getCities',
             type: 'GET',
-            headers: {
-                'Authorization': `Bearer ${token}`
-            },
             success: function (cities) {
                 populateCityDropdown(cities);
             },
