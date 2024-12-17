@@ -81,24 +81,24 @@
                     <div class="container">
                         <div class="row">
                             <div class="col">
-                                <form>
+                                <form method="GET" action="/Pros">
                                     <div class="form-row ">
                                         <div class="form-group col-lg-3">
-                                            <input type="text" class="form-control" id="inputPatientName" placeholder="Keywords">
+                                            <input type="text" name ="keywords" class="form-control" id="keywords" placeholder="Keywords">
                                         </div>
                                         <div class="form-group col-lg-3">
-                                            <select name="SelectedCitiesIds" class="form-control wide" id="cities">
+                                            <select name="SelectedCityId" class="form-control wide" id="cities">
                                                 <option value="">All Locations</option>
                                             </select>
                                         </div>
                                          <div class="form-group col-lg-3">
-                                            <select name="SelectedCategoryIds" class="form-control wide" id="categories">
+                                            <select name="SelectedCategoryId" class="form-control wide" id="categories">
                                                 <option value="" >All Categories</option>
                                             </select>
                                         </div> 
                                         <div class="form-group col-lg-3">
                                             <div class="btn-box">
-                                                <button type="submit" class="btn ">Submit Now</button>
+                                                <button type="submit" class="btn" id="applySearchButton">Search</button>
                                             </div>
                                         </div>
                                     </div>
@@ -300,33 +300,33 @@
         </div>
     </div>
 </section>
-
-<script>
-    fetch('/api/categories/getCategories')
-        .then(response => response.json())
-        .then(data => {
-            const categoriesDropdown = document.getElementById('categories');
-            data.forEach(category => {
-                const option = document.createElement('option');
-                option.value = category.categoryID;
-                option.textContent = category.name;
-                categoriesDropdown.appendChild(option);
-            });
-        })
-        .catch(error => console.error('Error fetching categories:', error));
-</script>
-
-<script>
-    fetch('/api/city/getCities')
-        .then(response => response.json())
-        .then(data => {
-            console.log("data", data);
-            const citiesDropdown = document.getElementById('cities');
-            data.forEach(city => {
-                const option = document.createElement('option');
-                option.value = city.cityId;
-                option.textContent = city.cityName;
-                citiesDropdown.appendChild(option);
+@if (isLoggedIn){
+    <script>
+        fetch('/api/categories/getCategories')
+            .then(response => response.json())
+            .then(data => {
+                const categoriesDropdown = document.getElementById('categories');
+                data.forEach(category => {
+                    const option = document.createElement('option');
+                    option.value = category.categoryID;
+                    option.textContent = category.name;
+                    categoriesDropdown.appendChild(option);
+                });
             })
-        })
-</script>
+            .catch(error => console.error('Error fetching categories:', error));
+    </script>
+
+    <script>
+        fetch('/api/city/getCities')
+            .then(response => response.json())
+            .then(data => {
+                const citiesDropdown = document.getElementById('cities');
+                data.forEach(city => {
+                    const option = document.createElement('option');
+                    option.value = city.cityId;
+                    option.textContent = city.cityName;
+                    citiesDropdown.appendChild(option);
+                })
+            })
+    </script>
+}
