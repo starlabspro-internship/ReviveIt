@@ -185,6 +185,58 @@ namespace WebUI.Controllers
             });
         }
 
+        [Authorize]
+        [HttpPost("change-password")]
+        public async Task<IActionResult> ChangePassword([FromBody] ChangePasswordDto model)
+        {
+            if (!ModelState.IsValid)
+            {
+                var errors = ModelState.Values.SelectMany(v => v.Errors)
+                                              .Select(e => e.ErrorMessage)
+                                              .ToList();
+                return BadRequest(new { Success = false, Errors = errors });
+            }
+
+            if (model.NewPassword != model.ConfirmPassword)
+            {
+                return BadRequest(new
+                {
+                    Success = false,
+                    Message = "New password and confirm password do not match."
+                });
+            }
+
+            var email = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            var user = await _userManager.FindByEmailAsync(email);
+
+            if (user == null)
+            {
+                return Unauthorized(new { Message = "User not found." });
+            }
+
+            var changePasswordResult = await _userManager.ChangePasswordAsync(user, model.CurrentPassword, model.NewPassword);
+
+            if (!changePasswordResult.Succeeded)
+            {
+                return BadRequest(new
+                {
+                    Success = false,
+                    Errors = changePasswordResult.Errors.Select(e => e.Description)
+                });
+            }
+
+            await _refreshTokenRepository.RemoveRefreshTokenAsync(user.Id);
+            Response.Cookies.Delete("jwtToken");
+            Response.Cookies.Delete("refreshToken");
+
+            return Ok(new
+            {
+                Success = true,
+                Message = "Password changed successfully. You have been logged out.",
+                RedirectUrl = "/login"
+            });
+        }
+
         private void SetTokenCookie(string jwtToken)
         {
             var secure = Request.IsHttps;
