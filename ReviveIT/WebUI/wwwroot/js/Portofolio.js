@@ -27,10 +27,10 @@ async function getPortfolio() {
 
         if (response.ok) {
             const result = await response.json();
+            console.log(result.portfolioDocuments);
             populatePortfolioContainer(result.portfolioDocuments);
         } else {
-            const errorData = await response.json();
-            alert(`Failed to fetch portfolio: ${errorData.Message || "Unknown error"}`);
+            populatePortfolioContainer([]);
         }
     } catch (error) {
         alert("An error occurred while fetching portfolio.");
@@ -42,7 +42,10 @@ function populatePortfolioContainer(portfolio) {
     container.innerHTML = "";
 
     if (!portfolio || portfolio.length === 0) {
-        container.innerHTML = '<p class="text-muted">No portfolio images available.</p>';
+        container.innerHTML = `
+            <div class="d-flex justify-content-center align-items-center" style="width: 100%;">
+                <p class="text-muted">No portfolio images available.</p>
+            </div`;
         return;
     }
 
@@ -51,7 +54,7 @@ function populatePortfolioContainer(portfolio) {
         col.className = "col-4 mb-2 position-relative";
 
         col.innerHTML = `
-            <div class="d-flex flex-column justify-content-center align-items-center border p-1" style="cursor: pointer;" onclick="openPortfolioModal('${item.filePath}', '${item.title}', '${item.Description || "No description available"}')">
+            <div class="d-flex flex-column justify-content-center align-items-center border p-1" style="cursor: pointer;" onclick="openPortfolioModal('${item.filePath}', '${item.title}', '${item.description || "No description available"}')">
                 <img src="${item.filePath}" alt="Portfolio Image" class="img-fluid rounded" style="height: 8em; object-fit: cover;">
                 <p class="text-muted" style="margin-bottom: 0.5em; margin-top: 0.5em;">${item.title}</p>
                 <button class="btn btn-danger btn-sm top-0 end-0" onclick="event.stopPropagation(); deletePortfolioImage(${item.id});">×</button>
