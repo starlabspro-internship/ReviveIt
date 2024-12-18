@@ -1,0 +1,112 @@
+﻿body {
+    background-color: #f0f0f0;
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.settings-container {
+    width: 70%; 
+    padding: 5px;
+    min-height: 80vh; 
+    background-color: #fff;
+    border-radius: 8px;
+    margin: auto;
+    color: #333;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: row; 
+}
+
+.settings-sidebar {
+    width: 25%; 
+    min-width: 200px;
+    max-width: 300px;
+    background-color: #0c1c58; 
+    padding: 20px;
+    color: #fff; 
+    min-height: 80vh 
+    overflow-y: auto;
+    flex-shrink: 0;
+    border-radius: 8px 0 0 8px; 
+}
+
+    .settings-sidebar .list-group-item {
+        background-color: #0c1c58;
+        border: none;
+        padding: 10px 0;
+    }
+
+        .settings-sidebar .list-group-item a {
+            text-decoration: none;
+            color: #fff; 
+            display: block;
+            padding: 10px 15px;
+        }
+
+            .settings-sidebar .list-group-item a:hover {
+                background-color: #09113d; 
+                color: #fff;
+            }
+
+.settings-content {
+    flex: 1;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 0 8px 8px 0; 
+}
+
+    .settings-content h2 {
+        font-size: 1.5rem;
+        margin-bottom: 20px;
+        color: #333;
+    }
+
+    .settings-content .form-group {
+        margin-top: 20px;
+    }
+
+        .settings-content .form-group label {
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: #333;
+        }
+
+        .settings-content .form-group input,
+        .settings-content .form-group select {
+            width: 100%;
+            padding: 0.5rem;
+            background-color: #f9f9f9;
+            color: #333;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+    .settings-content .btn-primary {
+        background-color: #007bff;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        cursor: pointer;
+        margin-top: 5px;
+    }
+
+        .settings-content .btn-primary:hover {
+            background-color: #0056b3;
+        }
+
+    .settings-content .btn-danger {
+        background-color: #f04747;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        cursor: pointer;
+        margin-top: 5px;
+    }
+
+        .settings-content .btn-danger:hover {
+            background-color: #d23636;
+        }
