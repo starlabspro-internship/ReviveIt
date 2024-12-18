@@ -7,18 +7,21 @@
             password: $("#password").val()
         };
 
+        var returnUrl = new URLSearchParams(window.location.search).get('returnUrl') || '/home';
+
         $.ajax({
-            url: "/api/accounts/login",
+            url: "/api/accounts/login?returnUrl=" + encodeURIComponent(returnUrl),
             method: "POST",
             contentType: "application/json",
             data: JSON.stringify(loginData),
             success: function (response) {
-                alert("Login successful!");
-
-                if (response.redirectToProfile) {
+                if (response.isEmailNotConfirmed) {
+                    window.location.href = "/ResendEmailConfirmation?email=" + encodeURIComponent(loginData.email);
+                } else if (response.redirectToProfile) {
                     window.location.href = "/CompleteProfile";
-                } else {
-                    window.location.href = "/home";
+                } else { 
+                    alert("Login successful!");
+                    window.location.href = response.returnUrl;
                 }
             },
             error: function (xhr) {

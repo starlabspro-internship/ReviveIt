@@ -37,7 +37,12 @@ namespace Application.Features.Accounts
             }
             if (!user.EmailConfirmed)
             {
-                return LoginResultDTO.Failure("Email not confirmed!");
+                return new LoginResultDTO
+                {
+                    IsSuccess = false,
+                    IsEmailNotConfirmed = true,
+                    ErrorMessage = "Email not confirmed!"
+                };
             }
 
             var result = await _signInManager.CheckPasswordSignInAsync(user, loginDto.Password, lockoutOnFailure: false);

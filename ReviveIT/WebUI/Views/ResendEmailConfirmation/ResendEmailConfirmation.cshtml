@@ -1,0 +1,31 @@
+﻿@{
+    ViewData["Title"] = "Resend Confirmation Email";
+}
+
+@section Scripts {
+    <script src="~/js/resendEmailConfirmation.js"></script>
+}
+
+<div class="hero_area">
+    <section class="slider_section">
+        <div class="container d-flex justify-content-center" style="min-height: 90vh; padding-top: 5vh;">
+            <section class="forgot_password_section w-100" style="max-width: 600px;">
+                <div class="card p-5 shadow-lg" style="min-height: 350px; position: relative;">
+                    <h2 class="text-center mb-4">Resend Confirmation Email</h2>
+                    <p class="text-center mb-4">
+                        The email: <strong>@ViewBag.Email</strong> has not been confirmed yet. Resend the email confirmation link by clicking the button below.
+                    </p>
+                    <form id="resendForm">
+                        <input type="hidden" id="email" value="@ViewBag.Email" />
+                        <button type="submit" class="btn btn-primary btn-block btn-lg" style="background-color: #08135c; border-color: #08135c; border-radius: 30px;">
+                            Resend Confirmation Email
+                        </button>
+                    </form>
+                    <div class="text-center mt-4">
+                        <p>Did you confirm your email? <a href="~/login">Login here</a></p>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </section>
+</div>

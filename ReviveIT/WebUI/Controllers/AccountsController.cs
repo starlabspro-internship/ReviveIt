@@ -33,15 +33,33 @@ namespace WebUI.Controllers
         }
 
         [HttpPost("login")]
-        public async Task<IActionResult> Login([FromBody] LoginDto loginDto)
+        public async Task<IActionResult> Login([FromBody] LoginDto loginDto, string returnUrl = null)
         {
             var result = await _loginFeature.AuthenticateUser(loginDto);
+
+            if (result.IsEmailNotConfirmed)
+            {
+                return Ok(new { isEmailNotConfirmed = true, message = "Email not confirmed!" });
+            }
+
             if (!result.IsSuccess)
                 return Unauthorized(new { Message = result.ErrorMessage });
 
+            if (string.IsNullOrEmpty(returnUrl))
+            {
+                returnUrl = "/home";
+            }
+
             SetTokenCookie(result.Token);
 
-            return Ok(new { Message = "Login successful.", result.Token, redirectToProfile = result.RedirectToProfile });
+            return Ok(new
+            {
+                Message = "Login successful.",
+                IsSuccess = result.IsSuccess,
+                Token = result.Token,
+                RedirectToProfile = result.RedirectToProfile,
+                ReturnUrl = returnUrl
+            });
         }
 
         [Authorize]
