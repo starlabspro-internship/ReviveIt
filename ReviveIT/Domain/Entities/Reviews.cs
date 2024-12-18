@@ -11,7 +11,7 @@
         public string UserId { get; set; }
         public Users User { get; set; }
 
-        public int ServiceID { get; set; }
-        public Service Service { get; set; }
+        public string ReviewedUserId { get; set; }
+        public Users ReviewedUser { get; set; }
     }
 }
