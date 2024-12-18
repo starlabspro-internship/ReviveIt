@@ -69,6 +69,8 @@ builder.Services.AddScoped<GetCitiesFeature>();
 builder.Services.AddScoped<CompleteProfileFeature>();
 builder.Services.AddScoped<CreateReviewFeature>();
 builder.Services.AddScoped<UpdateReviewFeature>();
+builder.Services.AddScoped<DeleteReviewFeature>();
+
 
 builder.Services.AddAuthentication(options =>
 {

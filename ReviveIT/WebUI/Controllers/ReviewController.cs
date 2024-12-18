@@ -15,13 +15,15 @@ namespace WebUI.Controllers
         private readonly UserManager<Users> _userManager;
         private readonly CreateReviewFeature _createReviewFeature;
         private readonly UpdateReviewFeature _updateReviewFeature;
+        private readonly DeleteReviewFeature _deleteReviewFeature;
 
-        public ReviewController(IApplicationDbContext context, UserManager<Users> userManager, CreateReviewFeature createReviewFeature, UpdateReviewFeature updateReviewFeature)
+        public ReviewController(IApplicationDbContext context, UserManager<Users> userManager, CreateReviewFeature createReviewFeature, UpdateReviewFeature updateReviewFeature, DeleteReviewFeature deleteReviewFeature)
         {
             _context = context;
             _userManager = userManager;
             _createReviewFeature = createReviewFeature;
             _updateReviewFeature = updateReviewFeature;
+            _deleteReviewFeature = deleteReviewFeature;
         }
 
         [HttpPost("users/{reviewedUserId}/reviews")]
@@ -38,7 +40,7 @@ namespace WebUI.Controllers
 
             if (!result.Success)
             {
-                return BadRequest(result.Message); 
+                return BadRequest(result.Message);
             }
 
             return Ok(result); 
@@ -50,6 +52,21 @@ namespace WebUI.Controllers
             var userId = User.FindFirst("UserId")?.Value;
 
             var result = await _updateReviewFeature.ExecuteAsync(reviewId, updateReviewDto, userId);
+
+            if (!result.Success)
+            {
+                return BadRequest(result.Message); 
+            }
+
+            return Ok(result); 
+        }
+
+        [HttpDelete("reviews/{reviewId}")]
+        public async Task<IActionResult> DeleteReview(int reviewId)
+        {
+            var userId = User.FindFirst("UserId")?.Value;
+
+            var result = await _deleteReviewFeature.ExecuteAsync(reviewId, userId);
 
             if (!result.Success)
             {

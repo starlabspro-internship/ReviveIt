@@ -35,6 +35,15 @@ namespace Application.Features.User
                 };
             }
 
+            if (updateReviewDto.Rating < 1 || updateReviewDto.Rating > 5)
+            {
+                return new UpdateReviewResultDto
+                {
+                    Success = false,
+                    Message = "Rating must be between 1 and 5."
+                };
+            }
+
             review.Content = updateReviewDto.Content;
             review.Rating = updateReviewDto.Rating;
             review.UpdatedAt = DateTime.UtcNow;

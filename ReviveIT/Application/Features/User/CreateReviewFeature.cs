@@ -71,6 +71,15 @@ namespace Application.Features.User
                 };
             }
 
+            if (createReviewDto.Rating < 1 || createReviewDto.Rating > 5)
+            {
+                return new CreateReviewResultDto
+                {
+                    Success = false,
+                    Message = "Rating must be between 1 and 5."
+                };
+            }
+
             var review = new Reviews
             {
                 UserId = userId,
