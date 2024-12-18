@@ -67,6 +67,7 @@ builder.Services.AddScoped<GetCategoriesFeature>();
 builder.Services.AddScoped<GetTechnicianProfileFeature>();
 builder.Services.AddScoped<GetCitiesFeature>();
 builder.Services.AddScoped<CompleteProfileFeature>();
+builder.Services.AddScoped<CreateReviewFeature>();
 
 builder.Services.AddAuthentication(options =>
 {
