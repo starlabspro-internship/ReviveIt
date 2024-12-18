@@ -9,6 +9,20 @@
     return null;
 }
 
+function openModalPfp() {
+    const modal = new bootstrap.Modal(document.getElementById('profileModal'));
+    modal.show();
+}
+
+function zoomImage() {
+    const profileImage = document.getElementById('profileImage').src;
+    const zoomedImage = document.getElementById('zoomedImage');
+    zoomedImage.src = profileImage;
+
+    const zoomModal = new bootstrap.Modal(document.getElementById('zoomModal'));
+    zoomModal.show();
+}
+
 document.addEventListener("DOMContentLoaded", () => {
     fetchName();
     fetchRole();
