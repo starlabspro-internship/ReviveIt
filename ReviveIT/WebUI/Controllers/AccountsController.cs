@@ -42,21 +42,22 @@ namespace WebUI.Controllers
                 return Ok(new { isEmailNotConfirmed = true, message = "Email not confirmed!" });
             }
 
+            if (!result.IsSuccess)
+                return Unauthorized(new { Message = result.ErrorMessage });
+
             if (string.IsNullOrEmpty(returnUrl))
             {
                 returnUrl = "/home";
             }
 
-            if (!result.IsSuccess)
-                return Unauthorized(new { Message = result.ErrorMessage });
-
             SetTokenCookie(result.Token);
 
-            return Ok(new LoginResultDTO
+            return Ok(new
             {
-                IsSuccess = true,
+                Message = "Login successful.",
+                IsSuccess = result.IsSuccess,
                 Token = result.Token,
-                IsEmailNotConfirmed = false,
+                RedirectToProfile = result.RedirectToProfile,
                 ReturnUrl = returnUrl
             });
         }
