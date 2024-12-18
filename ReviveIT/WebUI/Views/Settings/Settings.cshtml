@@ -1,0 +1,178 @@
+﻿
+@{
+    Layout = "_Layout";
+    ViewData["Title"] = "Settings";
+}
+@section Styles {
+<link rel="stylesheet" href="~/css/Settings.css" />
+}
+<div class="settings-container">
+    <aside class="settings-sidebar">
+        <ul class="list-group">
+            <li class="list-group-item"><a href="#" onclick="showSection('accountManagementSection')">Account Management</a></li>
+            <li class="list-group-item"><a href="#" onclick="showSection('languageSection')">Language</a></li>
+        </ul>
+    </aside>
+    <main class="settings-content" id="settingsContent">
+        <div id="accountManagementSection" style="display: none;">
+            <h2>Your Account</h2>
+            <ul class="list-group">
+                <li class="list-group-item"><a href="#" data-toggle="modal" data-target="#personalInformationModal">Personal Information</a></li>
+                <li class="list-group-item"><a href="#" data-toggle="modal" data-target="#changePasswordModal">Change Password</a></li>
+                <li class="list-group-item"><a href="#" data-toggle="modal" data-target="#changeEmailModal">Change Email Address</a></li>
+            </ul>
+            
+            <div class="modal fade" id="personalInformationModal" tabindex="-1" role="dialog" aria-labelledby="personalInformationModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="personalInformationModalLabel">Personal Information</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <form>
+                                <div class="form-group">
+                                    <label for="fullName">Full Name</label>
+                                    <input type="text" class="form-control" id="fullName">
+                                </div>
+                                <div class="form-group">
+                                    <label for="dateOfBirth">Date of Birth</label>
+                                    <input type="date" class="form-control" id="dateOfBirth">
+                                </div>
+                                <div class="form-group">
+                                    <label for="gender">Gender</label>
+                                    <select class="form-control" id="gender">
+                                        <option>Male</option>
+                                        <option>Female</option>
+                                        <option>Other</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="country">Country/Region</label>
+                                    <input type="text" class="form-control" id="country">
+                                </div>
+                                <div class="form-group">
+                                    <label for="language">Language</label>
+                                    <select class="form-control" id="language">
+                                        <option>English</option>
+                                        <option>Albanian</option>
+                                    </select>
+                                </div>
+                                <button type="submit" class="btn btn-primary">Save</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="modal fade" id="changePasswordModal" tabindex="-1" role="dialog" aria-labelledby="changePasswordModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="changePasswordModalLabel">Change Password</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <form>
+                                <div class="form-group">
+                                    <label for="currentPassword">Current Password</label>
+                                    <input type="password" class="form-control" id="currentPassword">
+                                </div>
+                                <div class="form-group">
+                                    <label for="newPassword">New Password</label>
+                                    <input type="password" class="form-control" id="newPassword">
+                                </div>
+                                <div class="form-group">
+                                    <label for="confirmPassword">Confirm New Password</label>
+                                    <input type="password" class="form-control" id="confirmPassword">
+                                </div>
+                                <button type="submit" class="btn btn-primary">Change Password</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal fade" id="changeEmailModal" tabindex="-1" role="dialog" aria-labelledby="changeEmailModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="changeEmailModalLabel">Change Email Address</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <form>
+                                <div class="form-group">
+                                    <label for="currentEmail">Current Email Address</label>
+                                    <input type="email" class="form-control" id="currentEmail">
+                                </div>
+                                <div class="form-group">
+                                    <label for="newEmail">New Email Address</label>
+                                    <input type="email" class="form-control" id="newEmail">
+                                </div>
+                                <button type="submit" class="btn btn-primary">Change Email Address</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mt-5">
+                <h2>Deletion</h2>
+                <ul class="list-group">
+                    <li class="list-group-item"><a href="#" data-toggle="modal" data-target="#deleteAccountModal">Delete your data and account</a></li>
+                </ul>
+            </div>
+
+            <div class="modal fade" id="deleteAccountModal" tabindex="-1" role="dialog" aria-labelledby="deleteAccountModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="deleteAccountModalLabel">Delete Account</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <p>Are you sure you want to delete your account? This action cannot be undone.</p>
+                            <button type="button" class="btn btn-danger">Delete Account</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="languageSection" style="display: none;">
+            <h2>Language</h2>
+            <ul class="list-group">
+                <li class="list-group-item">
+                    <form>
+                        <div class="form-group">
+                            <label for="language">Select Language</label>
+                            <select id="language" class="form-control">
+                                <option>English</option>
+                                <option>Albanian</option>
+                                
+                            </select>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Save</button>
+                    </form>
+                </li>
+            </ul>
+        </div>
+    </main>
+</div>
+
+<script>
+    function showSection(sectionId) {
+        document.getElementById('accountManagementSection').style.display = 'none';
+        document.getElementById('languageSection').style.display = 'none';
+        document.getElementById(sectionId).style.display = 'block';
+    }
+</script>
