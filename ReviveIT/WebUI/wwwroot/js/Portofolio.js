@@ -27,7 +27,6 @@ async function getPortfolio() {
 
         if (response.ok) {
             const result = await response.json();
-            console.log(result.portfolioDocuments);
             populatePortfolioContainer(result.portfolioDocuments);
         } else {
             populatePortfolioContainer([]);
