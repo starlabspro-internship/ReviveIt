@@ -35,6 +35,7 @@ namespace Application.Features.User
                 var portfolioDtos = portfolioPhotos.Select(photo => new PortfolioFetchDto
                 {
                     Id = photo.Id,
+                    Title = photo.Title,
                     Description = photo.Description, 
                     FilePath = photo.FilePath,
                     UploadedAt = photo.UploadedAt
