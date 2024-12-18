@@ -1,4 +1,5 @@
 ﻿using Application.DTO;
+using Application.Features.Review;
 using Application.Features.User;
 using Application.Interfaces;
 using Domain.Entities;
@@ -17,8 +18,9 @@ namespace WebUI.Controllers
         private readonly UpdateReviewFeature _updateReviewFeature;
         private readonly DeleteReviewFeature _deleteReviewFeature;
         private readonly GetUserReviewFeature _getUserReviewFeature;
+        private readonly GetAllReviewsFeature _getAllReviewsFeature;
 
-        public ReviewController(IApplicationDbContext context, UserManager<Users> userManager, CreateReviewFeature createReviewFeature, UpdateReviewFeature updateReviewFeature, DeleteReviewFeature deleteReviewFeature, GetUserReviewFeature getUserReviewFeature)
+        public ReviewController(IApplicationDbContext context, UserManager<Users> userManager, CreateReviewFeature createReviewFeature, UpdateReviewFeature updateReviewFeature, DeleteReviewFeature deleteReviewFeature, GetUserReviewFeature getUserReviewFeature, GetAllReviewsFeature getAllReviewsFeature)
         {
             _context = context;
             _userManager = userManager;
@@ -26,6 +28,7 @@ namespace WebUI.Controllers
             _updateReviewFeature = updateReviewFeature;
             _deleteReviewFeature = deleteReviewFeature;
             _getUserReviewFeature = getUserReviewFeature;
+            _getAllReviewsFeature = getAllReviewsFeature;
         }
 
         [HttpPost("users/{reviewedUserId}/reviews")]
@@ -93,6 +96,19 @@ namespace WebUI.Controllers
             if (result.Review == null)
             {
                 return Ok(new { Message = result.Message });
+            }
+
+            return Ok(result);
+        }
+
+        [HttpGet("technicians/{reviewedUserId}/reviews")]
+        public async Task<IActionResult> GetAllReviewsForTechnician(string reviewedUserId)
+        {
+            var result = await _getAllReviewsFeature.ExecuteAsync(reviewedUserId);
+
+            if (!result.Success)
+            {
+                return BadRequest(result.Message);
             }
 
             return Ok(result);

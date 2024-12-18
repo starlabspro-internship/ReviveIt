@@ -18,6 +18,7 @@ using Microsoft.IdentityModel.Tokens;
 using WebUI.MiddleWares;
 using Microsoft.AspNetCore.SignalR;
 using Application.Features.Cities;
+using Application.Features.Review;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Logging.ClearProviders(); builder.Logging.AddConsole(); builder.Logging.AddDebug(); builder.Logging.AddEventSourceLogger();
@@ -71,7 +72,7 @@ builder.Services.AddScoped<CreateReviewFeature>();
 builder.Services.AddScoped<UpdateReviewFeature>();
 builder.Services.AddScoped<DeleteReviewFeature>();
 builder.Services.AddScoped<GetUserReviewFeature>();
-
+builder.Services.AddScoped<GetAllReviewsFeature>();
 
 builder.Services.AddAuthentication(options =>
 {
