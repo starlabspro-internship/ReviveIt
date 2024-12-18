@@ -16,14 +16,16 @@ namespace WebUI.Controllers
         private readonly CreateReviewFeature _createReviewFeature;
         private readonly UpdateReviewFeature _updateReviewFeature;
         private readonly DeleteReviewFeature _deleteReviewFeature;
+        private readonly GetUserReviewFeature _getUserReviewFeature;
 
-        public ReviewController(IApplicationDbContext context, UserManager<Users> userManager, CreateReviewFeature createReviewFeature, UpdateReviewFeature updateReviewFeature, DeleteReviewFeature deleteReviewFeature)
+        public ReviewController(IApplicationDbContext context, UserManager<Users> userManager, CreateReviewFeature createReviewFeature, UpdateReviewFeature updateReviewFeature, DeleteReviewFeature deleteReviewFeature, GetUserReviewFeature getUserReviewFeature)
         {
             _context = context;
             _userManager = userManager;
             _createReviewFeature = createReviewFeature;
             _updateReviewFeature = updateReviewFeature;
             _deleteReviewFeature = deleteReviewFeature;
+            _getUserReviewFeature = getUserReviewFeature;
         }
 
         [HttpPost("users/{reviewedUserId}/reviews")]
@@ -74,6 +76,26 @@ namespace WebUI.Controllers
             }
 
             return Ok(result); 
+        }
+
+        [HttpGet("technicians/{reviewedUserId}/reviews/user")]
+        public async Task<IActionResult> GetUserReviewForTechnician(string reviewedUserId)
+        {
+            var userId = User.FindFirst("UserId")?.Value;
+
+            var result = await _getUserReviewFeature.ExecuteAsync(reviewedUserId, userId);
+
+            if (!result.Success)
+            {
+                return Unauthorized(result.Message);
+            }
+
+            if (result.Review == null)
+            {
+                return Ok(new { Message = result.Message });
+            }
+
+            return Ok(result);
         }
     }
 }
