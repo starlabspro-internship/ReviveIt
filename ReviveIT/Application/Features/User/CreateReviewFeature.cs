@@ -3,7 +3,6 @@ using Application.Interfaces;
 using Domain.Entities;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using System;
 
 namespace Application.Features.User
 {
@@ -22,7 +21,11 @@ namespace Application.Features.User
         {
             if (userId == createReviewDto.ReviewedUserId)
             {
-                throw new ArgumentException("You cannot review yourself.");
+                return new CreateReviewResultDto
+                {
+                    Success = false,
+                    Message = "You cannot review yourself."
+                };
             }
 
             var reviewedUser = await _context.Users
@@ -30,18 +33,30 @@ namespace Application.Features.User
 
             if (reviewedUser == null)
             {
-                throw new ArgumentException("User to be reviewed does not exist.");
+                return new CreateReviewResultDto
+                {
+                    Success = false,
+                    Message = "User to be reviewed does not exist."
+                };
             }
 
             if (reviewedUser.Role != UserRole.Technician && reviewedUser.Role != UserRole.Company)
             {
-                throw new ArgumentException("You can only review technicians or companies.");
+                return new CreateReviewResultDto
+                {
+                    Success = false,
+                    Message = "You can only review technicians or companies."
+                };
             }
 
             var reviewer = await _context.Users.FindAsync(userId);
             if (reviewer == null)
             {
-                throw new ArgumentException("Reviewer user does not exist.");
+                return new CreateReviewResultDto
+                {
+                    Success = false,
+                    Message = "Reviewer user does not exist."
+                };
             }
 
             var existingReview = await _context.Reviews
@@ -49,7 +64,11 @@ namespace Application.Features.User
 
             if (existingReview != null)
             {
-                throw new ArgumentException("You have already reviewed this technician or company.");
+                return new CreateReviewResultDto
+                {
+                    Success = false,
+                    Message = "You have already reviewed this technician or company."
+                };
             }
 
             var review = new Reviews
@@ -67,6 +86,7 @@ namespace Application.Features.User
 
             return new CreateReviewResultDto
             {
+                Success = true,
                 ReviewId = review.ReviewID,
                 Message = "Review successfully created.",
                 CreatedAt = review.CreatedAt

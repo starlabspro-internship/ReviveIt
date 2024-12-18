@@ -14,12 +14,14 @@ namespace WebUI.Controllers
         private readonly IApplicationDbContext _context;
         private readonly UserManager<Users> _userManager;
         private readonly CreateReviewFeature _createReviewFeature;
+        private readonly UpdateReviewFeature _updateReviewFeature;
 
-        public ReviewController(IApplicationDbContext context, UserManager<Users> userManager, CreateReviewFeature createReviewFeature)
+        public ReviewController(IApplicationDbContext context, UserManager<Users> userManager, CreateReviewFeature createReviewFeature, UpdateReviewFeature updateReviewFeature)
         {
             _context = context;
             _userManager = userManager;
             _createReviewFeature = createReviewFeature;
+            _updateReviewFeature = updateReviewFeature;
         }
 
         [HttpPost("users/{reviewedUserId}/reviews")]
@@ -32,15 +34,29 @@ namespace WebUI.Controllers
                 return BadRequest("Reviewed user ID mismatch.");
             }
 
-            try
+            var result = await _createReviewFeature.ExecuteAsync(createReviewDto, userId);
+
+            if (!result.Success)
             {
-                var result = await _createReviewFeature.ExecuteAsync(createReviewDto, userId);
-                return Ok(result);
+                return BadRequest(result.Message); 
             }
-            catch (ArgumentException ex)
+
+            return Ok(result); 
+        }
+
+        [HttpPut("reviews/{reviewId}")]
+        public async Task<IActionResult> UpdateReview(int reviewId, [FromBody] UpdateReviewDto updateReviewDto)
+        {
+            var userId = User.FindFirst("UserId")?.Value;
+
+            var result = await _updateReviewFeature.ExecuteAsync(reviewId, updateReviewDto, userId);
+
+            if (!result.Success)
             {
-                return BadRequest(ex.Message);
+                return BadRequest(result.Message); 
             }
+
+            return Ok(result); 
         }
     }
 }
