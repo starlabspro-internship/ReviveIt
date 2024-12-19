@@ -73,6 +73,7 @@ builder.Services.AddScoped<UpdateReviewFeature>();
 builder.Services.AddScoped<DeleteReviewFeature>();
 builder.Services.AddScoped<GetUserReviewFeature>();
 builder.Services.AddScoped<GetAllReviewsFeature>();
+builder.Services.AddScoped<GetAverageRatingFeature>();
 
 builder.Services.AddAuthentication(options =>
 {

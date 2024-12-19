@@ -19,8 +19,9 @@ namespace WebUI.Controllers
         private readonly DeleteReviewFeature _deleteReviewFeature;
         private readonly GetUserReviewFeature _getUserReviewFeature;
         private readonly GetAllReviewsFeature _getAllReviewsFeature;
+        private readonly GetAverageRatingFeature _getAverageRatingFeature;
 
-        public ReviewController(IApplicationDbContext context, UserManager<Users> userManager, CreateReviewFeature createReviewFeature, UpdateReviewFeature updateReviewFeature, DeleteReviewFeature deleteReviewFeature, GetUserReviewFeature getUserReviewFeature, GetAllReviewsFeature getAllReviewsFeature)
+        public ReviewController(IApplicationDbContext context, UserManager<Users> userManager, CreateReviewFeature createReviewFeature, UpdateReviewFeature updateReviewFeature, DeleteReviewFeature deleteReviewFeature, GetUserReviewFeature getUserReviewFeature, GetAllReviewsFeature getAllReviewsFeature, GetAverageRatingFeature getAverageRatingFeature)
         {
             _context = context;
             _userManager = userManager;
@@ -29,6 +30,7 @@ namespace WebUI.Controllers
             _deleteReviewFeature = deleteReviewFeature;
             _getUserReviewFeature = getUserReviewFeature;
             _getAllReviewsFeature = getAllReviewsFeature;
+            _getAverageRatingFeature = getAverageRatingFeature;
         }
 
         [HttpPost("users/{reviewedUserId}/reviews")]
@@ -105,6 +107,19 @@ namespace WebUI.Controllers
         public async Task<IActionResult> GetAllReviewsForTechnician(string reviewedUserId)
         {
             var result = await _getAllReviewsFeature.ExecuteAsync(reviewedUserId);
+
+            if (!result.Success)
+            {
+                return BadRequest(result.Message);
+            }
+
+            return Ok(result);
+        }
+
+        [HttpGet("technicians/{reviewedUserId}/reviews/average-rating")]
+        public async Task<IActionResult> GetAverageRatingForTechnician(string reviewedUserId)
+        {
+            var result = await _getAverageRatingFeature.ExecuteAsync(reviewedUserId);
 
             if (!result.Success)
             {
