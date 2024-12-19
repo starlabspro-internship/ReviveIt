@@ -88,17 +88,16 @@
                             <div class="row d-flex align-items-stretch">
                                 <div class="col-md-6 d-flex align-items-stretch">
                                     <div class="card w-100 border p-3">
-                                        <h5>Skills and Services</h5>
-                                        <ul class="list-unstyled mb-4">
-                                            <li><i class=""></i> Nan</li>
-                                            <li><i class=""></i> Nana</li>
-                                            <li><i class=""></i> Nothin</li>
-                                        </ul>
-                                        <button class="btn btn-secondary btn-sm edit-button d-none" onclick="editSkills()">Edit Skills</button>
-
-                                        <h5 class="mt-4">Work Experience</h5>
-                                        <p>Over 10 years of experience handling various tasks.</p>
-                                        <button class="btn btn-secondary btn-sm edit-button d-none" onclick="editExperience()">Edit Work Experience</button>
+                                        <div id="descriptionContainer">
+                                            <h5>Description</h5>
+                                            <div id="descriptionText"></div>
+                                            <button class="btn btn-secondary btn-sm edit-button" style="width:100%;" onclick="editDescription()">Edit Description</button>
+                                        </div>
+                                        <div id="WorkExperienceContainer">
+                                            <h5 class="mt-4">Work Experience</h5>
+                                            <p>Over 10 years of experience handling various tasks.</p>
+                                            <button class="btn btn-secondary btn-sm edit-button d-none" onclick="editExperience()">Edit Work Experience</button>
+                                        </div>
                                     </div>
                                 </div>
 
