@@ -88,10 +88,24 @@
                             <div class="row d-flex align-items-stretch">
                                 <div class="col-md-6 d-flex align-items-stretch">
                                     <div class="card w-100 border p-3">
-                                        <div id="descriptionContainer">
+                                        <div id="descriptionContainer" style="margin-bottom:15px;">
                                             <h5>Description</h5>
                                             <div id="descriptionText"></div>
                                             <button class="btn btn-secondary btn-sm edit-button" style="width:100%;" onclick="editDescription()">Edit Description</button>
+                                        </div>
+                                        <div id="selectedCategoriesContainer">
+                                            <h5>Selected Categories</h5>
+                                            <ul id="selectedCategoriesList"></ul>
+                                            <button class="btn btn-secondary btn-sm edit-button" style="width:100%;" onclick="editCategories()">Edit Categories</button>
+                                        </div>
+                                        <div id="editCategoriesModal" class="modal" style="display: none;">
+                                            <div class="modal-content">
+                                                <span class="close-modal" onclick="closeEditCategoriesModal()">&times;</span>
+                                                <h5>Edit Categories</h5>
+                                                <ul id="allCategoriesList"></ul>
+                                                <button class="btn btn-primary" onclick="saveCategories()">Save Changes</button>
+                                                <button class="btn btn-secondary" onclick="closeEditCategoriesModal()">Cancel</button>
+                                            </div>
                                         </div>
                                         <div id="WorkExperienceContainer">
                                             <h5 class="mt-4">Work Experience</h5>
