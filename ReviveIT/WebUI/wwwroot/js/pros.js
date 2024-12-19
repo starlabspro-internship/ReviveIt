@@ -38,42 +38,33 @@ async function loadTechnicians(clear = false, useUrl = false) {
         skipCount = 0;
     }
     const takeCount = skipCount === 0 ? initialPageSize : additionalPageSize;
-
     const { keywords, selectedCityId, selectedCategoryId } = getFilterParameters(useUrl);
-
     const params = new URLSearchParams({
         skipCount,
         takeCount,
         ...(keywords && { keywords }),
         ...(selectedCityId && { selectedCityId }),
-        ...(selectedCategoryId && {selectedCategoryId})
+        ...(selectedCategoryId && { selectedCategoryId }),
     });
 
     const response = await fetch(`/Pros/api/GetPros?${params.toString()}`, {
         credentials: 'include',
     });
-
     if (!response.ok) {
         const errorData = await response.json();
         alert(`Error: ${errorData.message}`);
         return;
     }
-
     const data = await response.json();
-
     if (clear) {
         document.getElementById('technicianContainer').innerHTML = '';
     }
-
     if (skipCount === 0) {
         document.getElementById('technicianContainer').innerHTML = '';
     }
-
     renderTechnicians(data.data);
-
     const container = document.getElementById('technicianContainer');
     const totalRendered = container.childElementCount;
-
     const viewMoreButton = document.getElementById('viewMoreButton');
 
     if (data.total <= initialPageSize || totalRendered >= data.total) {
@@ -88,57 +79,75 @@ async function loadTechnicians(clear = false, useUrl = false) {
     }
 }
 
-function renderTechnicians(technicians) {
-    const container = document.getElementById('technicianContainer');
+async function fetchAverageRating(technicianId) {
+    try {
+        const response = await fetch(`/api/Review/technicians/${technicianId}/reviews/average-rating`);
+        if (!response.ok) {
+            console.error('Failed to fetch average rating for technician:', technicianId);
+            return null;
+        }
+        const data = await response.json();
+        return data.averageRating;
+    } catch (error) {
+        console.error('Error fetching average rating for technician:', technicianId, error);
+        return null;
+    }
+}
 
-    technicians.forEach(technician => {
-        const profileLink = isAuthenticated
-            ? `/ProsProfileView/${technician.id}`
-            : `/LogIn?returnUrl=/ProsProfileView/${technician.id}`;
+async function renderTechnicians(technicians) {
+    const container = document.getElementById('technicianContainer');
+    for (const technician of technicians) {
+        const profileLink = isAuthenticated ? `/ProsProfileView/${technician.id}` : `/LogIn?returnUrl=/ProsProfileView/${technician.id}`;
+        const averageRating = await fetchAverageRating(technician.id);
+        let starsHtml = `<i class="fa fa-spinner fa-spin"></i>`;
+        let reviewCount = 0;
+
+        if (averageRating === null) {
+            starsHtml = generateStars(0);
+        } else {
+            starsHtml = generateStars(averageRating);
+            reviewCount = averageRating;
+        }
 
         const technicianHtml = `
-            <div class="col-md-6 col-lg-4 mx-auto">
-                <div class="box">
-                    <div class="img-box">
-                        <img src="${technician.profilePicture}" alt="${technician.fullName}'s Profile Picture" style="width: 100%; height: auto; object-fit: cover; color:black"/>
-                    </div>
-                    <div class="detail-box" style="background-color:white">
-                        <a href="${profileLink}" style="color:black">${technician.fullName}</a>
-                        <h6 class="expert_position">
-                            <span style="color:black">${technician.expertise}</span>
-                            <span style="color:black" class="text-right">${technician.experience} Years of Experience</span>
-                        </h6>
-                        <span class="expert_rating" style="color:black">
-                            ${generateStars(technician.rating)}
-                        </span>
-                        <p style="color:black">${technician.review}</p>
-                    </div>
-                </div>
-            </div>`;
+        <div class="col-md-6 col-lg-4 mx-auto">
+          <div class="box">
+            <div class="img-box">
+              <img src="${technician.profilePicture}" alt="${technician.fullName}'s Profile Picture" style="width: 100%; height: auto; object-fit: cover; color:black"/>
+            </div>
+            <div class="detail-box" style="background-color:white">
+              <a href="${profileLink}" style="color:black">${technician.fullName}</a>
+              <h6 class="expert_position">
+                  <span style="color:black">${technician.expertise}</span>
+                <span style="color:black" class="text-right">${technician.experience} Years of Experience</span>
+              </h6>
+              <span class="expert_rating" style="color:black">
+                 ${starsHtml} ${reviewCount}
+               </span>
+             </div>
+           </div>
+        </div>`;
 
         container.innerHTML += technicianHtml;
-    });
+    }
 }
 
 function generateStars(rating) {
     const fullStars = Math.floor(rating);
-    const halfStar = rating % 1 >= 0.5;
-    const emptyStars = 5 - fullStars - (halfStar ? 1 : 0);
-
+    const decimalPart = rating % 1;
+    const emptyStars = 5 - Math.ceil(rating);
     let starsHtml = '';
 
     for (let i = 0; i < fullStars; i++) {
         starsHtml += '<i class="fa fa-star" aria-hidden="true"></i>';
     }
-
-    if (halfStar) {
-        starsHtml += '<i class="fa fa-star-half-o" aria-hidden="true"></i>';
+    if (decimalPart > 0) {
+        const fillPercentage = decimalPart * 100;
+        starsHtml += `<i class="fa fa-star partial-star" style="background: linear-gradient(90deg, black ${fillPercentage}%, transparent ${fillPercentage}%); -webkit-background-clip: text; background-clip: text; color: transparent;"></i>`;
     }
-
     for (let i = 0; i < emptyStars; i++) {
         starsHtml += '<i class="fa fa-star-o" aria-hidden="true"></i>';
     }
-
     return starsHtml;
 }
 
@@ -164,11 +173,11 @@ function fetchCategories(selectedCategoryId = null) {
 
 function fetchCitites(selectedCityId = null) {
     fetch('/api/city/getCities')
-        .then(response => response.json())
-        .then(data => {
+        .then((response) => response.json())
+        .then((data) => {
             const citiesDropdown = document.getElementById('filterCities');
             if (citiesDropdown) {
-                data.forEach(city => {
+                data.forEach((city) => {
                     const option = document.createElement('option');
                     option.value = city.cityId;
                     option.textContent = city.cityName;
@@ -178,22 +187,15 @@ function fetchCitites(selectedCityId = null) {
                     citiesDropdown.value = selectedCityId;
                 }
             }
-        })
+        });
 }
 
 document.addEventListener('DOMContentLoaded', async () => {
     await checkAuthenticationStatus();
-
     const { keywords, selectedCityId, selectedCategoryId } = getFilterParameters(true);
-
-    await Promise.all([
-        fetchCategories(selectedCategoryId),
-        fetchCitites(selectedCityId),
-    ]);
+    await Promise.all([fetchCategories(selectedCategoryId), fetchCitites(selectedCityId)]);
     if (keywords) document.getElementById('keywords').value = keywords;
-
     loadTechnicians(true, true);
-
     const applyFiltersButton = document.getElementById('applyFiltersButton');
 
     if (applyFiltersButton) {
@@ -203,9 +205,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             loadTechnicians(true, false);
         });
     }
-
     const viewMoreButton = document.getElementById('viewMoreButton');
-
     if (viewMoreButton) {
         viewMoreButton.addEventListener('click', (e) => {
             e.preventDefault();
