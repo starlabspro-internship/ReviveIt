@@ -131,5 +131,47 @@ namespace WebUI.Controllers
 
             return Ok(new { message = "Categories updated successfully" });
         }
+
+        [HttpGet("getSelectedCities")]
+        public async Task<IActionResult> GetSelectedCities()
+        {
+            var userId = User.FindFirst("UserId")?.Value;
+            if (string.IsNullOrEmpty(userId))
+                return Unauthorized();
+
+            var selectedCities = await _context.OperatingCities
+                .Where(oc => oc.userId == userId)
+                .Select(oc => new
+                {
+                    oc.CityId,
+                    CityName = oc.City.CityName
+                })
+                .ToListAsync();
+
+            return Ok(selectedCities);
+        }
+
+        [HttpPost("updateOperatingCities")]
+        public async Task<IActionResult> UpdateOperatingCities([FromBody] List<int> cityIds)
+        {
+            var userId = User.FindFirst("UserId")?.Value;
+            if (string.IsNullOrEmpty(userId))
+                return Unauthorized();
+
+            var existingOperatingCities = _context.OperatingCities.Where(oc => oc.userId == userId);
+            _context.OperatingCities.RemoveRange(existingOperatingCities);
+
+            var newOperatingCities = cityIds.Select(cityId => new OperatingCity
+            {
+                userId = userId,
+                CityId = cityId
+            });
+
+            await _context.OperatingCities.AddRangeAsync(newOperatingCities);
+            await _context.SaveChangesAsync();
+
+            return Ok(new { message = "Operating cities updated successfully" });
+        }
+
     }
 }

@@ -336,6 +336,109 @@ async function fetchSelectedCategories() {
     }
 }
 
+async function fetchSelectedCities() {
+    try {
+        const response = await fetch('/api/Profile/getSelectedCities', {
+            method: 'GET',
+            headers: {
+                'Authorization': `Bearer ${getCookie('jwtToken')}`
+            }
+        });
+
+        if (!response.ok) throw new Error("Failed to fetch selected cities");
+
+        const selectedCities = await response.json();
+
+        const selectedCitiesList = document.getElementById('selectedCitiesList');
+        selectedCitiesList.innerHTML = '';
+
+        selectedCities.forEach(city => {
+            const listItem = document.createElement('li');
+            listItem.textContent = city.cityName;
+            selectedCitiesList.appendChild(listItem);
+        });
+    } catch (error) {
+        console.error("Error fetching selected cities:", error);
+        alert("An error occurred while fetching selected cities.");
+    }
+}
+
+async function editCities() {
+    try {
+        const response = await fetch('/api/city/getCities', {
+            method: 'GET',
+            headers: {
+                'Authorization': `Bearer ${getCookie('jwtToken')}`
+            }
+        });
+
+        if (!response.ok) throw new Error("Failed to fetch cities");
+
+        const cities = await response.json();
+        const allCitiesList = document.getElementById('allCitiesList');
+        allCitiesList.innerHTML = '';
+
+        cities.forEach(city => {
+            const listItem = document.createElement('li');
+            listItem.innerHTML = `
+                <label>
+                    <input type="checkbox" value="${city.cityId}" /> ${city.cityName}
+                </label>`;
+            allCitiesList.appendChild(listItem);
+        });
+
+        // Show modal
+        document.getElementById('editCitiesModal').style.display = 'block';
+
+        // Pre-select user's selected cities
+        const selectedCities = Array.from(document.querySelectorAll('#selectedCitiesList li')).map(li => li.textContent);
+        document.querySelectorAll('#allCitiesList input').forEach(input => {
+            if (selectedCities.includes(input.nextSibling.textContent.trim())) {
+                input.checked = true;
+            }
+        });
+    } catch (error) {
+        console.error("Error fetching cities:", error);
+        alert("An error occurred while fetching cities.");
+    }
+}
+
+// Close the modal
+function closeEditCitiesModal() {
+    document.getElementById('editCitiesModal').style.display = 'none';
+}
+
+async function saveCities() {
+    try {
+        const selectedCityIds = Array.from(document.querySelectorAll('#allCitiesList input:checked'))
+            .map(input => parseInt(input.value))
+            .filter(id => !isNaN(id));
+
+        if (!selectedCityIds.length) {
+            alert("Please select at least one city.");
+            return;
+        }
+
+        const response = await fetch('/api/Profile/updateOperatingCities', {
+            method: 'POST',
+            headers: {
+                'Authorization': `Bearer ${getCookie('jwtToken')}`,
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(selectedCityIds)
+        });
+
+        if (!response.ok) throw new Error("Failed to update operating cities");
+
+        alert("Operating cities updated successfully!");
+        closeEditCitiesModal();
+        fetchSelectedCities();
+    } catch (error) {
+        console.error("Error updating operating cities:", error);
+        alert("An error occurred while updating operating cities.");
+    }
+}
+
 async function getProfilePicture() {
     try {
         const response = await fetch('/ProfileUpdate/api/get', {
@@ -436,13 +539,20 @@ document.addEventListener('DOMContentLoaded', () => {
     getProfilePicture();
     getDescription();
     fetchSelectedCategories();
+    fetchSelectedCities();
 });
 
 document.addEventListener('keydown', function (event) {
     if (event.key === 'Escape') {
-        const modal = document.getElementById('editCategoriesModal');
-        if (modal.style.display === 'block') {
+        const categoriesModal = document.getElementById('editCategoriesModal');
+        const citiesModal = document.getElementById('editCitiesModal');
+
+        if (categoriesModal && categoriesModal.style.display === 'block') {
             closeEditCategoriesModal();
+        }
+
+        if (citiesModal && citiesModal.style.display === 'block') {
+            closeEditCitiesModal();
         }
     }
 });

@@ -107,6 +107,20 @@
                                                 <button class="btn btn-secondary" onclick="closeEditCategoriesModal()">Cancel</button>
                                             </div>
                                         </div>
+                                        <div id="selectedCitiesContainer">
+                                            <h5>Operating Cities</h5>
+                                            <ul id="selectedCitiesList"></ul>
+                                            <button class="btn btn-secondary btn-sm edit-button" style="width:100%;" onclick="editCities()">Edit Cities</button>
+                                        </div>
+                                        <div id="editCitiesModal" class="modal" style="display: none;">
+                                            <div class="modal-content">
+                                                <span class="close-modal" onclick="closeEditCitiesModal()">&times;</span>
+                                                <h5>Edit Operating Cities</h5>
+                                                <ul id="allCitiesList"></ul>
+                                                <button class="btn btn-primary" onclick="saveCities()">Save Changes</button>
+                                                <button class="btn btn-secondary" onclick="closeEditCitiesModal()">Cancel</button>
+                                            </div>
+                                        </div>
                                         <div id="WorkExperienceContainer">
                                             <h5 class="mt-4">Work Experience</h5>
                                             <p>Over 10 years of experience handling various tasks.</p>
