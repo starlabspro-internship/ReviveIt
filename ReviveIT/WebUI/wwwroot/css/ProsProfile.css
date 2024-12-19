@@ -180,3 +180,76 @@
     color: black;
     cursor: pointer;
 }
+
+.review-container {
+    text-align: center;
+    margin-top: 20px;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+    .review-container .review-header {
+        font-size: 1.8em;
+        margin-bottom: 15px;
+        color: #333;
+    }
+
+    .review-container .review-button-wrapper {
+        margin-bottom: 10px;
+    }
+
+    .review-container .toggle-button {
+        padding: 10px 20px;
+        border: none;
+        background-color: #444444;
+        color: white;
+        border-radius: 4px;
+        margin: 10px 0;
+        cursor: pointer;
+    }
+
+    .review-container .dropdown-content {
+        display: none;
+        padding: 10px;
+        border-top: 1px solid #ddd;
+    }
+
+.review-item {
+    margin-bottom: 10px;
+    padding: 10px;
+    border: 1px solid #eee;
+    border-radius: 4px;
+    background-color: #f9f9f9;
+}
+
+    .review-item .rating {
+        font-weight: bold;
+        margin-bottom: 5px;
+        font-size: 1.1em;
+        color: #333;
+    }
+
+    .review-item .comment {
+        margin-bottom: 5px;
+        font-size: 1.0em;
+        color: #555;
+        line-height: 1.5;
+    }
+
+    .review-item .reviewer {
+        font-style: italic;
+        color: #888;
+        font-size: 1.0em;
+    }
+
+.no-reviews-message {
+    font-size: 1.2em;
+}
+
+.error-message {
+    color: red;
+    font-size: 1.2rem;
+    font-weight: bold;
+}
