@@ -99,5 +99,8 @@ async function saveCategories() {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-    fetchSelectedCategories();
+    const categoriesContainer = document.getElementById('selectedCategoriesContainer');
+    if (categoriesContainer) {
+        fetchSelectedCategories();
+    }
 });

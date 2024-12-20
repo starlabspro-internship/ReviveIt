@@ -269,10 +269,6 @@ function convertToBase64(file) {
     });
 }
 
-document.addEventListener('DOMContentLoaded', () => {
-    getDescription();
-});
-
 document.addEventListener('keydown', function (event) {
     if (event.key === 'Escape') {
         const categoriesModal = document.getElementById('editCategoriesModal');

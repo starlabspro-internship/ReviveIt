@@ -197,4 +197,9 @@ async function deletePortfolioImage(portfolioDocumentId) {
 //    populateMonths();
 //};
 
-document.addEventListener("DOMContentLoaded", getPortfolio);
+document.addEventListener('DOMContentLoaded', () => {
+    const portfolioContainer = document.getElementById('portfolioContainer');
+    if (portfolioContainer) {
+        getPortfolio();
+    }
+});

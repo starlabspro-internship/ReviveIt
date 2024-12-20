@@ -61,5 +61,8 @@ async function saveDescription() {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-    getDescription();
+    const descriptionContainer = document.getElementById('descriptionContainer');
+    if (descriptionContainer) { 
+        getDescription();
+    }
 });
