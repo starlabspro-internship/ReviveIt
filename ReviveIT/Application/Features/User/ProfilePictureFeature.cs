@@ -80,7 +80,6 @@ namespace Application.Features.User
             if (roles.Contains("Company"))
             {
                 defaultProfilePicture = "/images/defaultCompanyPicture.png";
-
             }
 
             return ProfilePictureResultDTO.Success(defaultProfilePicture);
@@ -104,7 +103,6 @@ namespace Application.Features.User
             if (roles.Contains("Company"))
             {
                 defaultProfilePicture = "/images/defaultCompanyPicture.png";
-
             }
 
             var profilePictureUrl = string.IsNullOrEmpty(user.ProfilePicture) ? defaultProfilePicture : user.ProfilePicture;
