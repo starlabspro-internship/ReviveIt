@@ -1,5 +1,7 @@
 ﻿using Application.DTO;
 using Application.Interfaces;
+using Domain.Entities;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 namespace Application.Features.User
@@ -7,10 +9,12 @@ namespace Application.Features.User
     public class GetTechnicianProfileFeature
     {
         private readonly IApplicationDbContext _context;
+        private readonly UserManager<Users> _userManager;
 
-        public GetTechnicianProfileFeature(IApplicationDbContext context)
+        public GetTechnicianProfileFeature(IApplicationDbContext context, UserManager<Users> userManager)
         {
             _context = context;
+            _userManager = userManager;
         }
 
         public async Task<ProfileDataResultDto> ExecuteAsync(string id)
@@ -22,13 +26,23 @@ namespace Application.Features.User
             if (user == null)
                 return ProfileDataResultDto.Failure("Technician not found.");
 
+            string defaultProfilePicture = "/images/defaultProfilePicture.png";
+            var roles = await _userManager.GetRolesAsync(user);
+
+            if (roles.Contains("Company"))
+            {
+                defaultProfilePicture = "/images/defaultCompanyPicture.png";
+            }
+
+            string? profilePictureUrl = string.IsNullOrEmpty(user.ProfilePicture) ? defaultProfilePicture : user.ProfilePicture;
+            
             var profile = new
             {
                 FullName = user.FullName,
                 CompanyName = user.CompanyName,
                 PhoneNumber = user.PhoneNumber,
                 Email = user.Email,
-                ProfilePicture = user.ProfilePicture,
+                ProfilePictureUrl = profilePictureUrl, 
                 Expertise = user.Expertise,
                 Experience = user.Experience,
                 Description = user.Description,

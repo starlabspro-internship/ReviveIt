@@ -28,13 +28,13 @@
         }
     }
 
-    const profilePictureSelector = "#profilePicture"
-    const technicianFullNameSelector = "#technicianFullName"
-    const technicianExpertiseSelector = "#technicianExpertise"
-    const technicianExperienceSelector = "#technicianExperience"
-    const technicianDescriptionSelector = "#technicianDescription"
-    const technicianContactSelector = "#technicianContact"
-    const technicianPortfolioSelector = "#technicianPortfolio"
+    const profilePictureSelector = "#profilePicture";
+    const technicianFullNameSelector = "#technicianFullName";
+    const technicianExpertiseSelector = "#technicianExpertise";
+    const technicianExperienceSelector = "#technicianExperience";
+    const technicianDescriptionSelector = "#technicianDescription";
+    const technicianContactSelector = "#technicianContact";
+    const technicianPortfolioSelector = "#technicianPortfolio";
     const addReviewButton = $("#addReviewButton");
     const reviewFormOverlay = $("#reviewFormOverlay");
     const reviewFormContainer = $("#reviewFormContainer");
@@ -42,15 +42,17 @@
     const reviewForm = $("#reviewForm");
     const starRating = $(".star-rating");
     const reviewRatingInput = $("#reviewRating");
-    const addReviewButtonContainer = $(".add-review-button-container")
+    const addReviewButtonContainer = $(".add-review-button-container");
     const setElementText = (selector, text) => $(selector).text(text);
     const setElementHtml = (selector, html) => $(selector).html(html);
     const setElementAttribute = (selector, attribute, value) =>
         $(selector).attr(attribute, value);
-    const defaultProfilePicture = "/images/defaultProfilePicture.png";
+    const defaultTechnicianProfilePicture = "/images/defaultProfilePicture.png";
+    const defaultCompanyProfilePicture = "/images/defaultCompanyPicture.png";
+
     if (!technicianId) {
-        showToast("No technician ID provided.", true)
-        setElementAttribute(profilePictureSelector, "src", defaultProfilePicture);
+        showToast("No technician ID provided.", true);
+        setElementAttribute(profilePictureSelector, "src", defaultTechnicianProfilePicture);
         setElementText(technicianFullNameSelector, "");
         setElementText(technicianExpertiseSelector, "No Expertise Provided");
         setElementText(
@@ -68,36 +70,36 @@
 
     const fetchTechnicianProfile = async () => {
         try {
-
-            const response = await fetch(`/ProfileUpdate/api/get`, {
-                method: "GET",
-                headers: {
-                    Authorization: `Bearer ${getCookie("jwtToken")}`,
-                },
-            });
-
-            let pfpUrl;
-            if (response.ok) {
-                const data = await response.json();
-                pfpUrl = data.profilePictureUrl
-            } else {
-                pfpUrl = defaultProfilePicture
-            }
-            setElementAttribute(profilePictureSelector, "src", pfpUrl);
-
-
             const profileUrl = `/api/prosprofileapi/GetTechnicianProfile/${technicianId}`;
             const data = await fetchData(profileUrl);
+
             if (!data) {
                 setElementHtml(technicianPortfolioSelector, `<p class="error-message">Failed to retrieve user data.</p>`);
                 return;
             }
+
+
+            let pfpUrl;
+            if (data.profilePictureUrl) {
+                pfpUrl = data.profilePictureUrl;
+            }
+            else {
+                if (data.companyName) {
+                    pfpUrl = defaultCompanyProfilePicture
+                }
+                else {
+                    pfpUrl = defaultTechnicianProfilePicture;
+                }
+            }
+
+            setElementAttribute(profilePictureSelector, "src", pfpUrl);
+
             displayTechnicianProfile(data);
             await getUserReview();
             getReviews();
         } catch (error) {
             showToast(`Error fetching profile: ${error.message}`, true);
-            setElementAttribute(profilePictureSelector, "src", defaultProfilePicture);
+            setElementAttribute(profilePictureSelector, "src", defaultTechnicianProfilePicture);
             setElementHtml(
                 technicianPortfolioSelector,
                 `<p class="error-message">Failed to load profile data.</p>`
@@ -127,7 +129,6 @@
                `
         );
     };
-
 
     const displayPortfolios = (portfolios) => {
         const portfolioContainer = $(technicianPortfolioSelector);
