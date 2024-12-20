@@ -172,6 +172,5 @@ namespace WebUI.Controllers
 
             return Ok(new { message = "Operating cities updated successfully" });
         }
-
     }
 }
