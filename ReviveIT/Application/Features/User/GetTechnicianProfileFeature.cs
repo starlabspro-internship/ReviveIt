@@ -30,6 +30,7 @@ namespace Application.Features.User
                 ProfilePicture = user.ProfilePicture,
                 Expertise = user.Expertise,
                 Experience = user.Experience,
+                Description = user.Description,
                 Portfolios = user.Portfolios.Select(p => new
                 {
                     p.Title,

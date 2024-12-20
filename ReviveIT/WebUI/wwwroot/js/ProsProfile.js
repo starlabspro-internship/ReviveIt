@@ -99,7 +99,7 @@
         }
     };
 
-    const displayTechnicianProfile = (data) => {
+   const displayTechnicianProfile = (data) => {
         setElementAttribute(
             profilePictureSelector,
             "src",
