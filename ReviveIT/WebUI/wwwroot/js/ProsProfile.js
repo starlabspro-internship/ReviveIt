@@ -47,22 +47,10 @@
     const setElementHtml = (selector, html) => $(selector).html(html);
     const setElementAttribute = (selector, attribute, value) =>
         $(selector).attr(attribute, value);
-    const placeholderUrl = "https://via.placeholder.com/150";
-    const loadingState = () => {
-        setElementAttribute(profilePictureSelector, "src", placeholderUrl);
-        setElementText(technicianFullNameSelector, "Loading...");
-        setElementText(technicianExpertiseSelector, "Loading...");
-        setElementText(technicianExperienceSelector, "Experience: Loading...");
-        setElementHtml(technicianDescriptionSelector, "<p>Loading description...</p>");
-        setElementHtml(
-            technicianContactSelector,
-            "<h4>Contact Information</h4><p>Loading contact info...</p>"
-        );
-        setElementHtml(technicianPortfolioSelector, "<p>Loading portfolios...</p>");
-    };
+    const defaultProfilePicture = "/images/defaultProfilePicture.png";
     if (!technicianId) {
         showToast("No technician ID provided.", true)
-        setElementAttribute(profilePictureSelector, "src", placeholderUrl);
+        setElementAttribute(profilePictureSelector, "src", defaultProfilePicture);
         setElementText(technicianFullNameSelector, "No Name Provided");
         setElementText(technicianExpertiseSelector, "No Expertise Provided");
         setElementText(
@@ -79,7 +67,7 @@
     }
 
     const fetchTechnicianProfile = async () => {
-        loadingState();
+        setElementAttribute(profilePictureSelector, "src", defaultProfilePicture);
         try {
             const profileUrl = `/api/prosprofileapi/GetTechnicianProfile/${technicianId}`;
             const data = await fetchData(profileUrl);
@@ -92,6 +80,7 @@
             getReviews();
         } catch (error) {
             showToast(`Error fetching profile: ${error.message}`, true);
+            setElementAttribute(profilePictureSelector, "src", defaultProfilePicture);
             setElementHtml(
                 technicianPortfolioSelector,
                 `<p class="error-message">Failed to load profile data.</p>`
@@ -99,11 +88,11 @@
         }
     };
 
-   const displayTechnicianProfile = (data) => {
+    const displayTechnicianProfile = (data) => {
         setElementAttribute(
             profilePictureSelector,
             "src",
-            data.profilePicture || placeholderUrl
+            data.profilePicture || defaultProfilePicture
         );
         setElementText(technicianFullNameSelector, data.fullName || "No Name Provided");
         setElementText(technicianExpertiseSelector, data.expertise || "No Expertise Provided");

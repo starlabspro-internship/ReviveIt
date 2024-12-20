@@ -68,10 +68,7 @@ namespace WebUI.Controllers
             var userIdClaim = User.FindFirst("UserId")?.Value;
             var result = await _profilePictureFeature.GetProfilePictureAsync(userIdClaim);
 
-            if (result.IsSuccess)
-                return Ok(result);
-
-            return NotFound(result);
+            return Ok(result);
         }
 
         [HttpPut("api/update-profile")]
