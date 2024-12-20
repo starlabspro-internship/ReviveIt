@@ -26,32 +26,48 @@
                                     <h3 id="formTitle" class="text-center mb-4">Complete Your Profile</h3>
 
                                     <form id="profileForm">
-                                        <div  id="leftright">
-                                        <div id="left">
-                                        <div id="phoneField" class="form-group">
-                                            <label for="phone" class="form-label">Phone Number:</label>
-                                            <div class="input-group">
-                                                <div class="input-group-prepend">
-                                                    <span class="input-group-text"><i class="fa fa-phone"></i></span>
+                                        <div id="leftright">
+                                            <div id="left">
+                                                <div id="phoneField" class="form-group">
+                                                    <label for="phone" class="form-label">Phone Number:</label>
+                                                    <div class="input-group">
+                                                        <div class="input-group-prepend">
+                                                            <span class="input-group-text"><i class="fa fa-phone"></i></span>
+                                                        </div>
+                                                        <input type="text" class="form-control" id="phone" name="phone" placeholder="Enter your phone number" required>
+                                                    </div>
                                                 </div>
-                                                <input type="text" class="form-control" id="phone" name="phone" placeholder="Enter your phone number" required>
-                                            </div>
-                                        </div>
 
-                                        <div id="descriptionField" class="form-group">
-                                            <label for="description" class="form-label">Write a description about yourself:</label>
-                                            <textarea class="form-control" id="description" name="description" rows="4" placeholder="Tell us about yourself" required></textarea>
-                                        </div>
-                                        </div>
-                                        <div id="right">
-                                        <div id="cityField" class="form-group">
-                                            <label for="city" class="form-label">Chose the cities you operate in:</label>
-                                            <div>
-                                            <select class="form-control" id="city" name="city" multiple required>
-                                            </select>
+                                                <div id="descriptionField" class="form-group">
+                                                    <label for="description" class="form-label">Write a description about yourself:</label>
+                                                    <textarea class="form-control" id="description" name="description" rows="4" placeholder="Tell us about yourself" required></textarea>
+                                                </div>
                                             </div>
-                                        </div>
-                                        </div>
+                                            <div id="right">
+                                                <div id="cityField" class="form-group">
+                                                    <label for="city" class="form-label">Choose the cities you operate in:</label>
+                                                    <div>
+                                                        <select class="form-control" id="city" name="city" multiple required>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                @if (User.IsInRole("Company"))
+                                                {
+                                                    <div id="categoryField" class="form-group">
+                                                        <label for="category" class="form-label">Choose the categories your company operates in:</label>
+                                                        <div>
+                                                            <select class="form-control" id="category" name="category" multiple required>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                    <div id="experienceField" class="form-group">
+                                                        <label for="experience" class="form-label">Specify your company's experience in the industry:</label>
+                                                        <div>
+                                                            <input type="number" class="form-control" id="experience" name="experience" min="1" max="100" placeholder="Enter years of industry experience" required>
+                                                        </div>
+                                                    </div>
+                                                }
+                                            </div>
                                         </div>
                                         <button id="submitBtn" type="submit" class="btn btn-primary btn-block">Save Profile</button>
                                     </form>

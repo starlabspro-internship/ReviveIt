@@ -59,16 +59,39 @@ namespace Application.Features.User
                 await _context.OperatingCities.AddRangeAsync(operatingCities);
             }
 
+            if (profileDto.Categories != null && profileDto.Categories.Any())
+            {
+                var existingUserCategories = await _context.UserCategories
+                    .Where(uc => uc.UserId == userIdClaim)
+                    .ToListAsync();
+                _context.UserCategories.RemoveRange(existingUserCategories);
+
+                var userCategories = profileDto.Categories.Select(categoryId => new UserCategory
+                {
+                    CategoryId = categoryId,
+                    UserId = userIdClaim
+                }).ToList();
+
+                await _context.UserCategories.AddRangeAsync(userCategories);
+            }
+
+            if (profileDto.Experience != null)
+            {
+                user.Experience = profileDto.Experience.Value;
+            }
+
             user.CompletedProfile = !string.IsNullOrEmpty(user.PhoneNumber) &&
                                     !string.IsNullOrEmpty(user.Description) &&
-                                    profileDto.Cities != null && profileDto.Cities.Any();
+                                    (profileDto.Cities != null && profileDto.Cities.Any()) &&
+                                    (profileDto.Categories != null && profileDto.Categories.Any()) &&
+                                    profileDto.Experience != null;
 
             var result = await _userManager.UpdateAsync(user);
 
             if (result.Succeeded)
             {
                 await _context.SaveChangesAsync();
-                return CompleteProfileResultDto.SuccessResult("Profile and cities updated successfully.");
+                return CompleteProfileResultDto.SuccessResult("Profile updated successfully.");
             }
 
             return CompleteProfileResultDto.FailureResult("There was an error updating your profile.");

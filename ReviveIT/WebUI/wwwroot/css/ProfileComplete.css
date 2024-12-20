@@ -7,11 +7,12 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 250px;
+    padding: 60px 20px;
 }
 
 #profileContainer {
     max-width: 100%;
+    padding: 0 15px;
 }
 
 #profileFormSection {
@@ -19,22 +20,30 @@
 }
 
 #formCard {
-    padding: 40px;
+    padding: 30px;
     background-color: #fff;
     border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+#formTitle {
+    font-size: 28px;
+    color: #333;
+    font-weight: bold;
+    margin-bottom: 20px;
+    text-align: center;
 }
 
 #leftright {
     display: flex;
+    flex-wrap: wrap;
     justify-content: space-between;
-    gap: 20px; 
-    flex-wrap: wrap; 
+    gap: 20px;
 }
 
-#formTitle {
-    font-size: 24px;
-    color: #333;
-    font-weight: bold;
+#left{
+    flex: 1;
+    min-width: 250px;
 }
 
 #phoneField, #descriptionField, #cityField {
@@ -51,6 +60,7 @@
     border-radius: 8px;
     padding: 12px;
     font-size: 14px;
+    border: 1px solid #ddd;
 }
 
 #phoneField .input-group-prepend {
@@ -61,12 +71,13 @@
 #submitBtn {
     background-color: #007bff;
     color: white;
-    padding: 12px;
+    padding: 14px;
     border-radius: 8px;
     font-size: 16px;
     width: 100%;
     border: none;
     cursor: pointer;
+    transition: background-color 0.3s ease;
 }
 
     #submitBtn:hover {
@@ -74,7 +85,7 @@
     }
 
 .select2-container--default .select2-selection--multiple {
-    border-radius: 8px;
+    border-radius: 8px !important;
     padding: 0px;
     font-size: 14px;
 }
@@ -92,4 +103,24 @@
 
 .select2-container--default .select2-selection__choice__remove {
     color: white;
+}
+
+@media (max-width: 767px) {
+    #profileSection {
+        padding: 40px 15px;
+    }
+
+    #formCard {
+        padding: 20px;
+    }
+
+    #leftright {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    #left, #right {
+        flex: none;
+        min-width: 100%;
+    }
 }
