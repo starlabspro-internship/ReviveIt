@@ -67,8 +67,25 @@
     }
 
     const fetchTechnicianProfile = async () => {
-        setElementAttribute(profilePictureSelector, "src", defaultProfilePicture);
         try {
+
+            const response = await fetch(`/ProfileUpdate/api/get`, {
+                method: "GET",
+                headers: {
+                    Authorization: `Bearer ${getCookie("jwtToken")}`,
+                },
+            });
+
+            let pfpUrl;
+            if (response.ok) {
+                const data = await response.json();
+                pfpUrl = data.profilePictureUrl
+            } else {
+                pfpUrl = defaultProfilePicture
+            }
+            setElementAttribute(profilePictureSelector, "src", pfpUrl);
+
+
             const profileUrl = `/api/prosprofileapi/GetTechnicianProfile/${technicianId}`;
             const data = await fetchData(profileUrl);
             if (!data) {
@@ -87,13 +104,7 @@
             );
         }
     };
-
     const displayTechnicianProfile = (data) => {
-        setElementAttribute(
-            profilePictureSelector,
-            "src",
-            data.profilePicture || defaultProfilePicture
-        );
         setElementText(technicianFullNameSelector, data.companyName || data.fullName || "");
         setElementText(technicianExpertiseSelector, data.expertise || "No Expertise Provided");
         setElementText(
@@ -116,6 +127,7 @@
                `
         );
     };
+
 
     const displayPortfolios = (portfolios) => {
         const portfolioContainer = $(technicianPortfolioSelector);
