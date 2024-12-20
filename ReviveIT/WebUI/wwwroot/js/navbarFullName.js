@@ -1,41 +1,45 @@
-﻿async function fetchFullName() {
-    const navbarFullName = document.getElementById('navbarFullName');
+﻿function getCookie(name) {
+    const cookies = document.cookie.split("; ");
+    const cookie = cookies.find((cookie) => cookie.startsWith(name + "="));
+    return cookie ? decodeURIComponent(cookie.split("=")[1]) : null;
+}
+
+async function fetchFullName() {
+    const navbarFullName = document.getElementById("navbarFullName");
     try {
-        const response = await fetch('/ProfileUpdate/api/info?type=fullname', {
-            method: 'GET',
+        const response = await fetch("/ProfileUpdate/api/info?type=fullname", {
+            method: "GET",
             headers: {
-                'Authorization': `Bearer ${getCookie('jwtToken')}`
-            }
+                Authorization: `Bearer ${getCookie("jwtToken")}`,
+            },
         });
 
         if (response.ok) {
             const data = await response.json();
-            navbarFullName.textContent = data.fullName || "John Doe";
-        } else {
-            navbarFullName.textContent = "John Doe";
+            navbarFullName.textContent = data.fullName || "";
         }
     } catch (error) {
-        navbarFullName.textContent = "John Doe";
+        console.error("Error fetching name:", error);
     }
 }
 
 async function fetchUserRole() {
-    const statusText = document.getElementById('statusText');
+    const statusText = document.getElementById("statusText");
     try {
-        const response = await fetch('/ProfileUpdate/api/info?type=role', {
-            method: 'GET',
+        const response = await fetch("/ProfileUpdate/api/info?type=role", {
+            method: "GET",
             headers: {
-                'Authorization': `Bearer ${getCookie('jwtToken')}`
-            }
+                Authorization: `Bearer ${getCookie("jwtToken")}`,
+            },
         });
 
         if (response.ok) {
             const data = await response.json();
             const roles = {
-                'Admin': 'Admin',
-                'Customer': 'Customer',
-                'Technician': 'Technician',
-                'Company': 'Company'
+                Admin: "Admin",
+                Customer: "Customer",
+                Technician: "Technician",
+                Company: "Company",
             };
             statusText.textContent = roles[data.role] || "Unknown";
         } else {
@@ -46,7 +50,7 @@ async function fetchUserRole() {
     }
 }
 
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener("DOMContentLoaded", () => {
     fetchFullName();
     fetchUserRole();
 });

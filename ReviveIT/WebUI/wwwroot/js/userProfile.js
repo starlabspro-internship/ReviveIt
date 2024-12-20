@@ -45,10 +45,10 @@ async function fetchName() {
             const data = await response.json();
             userName.textContent = data.fullName || "";
         } else {
-            userName.textContent = "John Doe";
+            userName.textContent = "";
         }
     } catch (error) {
-        userName.textContent = "John Doe";
+        userName.textContent = "";
     }
 }
 

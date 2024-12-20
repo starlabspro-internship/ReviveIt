@@ -51,7 +51,7 @@
     if (!technicianId) {
         showToast("No technician ID provided.", true)
         setElementAttribute(profilePictureSelector, "src", defaultProfilePicture);
-        setElementText(technicianFullNameSelector, "No Name Provided");
+        setElementText(technicianFullNameSelector, "");
         setElementText(technicianExpertiseSelector, "No Expertise Provided");
         setElementText(
             technicianExperienceSelector,
@@ -94,7 +94,7 @@
             "src",
             data.profilePicture || defaultProfilePicture
         );
-        setElementText(technicianFullNameSelector, data.fullName || "No Name Provided");
+        setElementText(technicianFullNameSelector, data.companyName || data.fullName || "");
         setElementText(technicianExpertiseSelector, data.expertise || "No Expertise Provided");
         setElementText(
             technicianExperienceSelector,
@@ -211,11 +211,11 @@
                 .map(
                     (review) =>
                         `<div class="review-item">
-                 <p class="rating">Rating: ${review.rating}/5</p>
-                  <p class="comment">Comment: ${review.content}</p>
-                 <p class="reviewer">Review by ${review.reviewerName || "Anonymous User"
+                     <p class="rating">Rating: ${review.rating}/5</p>
+                      <p class="comment">Comment: ${review.content}</p>
+                     <p class="reviewer">Review by ${review.reviewerName || "Anonymous User"
                         }</p>
-               </div>`
+                   </div>`
                 )
                 .join("");
             reviewsDropdown.html(reviewsHTML)
