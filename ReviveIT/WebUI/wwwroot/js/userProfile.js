@@ -10,66 +10,67 @@
 }
 
 function openModalPfp() {
-    const modal = new bootstrap.Modal(document.getElementById('profileModal'));
+    const modal = new bootstrap.Modal(document.getElementById("profileModal"));
     modal.show();
 }
 
 function zoomImage() {
-    const profileImage = document.getElementById('profileImage').src;
-    const zoomedImage = document.getElementById('zoomedImage');
+    const profileImage = document.getElementById("profileImage").src;
+    const zoomedImage = document.getElementById("zoomedImage");
     zoomedImage.src = profileImage;
 
-    const zoomModal = new bootstrap.Modal(document.getElementById('zoomModal'));
+    const zoomModal = new bootstrap.Modal(document.getElementById("zoomModal"));
     zoomModal.show();
 }
 
 document.addEventListener("DOMContentLoaded", () => {
     fetchName();
     fetchRole();
+    getProfilePicture();
 });
 
 async function fetchName() {
-    const userName = document.getElementById('UserName');
+    const userName = document.getElementById("UserName");
     if (!userName) return;
 
     try {
-        const response = await fetch('/ProfileUpdate/api/info?type=fullname', {
-            method: 'GET',
+        const response = await fetch("/ProfileUpdate/api/info?type=fullname", {
+            method: "GET",
             headers: {
-                'Authorization': `Bearer ${getCookie('jwtToken')}`
-            }
+                Authorization: `Bearer ${getCookie("jwtToken")}`,
+            },
         });
 
         if (response.ok) {
             const data = await response.json();
             userName.textContent = data.fullName || "";
         } else {
-            userName.textContent = "John Doe";
+            userName.textContent = "";
         }
     } catch (error) {
-        userName.textContent = "John Doe";
+        userName.textContent = "";
     }
 }
 
 async function fetchRole() {
-    const userRole = document.getElementById('userRole');
+    const userRole = document.getElementById("userRole");
     if (!userRole) return;
 
     try {
-        const response = await fetch('/ProfileUpdate/api/info?type=role', {
-            method: 'GET',
+        const response = await fetch("/ProfileUpdate/api/info?type=role", {
+            method: "GET",
             headers: {
-                'Authorization': `Bearer ${getCookie('jwtToken')}`
-            }
+                Authorization: `Bearer ${getCookie("jwtToken")}`,
+            },
         });
 
         if (response.ok) {
             const data = await response.json();
             const roles = {
-                'Admin': 'Admin',
-                'Customer': 'Customer',
-                'Technician': 'Technician',
-                'Company': 'Company'
+                Admin: "Admin",
+                Customer: "Customer",
+                Technician: "Technician",
+                Company: "Company",
             };
             userRole.textContent = roles[data.role] || "Unknown";
         } else {
@@ -81,9 +82,9 @@ async function fetchRole() {
 }
 
 let cropper;
-const cropperModal = document.getElementById('cropperModal');
-const cropperImage = document.getElementById('cropperImage');
-const profileImage = document.getElementById('profileImage');
+const cropperModal = document.getElementById("cropperModal");
+const cropperImage = document.getElementById("cropperImage");
+const profileImage = document.getElementById("profileImage");
 const imageUpload = document.getElementById("imageUpload");
 
 imageUpload.addEventListener("change", (event) => {
@@ -101,7 +102,7 @@ imageUpload.addEventListener("change", (event) => {
 });
 
 async function uploadProfileImage() {
-    const fileInput = document.getElementById('imageUpload');
+    const fileInput = document.getElementById("imageUpload");
     const file = fileInput.files[0];
 
     if (!file) {
@@ -113,12 +114,12 @@ async function uploadProfileImage() {
     formData.append("ProfilePicture", file);
 
     try {
-        const response = await fetch('/ProfileUpdate/api/upload', {
-            method: 'POST',
+        const response = await fetch("/ProfileUpdate/api/upload", {
+            method: "POST",
             headers: {
-                'Authorization': `Bearer ${getCookie('jwtToken')}`
+                Authorization: `Bearer ${getCookie("jwtToken")}`,
             },
-            body: formData
+            body: formData,
         });
 
         if (response.ok) {
@@ -127,7 +128,7 @@ async function uploadProfileImage() {
             getProfilePicture();
         } else {
             const error = await response.json();
-            alert(`Failed to upload: ${error.message || 'Unknown error'}`);
+            alert(`Failed to upload: ${error.message || "Unknown error"}`);
         }
     } catch (error) {
         alert("An error occurred while uploading the profile picture.");
@@ -143,7 +144,7 @@ function saveCroppedImage() {
         const croppedCanvas = cropper.getCroppedCanvas();
         if (croppedCanvas) {
             profileImage.src = croppedCanvas.toDataURL();
-            cropperModal.classList.add('d-none');
+            cropperModal.classList.add("d-none");
             cropper.destroy();
             cropper = null;
         }
@@ -151,7 +152,7 @@ function saveCroppedImage() {
 }
 
 function cancelCrop() {
-    cropperModal.classList.add('d-none');
+    cropperModal.classList.add("d-none");
     if (cropper) {
         cropper.destroy();
         cropper = null;
@@ -167,54 +168,47 @@ cropper = new Cropper(cropperImage, {
     cropBoxResizable: true,
     responsive: true,
     ready() {
-        document.querySelectorAll('.cropper-hide, .cropper-view-box').forEach(element => {
-            element.style.display = 'none';
-        });
-    }
+        document.querySelectorAll(".cropper-hide, .cropper-view-box").forEach(
+            (element) => {
+                element.style.display = "none";
+            }
+        );
+    },
 });
 
 async function getProfilePicture() {
     try {
-        const response = await fetch('/ProfileUpdate/api/get', {
-            method: 'GET',
+        const response = await fetch("/ProfileUpdate/api/get", {
+            method: "GET",
             headers: {
-                'Authorization': `Bearer ${getCookie('jwtToken')}`
-            }
+                Authorization: `Bearer ${getCookie("jwtToken")}`,
+            },
         });
 
         if (response.ok) {
             const data = await response.json();
-
-            const profileImage = document.getElementById('profileImage');
-
-            if (data.profilePictureUrl) {
-                profileImage.src = `${data.profilePictureUrl}`;
-            } else {
-                profileImage.src = "https://via.placeholder.com/150";
-            }
-        } else {
-            const profileImage = document.getElementById('profileImage');
-            profileImage.src = "https://via.placeholder.com/150";
+            const profileImage = document.getElementById("profileImage");
+            profileImage.src = data.profilePictureUrl;
         }
     } catch (error) {
-        const profileImage = document.getElementById('profileImage');
-        profileImage.src = "https://via.placeholder.com/150";
+        const profileImage = document.getElementById("profileImage");
+        profileImage.src = "/images/defaultProfilePicture.png";
     }
 }
 
 async function removeProfilePicture() {
     try {
-        const response = await fetch('/ProfileUpdate/api/remove', {
-            method: 'DELETE',
+        const response = await fetch("/ProfileUpdate/api/remove", {
+            method: "DELETE",
             headers: {
-                'Authorization': `Bearer ${getCookie('jwtToken')}`
-            }
+                Authorization: `Bearer ${getCookie("jwtToken")}`,
+            },
         });
 
         if (response.ok) {
             alert("Profile picture removed successfully!");
-            const profileImage = document.getElementById('profileImage');
-            profileImage.src = 'https://via.placeholder.com/150';
+            getProfilePicture()
+
         } else {
             alert("Failed to remove profile picture.");
         }
@@ -239,11 +233,11 @@ async function updateProfileImage(event) {
     };
 
     try {
-        const response = await fetch('/ProfileUpdate/api/update-profile', {
-            method: 'PUT',
+        const response = await fetch("/ProfileUpdate/api/update-profile", {
+            method: "PUT",
             headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${getCookie('jwtToken')}`
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${getCookie("jwtToken")}`,
             },
             body: JSON.stringify(updateProfileDTO),
         });
@@ -253,7 +247,9 @@ async function updateProfileImage(event) {
             getProfilePicture();
         } else {
             const error = await response.json();
-            alert(`Failed to update profile picture: ${error.message || 'Unknown error'}`);
+            alert(
+                `Failed to update profile picture: ${error.message || "Unknown error"}`
+            );
         }
     } catch (error) {
         alert("An error occurred while updating the profile picture.");
@@ -264,16 +260,16 @@ function convertToBase64(file) {
     return new Promise((resolve, reject) => {
         const reader = new FileReader();
         reader.onload = () => resolve(reader.result);
-        reader.onerror = error => reject(error);
+        reader.onerror = (error) => reject(error);
         reader.readAsDataURL(file);
     });
 }
 
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener("DOMContentLoaded", () => {
     getDescription();
 });
 
-document.addEventListener('keydown', function (event) {
+document.addEventListener("keydown", function (event) {
     if (event.key === 'Escape') {
         const categoriesModal = document.getElementById('editCategoriesModal');
         const citiesModal = document.getElementById('editCitiesModal');

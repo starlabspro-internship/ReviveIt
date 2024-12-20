@@ -25,6 +25,7 @@ namespace Application.Features.User
             var profile = new
             {
                 FullName = user.FullName,
+                CompanyName = user.CompanyName,
                 PhoneNumber = user.PhoneNumber,
                 Email = user.Email,
                 ProfilePicture = user.ProfilePicture,

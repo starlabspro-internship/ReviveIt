@@ -47,23 +47,11 @@
     const setElementHtml = (selector, html) => $(selector).html(html);
     const setElementAttribute = (selector, attribute, value) =>
         $(selector).attr(attribute, value);
-    const placeholderUrl = "https://via.placeholder.com/150";
-    const loadingState = () => {
-        setElementAttribute(profilePictureSelector, "src", placeholderUrl);
-        setElementText(technicianFullNameSelector, "Loading...");
-        setElementText(technicianExpertiseSelector, "Loading...");
-        setElementText(technicianExperienceSelector, "Experience: Loading...");
-        setElementHtml(technicianDescriptionSelector, "<p>Loading description...</p>");
-        setElementHtml(
-            technicianContactSelector,
-            "<h4>Contact Information</h4><p>Loading contact info...</p>"
-        );
-        setElementHtml(technicianPortfolioSelector, "<p>Loading portfolios...</p>");
-    };
+    const defaultProfilePicture = "/images/defaultProfilePicture.png";
     if (!technicianId) {
         showToast("No technician ID provided.", true)
-        setElementAttribute(profilePictureSelector, "src", placeholderUrl);
-        setElementText(technicianFullNameSelector, "No Name Provided");
+        setElementAttribute(profilePictureSelector, "src", defaultProfilePicture);
+        setElementText(technicianFullNameSelector, "");
         setElementText(technicianExpertiseSelector, "No Expertise Provided");
         setElementText(
             technicianExperienceSelector,
@@ -79,8 +67,25 @@
     }
 
     const fetchTechnicianProfile = async () => {
-        loadingState();
         try {
+
+            const response = await fetch(`/ProfileUpdate/api/get`, {
+                method: "GET",
+                headers: {
+                    Authorization: `Bearer ${getCookie("jwtToken")}`,
+                },
+            });
+
+            let pfpUrl;
+            if (response.ok) {
+                const data = await response.json();
+                pfpUrl = data.profilePictureUrl
+            } else {
+                pfpUrl = defaultProfilePicture
+            }
+            setElementAttribute(profilePictureSelector, "src", pfpUrl);
+
+
             const profileUrl = `/api/prosprofileapi/GetTechnicianProfile/${technicianId}`;
             const data = await fetchData(profileUrl);
             if (!data) {
@@ -92,20 +97,15 @@
             getReviews();
         } catch (error) {
             showToast(`Error fetching profile: ${error.message}`, true);
+            setElementAttribute(profilePictureSelector, "src", defaultProfilePicture);
             setElementHtml(
                 technicianPortfolioSelector,
                 `<p class="error-message">Failed to load profile data.</p>`
             );
         }
     };
-
-   const displayTechnicianProfile = (data) => {
-        setElementAttribute(
-            profilePictureSelector,
-            "src",
-            data.profilePicture || placeholderUrl
-        );
-        setElementText(technicianFullNameSelector, data.fullName || "No Name Provided");
+    const displayTechnicianProfile = (data) => {
+        setElementText(technicianFullNameSelector, data.companyName || data.fullName || "");
         setElementText(technicianExpertiseSelector, data.expertise || "No Expertise Provided");
         setElementText(
             technicianExperienceSelector,
@@ -127,6 +127,7 @@
                `
         );
     };
+
 
     const displayPortfolios = (portfolios) => {
         const portfolioContainer = $(technicianPortfolioSelector);
@@ -222,11 +223,11 @@
                 .map(
                     (review) =>
                         `<div class="review-item">
-                 <p class="rating">Rating: ${review.rating}/5</p>
-                  <p class="comment">Comment: ${review.content}</p>
-                 <p class="reviewer">Review by ${review.reviewerName || "Anonymous User"
+                     <p class="rating">Rating: ${review.rating}/5</p>
+                      <p class="comment">Comment: ${review.content}</p>
+                     <p class="reviewer">Review by ${review.reviewerName || "Anonymous User"
                         }</p>
-               </div>`
+                   </div>`
                 )
                 .join("");
             reviewsDropdown.html(reviewsHTML)
