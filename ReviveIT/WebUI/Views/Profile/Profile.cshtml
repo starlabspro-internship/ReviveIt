@@ -10,6 +10,10 @@
 @section Scripts{
     <script src="https://cdn.jsdelivr.net/npm/cropperjs@1.5.12/dist/cropper.min.js"></script>
     <script src="~/js/userProfile.js"></script>
+    <script src="~/js/Portofolio.js"></script>
+    <script src="~/js/editCitiesProfile.js"></script>
+    <script src="~/js/editCategoriesProfile.js"></script>
+    <script src="~/js/editDescriptionProfile.js"></script>
 }
 
 <div class="hero_area">
@@ -88,17 +92,44 @@
                             <div class="row d-flex align-items-stretch">
                                 <div class="col-md-6 d-flex align-items-stretch">
                                     <div class="card w-100 border p-3">
-                                        <h5>Skills and Services</h5>
-                                        <ul class="list-unstyled mb-4">
-                                            <li><i class=""></i> Nan</li>
-                                            <li><i class=""></i> Nana</li>
-                                            <li><i class=""></i> Nothin</li>
-                                        </ul>
-                                        <button class="btn btn-secondary btn-sm edit-button d-none" onclick="editSkills()">Edit Skills</button>
-
-                                        <h5 class="mt-4">Work Experience</h5>
-                                        <p>Over 10 years of experience handling various tasks.</p>
-                                        <button class="btn btn-secondary btn-sm edit-button d-none" onclick="editExperience()">Edit Work Experience</button>
+                                        <div id="descriptionContainer" style="margin-bottom:15px;">
+                                            <h5>Description</h5>
+                                            <div id="descriptionText"></div>
+                                            <button class="btn btn-secondary btn-sm edit-button" style="width:100%;" onclick="editDescription()">Edit Description</button>
+                                        </div>
+                                        <div id="selectedCategoriesContainer">
+                                            <h5>Selected Categories</h5>
+                                            <ul id="selectedCategoriesList"></ul>
+                                            <button class="btn btn-secondary btn-sm edit-button" style="width:100%;" onclick="editCategories()">Edit Categories</button>
+                                        </div>
+                                        <div id="editCategoriesModal" class="modal" style="display: none;">
+                                            <div class="modal-content">
+                                                <span class="close-modal" onclick="closeEditCategoriesModal()">&times;</span>
+                                                <h5>Edit Categories</h5>
+                                                <ul id="allCategoriesList"></ul>
+                                                <button class="btn btn-primary" onclick="saveCategories()">Save Changes</button>
+                                                <button class="btn btn-secondary" onclick="closeEditCategoriesModal()">Cancel</button>
+                                            </div>
+                                        </div>
+                                        <div id="selectedCitiesContainer">
+                                            <h5>Operating Cities</h5>
+                                            <ul id="selectedCitiesList"></ul>
+                                            <button class="btn btn-secondary btn-sm edit-button" style="width:100%;" onclick="editCities()">Edit Cities</button>
+                                        </div>
+                                        <div id="editCitiesModal" class="modal" style="display: none;">
+                                            <div class="modal-content">
+                                                <span class="close-modal" onclick="closeEditCitiesModal()">&times;</span>
+                                                <h5>Edit Operating Cities</h5>
+                                                <ul id="allCitiesList"></ul>
+                                                <button class="btn btn-primary" onclick="saveCities()">Save Changes</button>
+                                                <button class="btn btn-secondary" onclick="closeEditCitiesModal()">Cancel</button>
+                                            </div>
+                                        </div>
+                                        <div id="WorkExperienceContainer">
+                                            <h5 class="mt-4">Work Experience</h5>
+                                            <p>Over 10 years of experience handling various tasks.</p>
+                                            <button class="btn btn-secondary btn-sm edit-button d-none" onclick="editExperience()">Edit Work Experience</button>
+                                        </div>
                                     </div>
                                 </div>
 
@@ -173,7 +204,6 @@
                                 </div>
                             </div> *@
 
-                            <script src="~/js/Portofolio.js"></script>
                         }
                         <div class="text-center mt-4">
                             <h5>Social Links</h5>

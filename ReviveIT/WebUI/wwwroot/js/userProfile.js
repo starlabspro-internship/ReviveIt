@@ -270,5 +270,20 @@ function convertToBase64(file) {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-    getProfilePicture();
+    getDescription();
+});
+
+document.addEventListener('keydown', function (event) {
+    if (event.key === 'Escape') {
+        const categoriesModal = document.getElementById('editCategoriesModal');
+        const citiesModal = document.getElementById('editCitiesModal');
+
+        if (categoriesModal && categoriesModal.style.display === 'block') {
+            closeEditCategoriesModal();
+        }
+
+        if (citiesModal && citiesModal.style.display === 'block') {
+            closeEditCitiesModal();
+        }
+    }
 });
