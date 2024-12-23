@@ -37,7 +37,7 @@ namespace Application.Features.User
             }
 
             var city = await _context.Cities.FindAsync(jobPostDto.CityId);
-            if(city==null)
+            if (city == null)
             {
                 return JobPostResultDto.FailureResult("City not found");
             }
@@ -75,21 +75,35 @@ namespace Application.Features.User
 
         public async Task<DeleteJobDto> DeleteJobPostAsync(int jobId, string userId)
         {
-            var jobPost = await _context.Jobs.FindAsync(jobId);
+            var jobPost = await _context.Jobs
+                .FirstOrDefaultAsync(j => j.JobID == jobId && j.UserId == userId);
+
             if (jobPost == null)
             {
                 return DeleteJobDto.Failure("Job post not found.", 404);
             }
 
-            if (jobPost.UserId != userId)
+            var selectedApplicants = await _context.SelectedJobApplicants
+                .Where(sa => sa.JobID == jobId)
+                .ToListAsync();
+
+            if (selectedApplicants.Any())
             {
-                return DeleteJobDto.Failure("You are not authorized to delete this job post.", 403);
+                _context.SelectedJobApplicants.RemoveRange(selectedApplicants);
             }
 
+
+            var jobApplications = await _context.JobApplications
+                 .Where(ja => ja.JobID == jobId)
+                 .ToListAsync();
+
+            if (jobApplications.Any())
+            {
+                _context.JobApplications.RemoveRange(jobApplications);
+            }
             _context.Jobs.Remove(jobPost);
             await _context.SaveChangesAsync();
-
-            return DeleteJobDto.Success("Job post deleted successfully.");
+            return DeleteJobDto.Success("Job post and associated applications deleted successfully.");
         }
     }
 }

@@ -71,9 +71,9 @@ function createJobCard(job) {
                         <span class="badge bg-light text-dark">${job.company || 'N/A'}</span>
                     </div>
                     <p class="text-muted mb-1"><i class="fa fa-map-marker-alt" aria-hidden="true"></i> ${job.cityName || 'N/A'}</p>
-                    <p class="mb-3"><strong>${job.pay || 'N/A'}</strong> •
-                        <i class="fa fa-level-up-alt" aria-hidden="true"></i> ${job.status} •
-                        <i class="fa fa-briefcase" aria-hidden="true"></i> ${job.categoryName}</p>
+                    <p class="mb-3"><strong>${job.price || 'N/A'}</strong> •
+                        <i class="fa fa-level-up-alt" aria-hidden="true"></i> ${job.status || 'N/A'} •
+                        <i class="fa fa-briefcase" aria-hidden="true"></i> ${job.categoryName || 'N/A'}</p>
                      <button class="btn btn-outline-primary btn-sm details-btn" data-job-id="${job.jobID}" data-bs-toggle="collapse" data-bs-target="#descriptionField${job.jobID}">Details</button>
                      <div class="collapse" id="descriptionField${job.jobID}">
                             <p>${job.description || 'N/A'}</p>
@@ -81,7 +81,7 @@ function createJobCard(job) {
                         </div>
                 
                  <div class="option-box" style="margin-top: 1em">
-                            <button class="btn btn-danger" data-job-id="${job.jobID}">Delete Job</button>
+                            <button class="btn btn-danger delete-btn" data-job-id="${job.jobID}">Delete Job</button>
                         </div>
                         </div>
             </div>
@@ -190,9 +190,10 @@ async function deleteJobPost(event) {
             'Content-Type': 'application/json'
         }
     });
-
     if (response && response.success) {
         getAllJobs();
+    } else {
+        alert("There was an error deleting the job");
     }
 }
 
@@ -230,6 +231,7 @@ async function submitJobForm(event) {
 
     isJobPostingInProgress = false;
 }
+
 function fetchCategories() {
     fetch('/api/categories/getCategories')
         .then(response => response.json())
