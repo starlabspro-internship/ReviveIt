@@ -80,11 +80,20 @@ namespace Application.Features.User
                 user.Experience = profileDto.Experience.Value;
             }
 
-            user.CompletedProfile = !string.IsNullOrEmpty(user.PhoneNumber) &&
-                                    !string.IsNullOrEmpty(user.Description) &&
-                                    (profileDto.Cities != null && profileDto.Cities.Any()) &&
-                                    (profileDto.Categories != null && profileDto.Categories.Any()) &&
-                                    profileDto.Experience != null;
+            if (user.Role == UserRole.Technician)
+            {
+                user.CompletedProfile = !string.IsNullOrEmpty(user.PhoneNumber) &&
+                                        !string.IsNullOrEmpty(user.Description) &&
+                                        (profileDto.Cities != null && profileDto.Cities.Any());
+            }
+            else if (user.Role == UserRole.Company)
+            {
+                user.CompletedProfile = !string.IsNullOrEmpty(user.PhoneNumber) &&
+                                        !string.IsNullOrEmpty(user.Description) &&
+                                        (profileDto.Cities != null && profileDto.Cities.Any()) &&
+                                        (profileDto.Categories != null && profileDto.Categories.Any()) &&
+                                        profileDto.Experience != null;
+            }
 
             var result = await _userManager.UpdateAsync(user);
 
