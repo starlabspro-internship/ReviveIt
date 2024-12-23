@@ -124,6 +124,7 @@ async function renderTechnicians(technicians) {
               <span class="expert_rating" style="color:black">
                  ${starsHtml} ${reviewCount}
                </span>
+               <p style="color:#000;">${technician.role}</p>
              </div>
            </div>
         </div>`;

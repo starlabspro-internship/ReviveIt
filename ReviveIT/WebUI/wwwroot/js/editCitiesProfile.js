@@ -122,5 +122,8 @@ async function saveCities() {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-    fetchSelectedCities();
+    const citiesContainer = document.getElementById('selectedCitiesContainer');
+    if (citiesContainer) {
+        fetchSelectedCities();
+    }
 });

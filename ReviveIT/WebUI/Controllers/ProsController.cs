@@ -83,6 +83,7 @@ namespace WebUI.Controllers
             {
                 Id = u.Id,
                 FullName = u.Role == UserRole.Company ? u.CompanyName : u.FullName,
+                Role = u.Role.ToString(),
                 Expertise = u.Expertise,
                 Experience = u.Experience ?? 0,
                 CompanyName = u.CompanyName,
