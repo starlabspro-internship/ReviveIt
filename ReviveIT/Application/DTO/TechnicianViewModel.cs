@@ -10,6 +10,7 @@ namespace Application.DTO
     {
         public string Id { get; set; }
         public string FullName { get; set; }
+        public string Role { get; set; }
         public string Expertise { get; set; }
         public int? Experience { get; set; }
         public string CompanyName { get; set; }
