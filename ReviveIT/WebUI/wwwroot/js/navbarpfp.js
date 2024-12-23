@@ -1,30 +1,27 @@
 ﻿function getCookie(name) {
     const cookies = document.cookie.split("; ");
-    const cookie = cookies.find(cookie => cookie.startsWith(name + "="));
+    const cookie = cookies.find((cookie) => cookie.startsWith(name + "="));
     return cookie ? decodeURIComponent(cookie.split("=")[1]) : null;
 }
 
 async function fetchNavbarProfilePicture() {
-    const navbarProfilePicture = document.getElementById('navbarProfilePicture');
-    const placeholderUrl = "https://via.placeholder.com/150";
-
+    const navbarProfilePicture = document.getElementById("navbarProfilePicture");
     try {
         const response = await fetch(`/ProfileUpdate/api/get`, {
-            method: 'GET',
+            method: "GET",
             headers: {
-                'Authorization': `Bearer ${getCookie('jwtToken')}`
-            }
+                Authorization: `Bearer ${getCookie("jwtToken")}`,
+            },
         });
 
         if (response.ok) {
             const data = await response.json();
-            navbarProfilePicture.src = data.profilePictureUrl || placeholderUrl;
-        } else {
-            navbarProfilePicture.src = placeholderUrl;
+            navbarProfilePicture.src = data.profilePictureUrl;
+
         }
     } catch (error) {
-        navbarProfilePicture.src = placeholderUrl;
+        navbarProfilePicture.src = "/images/defaultProfilePicture.png";
     }
 }
 
-document.addEventListener('DOMContentLoaded', fetchNavbarProfilePicture);
+document.addEventListener("DOMContentLoaded", fetchNavbarProfilePicture);

@@ -123,24 +123,7 @@
                                     <option value="salary">In Progress</option>
                                     <option value="salary">Most Applicants</option>
                                 </select>
-                            </div>
-                            <button id="addJobBtn" class="btn btn-primary">Add Job</button>
-                        </div>
-
                         <div class="row g-4" id="jobsContainer">
-                            <div class="col-md-6 mb-4">
-                                <div class="box shadow-sm border-0 h-100">
-                                    <div class="card-body">
-                                        <div class="d-flex justify-content-between align-items-center mb-2">
-                                            <h5 class="card-title mb-0">Senior UI/UX Designer</h5>
-                                            <span class="badge bg-light text-dark">Amazon</span>
-                                        </div>
-                                        <p class="text-muted mb-1"><i class="fa fa-map-marker-alt" aria-hidden="true"></i> San Francisco, CA</p>
-                                        <p class="mb-3"><strong>$250/hr</strong> • <i class="fa fa-level-up-alt" aria-hidden="true"></i> Senior level • <i class="fa fa-briefcase" aria-hidden="true"></i> Remote</p>
-                                        <a href="#" class="btn btn-outline-primary btn-sm">Details</a>
-                                    </div>
-                                </div>
-                            </div>
                         </div>
                     </div>
                 </div>
@@ -149,55 +132,294 @@
     </section>
 
     <script>
-        document.querySelectorAll('.toggle-filter').forEach(button => {
-            button.addEventListener('click', function () {
-                const filterId = this.dataset.filter;
-                const icon = this.querySelector('.arrow-button i');
-                const filterDiv = document.querySelector(filterId);
+            document.querySelectorAll('.toggle-filter').forEach(button => {
+                button.addEventListener('click', function () {
+                    const filterId = this.dataset.filter;
+                    const icon = this.querySelector('.arrow-button i');
+                    const filterDiv = document.querySelector(filterId);
 
-                $(filterDiv).collapse('toggle');
-                icon.classList.toggle('rotated');
+                    $(filterDiv).collapse('toggle');
+                    icon.classList.toggle('rotated');
+                });
             });
-        });
 
-        const salaryRange = document.getElementById('salaryRange');
-        const minSalary = document.getElementById('minSalary');
-        const maxSalary = document.getElementById('maxSalary');
-        const salaryType = document.getElementById('salaryType');
-        const minValue = document.getElementById('minValue');
-        const maxValue = document.getElementById('maxValue');
-        const stepValue = document.getElementById('stepValue');
+            const salaryRange = document.getElementById('salaryRange');
+            const minSalary = document.getElementById('minSalary');
+            const maxSalary = document.getElementById('maxSalary');
+            const salaryType = document.getElementById('salaryType');
+            const minValue = document.getElementById('minValue');
+            const maxValue = document.getElementById('maxValue');
+            const stepValue = document.getElementById('stepValue');
 
-        salaryRange.addEventListener('input', function () {
-            const value = salaryRange.value;
-            if (salaryType.value === 'hourly') {
-                minSalary.textContent = `$${value} per hour`;
-            } else {
-                minSalary.textContent = `$${value}`;
-            }
-        });
+            salaryRange.addEventListener('input', function () {
+                const value = salaryRange.value;
+                if (salaryType.value === 'hourly') {
+                    minSalary.textContent = `$${value} per hour`;
+                } else {
+                    minSalary.textContent = `$${value}`;
+                }
+            });
 
-        salaryType.addEventListener('change', function () {
-            const value = salaryRange.value;
-            if (salaryType.value === 'hourly') {
-                minSalary.textContent = `$${value} per hour`;
-                maxSalary.textContent = `$${salaryRange.max} per hour`;
-            } else {
-                minSalary.textContent = `$${value}`;
+            salaryType.addEventListener('change', function () {
+                const value = salaryRange.value;
+                if (salaryType.value === 'hourly') {
+                    minSalary.textContent = `$${value} per hour`;
+                    maxSalary.textContent = `$${salaryRange.max} per hour`;
+                } else {
+                    minSalary.textContent = `$${value}`;
+                    maxSalary.textContent = `$${salaryRange.max}`;
+                }
+            });
+
+            function updateRange() {
+                salaryRange.min = minValue.value;
+                salaryRange.max = maxValue.value;
+                salaryRange.step = stepValue.value;
+                minSalary.textContent = `$${salaryRange.min}`;
                 maxSalary.textContent = `$${salaryRange.max}`;
             }
-        });
 
-        function updateRange() {
-            salaryRange.min = minValue.value;
-            salaryRange.max = maxValue.value;
-            salaryRange.step = stepValue.value;
-            minSalary.textContent = `$${salaryRange.min}`;
-            maxSalary.textContent = `$${salaryRange.max}`;
+            minValue.addEventListener('input', updateRange);
+            maxValue.addEventListener('input', updateRange);
+            stepValue.addEventListener('input', updateRange);
+
+                    async function fetchData(url, options = {}) {
+            try {
+                const response = await fetch(url, options);
+                if (!response.ok) throw new Error('Network response was not ok');
+                return await response.json();
+            } catch (error) {
+                return null;
+            }
         }
 
-        minValue.addEventListener('input', updateRange);
-        maxValue.addEventListener('input', updateRange);
-        stepValue.addEventListener('input', updateRange);
+        function getCookie(name) {
+            const cookies = document.cookie.split(';');
+            for (let cookie of cookies) {
+                const [key, value] = cookie.trim().split('=');
+                if (key === name) return decodeURIComponent(value);
+            }
+            return null;
+        }
+
+        function openModal() {
+            const modal = new bootstrap.Modal(document.getElementById('jobModal'));
+            modal.show();
+        }
+
+        async function checkUserRole() {
+            const data = await fetchData(`ProfileUpdate/api/info?type=role`, {
+                method: 'GET',
+                headers: {
+                    'Authorization': `Bearer ${getCookie('jwtToken')}`,
+                    'Content-Type': 'application/json'
+                }
+            });
+            return data ? data.role : null;
+        }
+
+        async function getUserCreatedJobs() {
+            const data = await fetchData(`api/GetJobs/get-jobs-by-user-id`, {
+                method: 'GET',
+                headers: {
+                    'Authorization': `Bearer ${getCookie('jwtToken')}`,
+                    'Content-Type': 'application/json'
+                }
+            });
+            return data ? data.jobs || [] : [];
+        }
+
+        async function checkIfUserApplied(jobId) {
+            const data = await fetchData(`/api/jobapplication/has-applied/${jobId}`, {
+                method: 'GET',
+                headers: {
+                    'Authorization': `Bearer ${getCookie('jwtToken')}`,
+                    'Content-Type': 'application/json'
+                }
+            });
+            return data ? { hasApplied: data.hasApplied, applicationId: data.applicationId } : { hasApplied: false, applicationId: null };
+        }
+
+        async function getAllJobs() {
+            const userRole = await checkUserRole();
+            const userCreatedJobs = await getUserCreatedJobs();
+
+            const jobsData = await fetchData(`/api/GetJobs/get-all-jobs`, {
+                method: 'GET',
+                headers: {
+                    'Authorization': `Bearer ${getCookie('jwtToken')}`,
+                    'Content-Type': 'application/json'
+                }
+            });
+
+            if (jobsData && jobsData.jobs) {
+                const sortedJobs = jobsData.jobs.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+
+                const updatedJobs = await Promise.all(sortedJobs.map(async (job) => {
+                    job.isUserCreated = userCreatedJobs.some(userJob => userJob.jobID === job.jobID);
+                    const applicationStatus = await checkIfUserApplied(job.jobID);
+                    job.hasApplied = applicationStatus.hasApplied;
+                    job.applicationId = applicationStatus.applicationId;
+                    return job;
+                }));
+
+                populateJobsContainer(updatedJobs, userRole);
+            }
+        }
+
+        function populateJobsContainer(jobs, userRole) {
+            const jobsContainer = document.getElementById('jobsContainer');
+            jobsContainer.innerHTML = '';
+
+            if (!jobs.length) {
+                jobsContainer.innerHTML = `<p>No jobs found.</p>`;
+                return;
+            }
+
+            jobs.forEach(job => {
+                const jobCard = createJobCard(job, userRole);
+                jobsContainer.innerHTML += jobCard;
+            });
+
+            addJobEventListeners();
+        }
+
+        function createJobCard(job, userRole) {
+            return `
+                <div class="col-md-6 mb-4">
+                    <div class="shadow-sm border-0 h-100">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between align-items-center mb-2">
+                                <h5 class="card-title mb-0">${job.title || 'N/A'}</h5>
+                                <span class="badge bg-light text-dark">${job.company || 'N/A'}</span>
+                            </div>
+                    <p class="text-muted mb-1"><i class="fa fa-map-marker-alt" aria-hidden="true"></i> ${job.cityName || 'N/A'}</p>
+                    <p class="mb-3"><strong>${job.pay || 'N/A'}</strong> •
+                    <i class="fa fa-level-up-alt" aria-hidden="true"></i> ${job.status} •
+                    <i class="fa fa-briefcase" aria-hidden="true"></i> ${job.categoryName}</p>
+                    <a href="#" class="btn btn-outline-primary btn-sm" data-bs-toggle="collapse" data-bs-target="#descriptionField">Details</a>
+                    <div class="collapse" id="descriptionField">${job.description || 'N/A'}
+                                </div>
+                        </div>
+                        <div class="option-box" style="margin-top: 1em">
+                            ${job.isUserCreated ? `<p class="text-muted">This is your job listing</p>` : createJobActionButtons(job, userRole)}
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function createJobActionButtons(job, userRole) {
+            if (userRole === 'Technician' || userRole === 'Company' || userRole === 'Admin') {
+                return job.hasApplied
+                    ? `<button class="delete-btn" data-application-id="${job.applicationId}">Revoke Application</button>`
+                    : `<button class="apply-btn" data-job-id="${job.jobID}">Apply Now</button>`;
+            }
+            return '';
+        }
+
+        function addJobEventListeners() {
+            document.querySelectorAll('.delete-btn').forEach(button => {
+                button.addEventListener('click', deleteJobApplication);
+            });
+
+            document.querySelectorAll('.apply-btn').forEach(button => {
+                button.addEventListener('click', applyForJob);
+            });
+        }
+
+        async function deleteJobApplication(event) {
+            const applicationId = event.target.getAttribute('data-application-id');
+            const response = await fetchData(`/api/jobapplication/delete-job-application/${applicationId}`, {
+                method: 'DELETE',
+                headers: {
+                    'Authorization': `Bearer ${getCookie('jwtToken')}`,
+                    'Content-Type': 'application/json'
+                }
+            });
+
+            if (response) {
+                getAllJobs();
+            }
+        }
+
+        async function applyForJob(event) {
+            const jobId = event.target.getAttribute('data-job-id');
+            const response = await fetchData(`/api/jobapplication/apply-for-job/${jobId}`, {
+                method: 'POST',
+                headers: {
+                    'Authorization': `Bearer ${getCookie('jwtToken')}`,
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ jobID: jobId })
+            });
+
+            if (response) {
+                getAllJobs();
+            }
+        }
+
+        let isJobPostingInProgress = false;
+        async function submitJobForm(event) {
+            event.preventDefault();
+
+            if (isJobPostingInProgress) return;
+            isJobPostingInProgress = true;
+
+            const jobData = {
+                jobID: 0,
+                title: document.getElementById('jobTitle').value.trim(),
+                description: document.getElementById('jobDescription').value.trim(),
+                status: "Available",
+                createdAt: new Date().toISOString(),
+                categoryId: parseInt(document.getElementById('jobCategory').value.trim(), 10),
+                cityId: parseInt(document.getElementById('jobCity').value.trim(), 10),
+                price: parseFloat(document.getElementById('jobPrice').value) || 0
+            };
+
+
+            isJobPostingInProgress = false;
+        }
+
+        function fetchCategories() {
+            fetch('/api/categories/getCategories')
+                .then(response => response.json())
+                .then(data => {
+                    const jobCategoryDropdown = document.getElementById('jobCategory');
+                    data.forEach(category => {
+                        const option = document.createElement('option');
+                        option.value = category.categoryID;
+                        option.textContent = category.name;
+                        jobCategoryDropdown.appendChild(option);
+                    });
+                })
+                .catch(error => console.error('Error fetching categories:', error));
+        }
+
+        function fetchCities() {
+            fetch('/api/city/getCities')
+                .then(response => response.json())
+                .then(data => {
+                    const citiesDropdown = document.getElementById('jobCity');
+                    data.forEach(city => {
+                        const option = document.createElement('option');
+                        option.value = city.cityId;
+                        option.textContent = city.cityName;
+                        citiesDropdown.appendChild(option);
+                    })
+                })
+        }
+
+        document.addEventListener('DOMContentLoaded', function () {
+            fetchCategories();
+            fetchCities();
+            getAllJobs();
+
+            const jobForm = document.getElementById('jobForm');
+            if (jobForm) {
+                jobForm.removeEventListener('submit', submitJobForm);
+                jobForm.addEventListener('submit', submitJobForm);
+            }
+        });
     </script>
 </div>

@@ -16,17 +16,17 @@ namespace Application.Features.Review
         public async Task<GetAllReviewsResultDto> ExecuteAsync(string reviewedUserId)
         {
             var reviews = await _context.Reviews
-                .Where(r => r.ReviewedUserId == reviewedUserId)
-                .OrderByDescending(r => r.CreatedAt)
-                .Select(r => new ReviewDetailsDto
-                {
-                    ReviewId = r.ReviewID,
-                    Content = r.Content,
-                    Rating = r.Rating,
-                    CreatedAt = r.CreatedAt
-                })
-                .ToListAsync();
-
+               .Where(r => r.ReviewedUserId == reviewedUserId)
+               .OrderByDescending(r => r.CreatedAt)
+               .Select(r => new ReviewDetailsDto
+               {
+                   ReviewId = r.ReviewID,
+                   Content = r.Content,
+                   Rating = r.Rating,
+                   CreatedAt = r.CreatedAt,
+                   ReviewerName = _context.Users.FirstOrDefault(u => u.Id == r.UserId).FullName
+               })
+           .ToListAsync();
             if (!reviews.Any())
             {
                 return new GetAllReviewsResultDto
