@@ -1,6 +1,8 @@
 ﻿using Application.DTO;
 using Application.Interfaces;
 using Microsoft.EntityFrameworkCore;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace Application.Features
 {
@@ -19,21 +21,36 @@ namespace Application.Features
 
             if (job == null)
             {
-                return null; 
+                return null;
             }
+
+            var selectedApplicant = await _context.SelectedJobApplicants
+                .FirstOrDefaultAsync(sa => sa.JobID == jobId);
 
             var applications = await _context.JobApplications
                 .Where(ja => ja.JobID == jobId)
-                .Select(ja => new JobApplicationDto
+                .ToListAsync();
+
+            var applicationDtos = applications.Select(ja =>
+            {
+                var user = _context.Users.FirstOrDefault(u => u.Id == ja.UserId);
+
+                string applicantName = null;
+                if (user != null)
+                {
+                    applicantName = user.FullName != null ? user.FullName : user.CompanyName;
+                }
+                return new JobApplicationDto
                 {
                     ApplicationID = ja.ApplicationID,
                     ApplicantUserId = ja.UserId,
-                    Status = ja.Status,
+                    ApplicantName = applicantName,
+                    Status = selectedApplicant != null && selectedApplicant.ApplicationID == ja.ApplicationID ? "Selected" : null,
                     ApplicationDate = ja.ApplicationDate
-                })
-                .ToListAsync();
+                };
+            }).ToList();
 
-            return applications;
+            return applicationDtos;
         }
     }
 }
