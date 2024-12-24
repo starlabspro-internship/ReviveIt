@@ -128,7 +128,7 @@ function createApplicantCard(applicant, jobId, selectedApplicant) {
     const isSelected = selectedApplicant && selectedApplicant.applicationID === applicant.applicationID;
     return `
              <div class="applicant-card">
-                  <a href="/ProsProfileView/${applicant.applicantUserId}" class="applicant-name-link">
+                  <a href="/ProsProfileView/${applicant.applicantUserId}" class="applicant-name-link" target="_blank">
                   ${applicant.applicantName || 'N/A'}
                    </a>
                       ${isSelected ?
