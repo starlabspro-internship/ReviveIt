@@ -60,28 +60,35 @@ async function loadTechnicians(clear = false, useUrl = false) {
     const response = await fetch(`/Pros/api/GetPros?${params.toString()}`, {
         credentials: 'include',
     });
+
     if (!response.ok) {
         const errorData = await response.json();
         alert(`Error: ${errorData.message}`);
         return;
     }
+
     const data = await response.json();
+    console.log(data);
+
     if (clear) {
         document.getElementById('technicianContainer').innerHTML = '';
     }
+
     if (skipCount === 0) {
         document.getElementById('technicianContainer').innerHTML = '';
     }
-    renderTechnicians(data.data);
+
+    await renderTechnicians(data.data);
     const container = document.getElementById('technicianContainer');
     const totalRendered = container.childElementCount;
     const viewMoreButton = document.getElementById('viewMoreButton');
 
-    if (data.total <= initialPageSize || totalRendered >= data.total) {
+    if (totalRendered >= data.total) {
         if (viewMoreButton) {
             viewMoreButton.style.display = 'none';
         }
-    } else {
+    }
+    else {
         if (viewMoreButton) {
             viewMoreButton.style.display = 'block';
         }
