@@ -1,6 +1,6 @@
 ﻿async function getDescription() {
     try {
-        const response = await fetch('/api/Profile/get-description', {
+        const response = await fetch('/ProfileUpdate/api/get-description', {
             method: 'GET',
             headers: {
                 'Authorization': `Bearer ${getCookie('jwtToken')}`
@@ -40,7 +40,7 @@ async function saveDescription() {
     const newDescription = descriptionTextarea.value;
 
     try {
-        const response = await fetch('/api/Profile/update-description', {
+        const response = await fetch('/ProfileUpdate/api/update-description', {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',

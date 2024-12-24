@@ -1,6 +1,6 @@
 ﻿async function fetchSelectedCategories() {
     try {
-        const response = await fetch('/api/Profile/get-selected-categories', {
+        const response = await fetch('/ProfileUpdate/api/get-selected-categories', {
             method: 'GET',
             headers: {
                 'Authorization': `Bearer ${getCookie('jwtToken')}`
@@ -78,7 +78,7 @@ async function saveCategories() {
             return;
         }
 
-        const response = await fetch('/api/Profile/updateCategories', {
+        const response = await fetch('/ProfileUpdate/api/update-categories', {
             method: 'POST',
             headers: {
                 'Authorization': `Bearer ${getCookie('jwtToken')}`,
