@@ -131,7 +131,7 @@ async function renderTechnicians(technicians) {
               <img src="${technician.profilePicture}" alt="${technician.fullName}'s Profile Picture" style="width: 100%; height: auto; object-fit: cover; color:black"/>
             </div>
             <div class="detail-box" style="background-color:white">
-              <a href="${profileLink}" style="color:black">${technician.fullName}</a>
+              <a href="${profileLink}" style="color:black" target="_blank" rel="noopener noreferrer">${technician.fullName}</a>
               <h6 class="expert_position">
                   <span style="color:black">${technician.expertise}</span>
                 <span style="color:black" class="text-right">${technician.experience} Years of Experience</span>
@@ -140,8 +140,8 @@ async function renderTechnicians(technicians) {
                  ${starsHtml} ${reviewCount}
                </span>
                <p style="color:#000;">${technician.role}</p>
-             </div>
-           </div>
+            </div>
+          </div>
         </div>`;
 
         container.innerHTML += technicianHtml;
