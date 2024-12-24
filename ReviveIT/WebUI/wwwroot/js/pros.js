@@ -68,7 +68,6 @@ async function loadTechnicians(clear = false, useUrl = false) {
     }
 
     const data = await response.json();
-    console.log(data);
 
     if (clear) {
         document.getElementById('technicianContainer').innerHTML = '';
@@ -83,12 +82,11 @@ async function loadTechnicians(clear = false, useUrl = false) {
     const totalRendered = container.childElementCount;
     const viewMoreButton = document.getElementById('viewMoreButton');
 
-    if (totalRendered >= data.total) {
+    if (data.total <= initialPageSize || totalRendered >= data.total) {
         if (viewMoreButton) {
             viewMoreButton.style.display = 'none';
         }
-    }
-    else {
+    } else {
         if (viewMoreButton) {
             viewMoreButton.style.display = 'block';
         }
