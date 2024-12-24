@@ -31,7 +31,7 @@
     height: 30px;
     font-size: 18px;
     cursor: pointer;
-    transition: transform 0.3s ease; /* Smooth transition */
+    transition: transform 0.3s ease; 
 }
 
 .arrow-button:hover {
@@ -39,12 +39,12 @@
 }
 
 .arrow-button i {
-    transition: transform 0.3s ease; /* Smooth transition for the icon */
-    transform-origin: center; /* Ensure rotation occurs around the center of the icon */
+    transition: transform 0.3s ease;
+    transform-origin: center; 
 }
 
 .rotated {
-    transform: rotate(90deg); /* Rotate the icon by 90 degrees */
+    transform: rotate(90deg);
 }
 
 .circle-icon {
@@ -61,3 +61,35 @@
         font-size: 16px;
     }
 
+.applicant-card {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 5px;
+    width: 100%; 
+}
+
+.applicant-name-link {
+    color: black;
+    text-decoration: none;
+    margin-left: 10px;
+}
+
+    .applicant-name-link:hover {
+        text-decoration: underline; 
+    }
+
+.select-applicant-btn {
+    white-space: nowrap;
+    margin-left: auto;
+}
+
+.select-applicant-btn-selected {
+    white-space: nowrap;
+    pointer-events: none;
+    margin-left: auto;
+}
+
+.applicant-list {
+    padding: 1em;
+}

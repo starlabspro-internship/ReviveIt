@@ -1,6 +1,9 @@
 ﻿using Application.DTO;
 using Application.Interfaces;
 using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace Application.Features.User
 {
@@ -18,6 +21,12 @@ namespace Application.Features.User
             var jobs = await _context.Jobs
                                      .Where(j => j.UserId == userId)
                                      .Include(j => j.Category)
+                                     .Include(j => j.City)
+                                      .Select(j => new {
+                                          Job = j,
+                                          CityName = j.City.CityName,
+                                          CategoryName = j.Category.Name
+                                      })
                                      .ToListAsync();
 
             if (jobs == null || !jobs.Any())
@@ -30,15 +39,16 @@ namespace Application.Features.User
                 };
             }
 
+
             var jobsDto = jobs.Select(job => new GetJobsDto
             {
-                JobID = job.JobID,
-                Title = job.Title,
-                Description = job.Description,
-                Status = job.Status.ToString(),
-                CreatedAt = job.CreatedAt,
-                CategoryName = job.Category?.Name,
-                CityName = job.City?.CityName
+                JobID = job.Job.JobID,
+                Title = job.Job.Title,
+                Description = job.Job.Description,
+                Status = job.Job.Status.ToString(),
+                CreatedAt = job.Job.CreatedAt,
+                CategoryName = job.CategoryName,
+                CityName = job.CityName
             }).ToList();
 
             return new GetJobsByUserResultDto

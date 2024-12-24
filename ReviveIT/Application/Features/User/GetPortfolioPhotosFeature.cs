@@ -26,7 +26,7 @@ namespace Application.Features.User
                 {
                     return new PortfolioFetchResultDto
                     {
-                        IsSuccess = false,
+                        IsSuccess = true,
                         Message = "No portfolio items found for the user.",
                         PortfolioDocuments = new List<PortfolioFetchDto>()
                     };
@@ -36,7 +36,7 @@ namespace Application.Features.User
                 {
                     Id = photo.Id,
                     Title = photo.Title,
-                    Description = photo.Description, 
+                    Description = photo.Description,
                     FilePath = photo.FilePath,
                     UploadedAt = photo.UploadedAt
                 }).ToList();
@@ -54,7 +54,7 @@ namespace Application.Features.User
                 {
                     IsSuccess = false,
                     Message = $"An error occurred: {ex.Message}",
-                    PortfolioDocuments = null
+                    PortfolioDocuments = new List<PortfolioFetchDto>() 
                 };
             }
         }
