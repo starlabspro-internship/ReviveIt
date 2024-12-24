@@ -26,28 +26,53 @@
         {
             <div class="filter-section">
                 <form id="filtersForm">
-                <div class="form-row mb-4">
-                    <div class="form-group col-lg-3">
-                        <input type="text" class="form-control" id="keywords" placeholder="Keywords">
-                    </div>
-                    <div class="form-group col-lg-3">
-                        <select name="SelectedCityId" id="filterCities" class="form-control wide">
-                            <option value="">All Locations</option>
-                        </select>
-                    </div>
-                    <div class="form-group col-lg-3">
-                        <select name="SelectedCategoryId" id="filterCategories" class="form-control wide">
-                            <option value="">All Categories</option>
-                        </select>
-                    </div>
-                    <div class="form-group col-lg-3">
-                        <div class="btn-box">
-                            <button type="button" class="btn" id="applyFiltersButton">Apply Filters</button>
+                    <div class="form-row">
+                        <div class="form-group col-lg-4">
+                            <input type="text" class="form-control" id="keywords" placeholder="Enter keywords">
+                        </div>
+                        <div class="form-group col-lg-4">
+                            <select name="SelectedCityId" id="filterCities" class="form-control wide">
+                                <option value="">All Locations</option>
+                            </select>
+                        </div>
+                        <div class="form-group col-lg-4">
+                            <select name="SelectedCategoryId" id="filterCategories" class="form-control wide">
+                                <option value="">All Categories</option>
+                            </select>
                         </div>
                     </div>
-                </div>
-            </form>
-        </div>
+                    <div class="form-row">
+                        <div class="form-group col-lg-4">
+                            <input type="number" class="form-control" id="experience" placeholder="Minimum Experience">
+                        </div>
+                        <div class="form-group col-lg-4">
+                            <select name="SelectRole" id="selectRole" class="form-control wide">
+                                <option value="">All Profiles</option>
+                                <option value="technician">Technician</option>
+                                <option value="company">Company</option>
+                            </select>
+                        </div>
+                        <div class="form-group col-lg-4">
+                            <select name="SortBy" id="sortBy" class="form-control wide">
+                                <option value="">Sort By</option>
+                                <option value="highestRating">Highest Rating</option>
+                                <option value="dateAsc">Date: Oldest First</option>
+                                <option value="dateDesc">Date: Newest First</option>
+                                <option value="nameAsc">Name: A to Z</option>
+                                <option value="nameDesc">Name: Z to A</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-row mb-4">
+                        <div class="form-group col-lg-6">
+                            <button type="button" class="btn btn-primary w-100" id="applyFiltersButton">Apply Filters</button>
+                        </div>
+                        <div class="form-group col-lg-6">
+                            <button type="button" class="btn btn-secondary w-100" id="resetFiltersButton">Reset Filters</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
         }
         <div id="technicianContainer" class="row">
         </div>

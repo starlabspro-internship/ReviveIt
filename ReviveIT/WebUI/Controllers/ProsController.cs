@@ -23,7 +23,7 @@ namespace WebUI.Controllers
         }
 
         [HttpGet("api/GetPros")]
-        public IActionResult GetPros(string? keywords, int? selectedCityId, int? selectedCategoryId, int skipCount = 0, int takeCount = 3)
+        public IActionResult GetPros(string? keywords, int? selectedCityId, int? selectedCategoryId, int? experience, string? selectRole, string? sortBy, int skipCount = 0, int takeCount = 3)
         {
             var query = _context.Users
                 .Where(u => u.Role == UserRole.Technician || u.Role == UserRole.Company)
@@ -49,6 +49,31 @@ namespace WebUI.Controllers
                     _context.UserCategories.Any(uc => uc.UserId == u.Id && uc.CategoryId == selectedCategoryId.Value));
             }
 
+            if (experience.HasValue)
+            {
+                query = query.Where(u => u.Experience >= experience.Value);
+            }
+
+            if (!string.IsNullOrEmpty(selectRole))
+            {
+                if (Enum.TryParse<UserRole>(selectRole, true, out var parsedRole))
+                {
+                    query = query.Where(u => u.Role == parsedRole);
+                }
+            }
+
+            query = sortBy switch
+            {
+                "dateAsc" => query.OrderBy(u => u.CreatedAt),
+                "dateDesc" => query.OrderByDescending(u => u.CreatedAt),
+                "nameAsc" => query.OrderBy(u => u.Role == UserRole.Company ? u.CompanyName : u.FullName),
+                "nameDesc" => query.OrderByDescending(u => u.Role == UserRole.Company ? u.CompanyName : u.FullName),
+                "highestRating" => query.AsEnumerable()
+                          .OrderByDescending(u => GetRating(u))
+                          .AsQueryable(),
+                _ => query
+            };
+
             var totalCount = query.Count();
 
             var technicians = GetTechnicians(skipCount, takeCount, query);
@@ -73,7 +98,6 @@ namespace WebUI.Controllers
                 .Where(u => u.Role == UserRole.Technician || u.Role == UserRole.Company);
 
             var users = query
-                .OrderBy(u => u.Id)
                 .Skip(skipCount)
                 .Take(takeCount)
                 .AsNoTracking()

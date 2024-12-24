@@ -29,6 +29,9 @@ function getFilterParameters(useUrl = false) {
             keywords: document.getElementById('keywords').value || null,
             selectedCityId: document.getElementById('filterCities').value || null,
             selectedCategoryId: document.getElementById('filterCategories').value || null,
+            experience: document.getElementById('experience').value || null,
+            selectRole: document.getElementById('selectRole').value || null,
+            sortBy: document.getElementById('sortBy').value || null,
         };
     }
 }
@@ -39,30 +42,42 @@ async function loadTechnicians(clear = false, useUrl = false) {
     }
     const takeCount = skipCount === 0 ? initialPageSize : additionalPageSize;
     const { keywords, selectedCityId, selectedCategoryId } = getFilterParameters(useUrl);
+    const experience = document.getElementById('experience').value || null;
+    const selectRole = document.getElementById('selectRole').value || null;
+    const sortBy = document.getElementById('sortBy').value || null;
+
     const params = new URLSearchParams({
         skipCount,
         takeCount,
         ...(keywords && { keywords }),
         ...(selectedCityId && { selectedCityId }),
         ...(selectedCategoryId && { selectedCategoryId }),
+        ...(experience && { experience }),
+        ...(selectRole && { selectRole }),
+        ...(sortBy && { sortBy }),
     });
 
     const response = await fetch(`/Pros/api/GetPros?${params.toString()}`, {
         credentials: 'include',
     });
+
     if (!response.ok) {
         const errorData = await response.json();
         alert(`Error: ${errorData.message}`);
         return;
     }
+
     const data = await response.json();
+
     if (clear) {
         document.getElementById('technicianContainer').innerHTML = '';
     }
+
     if (skipCount === 0) {
         document.getElementById('technicianContainer').innerHTML = '';
     }
-    renderTechnicians(data.data);
+
+    await renderTechnicians(data.data);
     const container = document.getElementById('technicianContainer');
     const totalRendered = container.childElementCount;
     const viewMoreButton = document.getElementById('viewMoreButton');
@@ -191,12 +206,25 @@ function fetchCitites(selectedCityId = null) {
         });
 }
 
+document.getElementById('resetFiltersButton').addEventListener('click', function () {
+    document.getElementById('filtersForm').reset();
+
+    document.getElementById('filterCities').value = '';
+    document.getElementById('filterCategories').value = '';
+    document.getElementById('keywords').value = '';
+    document.getElementById('experience').value = '';
+    document.getElementById('selectRole').value = '';
+    document.getElementById('sortBy').value = '';
+});
+
 document.addEventListener('DOMContentLoaded', async () => {
     await checkAuthenticationStatus();
     const { keywords, selectedCityId, selectedCategoryId } = getFilterParameters(true);
     await Promise.all([fetchCategories(selectedCategoryId), fetchCitites(selectedCityId)]);
+
     if (keywords) document.getElementById('keywords').value = keywords;
     loadTechnicians(true, true);
+
     const applyFiltersButton = document.getElementById('applyFiltersButton');
 
     if (applyFiltersButton) {
@@ -206,7 +234,9 @@ document.addEventListener('DOMContentLoaded', async () => {
             loadTechnicians(true, false);
         });
     }
+
     const viewMoreButton = document.getElementById('viewMoreButton');
+
     if (viewMoreButton) {
         viewMoreButton.addEventListener('click', (e) => {
             e.preventDefault();
