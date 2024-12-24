@@ -1,6 +1,6 @@
 ﻿async function fetchSelectedCities() {
     try {
-        const response = await fetch('/api/Profile/getSelectedCities', {
+        const response = await fetch('/ProfileUpdate/api/get-selected-cities', {
             method: 'GET',
             headers: {
                 'Authorization': `Bearer ${getCookie('jwtToken')}`
@@ -101,7 +101,7 @@ async function saveCities() {
             return;
         }
 
-        const response = await fetch('/api/Profile/updateOperatingCities', {
+        const response = await fetch('/ProfileUpdate/api/update-operating-cities', {
             method: 'POST',
             headers: {
                 'Authorization': `Bearer ${getCookie('jwtToken')}`,
