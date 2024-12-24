@@ -74,13 +74,13 @@
                                             </a>
                                             @if (User.IsInRole("Customer"))
                                             {
-                                                <a class="dropdown-item" href="Jobboard">
+                                                <a class="dropdown-item" asp-controller="JobBoard" asp-action="JobBoard">
                                                     <i class="fa fa-briefcase mr-2"></i>My Job Posts
                                                 </a>
                                             }
                                             else if (User.IsInRole("Technician") || User.IsInRole("Company"))
                                             {
-                                                <a class="dropdown-item" href="Jobboard">
+                                                <a class="dropdown-item" asp-controller="JobBoard" asp-action="JobBoard">
                                                     <i class="fa fa-briefcase mr-2"></i>My Jobs
                                                 </a>
                                             }
