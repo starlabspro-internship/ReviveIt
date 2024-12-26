@@ -93,7 +93,8 @@
             }
 
             setElementAttribute(profilePictureSelector, "src", pfpUrl);
-
+            setElementAttribute(profilePictureSelector, "style", "cursor:pointer");
+            $(profilePictureSelector).on("click", () => openModal(pfpUrl, true))
             displayTechnicianProfile(data);
             await getUserReview();
             getReviews();
@@ -180,22 +181,28 @@
     $(document).on("click", ".portfolio-image-link", function (e) {
         e.preventDefault();
         const imageUrl = $(this).data("file");
-        openModal(imageUrl);
+        openModal(imageUrl, false);
     });
 
-    const openModal = (imageUrl) => {
+    const openModal = (imageUrl, isPfp) => {
+        let modalClass = "modal-image"
+        if (isPfp) {
+            modalClass = "pfp-modal-image"
+        }
         const modal = `
             <div class="modal-overlay">
                 <div class="modal-content">
                     <span class="close-modal">×</span>
-                     <img src="${imageUrl}" alt="Full Image" class="modal-image" />
+                     <img src="${imageUrl}" alt="Full Image" class="${modalClass}" />
                </div>
            </div>
         `;
         $("body").append(modal);
-        $(".close-modal").click(function () {
-            $(".modal-overlay").remove();
-        });
+        attachCloseButtonListeners($(".modal-overlay").last()[0])
+
+        // $(".close-modal").click(function () {
+        //     $(".modal-overlay").remove();
+        // });
     };
 
     const getReviews = async () => {
@@ -287,6 +294,23 @@
             resetForm();
         }
     });
+
+    function attachCloseButtonListeners(modal) {
+        // Get all elements with the class "close-modal" inside the provided modal
+        const closeButtons = modal.querySelectorAll(".close-modal");
+
+        closeButtons.forEach(button => {
+            button.addEventListener('click', function () {
+                // Find the closest modal container
+                const modal = button.closest('.modal-overlay, #profileModal, #zoomModal, #cropperModal, #editCategoriesModal, #editCitiesModal, #jobModal, .modal-overlay');
+                if (modal) {
+                    modal.style.display = "none";
+                    document.body.classList.remove("modal-open");
+                    document.querySelector(".modal-backdrop")?.remove();
+                }
+            });
+        });
+    }
 
     function showToast(message, isError = false) {
         const toast = $(
