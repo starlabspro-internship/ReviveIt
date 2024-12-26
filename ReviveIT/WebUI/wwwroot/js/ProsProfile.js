@@ -199,10 +199,6 @@
         `;
         $("body").append(modal);
         attachCloseButtonListeners($(".modal-overlay").last()[0])
-
-        // $(".close-modal").click(function () {
-        //     $(".modal-overlay").remove();
-        // });
     };
 
     const getReviews = async () => {
@@ -296,12 +292,10 @@
     });
 
     function attachCloseButtonListeners(modal) {
-        // Get all elements with the class "close-modal" inside the provided modal
         const closeButtons = modal.querySelectorAll(".close-modal");
 
         closeButtons.forEach(button => {
             button.addEventListener('click', function () {
-                // Find the closest modal container
                 const modal = button.closest('.modal-overlay, #profileModal, #zoomModal, #cropperModal, #editCategoriesModal, #editCitiesModal, #jobModal, .modal-overlay');
                 if (modal) {
                     modal.style.display = "none";

@@ -31,7 +31,6 @@ async function fetchData(url, method = "GET", body = null, isFormData = false) {
 function openModalPfp() {
     const modal = new bootstrap.Modal(document.getElementById("profileModal"));
     modal.show();
-    attachCloseButtonListeners(document.getElementById('profileModal'));
 }
 
 function zoomImage() {
@@ -41,7 +40,6 @@ function zoomImage() {
 
     const zoomModal = new bootstrap.Modal(document.getElementById("zoomModal"));
     zoomModal.show();
-    attachCloseButtonListeners(document.getElementById('zoomModal'));
 }
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -389,20 +387,6 @@ document.getElementById("toggleReviews").addEventListener("click", function () {
     this.setAttribute("aria-expanded", (!isVisible).toString());
 });
 
-function attachCloseButtonListeners(modal) {
-    const closeButtons = modal.querySelectorAll(".close-modal");
-
-    closeButtons.forEach(button => {
-        button.addEventListener('click', function () {
-            const modal = button.closest('.modal-overlay, #profileModal, #zoomModal, #cropperModal, #editCategoriesModal, #editCitiesModal, #jobModal, .modal, .modal-overlay');
-            if (modal) {
-                modal.style.display = "none";
-                document.body.classList.remove("modal-open");
-                document.querySelector(".modal-backdrop")?.remove();
-            }
-        });
-    });
-}
 function closeEditCategoriesModal() {
     document.getElementById("editCategoriesModal").style.display = "none";
 }
