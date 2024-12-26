@@ -7,7 +7,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
 }
 
-@section Scripts{
+@section Scripts {
     <script src="https://cdn.jsdelivr.net/npm/cropperjs@1.5.12/dist/cropper.min.js"></script>
     <script src="~/js/userProfile.js"></script>
     <script src="~/js/Portofolio.js"></script>
@@ -40,7 +40,6 @@
                                 <div class="modal-content">
                                     <div class="modal-header">
                                         <h5 class="modal-title" id="zoomModalLabel">Profile Image</h5>
-                                        <span class="close-modal" data-bs-dismiss="modal">&times;</span>
                                     </div>
                                     <div class="modal-body text-center">
                                         <img id="zoomedImage" src="" alt="Zoomed Profile Image"
@@ -56,7 +55,7 @@
                                 <div class="modal-content">
                                     <div class="modal-header">
                                         <h5 class="modal-title" id="profileModalLabel">Manage Profile Picture</h5>
-                                        <span class="close-modal" data-bs-dismiss="modal">&times;</span>
+
                                     </div>
                                     <div class="modal-body text-center">
                                         <input type="file" id="imageUpload" accept="image/*" class="d-none" onchange="updateProfileImage()">
@@ -104,7 +103,7 @@
                                         </div>
                                         <div id="editCategoriesModal" class="modal" style="display: none;">
                                             <div class="modal-content">
-                                                <span class="close-modal" onclick="closeEditCategoriesModal()">&times;</span>
+                                                <span class="close-modal" onclick="closeEditCategoriesModal()">×</span>
                                                 <h5>Edit Categories</h5>
                                                 <ul id="allCategoriesList"></ul>
                                                 <button class="btn btn-primary" onclick="saveCategories()">Save Changes</button>
@@ -118,7 +117,7 @@
                                         </div>
                                         <div id="editCitiesModal" class="modal" style="display: none;">
                                             <div class="modal-content">
-                                                <span class="close-modal" onclick="closeEditCitiesModal()">&times;</span>
+                                                <span class="close-modal" onclick="closeEditCitiesModal()">×</span>
                                                 <h5>Edit Operating Cities</h5>
                                                 <ul id="allCitiesList"></ul>
                                                 <button class="btn btn-primary" onclick="saveCities()">Save Changes</button>
@@ -148,7 +147,7 @@
                                                 <div class="modal-content">
                                                     <div class="modal-header">
                                                         <h5 class="modal-title">Add Portfolio Image</h5>
-                                                        <span class="close-modal" data-bs-dismiss="modal">&times;</span>
+
                                                     </div>
                                                     <div class="modal-body">
                                                         <form id="jobForm" onsubmit="uploadPortfolioImage(event)">

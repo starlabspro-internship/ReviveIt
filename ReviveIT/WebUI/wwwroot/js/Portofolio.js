@@ -14,7 +14,6 @@ function getCookie(name) {
 function openModal() {
     const modal = new bootstrap.Modal(document.getElementById('jobModal'));
     modal.show();
-    attachCloseButtonListeners(document.getElementById('jobModal'))
 }
 
 async function getPortfolio() {
@@ -69,7 +68,6 @@ function openPortfolioModal(filePath, title, description) {
     const modalHTML = `
         <div class="modal-overlay">
             <div class="modal-content">
-                <span class="close-modal">×</span>
                 <img src="${filePath}" alt="Full Image" class="modal-image" style="height: 25em;"/>
                 <h3>${title}</h3>
                 <p>${description}</p>
@@ -81,7 +79,6 @@ function openPortfolioModal(filePath, title, description) {
     newModalElement.innerHTML = modalHTML;
 
     document.body.appendChild(newModalElement);
-    attachCloseButtonListeners(newModalElement);
 
     document.querySelector('.modal-overlay').addEventListener('click', (e) => {
         if (e.target === document.querySelector('.modal-overlay')) {
