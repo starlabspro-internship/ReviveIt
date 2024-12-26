@@ -20,5 +20,4 @@ namespace Application.DTO
         [Required]
         public string Password { get; set; }
     }
-
 }
