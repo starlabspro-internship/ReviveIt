@@ -1,12 +1,31 @@
 ﻿function getCookie(name) {
-    const cookies = document.cookie.split("; ");
-    for (const cookie of cookies) {
-        const [key, value] = cookie.split("=");
-        if (key === name) {
-            return decodeURIComponent(value);
+    const value = `; ${document.cookie}`;
+    const parts = value.split(`; ${name}=`);
+    if (parts.length === 2) return parts.pop().split(";").shift();
+    return "";
+}
+
+async function fetchData(url, method = "GET", body = null, isFormData = false) {
+    try {
+        const headers = {
+            Authorization: `Bearer ${getCookie("jwtToken")}`,
+            ...(isFormData ? {} : { "Content-Type": "application/json" }),
+        };
+        const response = await fetch(url, {
+            method,
+            headers,
+            body: body ? (isFormData ? body : JSON.stringify(body)) : null,
+        });
+        if (!response.ok) {
+            const errorText = await response.text();
+            showToast(`HTTP Error ${response.status}: ${errorText}`, true);
+            throw new Error(`HTTP Error ${response.status}: ${errorText}`);
         }
+        return response.json();
+    } catch (error) {
+        showToast(`Error fetching data: ${error.message}`, true);
+        throw error;
     }
-    return null;
 }
 
 function openModalPfp() {
@@ -28,6 +47,7 @@ document.addEventListener("DOMContentLoaded", () => {
     fetchRole();
     getProfilePicture();
     fetchWorkExperience();
+    getReviews();
 });
 
 async function fetchName() {
@@ -236,8 +256,7 @@ async function removeProfilePicture() {
 
         if (response.ok) {
             alert("Profile picture removed successfully!");
-            getProfilePicture()
-
+            getProfilePicture();
         } else {
             alert("Failed to remove profile picture.");
         }
@@ -294,17 +313,90 @@ function convertToBase64(file) {
     });
 }
 
-document.addEventListener('keydown', function (event) {
-    if (event.key === 'Escape') {
-        const categoriesModal = document.getElementById('editCategoriesModal');
-        const citiesModal = document.getElementById('editCitiesModal');
+document.addEventListener("keydown", function (event) {
+    if (event.key === "Escape") {
+        const categoriesModal = document.getElementById("editCategoriesModal");
+        const citiesModal = document.getElementById("editCitiesModal");
 
-        if (categoriesModal && categoriesModal.style.display === 'block') {
+        if (categoriesModal && categoriesModal.style.display === "block") {
             closeEditCategoriesModal();
         }
 
-        if (citiesModal && citiesModal.style.display === 'block') {
+        if (citiesModal && citiesModal.style.display === "block") {
             closeEditCitiesModal();
         }
     }
 });
+
+async function getReviews() {
+    try {
+        const profileUrl = `/ProfileUpdate/api/info?type=userid`;
+        const data = await fetchData(profileUrl);
+
+        if (!data || !data.userid) {
+            showToast("Failed to fetch user ID.", true)
+            document.getElementById("reviewsDropdown").innerHTML =
+                `<p class='no-reviews-message' >Failed to fetch user id.</p>`;
+            return;
+        }
+        const userId = data.userid;
+        const reviewUrl = `/api/review/technicians/${userId}/reviews`;
+        const reviewData = await fetchData(reviewUrl);
+
+
+        if (!reviewData || !reviewData.reviews || reviewData.reviews.length === 0) {
+            document.getElementById("reviewsDropdown").innerHTML =
+                `<p class='no-reviews-message' >No reviews available.</p>`;
+            return;
+        }
+        displayReviews(reviewData.reviews);
+    } catch (error) {
+        showToast(`Error fetching reviews: ${error.message}`, true);
+        document.getElementById("reviewsDropdown").innerHTML =
+            `<p class="error-message">Failed to load reviews.</p>`;
+    }
+}
+function displayReviews(reviews) {
+    const reviewsDropdown = document.getElementById("reviewsDropdown");
+    reviewsDropdown.innerHTML = "";
+
+    if (reviews && reviews.length > 0) {
+        let reviewsHTML = reviews
+            .map(
+                (review) =>
+                    `<div class="review-item">
+                             <p class="rating">Rating: ${review.rating}/5</p>
+                             <p class="comment">Comment: ${review.content}</p>
+                            <p class="reviewer">Review by ${review.reviewerName || "Anonymous User"
+                    }</p>
+                   </div>`
+            )
+            .join("");
+        reviewsDropdown.innerHTML = reviewsHTML;
+    } else {
+        document.getElementById("reviewsDropdown").innerHTML =
+            `<p class='no-reviews-message' >No reviews available.</p>`;
+    }
+}
+
+document.getElementById("toggleReviews").addEventListener("click", function () {
+    const reviewsDropdown = document.getElementById("reviewsDropdown");
+    const isVisible = reviewsDropdown.style.display !== "none";
+    reviewsDropdown.style.display = isVisible ? "none" : "block";
+    this.textContent = isVisible ? "Show Reviews" : "Hide Reviews";
+    this.setAttribute("aria-expanded", (!isVisible).toString());
+});
+
+function showToast(message, isError = false) {
+    const toast = document.createElement("div");
+    toast.classList.add("toast-message");
+    if (isError) {
+        toast.classList.add("error");
+    }
+    toast.textContent = message;
+    document.getElementById("toast-container").appendChild(toast);
+
+    setTimeout(() => {
+        toast.remove();
+    }, 3000);
+}
