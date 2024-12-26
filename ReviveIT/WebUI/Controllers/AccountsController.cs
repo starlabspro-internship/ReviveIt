@@ -237,6 +237,72 @@ namespace WebUI.Controllers
             });
         }
 
+        [Authorize]
+        [HttpPost("change-email")]
+        public async Task<IActionResult> ChangeEmail([FromBody] ChangeEmailDto model)
+        {
+            if (!ModelState.IsValid)
+            {
+                var errors = ModelState.Values.SelectMany(v => v.Errors)
+                                              .Select(e => e.ErrorMessage)
+                                              .ToList();
+                return BadRequest(new { Success = false, Errors = errors });
+            }
+
+            var userId = User.FindFirst("UserId")?.Value;
+
+            if (string.IsNullOrEmpty(userId))
+            {
+                return Unauthorized(new { Success = false, Message = "User ID not found in token." });
+            }
+
+            var user = await _userManager.FindByIdAsync(userId);
+
+            if (user == null)
+            {
+                return Unauthorized(new { Success = false, Message = "User not found." });
+            }
+
+            if (user.Email == model.NewEmail)
+            {
+                return BadRequest(new { Success = false, Message = "New email is the same as the current email." });
+            }
+            var token = await _userManager.GenerateChangeEmailTokenAsync(user, model.NewEmail);
+            var changeEmailResult = await _userManager.ChangeEmailAsync(user, model.NewEmail, token);
+
+            if (!changeEmailResult.Succeeded)
+            {
+                return BadRequest(new
+                {
+                    Success = false,
+                    Errors = changeEmailResult.Errors.Select(e => e.Description)
+                });
+            }
+
+            user.UserName = model.NewEmail;
+            var updateUserResult = await _userManager.UpdateAsync(user);
+
+            if (!updateUserResult.Succeeded)
+            {
+                return BadRequest(new
+                {
+                    Success = false,
+                    Errors = updateUserResult.Errors.Select(e => e.Description)
+                });
+            }
+
+            await _refreshTokenRepository.RemoveRefreshTokenAsync(user.Id);
+            Response.Cookies.Delete("jwtToken");
+            Response.Cookies.Delete("refreshToken");
+
+            return Ok(new
+            {
+                Success = true,
+                Message = "Email changed successfully. You have been logged out.",
+                RedirectUrl = "/login"
+            });
+        }
+
         private void SetTokenCookie(string jwtToken)
         {
             var secure = Request.IsHttps;
