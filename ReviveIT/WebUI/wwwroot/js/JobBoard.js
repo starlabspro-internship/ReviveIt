@@ -79,7 +79,6 @@ function createJobCard(job) {
                     <p>${job.description || 'N/A'}</p>
                     <div class="applicant-list" id="applicantList${job.jobID}"></div>
                 </div>
-
                 <div class="option-box" style="margin-top: 1em">
                     <button class="btn btn-danger delete-btn" data-job-id="${job.jobID}">Delete Job</button>
                 </div>
