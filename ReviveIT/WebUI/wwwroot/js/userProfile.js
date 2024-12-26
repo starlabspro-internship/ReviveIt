@@ -18,12 +18,12 @@ async function fetchData(url, method = "GET", body = null, isFormData = false) {
         });
         if (!response.ok) {
             const errorText = await response.text();
-            showToast(`HTTP Error ${response.status}: ${errorText}`, true);
+            alert(`HTTP Error ${response.status}: ${errorText}`);
             throw new Error(`HTTP Error ${response.status}: ${errorText}`);
         }
         return response.json();
     } catch (error) {
-        showToast(`Error fetching data: ${error.message}`, true);
+        alert(`Error fetching data: ${error.message}`);
         throw error;
     }
 }
@@ -31,6 +31,7 @@ async function fetchData(url, method = "GET", body = null, isFormData = false) {
 function openModalPfp() {
     const modal = new bootstrap.Modal(document.getElementById("profileModal"));
     modal.show();
+    attachCloseButtonListeners(document.getElementById('profileModal'));
 }
 
 function zoomImage() {
@@ -40,6 +41,7 @@ function zoomImage() {
 
     const zoomModal = new bootstrap.Modal(document.getElementById("zoomModal"));
     zoomModal.show();
+    attachCloseButtonListeners(document.getElementById('zoomModal'));
 }
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -334,7 +336,7 @@ async function getReviews() {
         const data = await fetchData(profileUrl);
 
         if (!data || !data.userid) {
-            showToast("Failed to fetch user ID.", true)
+            alert("Failed to fetch user ID.");
             document.getElementById("reviewsDropdown").innerHTML =
                 `<p class='no-reviews-message' >Failed to fetch user id.</p>`;
             return;
@@ -351,7 +353,7 @@ async function getReviews() {
         }
         displayReviews(reviewData.reviews);
     } catch (error) {
-        showToast(`Error fetching reviews: ${error.message}`, true);
+        alert(`Error fetching reviews: ${error.message}`);
         document.getElementById("reviewsDropdown").innerHTML =
             `<p class="error-message">Failed to load reviews.</p>`;
     }
@@ -387,16 +389,24 @@ document.getElementById("toggleReviews").addEventListener("click", function () {
     this.setAttribute("aria-expanded", (!isVisible).toString());
 });
 
-function showToast(message, isError = false) {
-    const toast = document.createElement("div");
-    toast.classList.add("toast-message");
-    if (isError) {
-        toast.classList.add("error");
-    }
-    toast.textContent = message;
-    document.getElementById("toast-container").appendChild(toast);
+function attachCloseButtonListeners(modal) {
+    const closeButtons = modal.querySelectorAll(".close-modal");
 
-    setTimeout(() => {
-        toast.remove();
-    }, 3000);
+    closeButtons.forEach(button => {
+        button.addEventListener('click', function () {
+            const modal = button.closest('.modal-overlay, #profileModal, #zoomModal, #cropperModal, #editCategoriesModal, #editCitiesModal, #jobModal, .modal, .modal-overlay');
+            if (modal) {
+                modal.style.display = "none";
+                document.body.classList.remove("modal-open");
+                document.querySelector(".modal-backdrop")?.remove();
+            }
+        });
+    });
+}
+function closeEditCategoriesModal() {
+    document.getElementById("editCategoriesModal").style.display = "none";
+}
+
+function closeEditCitiesModal() {
+    document.getElementById("editCitiesModal").style.display = "none";
 }
