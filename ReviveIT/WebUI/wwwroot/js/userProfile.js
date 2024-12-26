@@ -27,6 +27,7 @@ document.addEventListener("DOMContentLoaded", () => {
     fetchName();
     fetchRole();
     getProfilePicture();
+    fetchWorkExperience();
 });
 
 async function fetchName() {
@@ -78,6 +79,34 @@ async function fetchRole() {
         }
     } catch (error) {
         userRole.textContent = "Error";
+    }
+}
+
+async function fetchWorkExperience() {
+    const workExperienceText = document.getElementById("workExperienceText");
+    if (!workExperienceText) return;
+
+    try {
+        const response = await fetch("/ProfileUpdate/api/info?type=experience", {
+            method: "GET",
+            headers: {
+                Authorization: `Bearer ${getCookie("jwtToken")}`,
+            },
+        });
+
+        if (response.ok) {
+            const data = await response.json();
+            const experienceYears = data.experience;
+            if (experienceYears) {
+                workExperienceText.textContent = `${experienceYears} years experience`;
+            } else {
+                workExperienceText.textContent = "No work experience provided.";
+            }
+        } else {
+            workExperienceText.textContent = "Failed to load work experience.";
+        }
+    } catch (error) {
+        workExperienceText.textContent = "Error loading work experience.";
     }
 }
 

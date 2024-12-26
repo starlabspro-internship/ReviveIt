@@ -44,6 +44,8 @@ namespace Application.Features.User
                     }
                 case "role":
                     return UserInfoResultDto.SuccessResult(new { role = roles.FirstOrDefault() ?? "Unknown" });
+                case "experience":
+                    return UserInfoResultDto.SuccessResult(new { experience = user.Experience });
                 default:
                     return UserInfoResultDto.ErrorResult("Invalid type specified");
             }
