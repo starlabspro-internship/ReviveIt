@@ -2,12 +2,12 @@
     ViewData["Title"] = "Profile Page";
 }
 
-@section Styles{
+@section Styles {
     <link href="~/css/userProfile.css" rel="stylesheet" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
 }
 
-@section Scripts{
+@section Scripts {
     <script src="https://cdn.jsdelivr.net/npm/cropperjs@1.5.12/dist/cropper.min.js"></script>
     <script src="~/js/userProfile.js"></script>
     <script src="~/js/Portofolio.js"></script>
@@ -40,7 +40,6 @@
                                 <div class="modal-content">
                                     <div class="modal-header">
                                         <h5 class="modal-title" id="zoomModalLabel">Profile Image</h5>
-                                        <span class="close-modal" data-bs-dismiss="modal">&times;</span>
                                     </div>
                                     <div class="modal-body text-center">
                                         <img id="zoomedImage" src="" alt="Zoomed Profile Image"
@@ -56,7 +55,7 @@
                                 <div class="modal-content">
                                     <div class="modal-header">
                                         <h5 class="modal-title" id="profileModalLabel">Manage Profile Picture</h5>
-                                        <span class="close-modal" data-bs-dismiss="modal">&times;</span>
+
                                     </div>
                                     <div class="modal-body text-center">
                                         <input type="file" id="imageUpload" accept="image/*" class="d-none" onchange="updateProfileImage()">
@@ -104,7 +103,7 @@
                                         </div>
                                         <div id="editCategoriesModal" class="modal" style="display: none;">
                                             <div class="modal-content">
-                                                <span class="close-modal" onclick="closeEditCategoriesModal()">&times;</span>
+                                                <span class="close-modal" onclick="closeEditCategoriesModal()">×</span>
                                                 <h5>Edit Categories</h5>
                                                 <ul id="allCategoriesList"></ul>
                                                 <button class="btn btn-primary" onclick="saveCategories()">Save Changes</button>
@@ -118,7 +117,7 @@
                                         </div>
                                         <div id="editCitiesModal" class="modal" style="display: none;">
                                             <div class="modal-content">
-                                                <span class="close-modal" onclick="closeEditCitiesModal()">&times;</span>
+                                                <span class="close-modal" onclick="closeEditCitiesModal()">×</span>
                                                 <h5>Edit Operating Cities</h5>
                                                 <ul id="allCitiesList"></ul>
                                                 <button class="btn btn-primary" onclick="saveCities()">Save Changes</button>
@@ -127,7 +126,7 @@
                                         </div>
                                         <div id="WorkExperienceContainer">
                                             <h5 class="mt-4">Work Experience</h5>
-                                            <p>Over 10 years of experience handling various tasks.</p>
+                                            <p id="workExperienceText"></p>
                                             <button class="btn btn-secondary btn-sm edit-button d-none" onclick="editExperience()">Edit Work Experience</button>
                                         </div>
                                     </div>
@@ -138,7 +137,6 @@
                                         <h5>Portfolio</h5>
                                         <div class="row mb-4" id="portfolioContainer">
                                             <div class="d-flex justify-content-center align-items-center">
-
                                             </div>
                                         </div>
 
@@ -149,7 +147,7 @@
                                                 <div class="modal-content">
                                                     <div class="modal-header">
                                                         <h5 class="modal-title">Add Portfolio Image</h5>
-                                                        <span class="close-modal" data-bs-dismiss="modal">&times;</span>
+
                                                     </div>
                                                     <div class="modal-body">
                                                         <form id="jobForm" onsubmit="uploadPortfolioImage(event)">
@@ -172,18 +170,16 @@
                                             </div>
                                         </div>
 
-                                        <h5 class="mt-4">Client Reviews</h5>
-
-                                        <div>
-                                            <p><i class="bi bi-star-fill text-warning"></i> "John is incredibly reliable!" - <i>Jane Smith</i></p>
-                                            <p><i class="bi bi-star-fill text-warning"></i> "Excellent work on my deck." - <i>Mark Doe</i></p>
+                                        <div class="review-section">
+                                            <h5 class="mt-4">Client Reviews</h5>
+                                            <div id="reviewsDropdown" style="display: none;"></div>
+                                            <button id="toggleReviews" class="btn btn-secondary mt-2" aria-expanded="false">Show Reviews</button>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-
-                            @* TO BE FIXED *@
-                        @*     <div class="mt-4">
+                            @*  TO BE FIXED *@
+                            @*     <div class="mt-4">
                                 <div class="card p-3">
                                     <h5>Availability</h5>
                                     <div class="form-check form-switch mb-3">

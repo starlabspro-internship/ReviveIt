@@ -63,29 +63,28 @@ function populateJobsContainer(jobs) {
 
 function createJobCard(job) {
     return `
-        <div class="col-md-6 mb-4" >
-            <div class="shadow-sm border-0 h-100" style="background: white; border-radius: 15px;">
-                <div class="card-body">
-                    <div class="d-flex justify-content-between align-items-center mb-2">
-                        <h5 class="card-title mb-0">${job.title || 'N/A'}</h5>
-                        <span class="badge bg-light text-dark">${job.company || 'N/A'}</span>
-                    </div>
-                    <p class="text-muted mb-1"><i class="fa fa-map-marker-alt" aria-hidden="true"></i> ${job.cityName || 'N/A'}</p>
-                    <p class="mb-3"><strong>${job.price || 'N/A'}</strong> •
-                        <i class="fa fa-level-up-alt" aria-hidden="true"></i> ${job.status || 'N/A'} •
-                        <i class="fa fa-briefcase" aria-hidden="true"></i> ${job.categoryName || 'N/A'}</p>
-                     <button class="btn btn-outline-primary btn-sm details-btn" data-job-id="${job.jobID}" data-bs-toggle="collapse" data-bs-target="#descriptionField${job.jobID}">Details</button>
-                     <div class="collapse" id="descriptionField${job.jobID}">
-                            <p>${job.description || 'N/A'}</p>
-                             <div class="applicant-list" id="applicantList${job.jobID}"></div>
-                        </div>
-                
-                 <div class="option-box" style="margin-top: 1em">
-                            <button class="btn btn-danger delete-btn" data-job-id="${job.jobID}">Delete Job</button>
-                        </div>
-                        </div>
+    <div class="col-md-6 mb-4" >
+        <div class="shadow-sm border-0 h-100" style="background: white; border-radius: 15px;">
+            <div class="card-body">
+                <div class="d-flex justify-content-between align-items-center mb-2">
+                    <h5 class="card-title mb-0">${job.title || 'N/A'}</h5>
+                    <span class="badge bg-light text-dark">${job.company || 'N/A'}</span>
+                </div>
+                <p class="text-muted mb-1"><i class="fa fa-map-marker-alt" aria-hidden="true"></i> ${job.cityName || 'N/A'}</p>
+                <p class="mb-3"><strong>${job.price || 'N/A'}</strong> •
+                    <i class="fa fa-level-up-alt" aria-hidden="true"></i> ${job.status || 'N/A'} •
+                    <i class="fa fa-briefcase" aria-hidden="true"></i> ${job.categoryName || 'N/A'}</p>
+                <button class="btn btn-outline-primary btn-sm details-btn" data-job-id="${job.jobID}" data-bs-toggle="collapse" data-bs-target="#descriptionField${job.jobID}">Details</button>
+                <div class="collapse" id="descriptionField${job.jobID}">
+                    <p>${job.description || 'N/A'}</p>
+                    <div class="applicant-list" id="applicantList${job.jobID}"></div>
+                </div>
+                <div class="option-box" style="margin-top: 1em">
+                    <button class="btn btn-danger delete-btn" data-job-id="${job.jobID}">Delete Job</button>
+                </div>
             </div>
         </div>
+    </div>
     `;
 }
 

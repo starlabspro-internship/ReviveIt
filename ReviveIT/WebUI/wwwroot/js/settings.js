@@ -4,6 +4,52 @@
     document.getElementById(sectionId).style.display = 'block';
 }
 
+document.getElementById('changeEmailForm').addEventListener('submit', async function (event) {
+    event.preventDefault();
+
+    const currentEmail = document.getElementById('currentEmail').value;
+    const newEmail = document.getElementById('newEmail').value;
+    const password = document.getElementById('password').value;
+
+    const messageDiv = document.getElementById('changeEmailMessage');
+    messageDiv.innerHTML = '';
+
+    if (!currentEmail || !newEmail || !password) {
+        messageDiv.innerHTML = '<div class="alert alert-danger">All fields are required.</div>';
+        return;
+    }
+
+    try {
+        const response = await fetch('/api/accounts/change-email', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${getTokenFromCookies()}`
+            },
+            body: JSON.stringify({
+                currentEmail: currentEmail,
+                newEmail: newEmail,
+                password: password
+            })
+        });
+
+        const data = await response.json();
+
+        if (response.ok) {
+            messageDiv.innerHTML = '<div class="alert alert-success">' + data.message + '</div>';
+            document.getElementById('changeEmailForm').reset();
+            setTimeout(() => {
+                window.location.href = '/login';
+            }, 2000);
+        } else {
+            messageDiv.innerHTML = '<div class="alert alert-danger">' + (data.errors || data.message) + '</div>';
+        }
+    } catch (error) {
+        console.error('Error changing email:', error);
+        messageDiv.innerHTML = '<div class="alert alert-danger">An unexpected error occurred. Please try again later.</div>';
+    }
+});
+
 document.getElementById('changePasswordForm').addEventListener('submit', async function (event) {
     event.preventDefault();
 
@@ -27,9 +73,9 @@ document.getElementById('changePasswordForm').addEventListener('submit', async f
                 'Authorization': `Bearer ${getTokenFromCookies()}`
             },
             body: JSON.stringify({
-            currentPassword: currentPassword,
-            newPassword: newPassword,
-            confirmPassword: confirmPassword
+                currentPassword: currentPassword,
+                newPassword: newPassword,
+                confirmPassword: confirmPassword
             })
         });
 
@@ -42,22 +88,21 @@ document.getElementById('changePasswordForm').addEventListener('submit', async f
             setTimeout(() => {
                 window.location.href = '/login';
             }, 2000);
-        }else {
-            const errors = data.errors || [data.message];
-            messageDiv.innerHTML = '<div class="alert alert-danger">' + errors.join('<br>') + '</div>';
+        } else {
+            messageDiv.innerHTML = '<div class="alert alert-danger">' + (data.errors || data.message) + '</div>';
         }
     } catch (error) {
         console.error('Error changing password:', error);
-        messageDiv.innerHTML = '<div class="alert alert-danger">An unexpected error occurred. Please try again.</div>';
-        }
-    });
+        messageDiv.innerHTML = '<div class="alert alert-danger">An unexpected error occurred. Please try again later.</div>';
+    }
+});
 
 function getTokenFromCookies() {
     const cookies = document.cookie.split(';');
     for (let cookie of cookies) {
-            const [name, value] = cookie.trim().split('=');
-    if (name === 'jwtToken') return decodeURIComponent(value);
-        }
+        const [name, value] = cookie.trim().split('=');
+        if (name === 'jwtToken') return decodeURIComponent(value);
+    }
     return null;
 }
 
