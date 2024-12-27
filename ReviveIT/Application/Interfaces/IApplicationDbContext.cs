@@ -21,6 +21,7 @@ namespace Application.Interfaces
         public DbSet<City> Cities { get; set; }
         public DbSet<OperatingCity> OperatingCities { get; set; }
         DbSet<Feedback> Feedbacks { get; set; }
+        public DbSet<TechnicianAvailability> TechnicianAvailabilities { get; set; }
 
         Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);
     }

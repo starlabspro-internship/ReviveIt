@@ -19,6 +19,7 @@ using WebUI.MiddleWares;
 using Microsoft.AspNetCore.SignalR;
 using Application.Features.Cities;
 using Application.Features.Review;
+using Application.Features.Available;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Logging.ClearProviders(); builder.Logging.AddConsole(); builder.Logging.AddDebug(); builder.Logging.AddEventSourceLogger();
@@ -74,6 +75,7 @@ builder.Services.AddScoped<DeleteReviewFeature>();
 builder.Services.AddScoped<GetUserReviewFeature>();
 builder.Services.AddScoped<GetAllReviewsFeature>();
 builder.Services.AddScoped<GetAverageRatingFeature>();
+builder.Services.AddScoped<ITechnicianAvailabilityService, TechnicianAvailabilityFeature>();
 
 builder.Services.AddAuthentication(options =>
 {
