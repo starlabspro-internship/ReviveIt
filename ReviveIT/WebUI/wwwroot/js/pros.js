@@ -42,9 +42,14 @@ async function loadTechnicians(clear = false, useUrl = false) {
     }
     const takeCount = skipCount === 0 ? initialPageSize : additionalPageSize;
     const { keywords, selectedCityId, selectedCategoryId } = getFilterParameters(useUrl);
-    const experience = document.getElementById('experience').value || null;
-    const selectRole = document.getElementById('selectRole').value || null;
-    const sortBy = document.getElementById('sortBy').value || null;
+    const experienceElement = document.getElementById('experience');
+    const selectRoleElement = document.getElementById('selectRole');
+    const sortByElement = document.getElementById('sortBy');
+
+    const experience = experienceElement ? experienceElement.value || null : null;
+    const selectRole = selectRoleElement ? selectRoleElement.value || null : null;
+    const sortBy = sortByElement ? sortByElement.value || null : null;
+
 
     const params = new URLSearchParams({
         skipCount,
@@ -206,16 +211,20 @@ function fetchCitites(selectedCityId = null) {
         });
 }
 
-document.getElementById('resetFiltersButton').addEventListener('click', function () {
-    document.getElementById('filtersForm').reset();
+const resetfilter = document.getElementById('resetFiltersButton');
 
-    document.getElementById('filterCities').value = '';
-    document.getElementById('filterCategories').value = '';
-    document.getElementById('keywords').value = '';
-    document.getElementById('experience').value = '';
-    document.getElementById('selectRole').value = '';
-    document.getElementById('sortBy').value = '';
-});
+if (resetfilter) {
+    document.getElementById('resetFiltersButton').addEventListener('click', function () {
+        document.getElementById('filtersForm').reset();
+
+        document.getElementById('filterCities').value = '';
+        document.getElementById('filterCategories').value = '';
+        document.getElementById('keywords').value = '';
+        document.getElementById('experience').value = '';
+        document.getElementById('selectRole').value = '';
+        document.getElementById('sortBy').value = '';
+    });
+}
 
 document.addEventListener('DOMContentLoaded', async () => {
     await checkAuthenticationStatus();
