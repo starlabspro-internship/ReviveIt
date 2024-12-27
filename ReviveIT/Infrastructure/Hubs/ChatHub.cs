@@ -55,22 +55,14 @@ namespace Infrastructure.Hubs
 
             try
             {
-                // Log connection state before sending the message
                 _logger.LogInformation($"Connection state before sending: {Context.ConnectionId}, user: {senderEmail}");
-
-                // Attempt to send the message
                 await Clients.User(recipientId).SendAsync("ReceiveMessage", senderEmail, message);
-
-                // Log success
                 _logger.LogInformation("Message sent successfully.");
             }
             catch (Exception ex)
             {
-                // Log any exceptions
                 _logger.LogError($"Error sending message from {senderEmail} to {recipientId}: {ex.Message}", ex);
             }
         }
-
     }
-
 }
