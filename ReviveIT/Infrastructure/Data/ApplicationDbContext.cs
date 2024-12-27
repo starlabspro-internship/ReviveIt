@@ -48,7 +48,7 @@ namespace Infrastructure.Data
             builder.ApplyConfiguration(new CityConfigurations());
             builder.ApplyConfiguration(new OperatingCityConfigurations());
             builder.ApplyConfiguration(new TechnicianAvailabilityConfigurations());
-
+            
             builder.Entity<City>().HasData(
                 new City { CityId = 1, CityName = "Deçan" },
                 new City { CityId = 2, CityName = "Dragash" },
