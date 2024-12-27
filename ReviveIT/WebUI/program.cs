@@ -1,8 +1,5 @@
 ﻿using System.Text;
 using Application.Features;
-using Application.Features.Accounts;
-using Application.Features.User;
-using Application.Features.Categories;
 using Application.Helpers;
 using Application.Interfaces;
 using Domain.Constants;
@@ -17,11 +14,21 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using WebUI.MiddleWares;
 using Microsoft.AspNetCore.SignalR;
+using Application.Features.Accounts;
+using Application.Features.Categories;
 using Application.Features.Cities;
+using Application.Features.User;
+using System.Security.Claims;
+using Microsoft.Extensions.Configuration;
+using static Infrastructure.Hubs.ChatHub;
 using Application.Features.Review;
 
 var builder = WebApplication.CreateBuilder(args);
-builder.Logging.ClearProviders(); builder.Logging.AddConsole(); builder.Logging.AddDebug(); builder.Logging.AddEventSourceLogger();
+
+builder.Logging.ClearProviders();
+builder.Logging.AddConsole();
+builder.Logging.AddDebug();
+builder.Logging.AddEventSourceLogger();
 builder.Services.AddControllersWithViews();
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"),
@@ -30,7 +37,6 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 builder.Services.AddIdentity<Users, IdentityRole>()
     .AddEntityFrameworkStores<ApplicationDbContext>()
     .AddDefaultTokenProviders();
-
 
 builder.Services.AddHttpContextAccessor();
 
@@ -103,6 +109,8 @@ builder.Services.AddAuthentication(options =>
     };
 });
 
+builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+builder.Services.AddTransient<TokenHelper>();
 builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
 builder.Services.AddScoped<IJobsRepository, JobsRepository>();
 builder.Services.AddScoped<IJobApplicationsRepository, JobApplicationsRepository>();
@@ -119,8 +127,7 @@ builder.Services.AddScoped<ICityRepository, CityRepository>();
 builder.Services.AddScoped<IOperatingCityRepository, OperatingCityRepository>();
 builder.Services.AddScoped<IJobPostFeature, JobPostFeature>();
 builder.Services.AddTransient<IEmailSender, EmailSender>();
-
-builder.Services.AddHttpContextAccessor();
+builder.Services.AddScoped<IMessageService, MessageService>();
 builder.Services.AddSingleton<ConfigurationConstant>();
 builder.Services.AddSignalR();
 
@@ -154,14 +161,17 @@ if (!app.Environment.IsDevelopment())
     app.UseHsts();
 }
 
+ 
+
+
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 app.UseRouting();
 app.UseCors("AllowAll");
 app.UseAuthentication();
 app.UseAuthorization();
-app.UseMiddleware<ExceptionMiddleware>();
-app.MapHub<ChatHub>("/chatHub"); 
+app.MapHub<ChatHub>("/chatHub");
+app.MapControllers();
 
 app.MapControllerRoute(
     name: "default",
@@ -216,4 +226,12 @@ app.MapControllerRoute(
     pattern: "Customer/MyAccount/{id?}",
     defaults: new { controller = "Customer", action = "MyAccount" });
 
+app.MapControllerRoute(
+    name: "inbox",
+    pattern: "Inbox",
+    defaults: new { controller = "Chat", action = "Inbox" });
+
 app.Run();
+
+
+

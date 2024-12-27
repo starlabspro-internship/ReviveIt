@@ -4,6 +4,7 @@ using Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace WebUI.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241227103945_Chat")]
+    partial class Chat
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -491,9 +494,8 @@ namespace WebUI.Migrations
                     b.Property<int>("Rating")
                         .HasColumnType("int");
 
-                    b.Property<string>("ReviewedUserId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int>("ServiceID")
+                        .HasColumnType("int");
 
                     b.Property<DateTime>("UpdatedAt")
                         .ValueGeneratedOnAdd()
@@ -506,7 +508,7 @@ namespace WebUI.Migrations
 
                     b.HasKey("ReviewID");
 
-                    b.HasIndex("ReviewedUserId");
+                    b.HasIndex("ServiceID");
 
                     b.HasIndex("UserId");
 
@@ -1065,9 +1067,9 @@ namespace WebUI.Migrations
 
             modelBuilder.Entity("Domain.Entities.Reviews", b =>
                 {
-                    b.HasOne("Domain.Entities.Users", "ReviewedUser")
+                    b.HasOne("Domain.Entities.Service", "Service")
                         .WithMany()
-                        .HasForeignKey("ReviewedUserId")
+                        .HasForeignKey("ServiceID")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
@@ -1077,7 +1079,7 @@ namespace WebUI.Migrations
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.Navigation("ReviewedUser");
+                    b.Navigation("Service");
 
                     b.Navigation("User");
                 });

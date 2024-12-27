@@ -1,4 +1,5 @@
-﻿using Domain.Entities;
+﻿using Domain.Configurations;
+using Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace Application.Interfaces
@@ -20,7 +21,7 @@ namespace Application.Interfaces
         public DbSet<SelectedJobApplicant> SelectedJobApplicants { get; set; }
         public DbSet<City> Cities { get; set; }
         public DbSet<OperatingCity> OperatingCities { get; set; }
-        DbSet<Feedback> Feedbacks { get; set; }
+        public DbSet<Feedback> Feedbacks { get; set; }
 
         Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);
     }

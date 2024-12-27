@@ -101,7 +101,7 @@
     border-bottom: 1px solid #dee2e6;
 }
 
-    .user-info .username {
+    .user-info .fullname {
         font-size: 1.25rem;
         font-weight: bold;
     }
@@ -157,3 +157,64 @@ h3 {
 .badge.bg-blue {
     background-color: #007bff !important;
 }
+
+.notification-badge {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background-color: red;
+    color: white;
+    border-radius: 50%;
+    padding: 5px 10px;
+    font-size: 14px;
+    display: none; 
+}
+
+#chat-container {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+#chat-messages {
+    flex-grow: 1;
+    overflow-y: auto;
+}
+
+#chat-input {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    border-top: 1px solid #ccc;
+}
+
+    #chat-input input[type="text"] {
+        flex-grow: 1;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+    }
+
+    #chat-input button {
+        background: none;
+        border: none;
+        cursor: pointer;
+        padding: 10px;
+        margin-left: 5px;
+    }
+
+        #chat-input button i {
+            font-size: 20px;
+            color: #007bff;
+        }
+
+.chat-session {
+    padding: 10px;
+    border: 1px solid #ccc;
+    margin-bottom: 5px;
+    cursor: pointer;
+}
+
+    .chat-session:hover {
+        background-color: #f0f0f0; 
+    }

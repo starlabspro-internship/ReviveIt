@@ -9,6 +9,29 @@
     <meta name="author" content="" />
 
     <title>ReviveIt</title>
+    <style>.nav-item {
+  position: relative;
+}
+
+.nav-link {
+  position: relative;
+  display: inline-block;
+  padding-right: 1px;
+}
+
+.notification-badge {
+  background-color: blue;
+  color: white;
+  border-radius: 50%;
+  padding: 2px 5px;
+  font-size: 8px; 
+  position: absolute;
+  top: -65
+  right: -10px; 
+  transform: translateY(-50%);
+}
+
+</style>
 
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
@@ -55,7 +78,7 @@
                                 @if (User.Identity.IsAuthenticated)
                                 {
                                     <li class="nav-item">
-                                        <a class="nav-link" asp-controller="Inbox" asp-action="Inbox">Inbox</a>
+                                        <a class="nav-link" asp-controller="Inbox" asp-action="Inbox">Inbox <span class="notification-badge" id="notification-badge">0</span></a>
                                     </li>
                                 }
                                 @if (User.Identity.IsAuthenticated)

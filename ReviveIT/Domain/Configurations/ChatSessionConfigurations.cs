@@ -14,19 +14,20 @@ namespace Domain.Configurations
                    .HasDefaultValueSql("GETDATE()");
 
             builder.HasOne(cs => cs.Technician)
-                   .WithMany()
+                   .WithMany(u => u.TechnicianChatSessions)
                    .HasForeignKey(cs => cs.TechnicianId)
                    .OnDelete(DeleteBehavior.Restrict);
 
             builder.HasOne(cs => cs.Customer)
-                   .WithMany()
+                   .WithMany(u => u.CustomerChatSessions)
                    .HasForeignKey(cs => cs.CustomerId)
                    .OnDelete(DeleteBehavior.Restrict);
 
             builder.HasOne(cs => cs.Company)
-                   .WithMany()
+                   .WithMany(u => u.CompanyChatSessions)
                    .HasForeignKey(cs => cs.CompanyId)
                    .OnDelete(DeleteBehavior.Restrict);
         }
     }
 }
+
