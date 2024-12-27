@@ -57,6 +57,59 @@ async function checkIfUserApplied(jobId) {
         : { hasApplied: false, applicationId: null };
 }
 
+document.getElementById("applyFiltersButton").addEventListener("click", async () => {
+    const keywords = document.getElementById("keywords").value.trim();
+    const selectedCityId = document.getElementById("filterCities").value;
+    const selectedCategoryId = document.getElementById("filterCategories").value;
+    const price = document.getElementById("price").value.trim();
+    const numberOfApplicants = document.getElementById("numberOfApplicants").value;
+    const sortBy = document.getElementById("sortBy").value;
+
+    const filterParams = {
+        keywords,
+        selectedCityId,
+        selectedCategoryId,
+        price,
+        numberOfApplicants,
+        sortBy,
+    };
+
+    await fetchAndFilterJobs(filterParams);
+});
+
+async function fetchAndFilterJobs(filters) {
+    const userRole = await checkUserRole();
+    const userCreatedJobs = await getUserCreatedJobs();
+
+    const queryString = new URLSearchParams(filters).toString();
+
+    const jobsData = await fetchData(`/api/GetJobs/get-all-jobs?${queryString}`, {
+        method: "GET",
+        headers: {
+            Authorization: `Bearer ${getCookie("jwtToken")}`,
+            "Content-Type": "application/json",
+        },
+    });
+
+    if (jobsData && jobsData.jobs) {
+        const updatedJobs = await Promise.all(
+            jobsData.jobs.map(async (job) => {
+                job.isUserCreated = userCreatedJobs.some(
+                    (userJob) => userJob.jobID === job.jobID
+                );
+
+                const applicationStatus = await checkIfUserApplied(job.jobID);
+                job.hasApplied = applicationStatus.hasApplied;
+                job.applicationId = applicationStatus.applicationId;
+
+                return job;
+            })
+        );
+
+        populateJobsContainer(updatedJobs, userRole);
+    }
+}
+
 async function getAllJobs() {
     const userRole = await checkUserRole();
     const userCreatedJobs = await getUserCreatedJobs();
@@ -198,16 +251,18 @@ function createJobCard(job, userRole) {
                              <h5 style="${titleStyle}">${job.title || 'N/A'}</h5>
                              <div style="${detailInfoStyle}">
                                    <h6 style="${detailItemStyle}"><i class="fa fa-th-list" style="${iconStyle}" aria-hidden="true"></i><span>${job.categoryName || 'N/A'}</span></h6>
-                                         <h6 style="${detailItemStyle}"><i class="fa fa-info-circle" style="${iconStyle}" aria-hidden="true"></i><span>${job.status || 'N/A'}</span></h6>
-                                        <h6 style="${detailItemStyle}; margin-bottom: 1em;">
-                                               <i class="fa fa-map-marker-alt" style="${iconStyle}"  aria-hidden="true"></i><span>${job.cityName || 'N/A'}</span></h6>
-                                </div>
+                                    <h6 style="${detailItemStyle}"><i class="fa fa-info-circle" style="${iconStyle}" aria-hidden="true"></i><span>${job.status || 'N/A'}</span></h6>
+                                    <h6 style="${detailItemStyle};">
+                                    <i class="fa fa-map-marker-alt" style="${iconStyle}"  aria-hidden="true"></i><span>${job.cityName || 'N/A'}</span></h6>
+                                    <h6 style="${detailItemStyle}; "><i class="fa fa-dollar-sign" style="${iconStyle}" aria-hidden="true"></i><span>${job.price ? `${job.price}` : 'N/A'}</span></h6>
+                                    <h6 style="${detailItemStyle}; "><i class="fa fa-user" style="${iconStyle}" aria-hidden="true"></i><span>Applicants: ${job.numberOfApplicants}</span></h6>
+                            </div>
                                ${descriptionArea}
                             <div class="collapse" id="descriptionField${job.jobID}">
                                  <p style = "color: #333; padding: 1em"> ${job.description || 'N/A'} </p>
                            </div>
                      </div>
-           </div>
+            </div>
             <div style="${optionBoxStyle}">
                         ${job.isUserCreated
             ? `<p style="${userJobMessageStyle}; margin-right:0; ">This is your job listing</p>`
@@ -218,11 +273,10 @@ function createJobCard(job, userRole) {
     </div>
 `;
 }
+
 function createJobActionButtons(job, userRole, buttonStyle, userJobMessageStyle) {
     const applyButtonStyle = `${buttonStyle} background-color: #28a745;`;
     const deleteButtonStyle = `${buttonStyle} background-color: #dc3545;`;
-
-
 
     if (userRole === "Technician" || userRole === "Company" || userRole === "Admin") {
         return job.isUserCreated ? ''
@@ -233,9 +287,7 @@ function createJobActionButtons(job, userRole, buttonStyle, userJobMessageStyle)
                 : `<button style="${applyButtonStyle}"  class="apply-btn" data-job-id="${job.jobID}"   onmouseover="this.style.backgroundColor='#1e7e34';"
                 onmouseout="this.style.backgroundColor='#28a745';"  >Apply Now</button>`;
     }
-
     return '';
-
 }
 
 function createJobActionButtons(job, userRole, buttonStyle) {
@@ -272,7 +324,6 @@ function addJobEventListeners() {
     });
 }
 
-
 async function deleteJobApplication(event) {
     const applicationId = event.target.getAttribute("data-application-id");
     const response = await fetchData(
@@ -290,7 +341,6 @@ async function deleteJobApplication(event) {
         getAllJobs();
     }
 }
-
 
 async function applyForJob(event) {
     const jobId = event.target.getAttribute("data-job-id");
@@ -345,39 +395,48 @@ async function submitJobForm(event) {
     isJobPostingInProgress = false;
 }
 
-function fetchCategories() {
+function fetchCategories(dropdownId) {
     fetch("/api/categories/getCategories")
         .then((response) => response.json())
         .then((data) => {
-            const jobCategoryDropdown = document.getElementById("jobCategory");
+            const dropdown = document.getElementById(dropdownId);
             data.forEach((category) => {
                 const option = document.createElement("option");
                 option.value = category.categoryID;
                 option.textContent = category.name;
-                jobCategoryDropdown.appendChild(option);
+                dropdown.appendChild(option);
             });
         })
         .catch((error) => console.error("Error fetching categories:", error));
 }
 
-function fetchCities() {
+function fetchCities(dropdownId) {
     fetch("/api/city/getCities")
         .then((response) => response.json())
         .then((data) => {
-            const citiesDropdown = document.getElementById("jobCity");
+            const dropdown = document.getElementById(dropdownId);
             data.forEach((city) => {
                 const option = document.createElement("option");
                 option.value = city.cityId;
                 option.textContent = city.cityName;
-                citiesDropdown.appendChild(option);
+                dropdown.appendChild(option);
             });
-        });
+        })
+        .catch((error) => console.error("Error fetching cities:", error));
 }
 
+document.getElementById("resetFiltersButton").addEventListener("click", () => {
+    document.getElementById("filtersForm").reset();
+    fetchAndFilterJobs({});
+});
 
 document.addEventListener("DOMContentLoaded", function () {
-    fetchCategories();
-    fetchCities();
+    fetchCategories("jobCategory");
+    fetchCities("jobCity");
+
+    fetchCategories("filterCategories");
+    fetchCities("filterCities");
+
     getAllJobs();
 
     const jobForm = document.getElementById("jobForm");
