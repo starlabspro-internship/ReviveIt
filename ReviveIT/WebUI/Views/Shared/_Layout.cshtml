@@ -92,9 +92,6 @@
                                             <a class="dropdown-item" asp-controller="Profile" asp-action="Profile">
                                                 <i class="fa fa-user mr-2"></i>Profile
                                             </a>
-                                            <a class="dropdown-item" href="#">
-                                                <i class="fa fa-envelope mr-2"></i>Inbox
-                                            </a>
                                             @if (User.IsInRole("Customer"))
                                             {
                                                 <a class="dropdown-item" asp-controller="JobBoard" asp-action="JobBoard">
