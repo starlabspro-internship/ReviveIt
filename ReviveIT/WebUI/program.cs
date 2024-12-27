@@ -1,28 +1,23 @@
-﻿using System.Text;
-using Application.Features;
+﻿using Application.Features;
+using Application.Features.Accounts;
+using Application.Features.Available;
+using Application.Features.Categories;
+using Application.Features.Cities;
+using Application.Features.Review;
+using Application.Features.User;
 using Application.Helpers;
 using Application.Interfaces;
 using Domain.Constants;
 using Domain.Entities;
 using Infrastructure.Data;
+using Infrastructure.Hubs;
 using Infrastructure.Repositories;
 using Infrastructure.Services;
-using Infrastructure.Hubs;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
-using WebUI.MiddleWares;
-using Microsoft.AspNetCore.SignalR;
-using Application.Features.Accounts;
-using Application.Features.Categories;
-using Application.Features.Cities;
-using Application.Features.User;
-using System.Security.Claims;
-using Microsoft.Extensions.Configuration;
-using static Infrastructure.Hubs.ChatHub;
-using Application.Features.Review;
-using Application.Features.Available;
+using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
