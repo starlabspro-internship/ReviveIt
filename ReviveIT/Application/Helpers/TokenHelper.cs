@@ -25,14 +25,14 @@ namespace Application.Helpers
         {
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration[ConfigurationConstant.Key]));
             var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
-
             var claims = new[]
             {
-                new Claim(JwtRegisteredClaimNames.Sub, user.UserName),
-                new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
-                new Claim(ClaimTypes.Role, user.Role.ToString()),
-                new Claim("UserId", user.Id)
-            };
+    new Claim(JwtRegisteredClaimNames.Sub, user.UserName),
+    new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
+    new Claim(ClaimTypes.Role, user.Role.ToString()),
+    new Claim(ClaimTypes.Email, user.Email),
+    new Claim("UserId", user.Id) 
+};
 
             var token = new JwtSecurityToken(
                 issuer: _configuration[ConfigurationConstant.Issuer],

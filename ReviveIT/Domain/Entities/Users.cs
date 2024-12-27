@@ -1,4 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using System;
+using System.Collections.Generic;
 
 namespace Domain.Entities
 {
@@ -20,6 +22,9 @@ namespace Domain.Entities
         public ICollection<OperatingCity> OperatingCities { get; set; }
         public ICollection<PortfolioDocument> Portfolios { get; set; } = new List<PortfolioDocument>();
 
+        public ICollection<ChatSession> TechnicianChatSessions { get; set; }
+        public ICollection<ChatSession> CustomerChatSessions { get; set; }
+        public ICollection<ChatSession> CompanyChatSessions { get; set; } // Chat sessions where the user is the company
     }
 
     public enum UserRole

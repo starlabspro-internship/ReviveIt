@@ -1,17 +1,12 @@
 ﻿using Domain.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace Application.Interfaces
+public interface IMessageService
 {
-    public interface IMessageService
-    {
-        void SendMessage(string senderId, string receiverId, string message);
-        IEnumerable<ChatSession> GetChatSessions(string userId);
-        IEnumerable<Messages> GetChatHistory(int chatSessionId);
-        void MarkMessageAsRead(int messageId);
-    }
+    IEnumerable<ChatSession> GetChatSessions(string userId);
+    ChatSession GetChatSession(string userId, string otherUserId); 
+    IEnumerable<Messages> GetChatHistory(int sessionId);
+    Task SendMessageAsync(string senderId, string recipientId, string message );
+    void MarkMessageAsRead(int messageId);
+    Users GetUserByEmail(string email);
+    int GetUnseenMessagesCountForUser(string userId);
 }
