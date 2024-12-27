@@ -25,8 +25,7 @@ namespace Infrastructure.Data
         public DbSet<City> Cities { get; set; }
         public DbSet<OperatingCity> OperatingCities { get; set; }
         public DbSet<Feedback> Feedbacks { get; set; }
-   
-
+        
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
