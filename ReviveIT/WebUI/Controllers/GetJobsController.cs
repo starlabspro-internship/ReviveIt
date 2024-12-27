@@ -1,5 +1,6 @@
 ﻿using Application.Features.User;
 using Microsoft.AspNetCore.Mvc;
+using System.Reflection.Metadata;
 
 namespace WebUI.Controllers
 {
@@ -17,10 +18,10 @@ namespace WebUI.Controllers
         }
 
         [HttpGet("get-all-jobs")]
-        public async Task<IActionResult> GetAllJobs()
+        public async Task<IActionResult> GetAllJobs([FromQuery] GetAllJobsQuery query)
         {
-            var result = await _getAllJobsFeature.HandleAsync();
-            return Ok(result);  
+            var result = await _getAllJobsFeature.HandleAsync(query);
+            return Ok(result);
         }
 
         [HttpGet("get-jobs-by-user-id")]

@@ -43,6 +43,7 @@ namespace Application.Features.User
                         user.Expertise = updateProfileDTO.Expertise ?? user.Expertise;
                         user.Experience = updateProfileDTO.Experience ?? user.Experience;
                         user.PhoneNumber = updateProfileDTO.PhoneNumber ?? user.PhoneNumber;
+                        user.Description = updateProfileDTO.Description ?? user.Description;
                         break;
 
                     case nameof(UserRole.Company):
@@ -50,6 +51,7 @@ namespace Application.Features.User
                         user.CompanyName = updateProfileDTO.CompanyName ?? user.CompanyName;
                         user.CompanyAddress = updateProfileDTO.CompanyAddress ?? user.CompanyAddress;
                         user.PhoneNumber = updateProfileDTO.PhoneNumber ?? user.PhoneNumber;
+                        user.Description = updateProfileDTO.Description ?? user.Description;
                         break;
 
                     default:

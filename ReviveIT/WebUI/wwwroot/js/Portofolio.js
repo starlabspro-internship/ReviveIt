@@ -68,7 +68,6 @@ function openPortfolioModal(filePath, title, description) {
     const modalHTML = `
         <div class="modal-overlay">
             <div class="modal-content">
-                <span class="close-modal">&times;</span>
                 <img src="${filePath}" alt="Full Image" class="modal-image" style="height: 25em;"/>
                 <h3>${title}</h3>
                 <p>${description}</p>
@@ -76,11 +75,10 @@ function openPortfolioModal(filePath, title, description) {
         </div>
     `;
 
-    document.body.insertAdjacentHTML('beforeend', modalHTML);
+    const newModalElement = document.createElement('div');
+    newModalElement.innerHTML = modalHTML;
 
-    document.querySelector('.close-modal').addEventListener('click', () => {
-        document.querySelector('.modal-overlay').remove();
-    });
+    document.body.appendChild(newModalElement);
 
     document.querySelector('.modal-overlay').addEventListener('click', (e) => {
         if (e.target === document.querySelector('.modal-overlay')) {
@@ -154,7 +152,6 @@ async function deletePortfolioImage(portfolioDocumentId) {
         alert("An error occurred while trying to delete the portfolio image.");
     }
 }
-
 /*TO BE FIXED*/
 //function populateDaysOfWeek() {
 //    const daysOfWeek = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
@@ -197,4 +194,9 @@ async function deletePortfolioImage(portfolioDocumentId) {
 //    populateMonths();
 //};
 
-document.addEventListener("DOMContentLoaded", getPortfolio);
+document.addEventListener('DOMContentLoaded', () => {
+    const portfolioContainer = document.getElementById('portfolioContainer');
+    if (portfolioContainer) {
+        getPortfolio();
+    }
+});

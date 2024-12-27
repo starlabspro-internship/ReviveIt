@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.Extensions.Hosting;   
+using Microsoft.Extensions.Hosting;
 using Application.DTO;
 using Domain.Entities;
 
@@ -9,12 +9,12 @@ namespace Application.Features.User
     public class ProfilePictureFeature
     {
         private readonly UserManager<Users> _userManager;
-        private readonly IHostEnvironment _hostEnvironment; 
+        private readonly IHostEnvironment _hostEnvironment;
 
         public ProfilePictureFeature(UserManager<Users> userManager, IHostEnvironment hostEnvironment)
         {
             _userManager = userManager;
-            _hostEnvironment = hostEnvironment;  
+            _hostEnvironment = hostEnvironment;
         }
 
         public async Task<ProfilePictureResultDTO> UploadProfilePictureAsync(IFormFile profilePicture, string userIdClaim)
@@ -32,7 +32,7 @@ namespace Application.Features.User
             if (user == null)
                 return ProfilePictureResultDTO.Failure("User not found.");
 
-            var uploadsFolder = Path.Combine(_hostEnvironment.ContentRootPath, "wwwroot/images/profile");  
+            var uploadsFolder = Path.Combine(_hostEnvironment.ContentRootPath, "wwwroot/images/profile");
             Directory.CreateDirectory(uploadsFolder);
 
             var fileName = $"{Guid.NewGuid()}{Path.GetExtension(profilePicture.FileName)}";
@@ -61,19 +61,28 @@ namespace Application.Features.User
             if (user == null)
                 return ProfilePictureResultDTO.Failure("User not found.");
 
-            if (string.IsNullOrEmpty(user.ProfilePicture))
-                return ProfilePictureResultDTO.Failure("No profile picture to remove.");
-
-            var filePath = Path.Combine(_hostEnvironment.ContentRootPath, "wwwroot", user.ProfilePicture.TrimStart('/'));  
-            if (System.IO.File.Exists(filePath))
+            if (!string.IsNullOrEmpty(user.ProfilePicture))
             {
-                System.IO.File.Delete(filePath);
+
+                var filePath = Path.Combine(_hostEnvironment.ContentRootPath, "wwwroot", user.ProfilePicture.TrimStart('/'));
+                if (System.IO.File.Exists(filePath))
+                {
+                    System.IO.File.Delete(filePath);
+                }
             }
 
             user.ProfilePicture = null;
             await _userManager.UpdateAsync(user);
 
-            return ProfilePictureResultDTO.Success(null);
+            var defaultProfilePicture = "/images/defaultProfilePicture.png";
+
+            var roles = await _userManager.GetRolesAsync(user);
+            if (roles.Contains("Company"))
+            {
+                defaultProfilePicture = "/images/defaultCompanyPicture.png";
+            }
+
+            return ProfilePictureResultDTO.Success(defaultProfilePicture);
         }
 
         public async Task<ProfilePictureResultDTO> GetProfilePictureAsync(string userIdClaim)
@@ -88,10 +97,16 @@ namespace Application.Features.User
             if (user == null)
                 return ProfilePictureResultDTO.Failure("User not found.");
 
-            if (string.IsNullOrEmpty(user.ProfilePicture))
-                return ProfilePictureResultDTO.Failure("No profile picture found.");
+            var defaultProfilePicture = "/images/defaultProfilePicture.png";
+            var roles = await _userManager.GetRolesAsync(user);
 
-            var profilePictureUrl = $"{user.ProfilePicture}";
+            if (roles.Contains("Company"))
+            {
+                defaultProfilePicture = "/images/defaultCompanyPicture.png";
+            }
+
+            var profilePictureUrl = string.IsNullOrEmpty(user.ProfilePicture) ? defaultProfilePicture : user.ProfilePicture;
+
             return ProfilePictureResultDTO.Success(profilePictureUrl);
         }
     }

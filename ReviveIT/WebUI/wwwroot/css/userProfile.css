@@ -95,3 +95,202 @@
     color: black;
     cursor: pointer;
 }
+
+#descriptionText {
+    margin-bottom: 15px;
+}
+
+#editCategoriesModal {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    z-index: 1000;
+}
+
+    #editCategoriesModal .modal-content {
+        position: relative;
+        max-width: 50%;
+        max-height: 80%;
+        background-color: #fff;
+        border-radius: 8px;
+        padding: 20px;
+        text-align: left;
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+        margin: auto;
+    }
+
+    #editCategoriesModal #allCategoriesList {
+        max-height: 60%;
+        overflow-y: auto;
+        margin-bottom: 20px;
+        padding: 0;
+        list-style: none;
+    }
+
+    #editCategoriesModal .modal-content button {
+        width: 100%;
+        margin-bottom: 10px;
+    }
+
+    #editCategoriesModal .modal-content h5 {
+        margin-bottom: 15px;
+        font-size: 1.5em;
+    }
+
+    #editCategoriesModal .close-modal {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        font-size: 1.5em;
+        font-weight: bold;
+        color: black;
+        cursor: pointer;
+        padding-right: 10px;
+    }
+
+        #editCategoriesModal .close-modal:hover {
+            color: red;
+        }
+
+#selectedCategoriesContainer {
+    margin-bottom: 15px;
+}
+
+#editCitiesModal {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    z-index: 1000;
+}
+
+    #editCitiesModal .modal-content {
+        position: relative;
+        max-width: 50%;
+        max-height: 80%;
+        background-color: #fff;
+        border-radius: 8px;
+        padding: 20px;
+        text-align: left;
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+        margin: auto;
+    }
+
+    #editCitiesModal #allCitiesList {
+        max-height: 60%;
+        overflow-y: auto;
+        margin-bottom: 20px;
+        padding: 0;
+        list-style: none;
+    }
+
+    #editCitiesModal .modal-content button {
+        width: 100%;
+        margin-bottom: 10px;
+    }
+
+    #editCitiesModal .modal-content h5 {
+        margin-bottom: 15px;
+        font-size: 1.5em;
+    }
+
+    #editCitiesModal .close-modal {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        font-size: 1.5em;
+        font-weight: bold;
+        color: black;
+        cursor: pointer;
+        padding-right: 10px;
+    }
+
+        #editCitiesModal .close-modal:hover {
+            color: red;
+        }
+
+.review-section {
+    text-align: center;
+    margin-top: 20px;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+    .review-section h5 {
+        font-size: 1.8em;
+        margin-bottom: 15px;
+        color: #333;
+    }
+
+    .review-section .toggle-button {
+        padding: 10px 20px;
+        border: none;
+        background-color: #333;
+        color: white;
+        border-radius: 4px;
+        margin: 10px 0;
+        cursor: pointer;
+    }
+
+    .review-section .dropdown-content {
+        padding: 10px;
+        border-top: 1px solid #ddd;
+        overflow: hidden;
+        transition: max-height 0.3s ease-in-out;
+    }
+
+
+.review-item {
+    margin-bottom: 10px;
+    padding: 10px;
+    border: 1px solid #eee;
+    border-radius: 4px;
+    background-color: #f9f9f9;
+}
+
+    .review-item .rating {
+        font-weight: bold;
+        margin-bottom: 5px;
+        font-size: 1.1em;
+        color: #333;
+    }
+
+    .review-item .comment {
+        margin-bottom: 5px;
+        font-size: 1.0em;
+        color: #555;
+        line-height: 1.5;
+    }
+
+    .review-item .reviewer {
+        font-style: italic;
+        color: #888;
+        font-size: 1.0em;
+    }
+
+.no-reviews-message {
+    font-size: 1.2em;
+}
+
+.error-message {
+    color: red;
+    font-size: 1.2rem;
+    font-weight: bold;
+}

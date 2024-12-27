@@ -21,6 +21,7 @@ using Application.Features.User;
 using System.Security.Claims;
 using Microsoft.Extensions.Configuration;
 using static Infrastructure.Hubs.ChatHub;
+using Application.Features.Review;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -73,6 +74,12 @@ builder.Services.AddScoped<GetCategoriesFeature>();
 builder.Services.AddScoped<GetTechnicianProfileFeature>();
 builder.Services.AddScoped<GetCitiesFeature>();
 builder.Services.AddScoped<CompleteProfileFeature>();
+builder.Services.AddScoped<CreateReviewFeature>();
+builder.Services.AddScoped<UpdateReviewFeature>();
+builder.Services.AddScoped<DeleteReviewFeature>();
+builder.Services.AddScoped<GetUserReviewFeature>();
+builder.Services.AddScoped<GetAllReviewsFeature>();
+builder.Services.AddScoped<GetAverageRatingFeature>();
 
 builder.Services.AddAuthentication(options =>
 {

@@ -43,7 +43,7 @@
                             </div>
                             <div class="mb-3">
                                 <label for="jobPrice" class="form-label">Price</label>
-                                <input type="number" class="form-control" id="jobPrice" name="jobPrice" placeholder="Enter Price range" required>
+                                <input type="number" class="form-control" id="jobPrice" name="jobPrice" placeholder="Max Price Willing to Pay" required>
                             </div>
                             <button type="submit" class="btn btn-success w-100">Add Job</button>
                         </form>
@@ -51,9 +51,62 @@
                 </div>
             </div>
         </div>
+         <div class="filter-section">
+            <form id="filtersForm">
+                <div class="form-row">
+                    <div class="form-group col-lg-4">
+                        <input type="text" class="form-control" id="keywords" placeholder="Enter keywords">
+                    </div>
+                    <div class="form-group col-lg-4">
+                        <select name="SelectedCityId" id="filterCities" class="form-control wide">
+                            <option value="">All Locations</option>
+                        </select>
+                    </div>
+                    <div class="form-group col-lg-4">
+                        <select name="SelectedCategoryId" id="filterCategories" class="form-control wide">
+                            <option value="">All Categories</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-lg-4">
+                        <input type="number" class="form-control" id="price" placeholder="Minimum Price">
+                    </div>
+                    <div class="form-group col-lg-4">
+                        <select name="NumberOfApplicants" id="numberOfApplicants" class="form-control wide">
+                            <option value="">Number of Applicants</option>
+                            <option value="LessThan3">Less than 3</option>
+                            <option value="LessThan5">Less than 5</option>
+                            <option value="Less than 10">Less than 10</option>
+                            <option value="Less than 20">Less than 20</option>
+                        </select>
+                    </div>
+                    <div class="form-group col-lg-4">
+                        <select name="SortBy" id="sortBy" class="form-control wide">
+                            <option value="">Sort By</option>
+                            <option value="highestPrice">Highest Price</option>
+                            <option value="dateAsc">Date: Oldest First</option>
+                            <option value="dateDesc">Date: Newest First</option>
+                            <option value="nameAsc">Name: A to Z</option>
+                            <option value="nameDesc">Name: Z to A</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-row mb-4">
+                    <div class="form-group col-lg-6">
+                        <button type="button" class="btn btn-primary w-100" style="background-color: #e41a2b; border: 1px solid #e41a2b;" id="applyFiltersButton">Apply Filters</button>
+                    </div>
+                    <div class="form-group col-lg-6">
+                        <button type="button" class="btn btn-secondary w-100" id="resetFiltersButton">Reset Filters</button>
+                    </div>
+                </div>
+            </form>
+        </div>
     </div>
     <div class="job_container">
-        <div id="jobsContainer" class="row">
+        <div class="container">
+            <div id="jobsContainer" class="row">
+            </div>
         </div>
     </div>
 </section>

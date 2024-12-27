@@ -10,22 +10,27 @@ namespace Domain.Configurations
         {
             builder.HasKey(r => r.ReviewID);
 
-            builder.Property(r => r.Content).IsRequired().HasMaxLength(1000);
+            builder.Property(r => r.Content)
+                .IsRequired()
+                .HasMaxLength(1000);
 
-            builder.Property(r => r.Rating).IsRequired();
+            builder.Property(r => r.Rating)
+                .IsRequired();
 
-            builder.Property(r => r.CreatedAt).HasDefaultValueSql("GETDATE()");
+            builder.Property(r => r.CreatedAt)
+                .HasDefaultValueSql("GETDATE()");
 
-            builder.Property(r => r.UpdatedAt).HasDefaultValueSql("GETDATE()");
+            builder.Property(r => r.UpdatedAt)
+                .HasDefaultValueSql("GETDATE()");
 
             builder.HasOne(r => r.User)
                 .WithMany()
                 .HasForeignKey(r => r.UserId)
                 .OnDelete(DeleteBehavior.NoAction);
 
-            builder.HasOne(r => r.Service)
+            builder.HasOne(r => r.ReviewedUser)
                 .WithMany()
-                .HasForeignKey(r => r.ServiceID)
+                .HasForeignKey(r => r.ReviewedUserId)
                 .OnDelete(DeleteBehavior.NoAction);
         }
     }

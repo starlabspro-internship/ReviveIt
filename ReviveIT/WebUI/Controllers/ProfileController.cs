@@ -3,28 +3,13 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace WebUI.Controllers
 {
+    [Route("Profile")]
     [Authorize]
     public class ProfileController : Controller
     {
         public IActionResult Profile()
         {
-            var userProfile = new UserProfileModel
-            {
-                Name = GetUserName() ?? "Unavailable",
-                Email = GetUserEmail() ?? "Unavailable",
-                ProfileType = "Guest"
-            };
-            return View(userProfile);
-        }
-
-        private string GetUserName()
-        {
-            return null;
-        }
-
-        private string GetUserEmail()
-        {
-            return null;
+            return View();
         }
 
         [HttpPost]
@@ -34,6 +19,5 @@ namespace WebUI.Controllers
 
             return RedirectToAction("Profile");
         }
-
     }
 }

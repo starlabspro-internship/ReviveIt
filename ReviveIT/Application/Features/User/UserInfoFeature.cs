@@ -24,12 +24,33 @@ namespace Application.Features.User
             if (user == null)
                 return UserInfoResultDto.ErrorResult("User not found");
 
-            return type.ToLower() switch
+            var roles = await _userManager.GetRolesAsync(user);
+
+            switch (type.ToLower())
             {
-                "fullname" => UserInfoResultDto.SuccessResult(new { FullName = user.FullName }),
-                "role" => UserInfoResultDto.SuccessResult(new { Role = user.Role.ToString() }),
-                _ => UserInfoResultDto.ErrorResult("Invalid type specified")
-            };
+                case "fullname":
+                    {
+                        string? displayName;
+
+                        if (roles.Contains("Company"))
+                        {
+                            displayName = user.CompanyName;
+                        }
+                        else
+                        {
+                            displayName = user.FullName;
+                        }
+                        return UserInfoResultDto.SuccessResult(new { fullName = displayName });
+                    }
+                case "role":
+                    return UserInfoResultDto.SuccessResult(new { role = roles.FirstOrDefault() ?? "Unknown" });
+                case "experience":
+                    return UserInfoResultDto.SuccessResult(new { experience = user.Experience });
+                case "userid":
+                    return UserInfoResultDto.SuccessResult(new { userid = user.Id });
+                default:
+                    return UserInfoResultDto.ErrorResult("Invalid type specified");
+            }
         }
     }
 }
