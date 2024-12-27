@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.SignalR;
 using Microsoft.Extensions.Logging;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
-using Domain.Entities; // Ensure the namespace includes your entities
+using Domain.Entities; 
 
 namespace Infrastructure.Hubs
 {
