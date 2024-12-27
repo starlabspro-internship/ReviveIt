@@ -6,6 +6,7 @@
         return "";
     }
 
+
     async function fetchData(url, method = "GET", body = null, isFormData = false) {
         try {
             const headers = {
@@ -97,7 +98,8 @@
             $(profilePictureSelector).on("click", () => openModal(pfpUrl, true))
             displayTechnicianProfile(data);
             await getUserReview();
-            getReviews();
+            await getReviews();
+            await fetchTechnicianAvailability();
         } catch (error) {
             showToast(`Error fetching profile: ${error.message}`, true);
             setElementAttribute(profilePictureSelector, "src", defaultTechnicianProfilePicture);
@@ -227,11 +229,11 @@
                 .map(
                     (review) =>
                         `<div class="review-item">
-                     <p class="rating">Rating: ${review.rating}/5</p>
-                      <p class="comment">Comment: ${review.content}</p>
-                     <p class="reviewer">Review by ${review.reviewerName || "Anonymous User"
+                      <p class="rating">Rating: ${review.rating}/5</p>
+                       <p class="comment">Comment: ${review.content}</p>
+                      <p class="reviewer">Review by ${review.reviewerName || "Anonymous User"
                         }</p>
-                   </div>`
+                    </div>`
                 )
                 .join("");
             reviewsDropdown.html(reviewsHTML)
@@ -328,7 +330,7 @@
                 showToast("Review deleted succesfully")
                 await getUserReview();
                 resetForm();
-                getReviews();
+                await getReviews();
             }
         }
         catch (error) {
@@ -423,10 +425,67 @@
             resetForm();
             toggleForm(false);
             await getUserReview();
-            getReviews();
+            await getReviews();
         } catch (error) {
             showToast(`Failed to submit review: ${error.message}`, true);
         }
     });
     fetchTechnicianProfile();
+
+
+    const headers = {
+        'Authorization': `Bearer ${getCookie('jwtToken')}`,
+        'Content-Type': 'application/json'
+    };
+
+    async function fetchTechnicianAvailability() {
+        try {
+            const response = await fetch(`/api/TechnicianAvailability/GetAvailabilityByTechnicianId/${technicianId}`, {
+                method: "GET",
+                headers
+            });
+
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+
+            const data = await response.json();
+
+            if (data && data.success && data.availability) {
+                displayTechnicianAvailability(data.availability);
+
+            }
+            else {
+                displayNoAvailabilityMessage();
+            }
+
+        } catch (error) {
+            console.error("Failed to fetch data:", error);
+            displayNoAvailabilityMessage();
+        }
+    }
+
+    function displayTechnicianAvailability(availability) {
+        const container = document.getElementById("availability-container");
+        container.innerHTML = "";
+
+        const availabilityCard = document.createElement("div");
+        availabilityCard.classList.add("mb-4", "p-3");
+
+        availabilityCard.innerHTML = `
+         <p><strong>Days Available:</strong> ${availability.daysAvailable || 'Not Specified'}</p>
+         <p><strong>Months Unavailable:</strong> ${availability.monthsUnavailable || 'Not Specified'}</p>
+         <p><strong>Specific Unavailable Dates:</strong> ${availability.specificUnavailableDates || 'Not Specified'}</p>
+    `;
+
+        container.appendChild(availabilityCard);
+    }
+
+    function displayNoAvailabilityMessage() {
+        document.getElementById("availability-container").innerHTML = `<div class="alert alert-info" role="alert">
+             No availability set by the technician yet.
+         </div>`;
+    }
+
+
 });

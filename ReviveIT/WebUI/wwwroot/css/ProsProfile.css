@@ -92,7 +92,7 @@
         line-height: 1.5;
     }
 
-.portfolio, .contact-info, .description {
+.portfolio, .contact-info, .description, .availability {
     text-align: center;
     margin-top: 20px;
     padding: 20px;

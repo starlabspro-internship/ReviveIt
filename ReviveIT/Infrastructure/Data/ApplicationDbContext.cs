@@ -25,7 +25,8 @@ namespace Infrastructure.Data
         public DbSet<City> Cities { get; set; }
         public DbSet<OperatingCity> OperatingCities { get; set; }
         public DbSet<Feedback> Feedbacks { get; set; }
-        
+        public DbSet<TechnicianAvailability> TechnicianAvailabilities { get; set; }
+
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
@@ -46,7 +47,8 @@ namespace Infrastructure.Data
             builder.ApplyConfiguration(new UserCategoryConfigurations());
             builder.ApplyConfiguration(new CityConfigurations());
             builder.ApplyConfiguration(new OperatingCityConfigurations());
-          
+            builder.ApplyConfiguration(new TechnicianAvailabilityConfigurations());
+            
             builder.Entity<City>().HasData(
                 new City { CityId = 1, CityName = "Deçan" },
                 new City { CityId = 2, CityName = "Dragash" },

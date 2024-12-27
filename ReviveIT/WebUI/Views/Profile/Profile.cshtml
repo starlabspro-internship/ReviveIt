@@ -178,31 +178,60 @@
                                     </div>
                                 </div>
                             </div>
-                            @*  TO BE FIXED *@
-                            @*     <div class="mt-4">
-                                <div class="card p-3">
-                                    <h5>Availability</h5>
-                                    <div class="form-check form-switch mb-3">
-                                        <input class="form-check-input" type="checkbox" id="availabilityToggle" onchange="toggleAvailability()">
-                                        <label class="form-check-label" for="availabilityToggle">Set Availability</label>
-                                    </div>
-                                    <div id="availabilityOptions" class="d-none">
-                                        <p>Select your availability:</p>
-                                        <label for="daysAvailable">Days Available:</label>
-                                        <select id="daysAvailable" class="form-control mb-3" multiple></select>
 
-                                        <label for="monthsUnavailable">Unavailable Months:</label>
-                                        <select id="monthsUnavailable" class="form-control mb-3" multiple></select>
+                            <div class="container mt-5">
+                                <h2>Technician Availability</h2>
 
-                                        <label for="specificDates">Additional Unavailable Dates:</label>
-                                        <input type="date" class="form-control mb-3" id="specificDates" multiple>
-                                    </div>
+                                <div id="dataContainer">
+                                    
                                 </div>
-                            </div> *@
 
+                                <div class="form-group">
+                                    <label for="daysAvailable">Select Available Days</label>
+                                    <select id="daysAvailable" class="form-control" multiple>
+                                        <option value="Monday">Monday</option>
+                                        <option value="Tuesday">Tuesday</option>
+                                        <option value="Wednesday">Wednesday</option>
+                                        <option value="Thursday">Thursday</option>
+                                        <option value="Friday">Friday</option>
+                                        <option value="Saturday">Saturday</option>
+                                        <option value="Sunday">Sunday</option>
+                                    </select>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="monthsUnavailable">Select Unavailable Months</label>
+                                    <select id="monthsUnavailable" class="form-control" multiple>
+                                        <option value="January">January</option>
+                                        <option value="February">February</option>
+                                        <option value="March">March</option>
+                                        <option value="April">April</option>
+                                        <option value="May">May</option>
+                                        <option value="June">June</option>
+                                        <option value="July">July</option>
+                                        <option value="August">August</option>
+                                        <option value="September">September</option>
+                                        <option value="October">October</option>
+                                        <option value="November">November</option>
+                                        <option value="December">December</option>
+                                    </select>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="specificUnavailableDates">Select Specific Unavailable Dates</label>
+                                    <input type="date" id="specificUnavailableDates" class="form-control">
+                                </div>
+
+                                <button id="saveAvailability" class="btn btn-primary mt-3">Save Availability</button>
+                                <button id="updateAvailability" class="btn btn-secondary mt-3" style="display: none;">Update Availability</button>
+                                <button id="deleteAvailability" class="btn btn-danger mt-3">Delete Availability</button>
+                            </div>
+
+                            <script src="~/js/available.js"></script>
+                            <script src="~/js/Portofolio.js"></script>
                         }
                         <div class="text-center mt-4">
-                            <h5>Social Links</h5>
+                            <h5>Social Links</h5> 
                             <div class="social-icons">
                                 <a href="#" title="Facebook">
                                     <i class="fa fa-facebook" aria-hidden="true"></i>
